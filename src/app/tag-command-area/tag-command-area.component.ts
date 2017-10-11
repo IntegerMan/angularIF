@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TagInputModule} from 'ngx-chips/index';
 
 @Component({
   selector: 'if-tag-command-area',
@@ -13,3 +14,10 @@ export class TagCommandAreaComponent implements OnInit {
   }
 
 }
+
+
+TagInputModule.withDefaults({
+  tagInput: {
+    placeholder: 'What do you want to do?'
+  }
+});
