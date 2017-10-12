@@ -7,10 +7,13 @@ import {InteractiveFictionService} from './interactive-fiction.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Angular Interactive Fiction Engine';
+
+  title: string;
 
   constructor(private ifService: InteractiveFictionService) {
     ifService.initialize();
+
+    this.title = ifService.engineName;
   }
 
 }

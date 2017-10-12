@@ -29,7 +29,9 @@ export class TextOutputService {
   private addLine(line: string) {
 
     // Send the output to the console for good measure
-    this.logger.log(`OUT: ${line}`);
+    if (line && line.length > 0) {
+      this.logger.log(`OUT: ${line}`);
+    }
 
     // Update the collection. If components displaying this are bound to our lines collection, they'll update
     this.lines.push(line);
