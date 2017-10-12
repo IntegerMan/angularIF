@@ -4,8 +4,7 @@ import {CommandEntryService} from '../command-entry.service';
 @Component({
   selector: 'if-parser-command-area',
   templateUrl: './parser-command-area.component.html',
-  styleUrls: ['./parser-command-area.component.css'],
-  providers: [CommandEntryService]
+  styleUrls: ['./parser-command-area.component.css']
 })
 
 export class ParserCommandAreaComponent implements OnInit {
