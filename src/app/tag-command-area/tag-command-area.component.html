@@ -1,7 +1,3 @@
-<tag-input #input
-           [theme]="'minimal'"
-           [separatorKeyCodes]="[32, 188]"
-           [allowDupes]="true"
-           [clearOnBlur]="true"
-           [addOnBlur]="true">
+<tag-input [(ngModel)]="tags"
+           [separatorKeyCodes]="[32, 188]">
 </tag-input>

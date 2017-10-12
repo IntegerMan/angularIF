@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {TagInputModule} from 'ngx-chips/index';
 
 @Component({
@@ -8,13 +8,14 @@ import {TagInputModule} from 'ngx-chips/index';
 })
 export class TagCommandAreaComponent implements OnInit {
 
+  tags: string[] = ['This', 'is', 'a', 'test'];
+
   constructor() { }
 
   ngOnInit() {
   }
 
 }
-
 
 TagInputModule.withDefaults({
   tagInput: {
