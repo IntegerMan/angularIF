@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {InteractiveFictionService} from './interactive-fiction.service';
 
 @Component({
   selector: 'if-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Angular Interactive Fiction Engine';
+
+  constructor(private ifService: InteractiveFictionService) {
+    ifService.initialize();
+  }
+
 }
