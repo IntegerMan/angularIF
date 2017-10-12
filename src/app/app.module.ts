@@ -4,10 +4,10 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 import { TextRendererComponent } from './text-renderer/text-renderer.component';
 import { CommandAreaComponent } from './command-area/command-area.component';
-import { TagCommandAreaComponent } from './tag-command-area/tag-command-area.component';
 
-import { TagInputModule } from 'ngx-chips';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TagCommandAreaComponent } from './tag-command-area/tag-command-area.component';
+import { ParserCommandAreaComponent } from './parser-command-area/parser-command-area.component'; // this is needed!
 
 @NgModule({
   declarations: [
@@ -15,9 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     TextRendererComponent,
     CommandAreaComponent,
     TagCommandAreaComponent,
+    ParserCommandAreaComponent
   ],
   imports: [
-    TagInputModule,
     BrowserAnimationsModule,
     BrowserModule
   ],
