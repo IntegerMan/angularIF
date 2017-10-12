@@ -1,6 +1,6 @@
 <input #parserInput
        type="text"
        placeholder="What do you want to do?"
-       (keyup.enter)="parseInput(parserInput.value)">
+       (keyup.enter)="parseInput(parserInput.value); parserInput.value = '';">
 
-<button (click)="parseInput(parserInput.value)">Go</button>
+<button (click)="parseInput(parserInput.value); parserInput.value = '';">Go</button>

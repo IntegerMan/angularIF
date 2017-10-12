@@ -8,6 +8,7 @@ import {CommandEntryService} from '../command-entry.service';
 })
 
 export class ParserCommandAreaComponent implements OnInit {
+
   private _commandService: CommandEntryService;
 
   constructor(commandService: CommandEntryService) {
