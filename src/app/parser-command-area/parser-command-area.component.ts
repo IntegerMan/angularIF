@@ -9,17 +9,19 @@ import {CommandEntryService} from '../command-entry.service';
 })
 
 export class ParserCommandAreaComponent implements OnInit {
+  private _commandService: CommandEntryService;
 
   constructor(commandService: CommandEntryService) {
+    this._commandService = commandService;
 
   }
 
   ngOnInit() {
   }
 
-  parseInput(sentence: String) {
+  parseInput(sentence: string) {
 
-    this.commandService.parseInput(sentence);
+    this._commandService.parseInput(sentence);
 
   }
 }

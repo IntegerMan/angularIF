@@ -4,10 +4,14 @@ import {LoggingService} from './logging.service';
 @Injectable()
 export class CommandEntryService {
 
-  constructor(loggingService: LoggingService) { }
+  private _logger: LoggingService;
+
+  constructor(loggingService: LoggingService) {
+    this._logger = loggingService;
+  }
 
   parseInput(sentence: string) {
-    this.loggingService.log(`User typed in '${sentence}'`);
+    this._logger.log(`User typed in '${sentence}'`);
   }
 
 }
