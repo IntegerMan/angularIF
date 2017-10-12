@@ -17,7 +17,7 @@ export class AppComponent {
     const story: Story = new CloakStory();
     ifService.initialize(story);
 
-    this.title = ifService.engineName;
+    this.title = story.title;
   }
 
 }
