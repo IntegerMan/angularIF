@@ -1,4 +1,4 @@
-import {Story} from './story';
+import {Story} from '../story';
 
 export class CloakStory extends Story {
 

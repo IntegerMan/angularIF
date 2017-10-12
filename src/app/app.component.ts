@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {InteractiveFictionService} from './interactive-fiction.service';
-import {Story} from './story';
-import {CloakStory} from './cloak-story';
+import {Story} from './stories/story';
+import {CloakStory} from './stories/cloak-of-darkness/cloak-story';
 
 @Component({
   selector: 'if-root',

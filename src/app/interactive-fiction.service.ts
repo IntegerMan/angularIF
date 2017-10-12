@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {TextOutputService} from './text-output.service';
 import {LoggingService} from './logging.service';
-import {Story} from './story';
+import {Story} from './stories/story';
 
 @Injectable()
 export class InteractiveFictionService {
