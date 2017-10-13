@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {InteractiveFictionService} from './interactive-fiction.service';
+import {InteractiveFictionService} from './engine/interactive-fiction.service';
 import {Story} from './engine/story';
 import {CloakStory} from './stories/cloak-of-darkness/cloak-story';
 

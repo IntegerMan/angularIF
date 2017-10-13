@@ -46,6 +46,9 @@ export class TextRendererComponent implements OnInit {
       case CommandType.engine:
         return `<span class="text-secondary">${text}</span>`;
 
+      case CommandType.parserError:
+        return `<span class="text-warning font-weight-bold">${text}</span>`;
+
       case CommandType.roomName:
         return `<p class="text my-4"><strong>${text}</strong></p>`;
 
@@ -59,7 +62,7 @@ export class TextRendererComponent implements OnInit {
         return `<span class="text-info">${text}</span>`;
 
       case CommandType.userInput:
-        return `<span class="text-secondary font-weight-bold">&gt;&nbsp;</span><kbd>${text}</kbd>`;
+        return `<p class="my-2 text-secondary font-weight-bold">&gt;&nbsp;<kbd>${text}</kbd></p>`;
 
       case CommandType.divider:
         return `<p class="my-3">${text}</p>`;

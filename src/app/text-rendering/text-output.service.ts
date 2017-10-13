@@ -35,6 +35,10 @@ export class TextOutputService {
     this.addLine(new TextLine(text, CommandType.narrative));
   }
 
+  displayParserError(text: string) {
+    this.addLine(new TextLine(text, CommandType.parserError));
+  }
+
   displayBlankLine() {
     this.addLine(new TextLine('', CommandType.divider));
   }

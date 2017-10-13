@@ -10,8 +10,10 @@ import { TagCommandAreaComponent } from './command-area/tag-command-area/tag-com
 import { ParserCommandAreaComponent } from './command-area/parser-command-area/parser-command-area.component';
 import { LoggingService } from './logging.service';
 import {TextOutputService} from './text-rendering/text-output.service';
-import {CommandEntryService} from './command-entry.service';
-import {InteractiveFictionService} from './interactive-fiction.service'; // this is needed!
+import {CommandEntryService} from './command-area/command-entry.service';
+import {InteractiveFictionService} from './engine/interactive-fiction.service';
+import {TokenizerService} from './engine/tokenizer.service';
+import {CommandParserService} from './engine/command-parser.service'; // this is needed!
 
 @NgModule({
   declarations: [
@@ -25,7 +27,7 @@ import {InteractiveFictionService} from './interactive-fiction.service'; // this
     BrowserAnimationsModule,
     BrowserModule
   ],
-  providers: [LoggingService, TextOutputService, CommandEntryService, InteractiveFictionService],
+  providers: [LoggingService, TextOutputService, CommandEntryService, InteractiveFictionService, TokenizerService, CommandParserService],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
