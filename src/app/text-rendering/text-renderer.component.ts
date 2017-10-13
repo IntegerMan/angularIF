@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {TextOutputService} from '../text-output.service';
+import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../logging.service';
+import {TextLine} from './text-line';
 
 @Component({
   selector: 'if-text-renderer',
@@ -9,7 +10,7 @@ import {LoggingService} from '../logging.service';
 })
 export class TextRendererComponent implements OnInit {
 
-  lines: string[] = [];
+  lines: TextLine[] = [];
 
   private _outputService: TextOutputService;
   private _logger: LoggingService;

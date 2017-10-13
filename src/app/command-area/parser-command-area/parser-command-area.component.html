@@ -1,0 +1,11 @@
+<label for="parserInput">What do you want to do?</label>
+
+<input #parserInput
+       id="parserInput"
+       type="text"
+       placeholder="Enter your command"
+       style="width: 100%;"
+       class="border border-secondary px-2"
+       (keyup.enter)="parseInput(parserInput.value); parserInput.value = '';">
+
+<!--<button (click)="parseInput(parserInput.value); parserInput.value = '';">Go</button>-->

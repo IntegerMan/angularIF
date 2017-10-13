@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {TextOutputService} from './text-output.service';
+import {TextOutputService} from './text-rendering/text-output.service';
 import {LoggingService} from './logging.service';
 import {Story} from './stories/story';
 
@@ -29,7 +29,7 @@ export class InteractiveFictionService {
   }
 
   private initializeEngine() {
-    this.outputService.displaySystemText(`${this.engineName} v${this.engineVersion} by ${this.engineAuthor}`);
+    this.outputService.displayTitle(`${this.engineName} v${this.engineVersion} by ${this.engineAuthor}`);
     this.outputService.displayBlankLine();
     this.outputService.displaySystemText(this.copyrightText);
     this.outputService.displaySystemText(this.licenseText);
@@ -39,8 +39,10 @@ export class InteractiveFictionService {
   private initializeStory(story: Story) {
 
     this.story = story;
-    this.outputService.displaySystemText(`${story.title} v${story.version}`);
+    this.outputService.displayTitle(`${story.title} v${story.version}`);
     this.outputService.displaySystemText(`by ${story.author}`);
+    this.outputService.displayBlankLine();
+    this.outputService.displayStory('The story begins...');
     this.outputService.displayBlankLine();
   }
 }

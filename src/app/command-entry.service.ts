@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {LoggingService} from './logging.service';
-import {TextOutputService} from './text-output.service';
+import {TextOutputService} from './text-rendering/text-output.service';
 
 @Injectable()
 export class CommandEntryService {

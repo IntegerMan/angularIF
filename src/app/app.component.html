@@ -1,9 +1,19 @@
-<div class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">
-      {{title}}
-    </h1>
-    <if-text-renderer></if-text-renderer>
-    <if-command-area></if-command-area>
+<div class="container full-height">
+
+  <div class="full-height py-4">
+    <div class="card card-outline-secondary full-height" >
+      <div class="card-header">
+        {{title}}
+      </div>
+
+      <div class="card-body bg-dark" style="overflow-y: auto;">
+        <if-text-renderer></if-text-renderer>
+      </div>
+
+      <div class="card-footer">
+        <if-command-area></if-command-area>
+      </div>
+    </div>
   </div>
+
 </div>

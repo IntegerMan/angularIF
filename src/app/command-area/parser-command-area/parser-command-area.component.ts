@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommandEntryService} from '../command-entry.service';
+import {CommandEntryService} from '../../command-entry.service';
 
 @Component({
   selector: 'if-parser-command-area',
