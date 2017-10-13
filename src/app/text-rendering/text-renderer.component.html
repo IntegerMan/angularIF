@@ -1,3 +1,3 @@
-<div *ngFor="let line of lines">
-  <span class="{{line.classes}}">{{line.text}}</span><br />
+<div *ngFor="let line of lines" [innerHTML]="getHtmlForLine(line)" >
+
 </div>

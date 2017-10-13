@@ -1,10 +1,12 @@
+import {CommandType} from './command-type.enum';
+
 export class TextLine {
 
   text: string = '';
-  classes: string = '';
+  commandType: CommandType;
 
-  constructor(text: string, classes: string) {
+  constructor(text: string, commmandType: CommandType) {
     this.text = text;
-    this.classes = classes;
+    this.commandType = commmandType;
   }
 }

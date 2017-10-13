@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {LoggingService} from '../logging.service';
 import {TextLine} from './text-line';
+import {CommandType} from './command-type.enum';
 
 @Injectable()
 export class TextOutputService {
@@ -11,23 +12,27 @@ export class TextOutputService {
   }
 
   displayUserCommand(command: string) {
-    this.addLine(new TextLine(`> ${command}`, 'text-secondary'));
+    this.addLine(new TextLine(command, CommandType.userInput));
   }
 
   displayTitle(text: string) {
-    this.addLine(new TextLine(text, 'lead text-info'));
+    this.addLine(new TextLine(text, CommandType.header));
+  }
+
+  displaySubtitle(text: string) {
+    this.addLine(new TextLine(text, CommandType.subHeader));
   }
 
   displaySystemText(text: string) {
-    this.addLine(new TextLine(text, 'text-info'));
+    this.addLine(new TextLine(text, CommandType.engine));
   }
 
   displayStory(text: string) {
-    this.addLine(new TextLine(text, 'text-primary'));
+    this.addLine(new TextLine(text, CommandType.narrative));
   }
 
   displayBlankLine() {
-    this.addLine(new TextLine('', ''));
+    this.addLine(new TextLine('', CommandType.divider));
   }
 
   clear() {

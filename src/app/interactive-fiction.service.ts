@@ -9,7 +9,7 @@ export class InteractiveFictionService {
   engineName: string = 'Angular Interactive Fiction Engine';
   engineVersion: string = '0.1';
   engineAuthor: string = 'Matt Eland';
-  copyrightText: string = 'Copyright (c) 2017 Matt Eland';
+  copyrightText: string = 'Copyright &copy; 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
 
   story: Story;
@@ -29,7 +29,8 @@ export class InteractiveFictionService {
   }
 
   private initializeEngine() {
-    this.outputService.displayTitle(`${this.engineName} v${this.engineVersion} by ${this.engineAuthor}`);
+    this.outputService.displayTitle(`${this.engineName}`);
+    this.outputService.displaySubtitle(`v${this.engineVersion} by ${this.engineAuthor}`);
     this.outputService.displayBlankLine();
     this.outputService.displaySystemText(this.copyrightText);
     this.outputService.displaySystemText(this.licenseText);
@@ -40,7 +41,7 @@ export class InteractiveFictionService {
 
     this.story = story;
     this.outputService.displayTitle(`${story.title} v${story.version}`);
-    this.outputService.displaySystemText(`by ${story.author}`);
+    this.outputService.displaySubtitle(`by ${story.author}`);
     this.outputService.displayBlankLine();
     this.outputService.displayStory('The story begins...');
     this.outputService.displayBlankLine();
