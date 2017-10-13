@@ -1,4 +1,5 @@
 export enum CommandType {
+  roomName,
   divider,
   header,
   subHeader,

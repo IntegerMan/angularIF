@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {TextOutputService} from './text-rendering/text-output.service';
 import {LoggingService} from './logging.service';
-import {Story} from './stories/story';
+import {Story} from './engine/story';
+import {Room} from './engine/room';
+import {Player} from './engine/player';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -29,21 +31,42 @@ export class InteractiveFictionService {
   }
 
   private initializeEngine() {
+
     this.outputService.displayTitle(`${this.engineName}`);
     this.outputService.displaySubtitle(`v${this.engineVersion} by ${this.engineAuthor}`);
     this.outputService.displayBlankLine();
-    this.outputService.displaySystemText(this.copyrightText);
-    this.outputService.displaySystemText(this.licenseText);
+    this.outputService.displaySystem(this.copyrightText);
+    this.outputService.displaySystem(this.licenseText);
     this.outputService.displayBlankLine();
   }
 
   private initializeStory(story: Story) {
 
+    story.initialize();
+
     this.story = story;
     this.outputService.displayTitle(`${story.title} v${story.version}`);
     this.outputService.displaySubtitle(`by ${story.author}`);
     this.outputService.displayBlankLine();
+
+    if (!story.player || !story.player.currentRoom) {
+      // TODO: I need an exception handling service somewhere...
+      throw new Error('The player must be initialized and have a starting room when the story begins!');
+    }
+
+    this.outputService.displayBlankLine();
     this.outputService.displayStory('The story begins...');
     this.outputService.displayBlankLine();
+
+    this.describeRoom(story.player, story.player.currentRoom);
   }
+
+  private describeRoom(player: Player, room: Room) {
+
+    this.outputService.displayRoomName(room.name);
+    this.outputService.displayBlankLine();
+    this.outputService.displayStory(room.description);
+
+  }
+
 }

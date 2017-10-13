@@ -23,8 +23,12 @@ export class TextOutputService {
     this.addLine(new TextLine(text, CommandType.subHeader));
   }
 
-  displaySystemText(text: string) {
+  displaySystem(text: string) {
     this.addLine(new TextLine(text, CommandType.engine));
+  }
+
+  displayRoomName(text: string) {
+    this.addLine(new TextLine(text, CommandType.roomName));
   }
 
   displayStory(text: string) {
@@ -53,6 +57,5 @@ export class TextOutputService {
     // TODO: We may also need to fire an event here at some point
 
   }
-
 
 }

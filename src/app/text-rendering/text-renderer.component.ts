@@ -29,30 +29,43 @@ export class TextRendererComponent implements OnInit {
 
   getHtmlForLine(line: TextLine): string {
 
-    // <span class="{{line.classes}}">{{line.text}}</span><br />
+    // TODO: This should really be moved into a service of some sort...
+
+    let text: string = line.text;
+
+    // Render direction tags
+    text = text.split('{').join('<a class=\'text-info\' href="#">');
+    text = text.split('}').join('</a>');
+
+    // Render object tags
+    text = text.split('[').join('<a class=\'text-secondary\' href="#">');
+    text = text.split(']').join('</a>');
 
     switch (line.commandType) {
 
       case CommandType.engine:
-        return `<span class="text-secondary">${line.text}</span>`;
+        return `<span class="text-secondary">${text}</span>`;
+
+      case CommandType.roomName:
+        return `<p class="text my-4"><strong>${text}</strong></p>`;
 
       case CommandType.narrative:
-        return `<span class="text">${line.text}</span>`;
+        return `<span class="text">${text}</span>`;
 
       case CommandType.header:
-        return `<span class="lead">${line.text}</span>`;
+        return `<span class="lead">${text}</span>`;
 
       case CommandType.subHeader:
-        return `<span class="text-info">${line.text}</span>`;
+        return `<span class="text-info">${text}</span>`;
 
       case CommandType.userInput:
-        return `<span class="text-secondary">&gt;</span> <kbd>${line.text}</kbd>`;
+        return `<span class="text-secondary font-weight-bold">&gt;&nbsp;</span><kbd>${text}</kbd>`;
 
       case CommandType.divider:
-        return `<p class="my-3">${line.text}</p>`;
+        return `<p class="my-3">${text}</p>`;
 
       default:
-        return line.text;
+        return text;
     }
 
   }
