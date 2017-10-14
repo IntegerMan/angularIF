@@ -89,8 +89,7 @@ export class InteractiveFictionService {
     const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
     for (const token of tokens) {
 
-      const tokenType: string = TokenClassification[token.classification];
-      this.logger.log(`Read in token '${token.name}' of type ${tokenType} from input '${token.userInput}'`);
+      this.logger.log(`Read in token '${token.name}' of type ${token.classification} from input '${token.userInput}'`);
 
     }
 
