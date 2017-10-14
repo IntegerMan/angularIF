@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {TokenizerService} from './tokenizer.service';
-import {NaturalLanguageService} from './natural-language.service';
+import {TokenizerService} from './Tokenizer/tokenizer.service';
+import {NaturalLanguageService} from './Tokenizer/natural-language.service';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {CommandParserService} from './command-parser.service';
-import {LexiconService} from './lexicon.service';
+import {LexiconService} from './Tokenizer/lexicon.service';
 
 @NgModule({
   imports: [

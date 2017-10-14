@@ -4,11 +4,11 @@ import {LoggingService} from '../logging.service';
 import {Story} from './story';
 import {Room} from './room';
 import {Player} from './player';
-import {TokenizerService} from './tokenizer.service';
-import {CommandToken} from './command-token';
-import {TokenClassification} from './token-classification.enum';
-import {CommonDictionary} from './common-dictionary';
-import {LexiconService} from './lexicon.service';
+import {TokenizerService} from './Tokenizer/tokenizer.service';
+import {CommandToken} from './Tokenizer/command-token';
+import {TokenClassification} from './Tokenizer/token-classification.enum';
+import {CommonDictionary} from './Tokenizer/common-dictionary';
+import {LexiconService} from './Tokenizer/lexicon.service';
 
 @Injectable()
 export class InteractiveFictionService {

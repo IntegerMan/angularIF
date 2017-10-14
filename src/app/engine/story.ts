@@ -1,6 +1,6 @@
 import {Room} from './room';
 import {Player} from './player';
-import {LexiconDictionary} from './lexicon-dictionary';
+import {LexiconDictionary} from './Tokenizer/lexicon-dictionary';
 
 export abstract class Story {
 
