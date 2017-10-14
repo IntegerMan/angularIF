@@ -4,4 +4,4 @@ interface NodeModule {
   id: string;
 }
 
-declare var require: any;
+declare var require: NodeRequire;
