@@ -110,6 +110,8 @@ export class InteractiveFictionService {
     // Log it to console and stick the command into the main window for user reference
     this.logger.log(`Input sentence: '${sentence}'`);
 
+    // TODO: From this thing's perspective, it's probably best to work with a single sentence or command object aggregating the tokens
+
     // Break down the input into command tokens
     const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
     this.outputService.displayUserCommand(sentence, tokens);
