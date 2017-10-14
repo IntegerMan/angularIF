@@ -1,16 +1,32 @@
 import { Injectable } from '@angular/core';
 import {CommandToken} from './command-token';
 import {TokenClassification} from './token-classification.enum';
+import {LexiconService} from './lexicon.service';
 
 @Injectable()
 export class TokenizerService {
 
-  constructor() { }
+  private nlp: any;
+
+  // TODO: Use a typing definition
+
+  constructor(private lexer: LexiconService) {
+
+    this.nlp = require('Compromise');
+
+  }
 
   public getTokensForSentence(sentence: string): CommandToken[] {
+
+    // Great test case: Open the door to the east with the bronze key from the bedroom.
+
+    // Validate input
     if (!sentence || sentence.length  <= 0) {
       throw new Error('I\'m sorry. Did you say something?'); // Cutesy speak for I can't figure out what you're talking about
     }
+
+    const nlpData = this.nlp(sentence, this.lexer.lexicon);
+    console.log(nlpData.terms().data());
 
     const words: string[] = sentence.split(' ');
     const tokens: CommandToken[] = [];
