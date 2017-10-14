@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {LexiconService} from './lexicon.service';
 import {LoggingService} from '../../logging.service';
+import {LanguageTerm} from './language-term';
 
 @Injectable()
 export class NaturalLanguageService {
@@ -13,11 +14,13 @@ export class NaturalLanguageService {
 
   }
 
-  public getTerms(sentence: string): any[] {
+  public getTerms(sentence: string): LanguageTerm[] {
+
+    this.logger.log(`Language service is extracting terms from: ${sentence}`);
 
     const nlpData = this.nlp(sentence, this.lexer.lexicon);
 
-    const data: any[] = nlpData.terms().data();
+    const data: LanguageTerm[] = nlpData.terms().data();
     this.logger.log(data);
 
     return data;

@@ -1,4 +1,4 @@
-import {CommandToken} from './Tokenizer/command-token';
+import {CommandToken} from './tokenizer/command-token';
 
 export class Command {
 

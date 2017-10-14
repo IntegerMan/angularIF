@@ -27,7 +27,15 @@ export class LexiconService {
     this.addCustom(term, 'Verb');
   }
 
-  public addAdjective(term: string) {
+  public addAdjective(term: string): void {
     this.addCustom(term, 'Adjective');
+  }
+
+  public addNoun(term: string): void {
+    this.addCustom(term, 'Noun');
+  }
+
+  public addDirection(term: string): void {
+    this.addCustom(term, 'Direction');
   }
 }

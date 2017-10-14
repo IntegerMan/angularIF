@@ -4,11 +4,11 @@ import {LoggingService} from '../logging.service';
 import {Story} from './story';
 import {Room} from './room';
 import {Player} from './player';
-import {TokenizerService} from './Tokenizer/tokenizer.service';
-import {CommandToken} from './Tokenizer/command-token';
-import {TokenClassification} from './Tokenizer/token-classification.enum';
-import {CommonDictionary} from './Tokenizer/common-dictionary';
-import {LexiconService} from './Tokenizer/lexicon.service';
+import {TokenizerService} from './tokenizer/tokenizer.service';
+import {CommandToken} from './tokenizer/command-token';
+import {TokenClassification} from './tokenizer/token-classification.enum';
+import {CommonDictionary} from './tokenizer/common-dictionary';
+import {LexiconService} from './tokenizer/lexicon.service';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -94,7 +94,7 @@ export class InteractiveFictionService {
 
     }
 
-    const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.unknown);
+    const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
     if (unknowns && unknowns.length > 0) {
 
       let message: string;
