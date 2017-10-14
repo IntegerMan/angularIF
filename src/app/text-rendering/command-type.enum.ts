@@ -5,6 +5,7 @@ export enum CommandType {
   header,
   subHeader,
   userInput,
+  userInputDebug,
   engine,
   narrative
 }

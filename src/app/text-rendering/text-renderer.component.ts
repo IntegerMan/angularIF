@@ -3,6 +3,8 @@ import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../logging.service';
 import {TextLine} from './text-line';
 import {CommandType} from './command-type.enum';
+import {CommandToken} from '../engine/tokenizer/command-token';
+import {TokenClassification} from '../engine/tokenizer/token-classification.enum';
 
 @Component({
   selector: 'if-text-renderer',
@@ -64,6 +66,10 @@ export class TextRendererComponent implements OnInit {
       case CommandType.userInput:
         return `<p class="my-2 text-secondary font-weight-bold">&gt;&nbsp;<kbd>${text}</kbd></p>`;
 
+      case CommandType.userInputDebug:
+        return this.getInputDebuggingHtml(line);
+
+
       case CommandType.divider:
         return `<p class="my-3">${text}</p>`;
 
@@ -71,6 +77,60 @@ export class TextRendererComponent implements OnInit {
         return text;
     }
 
+  }
+
+  private getInputDebuggingHtml(line: TextLine): string {
+    const tokens: CommandToken[] = line.data;
+
+    let output: string =
+      `<p class="my-2 text-secondary font-weight-bold">&gt;&nbsp;`;
+
+    for (const token of tokens) {
+      const term = token.term;
+      const tooltip = `${token.classification}: ${token.term.normal}`;
+      output += `${term.spaceBefore}<span ${this.getTokenStyling(token)} title="${tooltip}">${token.userInput}</span>${term.spaceAfter}`;
+    }
+
+    output += '</p>';
+
+    return output;
+  }
+
+  private getTokenStyling(token: CommandToken): string {
+
+    let output: string = `class="badge token-${token.classification.toString().toLowerCase()} `;
+
+    switch (token.classification) {
+      case TokenClassification.Verb:
+        output += 'badge-danger';
+        break;
+
+      case TokenClassification.Direction:
+        output += 'badge-success';
+        break;
+
+      case TokenClassification.Noun:
+        output += 'badge-primary';
+        break;
+
+      case TokenClassification.Adjective:
+      case TokenClassification.Adverb:
+        output += 'badge-info';
+        break;
+
+      case TokenClassification.Determiner:
+      case TokenClassification.Conjunction:
+        output += 'badge-secondary';
+        break;
+
+      default:
+        output += 'badge-default';
+        break;
+    }
+
+    output += '"';
+
+    return output;
   }
 
 }

@@ -27,6 +27,30 @@ export class InteractiveFictionService {
               private lexer: LexiconService) {
 
   }
+  private static displayParserError(unknowns: CommandToken[]) {
+    let message: string;
+
+    if (unknowns.length === 1) {
+      message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' means.`;
+    } else if (unknowns.length === 2) {
+      message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' or '${unknowns[1].userInput}' mean.`;
+    } else {
+
+      let wordStrings: string = '';
+      for (const t of unknowns) {
+
+        if (t === unknowns[unknowns.length - 1]) {
+          wordStrings += `or '${t.userInput}'`;
+        } else {
+          wordStrings += `'${t.userInput}', `;
+        }
+
+      }
+      message = `I'm sorry, but I don't know what ${wordStrings} mean.`;
+    }
+
+    this.outputService.displayParserError(message);
+  }
 
   initialize(story: Story) {
     this.logger.log('System Initialized');
@@ -79,49 +103,32 @@ export class InteractiveFictionService {
 
   }
 
-  handleUserSentence(sentence: string): void {
+  handleUserSentence(sentence: string): boolean {
+
+    let failed: boolean = false;
 
     // Log it to console and stick the command into the main window for user reference
     this.logger.log(`Input sentence: '${sentence}'`);
-    this.outputService.displayUserCommand(sentence);
 
-    // Break down the input into tokens
+    // Break down the input into command tokens
     const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
+    this.outputService.displayUserCommand(sentence, tokens);
     for (const token of tokens) {
-
       this.logger.log(`Read in ${token.classification} token '${token.name}' from input '${token.userInput}'`);
-
     }
 
+    // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
     if (unknowns && unknowns.length > 0) {
-
-      let message: string;
-
-      if (unknowns.length === 1) {
-        message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' means.`;
-      } else if (unknowns.length === 2) {
-        message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' or '${unknowns[1].userInput}' mean.`;
-      } else {
-
-        let wordStrings: string = '';
-        for (const t of unknowns) {
-
-          if (t === unknowns[unknowns.length - 1]) {
-
-            wordStrings += `or '${t.userInput}'`;
-
-          } else {
-
-            wordStrings += `'${t.userInput}', `;
-          }
-
-        }
-        message = `I'm sorry, but I don't know what ${wordStrings} mean.`;
-      }
-
-      this.outputService.displayParserError(message);
+      InteractiveFictionService.displayParserError(unknowns);
+      failed = true;
     }
 
+    // Placeholder for future things
+    if (!failed) {
+      this.outputService.displayParserError(`That's cool and all, but I don't really know how to do anything yet.`);
+    }
+
+    return failed;
   }
 }

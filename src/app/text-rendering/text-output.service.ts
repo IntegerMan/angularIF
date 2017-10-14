@@ -8,11 +8,24 @@ export class TextOutputService {
 
   lines: TextLine[] = [];
 
+  displayDebugInfo: boolean = true;
+
   constructor(private logger: LoggingService) {
   }
 
-  displayUserCommand(command: string) {
-    this.addLine(new TextLine(command, CommandType.userInput));
+  displayUserCommand(command: string, tokens: any) {
+
+    let commandType;
+    if (this.displayDebugInfo) {
+      commandType = CommandType.userInputDebug;
+    } else {
+      commandType = CommandType.userInput;
+    }
+
+    const line = new TextLine(command, commandType);
+    line.data = tokens;
+
+    this.addLine(line);
   }
 
   displayTitle(text: string) {
