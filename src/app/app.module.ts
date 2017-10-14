@@ -11,11 +11,7 @@ import { ParserCommandAreaComponent } from './command-area/parser-command-area/p
 import { LoggingService } from './logging.service';
 import {TextOutputService} from './text-rendering/text-output.service';
 import {CommandEntryService} from './command-area/command-entry.service';
-import {InteractiveFictionService} from './engine/interactive-fiction.service';
-import {TokenizerService} from './engine/tokenizer.service';
-import {CommandParserService} from './engine/command-parser.service';
-import {LexiconService} from './engine/lexicon.service';
-import {NaturalLanguageService} from './engine/natural-language.service'; // this is needed!
+import {EngineModule} from './engine/engine.module';
 
 @NgModule({
   declarations: [
@@ -27,17 +23,13 @@ import {NaturalLanguageService} from './engine/natural-language.service'; // thi
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule
+    BrowserModule,
+    EngineModule
   ],
   providers: [
     LoggingService,
     TextOutputService,
-    CommandEntryService,
-    InteractiveFictionService,
-    TokenizerService,
-    CommandParserService,
-    LexiconService,
-    NaturalLanguageService
+    CommandEntryService
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
