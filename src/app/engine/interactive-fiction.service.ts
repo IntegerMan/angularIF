@@ -7,6 +7,8 @@ import {Player} from './player';
 import {TokenizerService} from './tokenizer.service';
 import {CommandToken} from './command-token';
 import {TokenClassification} from './token-classification.enum';
+import {CommonDictionary} from './common-dictionary';
+import {LexiconService} from './lexicon.service';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -21,7 +23,8 @@ export class InteractiveFictionService {
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
-              private tokenizer: TokenizerService) {
+              private tokenizer: TokenizerService,
+              private lexer: LexiconService) {
 
   }
 
@@ -45,6 +48,9 @@ export class InteractiveFictionService {
   }
 
   private initializeStory(story: Story) {
+
+    // Ensure the story has the base dictionary at least
+    story.addDictionary(new CommonDictionary(this.lexer));
 
     story.initialize();
 

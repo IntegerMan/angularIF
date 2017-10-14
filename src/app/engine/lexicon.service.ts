@@ -17,10 +17,17 @@ export class LexiconService {
 
   }
 
-  public add(term: string, tag: string): void {
+  private addCustom(term: string, tag: string): void {
     if (term && term.length > 0) {
       this.lexicon[term] = tag;
     }
   }
 
+  public addVerb(term: string): void {
+    this.addCustom(term, 'Verb');
+  }
+
+  public addAdjective(term: string) {
+    this.addCustom(term, 'Adjective');
+  }
 }

@@ -1,5 +1,6 @@
 import {Room} from './room';
 import {Player} from './player';
+import {LexiconDictionary} from './lexicon-dictionary';
 
 export abstract class Story {
 
@@ -10,10 +11,13 @@ export abstract class Story {
   rooms: Room[];
   player: Player;
 
+  private dictionaries: LexiconDictionary[];
+
   constructor(title: string, author: string, version: string) {
     this.title = title;
     this.author = author;
     this.version = version;
+    this.dictionaries = [];
   }
 
   public initialize(): void {
@@ -24,6 +28,15 @@ export abstract class Story {
     this.rooms = this.getRooms();
     this.player = this.getPlayerActor();
 
+    // Add our terms to the lexer
+    for (const dictionary of this.dictionaries) {
+      dictionary.addTerms();
+    }
+
+  }
+
+  public addDictionary(dictionary: LexiconDictionary): void {
+    this.dictionaries.push(dictionary);
   }
 
   protected abstract getRooms(): Room[];
