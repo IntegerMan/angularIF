@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {InteractiveFictionService} from './interactive-fiction.service';
-import {CommandParserService} from './command-parser.service';
+import {CommandParserService} from './tokenizer/command-parser.service';
 import {TokenizerModule} from './tokenizer/tokenizer.module';
 import {TextOutputService} from './text-output.service';
+import {UserInputService} from './user-input.service';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {TextOutputService} from './text-output.service';
   providers: [
     InteractiveFictionService,
     CommandParserService,
-    TextOutputService
+    TextOutputService,
+    UserInputService
   ],
   declarations: []
 })

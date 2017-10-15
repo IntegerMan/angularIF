@@ -9,6 +9,8 @@ import {CommandToken} from './tokenizer/command-token';
 import {TokenClassification} from './tokenizer/token-classification.enum';
 import {CommonDictionary} from './tokenizer/common-dictionary';
 import {LexiconService} from './tokenizer/lexicon.service';
+import {SentenceParserService} from './tokenizer/sentence-parser.service';
+import {Command} from './tokenizer/command';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -23,6 +25,7 @@ export class InteractiveFictionService {
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
+              private sentenceParser: SentenceParserService,
               private outputService: TextOutputService,
               private lexer: LexiconService) {
 
@@ -45,31 +48,6 @@ export class InteractiveFictionService {
     this.outputService.displaySystem(this.copyrightText);
     this.outputService.displaySystem(this.licenseText);
     this.outputService.displayBlankLine();
-  }
-
-  private displayParserError(unknowns: CommandToken[]) {
-    let message: string;
-
-    if (unknowns.length === 1) {
-      message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' means.`;
-    } else if (unknowns.length === 2) {
-      message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' or '${unknowns[1].userInput}' mean.`;
-    } else {
-
-      let wordStrings: string = '';
-      for (const t of unknowns) {
-
-        if (t === unknowns[unknowns.length - 1]) {
-          wordStrings += `or '${t.userInput}'`;
-        } else {
-          wordStrings += `'${t.userInput}', `;
-        }
-
-      }
-      message = `I'm sorry, but I don't know what ${wordStrings} mean.`;
-    }
-
-    this.outputService.displayParserError(message);
   }
 
   private initializeStory(story: Story) {
@@ -104,34 +82,25 @@ export class InteractiveFictionService {
 
   }
 
-  handleUserSentence(sentence: string): boolean {
+  public handleUserCommand(command: Command): boolean {
 
-    let failed: boolean = false;
-
-    // Log it to console and stick the command into the main window for user reference
-    this.logger.log(`Input sentence: '${sentence}'`);
-
-    // TODO: From this thing's perspective, it's probably best to work with a single sentence or command object aggregating the tokens
-
-    // Break down the input into command tokens
-    const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
-    this.outputService.displayUserCommand(sentence, tokens);
-    for (const token of tokens) {
-      this.logger.log(`Read in ${token.classification} token '${token.name}' from input '${token.userInput}'`);
+    // Validate input
+    if (!command) {
+      throw new Error('Can\'t respond to a command that isn\'t there');
     }
 
-    // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
-    const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
-    if (unknowns && unknowns.length > 0) {
-      this.displayParserError(unknowns);
-      failed = true;
+    this.logger.log(`Handling command associated with sentence ${command.userInput}`);
+    this.logger.log(command);
+
+    // We have to have a verb here
+    if (!command.verb) {
+      this.outputService.displayParserError('I couldn\'t figure out what you want me to do. Try starting your command with a verb.');
+      return false;
     }
 
-    // Placeholder for future things
-    if (!failed) {
-      this.outputService.displayParserError(`That's cool and all, but I don't really know how to do anything yet.`);
-    }
+    // TODO: Check to see if we have a registered verb handler for the requested verb (or one of its synonyms, perhaps)
 
-    return failed;
+    this.logger.log('The engine cannot currently respond to commands');
+    return false;
   }
 }

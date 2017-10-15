@@ -13,34 +13,13 @@ export class TokenizerService {
 
   }
 
-  public getTokensForSentence(sentence: string): CommandToken[] {
-
-    // Great test case: Open the door to the east with the bronze key from the bedroom.
-
-    // Validate input
-    if (!sentence || sentence.length  <= 0) {
-      throw new Error('I\'m sorry. Did you say something?'); // Cutesy speak for I can't figure out what you're talking about
-    }
-
-    const terms: LanguageTerm[] = this.languageService.getTerms(sentence);
-
-    const tokens: CommandToken[] = [];
-
-    console.log('Parsing terms into tokens now...');
-    for (const term of terms) {
-
-      const token: CommandToken = new CommandToken(term);
-      token.classification = this.getClassificationFromTerm(term);
-
-      this.logger.log(token);
-      tokens.push(token);
-
-    }
-
-    return tokens;
+  private static getTokenFromTerm(term) {
+    const token: CommandToken = new CommandToken(term);
+    token.classification = TokenizerService.getClassificationFromTerm(term);
+    return token;
   }
 
-  getClassificationFromTerm(term: LanguageTerm): TokenClassification {
+  private static getClassificationFromTerm(term: LanguageTerm): TokenClassification {
 
     const classifications = Object.keys(TokenClassification);
 
@@ -68,6 +47,44 @@ export class TokenizerService {
     }
 
     return TokenClassification.Unknown;
+  }
+
+  public getTokenForWord(word: string) {
+
+    // Validate input
+    if (!word || word.length  <= 0) {
+      throw new Error('When interpreting a single word, that word must be present');
+    }
+
+    const terms: LanguageTerm[] = this.languageService.getTerms(word);
+
+    return TokenizerService.getTokenFromTerm(terms[0]);
+  }
+
+  public getTokensForSentence(sentence: string): CommandToken[] {
+
+    // Great test case: Open the door to the east with the bronze key from the bedroom.
+
+    // Validate input
+    if (!sentence || sentence.length  <= 0) {
+      throw new Error('I\'m sorry. Did you say something?'); // Cutesy speak for I can't figure out what you're talking about
+    }
+
+    const terms: LanguageTerm[] = this.languageService.getTerms(sentence);
+
+    const tokens: CommandToken[] = [];
+
+    console.log('Parsing terms into tokens now...');
+    for (const term of terms) {
+
+      const token = TokenizerService.getTokenFromTerm(term);
+
+      this.logger.log(token);
+      tokens.push(token);
+
+    }
+
+    return tokens;
   }
 
 }
