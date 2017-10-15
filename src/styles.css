@@ -8,6 +8,7 @@ html, body {
   min-height: 100%;
 }
 
+/* Definition lists should render in a more horizontal mode */
 dl {
   padding: 0.5em;
 }
@@ -23,4 +24,8 @@ dt:after {
 }
 dd {
   margin: 0 0 0 110px;
+}
+
+.inferred {
+  opacity: 0.5;
 }

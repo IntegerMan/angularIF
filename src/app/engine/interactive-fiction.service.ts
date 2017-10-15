@@ -12,6 +12,7 @@ import {LexiconService} from './tokenizer/lexicon.service';
 import {SentenceParserService} from './tokenizer/sentence-parser.service';
 import {Command} from './tokenizer/command';
 import {VerbHandler} from './verbs/verb-handler';
+import {CommandContext} from './command-context';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -117,20 +118,21 @@ export class InteractiveFictionService {
       return false;
     }
 
+    // Find the requisite verb handler for the item in question
     const verbHandler: VerbHandler = this.getVerbHandler(command.verb);
-
-    // TODO: Look up the verb to see if we have something registered to handle it
 
     // If we don't have a verb handler for the verb in question, display a generic error message
     if (!verbHandler) {
-      this.outputService.displayParserError(`I don't know how to respond to the verb '${command.verb.name}' yet. Try something else.`);
+      this.outputService.displayParserError(`I don't know how to respond to the verb '${command.verb.name}' yet.`);
       return false;
     }
 
-    // TODO: Execute the verb handler, now that we know we have something that can take in the sentence
+    // Create a command context. This will give the command handler more utility information
+    const context: CommandContext =
+      new CommandContext(this.story, this, this.outputService, this.logger);
 
-    this.logger.log('The engine cannot currently respond to commands');
-    return false;
+    // TODO: This will likely need a command context
+    return verbHandler.handleCommand(command, context);
   }
 
   private getVerbHandler(verbToken: CommandToken): VerbHandler {

@@ -1,7 +1,8 @@
 import {CommandToken} from '../tokenizer/command-token';
+import {Command} from '../tokenizer/command';
+import {CommandContext} from '../command-context';
 
 export abstract class VerbHandler {
-
 
   constructor(normals: string[]) {
 
@@ -30,7 +31,25 @@ export abstract class VerbHandler {
   }
 
   canHandleVerb(verbToken: CommandToken): boolean {
+
+    // TODO: Key lookup would likely be better here
+
+    // Match on supported verb normals
+    for (const normal of this.registeredNormals) {
+      if (normal === verbToken.name) {
+        return true;
+      }
+    }
+
+    // If we can't handle it, we can't handle it
     return false;
+  }
+
+  handleCommand(command: Command, context: CommandContext): boolean {
+
+    context.outputService.displayStory('You do the thing');
+
+    return true;
   }
 
 }

@@ -120,6 +120,10 @@ export class TextRendererComponent implements OnInit {
 
   private getTokenSpan(token: CommandToken): string {
 
+    if (!token) {
+      return '<span class="small text-muted">(None)</span>';
+    }
+
     const styling = this.getTokenStyling(token);
     const tooltip = this.getTokenTooltip(token);
     return `<span ${styling} ${tooltip}>${token.name}</span>`;
@@ -167,7 +171,7 @@ export class TextRendererComponent implements OnInit {
 
     // Give it a rounded look if it is inferred
     if (token.isInferred) {
-      output += 'badge-pill ';
+      output += 'inferred ';
     }
 
     output += '"';
