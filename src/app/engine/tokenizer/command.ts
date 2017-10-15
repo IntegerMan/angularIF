@@ -14,7 +14,6 @@ export class Command {
     // Initialize empty collections
     this.objects = [];
     this.tokens = [];
-    this.sentenceModifiers = [];
   }
 
   userInput: string;
@@ -23,6 +22,5 @@ export class Command {
   verb: CommandToken;
   subject: CommandToken;
   objects: CommandToken[];
-  sentenceModifiers: CommandToken[];
 
 }

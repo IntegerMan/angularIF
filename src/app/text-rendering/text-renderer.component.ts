@@ -90,7 +90,6 @@ export class TextRendererComponent implements OnInit {
     output += `<dt>Subject</dt><dd>${this.getTokenSpan(command.subject, true)}</dd>`;
     output += `<dt>Verb</dt><dd>${this.getTokenSpan(command.verb, true)}</dd>`;
     output += `<dt>Objects</dt><dd>${this.getTokenSpans(command.objects, true)}</dd>`;
-    output += `<dt>Modifiers</dt><dd>${this.getTokenSpans(command.sentenceModifiers, true)}</dd>`;
     output += '</dl>';
 
     output += '</div>';
@@ -163,7 +162,7 @@ export class TextRendererComponent implements OnInit {
         break;
 
       case TokenClassification.Adverb:
-        output += 'badge-warning ';
+        output += 'badge-info ';
         break;
 
       case TokenClassification.Adjective:
@@ -181,7 +180,7 @@ export class TextRendererComponent implements OnInit {
         break;
 
       default:
-        output += 'badge-dark ';
+        output += 'badge-warning '; // badge-dark works too
         break;
     }
 

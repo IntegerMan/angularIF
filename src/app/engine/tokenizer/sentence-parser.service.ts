@@ -21,12 +21,14 @@ export class SentenceParserService {
     return t.classification === TokenClassification.Verb;
   }
 
-  private static isSentenceModifier(t): boolean {
+  private static isVerbModifier(t): boolean {
     return t.classification === TokenClassification.Adverb;
   }
 
-  private static isWordModifier(t): boolean {
-    return t.classification === TokenClassification.Determiner || t.classification === TokenClassification.Adjective;
+  private static isNounModifier(t): boolean {
+    return t.classification === TokenClassification.Determiner ||
+      t.classification === TokenClassification.Adjective ||
+      t.classification === TokenClassification.Preposition; // TODO: You could argue that prepositions link prior nouns to future words
   }
 
   private static findNextNoun(modifier: CommandToken): CommandToken {
@@ -86,10 +88,10 @@ export class SentenceParserService {
     this.identifyRawTokensIncludingInferred(command, tokens);
 
     // Adverbs go at the sentence level, though perhaps they could be associated with the verb
-    this.identifySentenceModifiers(command, tokens);
+    this.identifyVerbModifiers(command, tokens);
 
     // Adjectives and articles get associated with the next noun
-    this.associateWordModifiers(command, tokens);
+    this.associateNounModifiers(command, tokens);
 
     // TODO: It'd be nice to register other aspects of the sentence as modifiers on other words, but this will work for an early engine
 
@@ -126,8 +128,8 @@ export class SentenceParserService {
     }
   }
 
-  private associateWordModifiers(command: Command, tokens: CommandToken[]) {
-    const nounModifiers: CommandToken[] = tokens.filter(t => SentenceParserService.isWordModifier(t));
+  private associateNounModifiers(command: Command, tokens: CommandToken[]) {
+    const nounModifiers: CommandToken[] = tokens.filter(t => SentenceParserService.isNounModifier(t));
     for (const modifier of nounModifiers) {
 
       const nextNoun: CommandToken = SentenceParserService.findNextNoun(modifier);
@@ -140,14 +142,17 @@ export class SentenceParserService {
     }
   }
 
-  private identifySentenceModifiers(command: Command, tokens: CommandToken[]) {
+  private identifyVerbModifiers(command: Command, tokens: CommandToken[]) {
 
     // Grab the adverbs and stick them into the sentence as modifiers on the overall sentence
-    const adverbs: CommandToken[] = tokens.filter(t => SentenceParserService.isSentenceModifier(t));
+    const adverbs: CommandToken[] = tokens.filter(t => SentenceParserService.isVerbModifier(t));
     for (const adverb of adverbs) {
 
-      // TODO: These maybe should just go onto the verb
-      command.sentenceModifiers.push(adverb);
+      if (command.verb) {
+        command.verb.setModifiedBy(adverb);
+      } else {
+        this.logger.warning(`No verb present for the adverb '${adverb.name}' to modify`);
+      }
 
     }
 
