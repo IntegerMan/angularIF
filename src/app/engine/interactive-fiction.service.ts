@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {TextOutputService} from '../text-rendering/text-output.service';
+import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../logging.service';
 import {Story} from './story';
 import {Room} from './room';
@@ -21,13 +21,33 @@ export class InteractiveFictionService {
 
   story: Story;
 
-  constructor(private outputService: TextOutputService,
-              private logger: LoggingService,
+  constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
+              private outputService: TextOutputService,
               private lexer: LexiconService) {
 
   }
-  private static displayParserError(unknowns: CommandToken[]) {
+
+  initialize(story: Story) {
+    this.logger.log('System Initialized');
+
+    this.outputService.clear();
+
+    this.initializeEngine();
+    this.initializeStory(story);
+  }
+
+  private initializeEngine() {
+
+    this.outputService.displayTitle(`${this.engineName}`);
+    this.outputService.displaySubtitle(`v${this.engineVersion} by ${this.engineAuthor}`);
+    this.outputService.displayBlankLine();
+    this.outputService.displaySystem(this.copyrightText);
+    this.outputService.displaySystem(this.licenseText);
+    this.outputService.displayBlankLine();
+  }
+
+  private displayParserError(unknowns: CommandToken[]) {
     let message: string;
 
     if (unknowns.length === 1) {
@@ -50,25 +70,6 @@ export class InteractiveFictionService {
     }
 
     this.outputService.displayParserError(message);
-  }
-
-  initialize(story: Story) {
-    this.logger.log('System Initialized');
-
-    this.outputService.clear();
-
-    this.initializeEngine();
-    this.initializeStory(story);
-  }
-
-  private initializeEngine() {
-
-    this.outputService.displayTitle(`${this.engineName}`);
-    this.outputService.displaySubtitle(`v${this.engineVersion} by ${this.engineAuthor}`);
-    this.outputService.displayBlankLine();
-    this.outputService.displaySystem(this.copyrightText);
-    this.outputService.displaySystem(this.licenseText);
-    this.outputService.displayBlankLine();
   }
 
   private initializeStory(story: Story) {
@@ -122,7 +123,7 @@ export class InteractiveFictionService {
     // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
     if (unknowns && unknowns.length > 0) {
-      InteractiveFictionService.displayParserError(unknowns);
+      this.displayParserError(unknowns);
       failed = true;
     }
 

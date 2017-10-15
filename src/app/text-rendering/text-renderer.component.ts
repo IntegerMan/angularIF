@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TextOutputService} from './text-output.service';
+import {TextOutputService} from '../engine/text-output.service';
 import {LoggingService} from '../logging.service';
 import {TextLine} from './text-line';
 import {CommandType} from './command-type.enum';

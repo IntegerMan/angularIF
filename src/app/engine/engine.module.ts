@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {TokenizerService} from './tokenizer/tokenizer.service';
-import {NaturalLanguageService} from './tokenizer/natural-language.service';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {CommandParserService} from './command-parser.service';
-import {LexiconService} from './tokenizer/lexicon.service';
+import {TokenizerModule} from './tokenizer/tokenizer.module';
+import {TextOutputService} from './text-output.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    TokenizerModule
   ],
   providers: [
     InteractiveFictionService,
-    TokenizerService,
     CommandParserService,
-    LexiconService,
-    NaturalLanguageService
+    TextOutputService
   ],
   declarations: []
 })

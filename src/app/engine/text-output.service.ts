@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {LoggingService} from '../logging.service';
-import {TextLine} from './text-line';
-import {CommandType} from './command-type.enum';
+import {TextLine} from '../text-rendering/text-line';
+import {CommandType} from '../text-rendering/command-type.enum';
 
 @Injectable()
 export class TextOutputService {

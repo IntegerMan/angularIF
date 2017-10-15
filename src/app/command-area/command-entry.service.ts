@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {LoggingService} from '../logging.service';
-import {TextOutputService} from '../text-rendering/text-output.service';
+import {TextOutputService} from '../engine/text-output.service';
 import {InteractiveFictionService} from '../engine/interactive-fiction.service';
 
 @Injectable()

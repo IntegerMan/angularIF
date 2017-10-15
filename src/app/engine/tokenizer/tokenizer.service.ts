@@ -34,6 +34,7 @@ export class TokenizerService {
 
       this.logger.log(token);
       tokens.push(token);
+
     }
 
     return tokens;
