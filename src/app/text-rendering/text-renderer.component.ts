@@ -83,6 +83,8 @@ export class TextRendererComponent implements OnInit {
   private getInputDebuggingHtml(line: TextLine): string {
     const command: Command = line.data;
 
+    // TODO: This should really be its own component
+
     let output: string = `<div class="card mb-3"><div class="card-header">Sentence Structure</div>`;
 
     output += '<div class="card-body p-0 pt-3">';

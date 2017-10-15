@@ -44,6 +44,19 @@ export class SentenceParserService {
 
   }
 
+  private static findNextAdverb(modifier: CommandToken): CommandToken {
+
+    let next: CommandToken = modifier.nextToken;
+    while (next) {
+      if (SentenceParserService.isVerbModifier(next)) {
+        return next;
+      }
+
+      next = next.nextToken;
+    }
+
+  }
+
   private buildSelfToken(): CommandToken {
 
     const token = this.tokenizer.getTokenForWord('I ');
@@ -134,9 +147,14 @@ export class SentenceParserService {
 
       const nextNoun: CommandToken = SentenceParserService.findNextNoun(modifier);
       if (nextNoun) {
+
+        this.logger.log(`Associating modifier '${modifier.name}' with '${nextNoun.name}'`);
         nextNoun.setModifiedBy(modifier);
+
       } else {
-        this.logger.warning(`Could not find a word to associate with the token '${modifier.name}'`);
+
+        this.logger.warning(`Could not find a word to associate with the modifier '${modifier.name}'`);
+
       }
 
     }
@@ -148,14 +166,23 @@ export class SentenceParserService {
     const adverbs: CommandToken[] = tokens.filter(t => SentenceParserService.isVerbModifier(t));
     for (const adverb of adverbs) {
 
-      if (command.verb) {
-        command.verb.setModifiedBy(adverb);
-      } else {
-        this.logger.warning(`No verb present for the adverb '${adverb.name}' to modify`);
+      let target: CommandToken = SentenceParserService.findNextAdverb(adverb);
+
+      if (!target) {
+        target = command.verb;
       }
 
-    }
+      if (target) {
 
+        this.logger.log(`Associating adverb '${adverb.name}' with '${target.name}'`);
+        target.setModifiedBy(adverb);
+
+      } else {
+
+        this.logger.warning(`No target present for the adverb '${adverb.name}' to modify`);
+
+      }
+    }
   }
 
   private identifySentenceNouns(command: Command, tokens: CommandToken[]): void {
