@@ -36,7 +36,7 @@ export class UserInputService {
     }
 
     // Okay, we can send the command off to be interpreted and just return the result
-    const command: Command = this.sentenceParser.getCommandFromSentenceTokens(sentence, tokens);
+    const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
     return this.ifService.handleUserCommand(command);
   }
 

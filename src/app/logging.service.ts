@@ -17,4 +17,10 @@ export class LoggingService {
     }
   }
 
+  public warning(input: string): void {
+    if (console) {
+      console.warn(input);
+    }
+  }
+
 }

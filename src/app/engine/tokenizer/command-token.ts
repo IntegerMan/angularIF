@@ -26,4 +26,13 @@ export class CommandToken {
 
   }
 
+  setModifiedBy(modifier: CommandToken): void {
+
+    if (!modifier) {
+      throw new Error('Cannot set modified by on a token to a null token');
+    }
+
+    modifier.modifies = this;
+    this.modifiedBy.push(modifier);
+  }
 }
