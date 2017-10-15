@@ -5,7 +5,16 @@ export class LoggingService {
 
   constructor() { }
 
-  log(input: any) {
-    console.log(input);
+  public log(input: any): void {
+    if (console) {
+      console.log(input);
+    }
   }
+
+  public error(input: string): void {
+    if (console) {
+      console.error(input);
+    }
+  }
+
 }

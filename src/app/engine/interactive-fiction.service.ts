@@ -11,6 +11,7 @@ import {CommonDictionary} from './tokenizer/common-dictionary';
 import {LexiconService} from './tokenizer/lexicon.service';
 import {SentenceParserService} from './tokenizer/sentence-parser.service';
 import {Command} from './tokenizer/command';
+import {VerbHandler} from './verbs/verb-handler';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -24,6 +25,7 @@ export class InteractiveFictionService {
   story: Story;
 
   private isDebugMode: boolean = true;
+  private verbHandlers: VerbHandler[];
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
@@ -31,12 +33,16 @@ export class InteractiveFictionService {
               private outputService: TextOutputService,
               private lexer: LexiconService) {
 
+    // Ensure we start with a unique empty list
+    this.verbHandlers = [];
+
   }
 
   initialize(story: Story) {
     this.logger.log('System Initialized');
 
     this.outputService.clear();
+    this.verbHandlers.length = 0;
 
     this.initializeEngine();
     this.initializeStory(story);
@@ -63,6 +69,12 @@ export class InteractiveFictionService {
     this.outputService.displayTitle(`${story.title} v${story.version}`);
     this.outputService.displaySubtitle(`by ${story.author}`);
     this.outputService.displayBlankLine();
+
+    // Grab verb handlers from the story.
+    for (const verb of story.verbHandlers) {
+      this.logger.log(`Loaded verb handler: ${verb.name}`);
+      this.verbHandlers.push(verb);
+    }
 
     if (!story.player || !story.player.currentRoom) {
       // TODO: I need an exception handling service somewhere...
@@ -105,7 +117,7 @@ export class InteractiveFictionService {
       return false;
     }
 
-    const verbHandler: any = null;
+    const verbHandler: VerbHandler = this.getVerbHandler(command.verb);
 
     // TODO: Look up the verb to see if we have something registered to handle it
 
@@ -120,4 +132,21 @@ export class InteractiveFictionService {
     this.logger.log('The engine cannot currently respond to commands');
     return false;
   }
+
+  private getVerbHandler(verbToken: CommandToken): VerbHandler {
+
+    if (verbToken.classification !== TokenClassification.Verb) {
+      this.logger.error(`Asked to get a verb handler for the non-verb token '${verbToken.name}' (${verbToken.classification})`);
+      return null;
+    }
+
+    for (const handler of this.verbHandlers) {
+      if (handler.canHandleVerb(verbToken)) {
+        return handler;
+      }
+    }
+
+    return null;
+  }
+
 }

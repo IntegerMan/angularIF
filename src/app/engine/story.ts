@@ -1,6 +1,8 @@
 import {Room} from './room';
 import {Player} from './player';
 import {LexiconDictionary} from './tokenizer/lexicon-dictionary';
+import {VerbHandler} from './verbs/verb-handler';
+import {CommonVerbService} from './verbs/common-verb.service';
 
 export abstract class Story {
 
@@ -11,13 +13,20 @@ export abstract class Story {
   rooms: Room[];
   player: Player;
 
+  verbHandlers: VerbHandler[];
+
   private dictionaries: LexiconDictionary[];
 
-  constructor(title: string, author: string, version: string) {
-    this.title = title;
-    this.author = author;
-    this.version = version;
+  constructor() {
+
+    this.title = 'Untitled';
+    this.author = 'Anonymous';
+    this.version = '1.0';
+
+    // Initialize empty lists
     this.dictionaries = [];
+    this.verbHandlers = [];
+
   }
 
   public initialize(): void {

@@ -1,6 +1,7 @@
 import {Story} from '../../engine/story';
 import {Room} from '../../engine/room';
 import {Player} from '../../engine/player';
+import {CommonVerbService} from '../../engine/verbs/common-verb.service';
 
 export class CloakStory extends Story {
 
@@ -18,7 +19,11 @@ export class CloakStory extends Story {
   }
 
   constructor() {
-    super('Angular Cloak of Darkness', 'Matt Eland', '1.0');
+    super();
+
+    this.title = 'Angular Cloak of Darkness';
+    this.author = 'Matt Eland';
+    this.version = '0.1 Pre-Alpha';
 
     // Build out our rooms
     this._foyer = new Room('Foyer of the Opera House');
