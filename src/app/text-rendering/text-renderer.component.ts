@@ -83,7 +83,7 @@ export class TextRendererComponent implements OnInit {
   private getInputDebuggingHtml(line: TextLine): string {
     const command: Command = line.data;
 
-    let output: string = `<div class="card"><div class="card-header">Sentence Structure</div><div class="card-body">`;
+    let output: string = `<div class="card mb-3"><div class="card-header">Sentence Structure</div><div class="card-body">`;
 
     output += '<dl>';
 
@@ -142,8 +142,11 @@ export class TextRendererComponent implements OnInit {
         output += 'badge-primary ';
         break;
 
-      case TokenClassification.Adjective:
       case TokenClassification.Adverb:
+        output += 'badge-warning ';
+        break;
+
+      case TokenClassification.Adjective:
         output += 'badge-info ';
         break;
 
