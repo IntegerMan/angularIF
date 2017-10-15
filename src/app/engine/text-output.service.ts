@@ -2,66 +2,66 @@ import { Injectable } from '@angular/core';
 import {LoggingService} from '../logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {CommandType} from '../text-rendering/command-type.enum';
+import {Command} from './tokenizer/command';
 
 @Injectable()
 export class TextOutputService {
 
   lines: TextLine[] = [];
 
-  displayDebugInfo: boolean = true;
-
   constructor(private logger: LoggingService) {
   }
 
-  displayUserCommand(command: string, tokens: any) {
+  displayUserCommand(command: string, tokens: any): void {
 
-    let commandType;
-    if (this.displayDebugInfo) {
-      commandType = CommandType.userInputDebug;
-    } else {
-      commandType = CommandType.userInput;
-    }
-
-    const line = new TextLine(command, commandType);
+    const line = new TextLine(command, CommandType.userInput);
     line.data = tokens;
 
     this.addLine(line);
   }
 
-  displayTitle(text: string) {
+  displaySentenceDebugInfo(command: Command): void {
+
+    const line = new TextLine(command.userInput, CommandType.userInputDebug);
+    line.data = command;
+
+    this.addLine(line);
+  }
+
+  displayTitle(text: string): void {
     this.addLine(new TextLine(text, CommandType.header));
   }
 
-  displaySubtitle(text: string) {
+  displaySubtitle(text: string): void {
     this.addLine(new TextLine(text, CommandType.subHeader));
   }
 
-  displaySystem(text: string) {
+  displaySystem(text: string): void {
     this.addLine(new TextLine(text, CommandType.engine));
   }
 
-  displayRoomName(text: string) {
+  displayRoomName(text: string): void {
     this.addLine(new TextLine(text, CommandType.roomName));
   }
 
-  displayStory(text: string) {
+  displayStory(text: string): void {
     this.addLine(new TextLine(text, CommandType.narrative));
   }
 
-  displayParserError(text: string) {
+  displayParserError(text: string): void {
     this.addLine(new TextLine(text, CommandType.parserError));
   }
 
-  displayBlankLine() {
+  displayBlankLine(): void {
     this.addLine(new TextLine('', CommandType.divider));
   }
 
-  clear() {
+  clear(): void {
     this.logger.log('Clearing output area');
     this.lines.length = 0;
   }
 
-  private addLine(line: TextLine) {
+  private addLine(line: TextLine): void {
 
     // Send the output to the console for good measure
     if (line && line.text && line.text.length > 0) {

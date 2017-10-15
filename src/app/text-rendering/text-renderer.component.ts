@@ -5,6 +5,7 @@ import {TextLine} from './text-line';
 import {CommandType} from './command-type.enum';
 import {CommandToken} from '../engine/tokenizer/command-token';
 import {TokenClassification} from '../engine/tokenizer/token-classification.enum';
+import {Command} from '../engine/tokenizer/command';
 
 @Component({
   selector: 'if-text-renderer',
@@ -80,12 +81,12 @@ export class TextRendererComponent implements OnInit {
   }
 
   private getInputDebuggingHtml(line: TextLine): string {
-    const tokens: CommandToken[] = line.data;
+    const command: Command = line.data;
 
     let output: string =
       `<p class="my-2 text-secondary font-weight-bold">&gt;&nbsp;`;
 
-    for (const token of tokens) {
+    for (const token of command.tokens) {
       const term = token.term;
       const tooltip = `${token.classification}: ${token.term.normal}`;
       output += `${term.spaceBefore}<span ${this.getTokenStyling(token)} title="${tooltip}">${token.userInput}</span>${term.spaceAfter}`;
