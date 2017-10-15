@@ -29,3 +29,8 @@ dd {
 .inferred {
   opacity: 0.5;
 }
+
+.badge.small {
+  font-size: 55%;
+  vertical-align: text-top;
+}

@@ -87,21 +87,21 @@ export class TextRendererComponent implements OnInit {
 
     output += '<div class="card-body p-0 pt-3">';
     output += '<dl>';
-    output += `<dt>Subject</dt><dd>${this.getTokenSpan(command.subject)}</dd>`;
-    output += `<dt>Verb</dt><dd>${this.getTokenSpan(command.verb)}</dd>`;
-    output += `<dt>Objects</dt><dd>${this.getTokenSpans(command.objects)}</dd>`;
-    output += `<dt>Modifiers</dt><dd>${this.getTokenSpans(command.sentenceModifiers)}</dd>`;
+    output += `<dt>Subject</dt><dd>${this.getTokenSpan(command.subject, true)}</dd>`;
+    output += `<dt>Verb</dt><dd>${this.getTokenSpan(command.verb, true)}</dd>`;
+    output += `<dt>Objects</dt><dd>${this.getTokenSpans(command.objects, true)}</dd>`;
+    output += `<dt>Modifiers</dt><dd>${this.getTokenSpans(command.sentenceModifiers, true)}</dd>`;
     output += '</dl>';
 
     output += '</div>';
 
-    output += `<div class="card-footer">All Tokens: ${this.getTokenSpans(command.tokens)}</div>`;
+    output += `<div class="card-footer">All Tokens: ${this.getTokenSpans(command.tokens, false)}</div>`;
     output += '</div>';
 
     return output;
   }
 
-  private getTokenSpans(tokens: CommandToken[]): string {
+  private getTokenSpans(tokens: CommandToken[], includeModifiers: boolean): string {
 
     // None is a valid input in some cases
     if (!tokens || tokens.length <= 0) {
@@ -112,13 +112,15 @@ export class TextRendererComponent implements OnInit {
 
     for (const token of tokens) {
       const term = token.term;
-      output += `${term.spaceBefore}${this.getTokenSpan(token)}${term.spaceAfter}`;
+
+      output += `${term.spaceBefore}${this.getTokenSpan(token, includeModifiers)}${term.spaceAfter}`;
+
     }
 
     return output;
   }
 
-  private getTokenSpan(token: CommandToken): string {
+  private getTokenSpan(token: CommandToken, includeModifiers: boolean): string {
 
     if (!token) {
       return '<span class="small text-muted">(None)</span>';
@@ -126,7 +128,21 @@ export class TextRendererComponent implements OnInit {
 
     const styling = this.getTokenStyling(token);
     const tooltip = this.getTokenTooltip(token);
-    return `<span ${styling} ${tooltip}>${token.name}</span>`;
+
+    let output: string = '';
+
+    // Include modifiers
+    if (includeModifiers && token.modifiedBy && token.modifiedBy.length > 0) {
+      output += this.getTokenSpans(token.modifiedBy, false);
+
+      output += token.term.spaceBefore;
+    }
+
+    // Core span
+    output += `<span ${styling} ${tooltip}>${token.name}</span>`;
+
+    return output;
+
   }
 
   private getTokenStyling(token: CommandToken): string {
@@ -174,6 +190,11 @@ export class TextRendererComponent implements OnInit {
       output += 'inferred ';
     }
 
+    // Modifiers should be rendered at a small level
+    if (token.modifies) {
+      output += 'small ';
+    }
+
     output += '"';
 
     return output;
@@ -185,6 +206,19 @@ export class TextRendererComponent implements OnInit {
 
     if (token.isInferred) {
       tooltip += ' (Inferred)';
+    }
+
+    if (token.modifies) {
+      tooltip += `\r\nModifies: ${token.modifies.name}`;
+    }
+
+    if (token.modifiedBy && token.modifiedBy.length > 0) {
+      let modifiedByNames: string = '';
+      for (const modifiedBy of token.modifiedBy) {
+        modifiedByNames += modifiedBy.name + ' ';
+      }
+
+      tooltip += `\r\nModified by: ${modifiedByNames}`;
     }
 
     return `title="${tooltip}"`;

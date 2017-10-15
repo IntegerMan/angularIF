@@ -145,7 +145,10 @@ export class SentenceParserService {
     // Grab the adverbs and stick them into the sentence as modifiers on the overall sentence
     const adverbs: CommandToken[] = tokens.filter(t => SentenceParserService.isSentenceModifier(t));
     for (const adverb of adverbs) {
+
+      // TODO: These maybe should just go onto the verb
       command.sentenceModifiers.push(adverb);
+
     }
 
   }
