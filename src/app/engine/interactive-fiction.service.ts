@@ -105,7 +105,17 @@ export class InteractiveFictionService {
       return false;
     }
 
-    // TODO: Check to see if we have a registered verb handler for the requested verb (or one of its synonyms, perhaps)
+    const verbHandler: any = null;
+
+    // TODO: Look up the verb to see if we have something registered to handle it
+
+    // If we don't have a verb handler for the verb in question, display a generic error message
+    if (!verbHandler) {
+      this.outputService.displayParserError(`I don't know how to respond to the verb '${command.verb.name}' yet. Try something else.`);
+      return false;
+    }
+
+    // TODO: Execute the verb handler, now that we know we have something that can take in the sentence
 
     this.logger.log('The engine cannot currently respond to commands');
     return false;
