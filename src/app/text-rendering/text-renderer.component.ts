@@ -83,16 +83,16 @@ export class TextRendererComponent implements OnInit {
   private getInputDebuggingHtml(line: TextLine): string {
     const command: Command = line.data;
 
-    let output: string = `<div class="card mb-3"><div class="card-header">Sentence Structure</div><div class="card-body">`;
+    let output: string = `<div class="card mb-3"><div class="card-header">Sentence Structure</div>`;
 
+    output += '<div class="card-body p-0 pt-3">';
     output += '<dl>';
-
-    output += `<dt>Verb</dt><dd>${this.getTokenSpan(command.verb)}</dd>`;
     output += `<dt>Subject</dt><dd>${this.getTokenSpan(command.subject)}</dd>`;
+    output += `<dt>Verb</dt><dd>${this.getTokenSpan(command.verb)}</dd>`;
     output += `<dt>Objects</dt><dd>${this.getTokenSpans(command.objects)}</dd>`;
     output += `<dt>Modifiers</dt><dd>${this.getTokenSpans(command.sentenceModifiers)}</dd>`;
-
     output += '</dl>';
+
     output += '</div>';
 
     output += `<div class="card-footer">All Tokens: ${this.getTokenSpans(command.tokens)}</div>`;
@@ -156,6 +156,7 @@ export class TextRendererComponent implements OnInit {
         break;
 
       case TokenClassification.Conjunction:
+      case TokenClassification.Preposition:
         output += 'badge-secondary ';
         break;
 
@@ -166,7 +167,7 @@ export class TextRendererComponent implements OnInit {
 
     // Give it a rounded look if it is inferred
     if (token.isInferred) {
-      output += 'badge-pill text-muted';
+      output += 'badge-pill ';
     }
 
     output += '"';

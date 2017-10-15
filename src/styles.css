@@ -7,3 +7,20 @@ html, body {
   height: 100%;
   min-height: 100%;
 }
+
+dl {
+  padding: 0.5em;
+}
+dt {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: right;
+  font-weight: bold;
+}
+dt:after {
+  content: ":";
+}
+dd {
+  margin: 0 0 0 110px;
+}
