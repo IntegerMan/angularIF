@@ -38,4 +38,8 @@ export class LexiconService {
   public addDirection(term: string): void {
     this.addCustom(term, 'Direction');
   }
+
+  public addIgnorable(term: string): void {
+    this.addCustom(term, 'Ignorable');
+  }
 }

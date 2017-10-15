@@ -36,5 +36,8 @@ export class CommonDictionary extends LexiconDictionary {
     this.lexer.addDirection('Southwest');
     this.lexer.addDirection('Southeast');
 
+    // Handle some junk words
+    this.lexer.addIgnorable('Please');
+
   }
 }

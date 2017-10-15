@@ -50,6 +50,12 @@ export enum TokenClassification {
   Conjunction = 'Conjunction',
 
   /**
+   * This includes common words that are typically best left out as they frequently mean nothing, for example the word 'please'
+   * @type {string}
+   */
+  Ignorable = 'Ignorable',
+
+  /**
    * Represents something that eludes classification.
    * @type {string}
    */

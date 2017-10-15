@@ -150,13 +150,17 @@ export class TextRendererComponent implements OnInit {
         output += 'badge-info ';
         break;
 
+      case TokenClassification.Ignorable:
       case TokenClassification.Determiner:
+        output += 'badge-default ';
+        break;
+
       case TokenClassification.Conjunction:
         output += 'badge-secondary ';
         break;
 
       default:
-        output += 'badge-default ';
+        output += 'badge-dark ';
         break;
     }
 

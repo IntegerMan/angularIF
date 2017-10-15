@@ -13,6 +13,18 @@ export class SentenceParserService {
 
   }
 
+  private static isNounLike(t): boolean {
+    return t.classification === TokenClassification.Noun || t.classification === TokenClassification.Direction;
+  }
+
+  private static isVerbLike(t): boolean {
+    return t.classification === TokenClassification.Verb;
+  }
+
+  private static isSentenceModifier(t): boolean {
+    return t.classification === TokenClassification.Adverb;
+  }
+
   private getSelfToken(): CommandToken {
 
     const token = this.tokenizer.getTokenForWord('I ');
@@ -40,33 +52,44 @@ export class SentenceParserService {
     const command: Command = new Command(sentence);
 
     // Grab the first verb and stick that into the sentence as the sentence's main verb
-    const verbs: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Verb);
+    let indexOfVerb: number = -1;
+    const verbs: CommandToken[] = tokens.filter(t => SentenceParserService.isVerbLike(t));
     if (verbs.length > 0) {
       command.verb = verbs[0];
+      indexOfVerb = tokens.indexOf(command.verb);
 
       // TODO: We should attempt to interpret remaining verb symbols in other contexts. E.G. Open can be a verb and an adjective
     }
 
-    // TODO: Sentences will sometimes carry an explicit Noun subject, particularly if the noun precedes the verb
-    const self = this.getSelfToken();
-    command.subject = self;
+    // Grab the nouns and stick them into the sentence as the objects
+    const nouns: CommandToken[] = tokens.filter(t => SentenceParserService.isNounLike(t));
+    for (const noun of nouns) {
 
-    // Ensure the self token gets pushed ahead of all other raw tokens
-    command.tokens.push(self);
+      // If this noun comes before the verb, we're going to use it as a subject instead of as an object, but only for the first noun
+      if (!command.subject && indexOfVerb > tokens.indexOf(noun)) {
+        command.subject = noun;
+      } else {
+        command.objects.push(noun);
+      }
+    }
+
+    // If we didn't have a noun that qualified as a subject, go ahead and add an implicit self token to the beginning of the sentence
+    if (!command.subject) {
+
+      const self = this.getSelfToken();
+      command.subject = self;
+
+      // Ensure the inferred self token gets pushed ahead of all other raw tokens
+      command.tokens.push(self);
+    }
 
     // Copy all raw tokens over to the tokens array
     for (const token of tokens) {
       command.tokens.push(token);
     }
 
-    // Grab the nouns and stick them into the sentence as the objects
-    const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
-    for (const noun of nouns) {
-      command.objects.push(noun);
-    }
-
     // Grab the adverbs and stick them into the sentence as modifiers on the overall sentence
-    const adverbs: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Adverb);
+    const adverbs: CommandToken[] = tokens.filter(t => SentenceParserService.isSentenceModifier(t));
     for (const adverb of adverbs) {
       command.sentenceModifiers.push(adverb);
     }
@@ -76,4 +99,5 @@ export class SentenceParserService {
     return command;
 
   }
+
 }
