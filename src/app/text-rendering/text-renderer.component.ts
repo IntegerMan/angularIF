@@ -95,7 +95,7 @@ export class TextRendererComponent implements OnInit {
     output += '</dl>';
     output += '</div>';
 
-    output += `<div class="card-footer">Raw: ${this.getTokenSpans(command.tokens)}</div>`;
+    output += `<div class="card-footer">All Tokens: ${this.getTokenSpans(command.tokens)}</div>`;
     output += '</div>';
 
     return output;
