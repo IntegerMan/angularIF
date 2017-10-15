@@ -8,6 +8,11 @@ export class CommandToken {
   classification: TokenClassification;
   isInferred: boolean = false;
 
+  previousToken: CommandToken;
+  nextToken: CommandToken;
+  modifies: CommandToken;
+  modifiedBy: CommandToken[];
+
   get userInput(): string {
     return this.term.text;
   }
@@ -17,6 +22,7 @@ export class CommandToken {
     this.term = term;
     this.name = term.normal;
     this.classification = TokenClassification.Unknown;
+    this.modifiedBy = [];
 
   }
 

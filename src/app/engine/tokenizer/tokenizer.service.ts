@@ -37,11 +37,9 @@ export class TokenizerService {
       const value: any = TokenClassification[c];
 
       for (const tag of term.tags) {
-
         if (value === tag) {
           return value;
         }
-
       }
 
     }
@@ -75,12 +73,25 @@ export class TokenizerService {
     const tokens: CommandToken[] = [];
 
     console.log('Parsing terms into tokens now...');
+    let lastToken: CommandToken = null;
     for (const term of terms) {
 
       const token = TokenizerService.getTokenFromTerm(term);
 
+      // Establish a link to the next token from the prior one
+      if (lastToken) {
+        lastToken.nextToken = token;
+      }
+
+      // Establish a link to the previous token from this token
+      token.previousToken = lastToken;
+
+      // Add it to the list of tokens
       this.logger.log(token);
       tokens.push(token);
+
+      // Update the last token reference so that the next iteration of the loop links things correctly
+      lastToken = token;
 
     }
 
