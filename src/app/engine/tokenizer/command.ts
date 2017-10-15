@@ -6,14 +6,14 @@ import {CommandToken} from './command-token';
  */
 export class Command {
 
-  constructor(userInput: string, tokens: CommandToken[]) {
+  constructor(userInput: string) {
 
     // Farm out parameters
     this.userInput = userInput;
-    this.tokens = tokens;
 
     // Initialize empty collections
     this.objects = [];
+    this.tokens = [];
     this.sentenceModifiers = [];
   }
 

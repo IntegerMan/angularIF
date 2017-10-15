@@ -83,18 +83,46 @@ export class TextRendererComponent implements OnInit {
   private getInputDebuggingHtml(line: TextLine): string {
     const command: Command = line.data;
 
-    let output: string =
-      `<p class="my-2 text-secondary font-weight-bold">&gt;&nbsp;`;
+    let output: string = `<div class="card"><div class="card-header">Sentence Structure</div><div class="card-body">`;
 
-    for (const token of command.tokens) {
-      const term = token.term;
-      const tooltip = `${token.classification}: ${token.term.normal}`;
-      output += `${term.spaceBefore}<span ${this.getTokenStyling(token)} title="${tooltip}">${token.userInput}</span>${term.spaceAfter}`;
-    }
+    output += '<dl>';
 
-    output += '</p>';
+    output += `<dt>Verb</dt><dd>${this.getTokenSpan(command.verb)}</dd>`;
+    output += `<dt>Subject</dt><dd>${this.getTokenSpan(command.subject)}</dd>`;
+    output += `<dt>Objects</dt><dd>${this.getTokenSpans(command.objects)}</dd>`;
+    output += `<dt>Modifiers</dt><dd>${this.getTokenSpans(command.sentenceModifiers)}</dd>`;
+
+    output += '</dl>';
+    output += '</div>';
+
+    output += `<div class="card-footer">Raw: ${this.getTokenSpans(command.tokens)}</div>`;
+    output += '</div>';
 
     return output;
+  }
+
+  private getTokenSpans(tokens: CommandToken[]): string {
+
+    // None is a valid input in some cases
+    if (!tokens || tokens.length <= 0) {
+      return '<span class="small text-muted">(None)</span>';
+    }
+
+    let output: string = '';
+
+    for (const token of tokens) {
+      const term = token.term;
+      output += `${term.spaceBefore}${this.getTokenSpan(token)}${term.spaceAfter}`;
+    }
+
+    return output;
+  }
+
+  private getTokenSpan(token: CommandToken): string {
+
+    const styling = this.getTokenStyling(token);
+    const tooltip = this.getTokenTooltip(token);
+    return `<span ${styling} ${tooltip}>${token.name}</span>`;
   }
 
   private getTokenStyling(token: CommandToken): string {
@@ -103,30 +131,35 @@ export class TextRendererComponent implements OnInit {
 
     switch (token.classification) {
       case TokenClassification.Verb:
-        output += 'badge-danger';
+        output += 'badge-danger ';
         break;
 
       case TokenClassification.Direction:
-        output += 'badge-success';
+        output += 'badge-success ';
         break;
 
       case TokenClassification.Noun:
-        output += 'badge-primary';
+        output += 'badge-primary ';
         break;
 
       case TokenClassification.Adjective:
       case TokenClassification.Adverb:
-        output += 'badge-info';
+        output += 'badge-info ';
         break;
 
       case TokenClassification.Determiner:
       case TokenClassification.Conjunction:
-        output += 'badge-secondary';
+        output += 'badge-secondary ';
         break;
 
       default:
-        output += 'badge-default';
+        output += 'badge-default ';
         break;
+    }
+
+    // Give it a rounded look if it is inferred
+    if (token.isInferred) {
+      output += 'badge-pill text-muted';
     }
 
     output += '"';
@@ -134,4 +167,15 @@ export class TextRendererComponent implements OnInit {
     return output;
   }
 
+  private getTokenTooltip(token: CommandToken): string {
+
+    let tooltip = `${token.classification}: ${token.term.normal}`;
+
+    if (token.isInferred) {
+      tooltip += ' (Inferred)';
+    }
+
+    return `title="${tooltip}"`;
+
+  }
 }

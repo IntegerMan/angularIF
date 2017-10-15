@@ -6,6 +6,7 @@ export class CommandToken {
   name: string;
   term: LanguageTerm;
   classification: TokenClassification;
+  isInferred: boolean = false;
 
   get userInput(): string {
     return this.term.text;

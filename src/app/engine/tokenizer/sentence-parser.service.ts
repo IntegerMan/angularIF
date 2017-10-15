@@ -14,7 +14,11 @@ export class SentenceParserService {
   }
 
   private getSelfToken(): CommandToken {
-    return this.tokenizer.getTokenForWord('I');
+
+    const token = this.tokenizer.getTokenForWord('I ');
+    token.isInferred = true;
+
+    return token;
   }
 
   public getCommandFromSentenceTokens(sentence: string, tokens: CommandToken[]): Command {
@@ -33,7 +37,7 @@ export class SentenceParserService {
     }
 
     // Build the basic bones of the object we'll be interpreting now
-    const command: Command = new Command(sentence, tokens);
+    const command: Command = new Command(sentence);
 
     // Grab the first verb and stick that into the sentence as the sentence's main verb
     const verbs: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Verb);
@@ -43,7 +47,17 @@ export class SentenceParserService {
       // TODO: We should attempt to interpret remaining verb symbols in other contexts. E.G. Open can be a verb and an adjective
     }
 
-    command.subject = this.getSelfToken();
+    // TODO: Sentences will sometimes carry an explicit Noun subject, particularly if the noun precedes the verb
+    const self = this.getSelfToken();
+    command.subject = self;
+
+    // Ensure the self token gets pushed ahead of all other raw tokens
+    command.tokens.push(self);
+
+    // Copy all raw tokens over to the tokens array
+    for (const token of tokens) {
+      command.tokens.push(token);
+    }
 
     // Grab the nouns and stick them into the sentence as the objects
     const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
