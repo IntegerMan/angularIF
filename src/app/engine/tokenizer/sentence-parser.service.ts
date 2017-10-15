@@ -33,6 +33,14 @@ export class SentenceParserService {
     return token;
   }
 
+  private getGoToken(): CommandToken {
+
+    const token = this.tokenizer.getTokenForWord('go ');
+    token.isInferred = true;
+
+    return token;
+  }
+
   public getCommandFromSentenceTokens(sentence: string, tokens: CommandToken[]): Command {
 
     // Validate inputs since we're an entry method
@@ -65,6 +73,11 @@ export class SentenceParserService {
     const nouns: CommandToken[] = tokens.filter(t => SentenceParserService.isNounLike(t));
     for (const noun of nouns) {
 
+      // TODO: When no verbs are present and the first noun is a direction, interpret it as a 'Go' verb.
+      if (!command.verb && noun.classification === TokenClassification.Direction) {
+        command.verb = this.getGoToken();
+      }
+
       // If this noun comes before the verb, we're going to use it as a subject instead of as an object, but only for the first noun
       if (!command.subject && indexOfVerb > tokens.indexOf(noun)) {
         command.subject = noun;
@@ -81,6 +94,11 @@ export class SentenceParserService {
 
       // Ensure the inferred self token gets pushed ahead of all other raw tokens
       command.tokens.push(self);
+    }
+
+    // If we inferred a verb, stick that in the token list as well before the rest of the sentence
+    if (command.verb && command.verb.isInferred) {
+      command.tokens.push(command.verb);
     }
 
     // Copy all raw tokens over to the tokens array
