@@ -4,16 +4,7 @@
 
   <span *ngSwitchCase="'parserError'" class="text-warning font-weight-bold"><samp>{{line.text}}</samp></span>
 
-  <div *ngSwitchCase="'userInput'">
-    <p class="my-2 text-secondary font-weight-bold">
-      &gt;&nbsp;<kbd>{{line.text}}</kbd>
-      <a class="btn btn-sm btn-link small"
-         href="#collapseExample"
-         data-toggle="collapse"
-         title="Show diagnostic information about how this was interpreted">Details</a>
-    </p>
-    <if-sentence-debug-card [command]="line.data" class="collapse" id="collapseExample"></if-sentence-debug-card>
-  </div>
+  <if-user-input *ngSwitchCase="'userInput'" [text]="line.text" [command]="line.data"></if-user-input>
 
   <h1 *ngSwitchCase="'header'" class="lead">{{line.text}}</h1>
 

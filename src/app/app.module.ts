@@ -15,6 +15,7 @@ import {EngineModule} from './engine/engine.module';
 import { SentenceDebugCardComponent } from './text-rendering/sentence-debug-card/sentence-debug-card.component';
 import { LineRendererComponent } from './text-rendering/line-renderer/line-renderer.component';
 import { TokenComponent } from './text-rendering/token/token.component';
+import { UserInputComponent } from './text-rendering/user-input/user-input.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TokenComponent } from './text-rendering/token/token.component';
     ParserCommandAreaComponent,
     SentenceDebugCardComponent,
     LineRendererComponent,
-    TokenComponent
+    TokenComponent,
+    UserInputComponent
   ],
   imports: [
     BrowserAnimationsModule,
