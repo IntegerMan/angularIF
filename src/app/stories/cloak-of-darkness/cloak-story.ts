@@ -3,8 +3,8 @@ import {Room} from '../../engine/room';
 import {Player} from '../../engine/player';
 import {NavigationService} from '../../engine/navigation.service';
 import {Scenery} from '../../engine/scenery';
-import {NaturalLanguageService} from '../../engine/tokenizer/natural-language.service';
 import {LoggingService} from '../../logging.service';
+import {Hook} from './hook';
 
 export class CloakStory extends Story {
 
@@ -22,8 +22,7 @@ export class CloakStory extends Story {
   }
 
   constructor(private navService: NavigationService,
-              private logger: LoggingService,
-              private languageService: NaturalLanguageService) {
+              private logger: LoggingService) {
     super();
 
     // Basic Metadata
@@ -54,6 +53,18 @@ export class CloakStory extends Story {
     room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
       'completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.';
 
+    // TODO: Examining the sawdust should end the game in victory or loss
+    const message: Scenery = new Scenery('scrawled message');
+    message.addAdjectiveAlias('written');
+    message.addNounAlias('writing');
+    message.addNounAlias('sawdust');
+    message.addNounAlias('words');
+    message.addNounAlias('word');
+    message.addNounAlias('note');
+    message.addNounAlias('floor');
+
+    this.addToRoom(message, room);
+
     this.navService.northTo(room, this._foyer);
 
   }
@@ -63,34 +74,12 @@ export class CloakStory extends Story {
     room.description = 'The walls of this small room were clearly once lined with hooks, though now only one remains. ' +
       'The exit is a door to the east.';
 
-    // TODO: Auto-tokenize currently thinks that brass is a noun and not an adjective
-    const hook = this.createObjectWithAutoTokenizing('small brass hook');
+    const hook: Hook = new Hook('small brass hook');
+    hook.addNounAlias('Peg');
     this.addToRoom(hook, room);
 
     this.navService.eastTo(room, this._foyer);
 
-  }
-
-  private addToRoom(scenery: Scenery, room: Room) {
-    this.logger.log(`Adding object ${scenery.name} to room ${room.name}`);
-    room.addObject(scenery);
-  }
-
-  private createObjectWithAutoTokenizing(objectName: string) {
-
-    // TODO: This should belong elsewhere
-
-    const hook: Scenery = new Scenery(objectName);
-
-    for (const noun of this.languageService.getNouns(hook.name)) {
-      this.logger.log(`Registering noun '${noun}' for object '${hook.name}'`);
-      hook.registerNoun(noun);
-    }
-    for (const adjective of this.languageService.getAdjectives(hook.name)) {
-      this.logger.log(`Registering adjective '${adjective}' for object '${hook.name}'`);
-      hook.registerAdjective(adjective);
-    }
-    return hook;
   }
 
   private configureFoyer(room: Room): void {
@@ -105,6 +94,11 @@ export class CloakStory extends Story {
     this.navService.southTo(room, this._bar);
     this.navService.westTo(room, this._cloakroom);
 
+  }
+
+  private addToRoom(scenery: Scenery, room: Room) {
+    this.logger.log(`Adding object ${scenery.name} to room ${room.name}`);
+    room.addObject(scenery);
   }
 
 }

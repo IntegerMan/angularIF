@@ -3,6 +3,15 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class LexiconService {
 
+  private static _instance: LexiconService;
+
+  static get instance(): LexiconService {
+    if (!this._instance) {
+      this._instance = new LexiconService();
+    }
+    return this._instance;
+  }
+
   public get lexicon(): any {
     return this._lexicon;
   }
@@ -14,6 +23,8 @@ export class LexiconService {
     // Define it as an empty object. We'll add entries via key-value pairs.
     this._lexicon = {
     };
+
+    LexiconService._instance = this;
 
   }
 
