@@ -19,7 +19,9 @@
 
       <dt>Objects</dt>
       <dd>
-        <if-token *ngFor="let obj of command.objects" [token]="obj" [includeModifiers]="true"></if-token>
+        <div *ngFor="let obj of command.objects" class="mb-1">
+          <if-token [token]="obj" [includeModifiers]="true"></if-token>
+        </div>
         <span *ngIf="command.objects.length < 1" class="text-muted small">(None)</span>
       </dd>
 
