@@ -2,6 +2,9 @@ import {Story} from '../../engine/story';
 import {Room} from '../../engine/room';
 import {Player} from '../../engine/player';
 import {NavigationService} from '../../engine/navigation.service';
+import {Scenery} from '../../engine/scenery';
+import {NaturalLanguageService} from '../../engine/tokenizer/natural-language.service';
+import {LoggingService} from '../../logging.service';
 
 export class CloakStory extends Story {
 
@@ -18,7 +21,9 @@ export class CloakStory extends Story {
     return this._player;
   }
 
-  constructor(private navService: NavigationService) {
+  constructor(private navService: NavigationService,
+              private logger: LoggingService,
+              private languageService: NaturalLanguageService) {
     super();
 
     // Basic Metadata
@@ -28,7 +33,7 @@ export class CloakStory extends Story {
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
 
-    // Define the room objects
+    // Define the rooms
     this._foyer = new Room('Foyer of the Opera House');
     this._cloakroom = new Room('Cloakroom');
     this._bar = new Room('Foyer Bar');
@@ -58,8 +63,30 @@ export class CloakStory extends Story {
     room.description = 'The walls of this small room were clearly once lined with hooks, though now only one remains. ' +
       'The exit is a door to the east.';
 
+    const hook = this.createObjectWithAutoTokenizing('small brass hook');
+
+    this.logger.log(`Adding object ${hook.name} to room ${room.name}`);
+    room.addObject(hook);
+
     this.navService.eastTo(room, this._foyer);
 
+  }
+
+  private createObjectWithAutoTokenizing(objectName: string) {
+
+    // TODO: This should belong elsewhere
+
+    const hook: Scenery = new Scenery(objectName);
+
+    for (const noun of this.languageService.getNouns(hook.name)) {
+      this.logger.log(`Registering noun '${noun}' for object '${hook.name}'`);
+      hook.registerNoun(noun);
+    }
+    for (const adjective of this.languageService.getAdjectives(hook.name)) {
+      this.logger.log(`Registering adjective '${adjective}' for object '${hook.name}'`);
+      hook.registerAdjective(adjective);
+    }
+    return hook;
   }
 
   private configureFoyer(room: Room): void {

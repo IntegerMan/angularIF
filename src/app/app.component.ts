@@ -4,6 +4,8 @@ import {Story} from './engine/story';
 import {CloakStory} from './stories/cloak-of-darkness/cloak-story';
 import {CommonVerbService} from './engine/verbs/common-verb.service';
 import {NavigationService} from './engine/navigation.service';
+import {LoggingService} from './logging.service';
+import {NaturalLanguageService} from './engine/tokenizer/natural-language.service';
 
 @Component({
   selector: 'if-root',
@@ -16,9 +18,11 @@ export class AppComponent {
 
   constructor(private ifService: InteractiveFictionService,
               private navService: NavigationService,
+              private logger: LoggingService,
+              private languageService: NaturalLanguageService,
               private verbService: CommonVerbService) {
 
-    const story: Story = new CloakStory(navService);
+    const story: Story = new CloakStory(navService, logger, languageService);
 
     // Import the common set of verbs
     for (const verb of this.verbService.getCommonVerbs()) {

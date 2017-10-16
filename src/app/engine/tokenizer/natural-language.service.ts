@@ -18,11 +18,35 @@ export class NaturalLanguageService {
 
     this.logger.log(`Language service is extracting terms from: ${sentence}`);
 
-    const nlpData = this.nlp(sentence, this.lexer.lexicon);
-
-    const data: LanguageTerm[] = nlpData.terms().data();
+    const data: LanguageTerm[] = this.nlp(sentence, this.lexer.lexicon).terms().data();
     this.logger.log(data);
 
     return data;
+  }
+
+  getNouns(phrase: string): string[] {
+
+    const matches: string[] = [];
+
+    const terms: LanguageTerm[] = this.getTerms(phrase);
+    for (const term of terms.filter(t => t.bestTag === 'Noun'))
+    {
+      matches.push(term.text);
+    }
+
+    return matches;
+  }
+
+  getAdjectives(phrase: string): string[] {
+
+    const matches: string[] = [];
+
+    const terms: LanguageTerm[] = this.getTerms(phrase);
+    for (const term of terms.filter(t => t.bestTag === 'Adjective'))
+    {
+      matches.push(term.text);
+    }
+
+    return matches;
   }
 }
