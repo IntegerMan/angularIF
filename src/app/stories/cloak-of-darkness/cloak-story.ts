@@ -63,13 +63,17 @@ export class CloakStory extends Story {
     room.description = 'The walls of this small room were clearly once lined with hooks, though now only one remains. ' +
       'The exit is a door to the east.';
 
+    // TODO: Auto-tokenize currently thinks that brass is a noun and not an adjective
     const hook = this.createObjectWithAutoTokenizing('small brass hook');
-
-    this.logger.log(`Adding object ${hook.name} to room ${room.name}`);
-    room.addObject(hook);
+    this.addToRoom(hook, room);
 
     this.navService.eastTo(room, this._foyer);
 
+  }
+
+  private addToRoom(scenery: Scenery, room: Room) {
+    this.logger.log(`Adding object ${scenery.name} to room ${room.name}`);
+    room.addObject(scenery);
   }
 
   private createObjectWithAutoTokenizing(objectName: string) {
