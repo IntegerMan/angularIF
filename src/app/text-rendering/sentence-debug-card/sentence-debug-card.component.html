@@ -1,0 +1,33 @@
+<div class="card mb-3">
+
+  <div class="card-header">Sentence Structure</div>
+
+  <div class="card-body p-0 pt-3">
+    <dl>
+
+      <dt>Subject</dt>
+      <dd>
+        <if-token *ngIf="command.subject" [token]="command.subject" [includeModifiers]="true"></if-token>
+        <span *ngIf="!command.subject" class="text-muted small">(None)</span>
+      </dd>
+
+      <dt>Verb</dt>
+      <dd>
+        <if-token *ngIf="command.verb" [token]="command.verb" [includeModifiers]="true"></if-token>
+        <span *ngIf="!command.verb" class="text-muted small">(None)</span>
+      </dd>
+
+      <dt>Objects</dt>
+      <dd>
+        <if-token *ngFor="let obj of command.objects" [token]="obj" [includeModifiers]="true"></if-token>
+        <span *ngIf="command.objects.length < 1" class="text-muted small">(None)</span>
+      </dd>
+
+    </dl>
+  </div>
+
+  <div class="card-footer">
+    All Tokens: <if-token *ngFor="let t of command.tokens" [token]="t"></if-token>
+  </div>
+
+</div>

@@ -12,6 +12,9 @@ import { LoggingService } from './logging.service';
 import {TextOutputService} from './engine/text-output.service';
 import {CommandEntryService} from './command-area/command-entry.service';
 import {EngineModule} from './engine/engine.module';
+import { SentenceDebugCardComponent } from './text-rendering/sentence-debug-card/sentence-debug-card.component';
+import { LineRendererComponent } from './text-rendering/line-renderer/line-renderer.component';
+import { TokenComponent } from './text-rendering/token/token.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import {EngineModule} from './engine/engine.module';
     TextRendererComponent,
     CommandAreaComponent,
     TagCommandAreaComponent,
-    ParserCommandAreaComponent
+    ParserCommandAreaComponent,
+    SentenceDebugCardComponent,
+    LineRendererComponent,
+    TokenComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,11 +1,11 @@
 export enum CommandType {
-  parserError,
-  roomName,
-  divider,
-  header,
-  subHeader,
-  userInput,
-  userInputDebug,
-  engine,
-  narrative
+  parserError = 'parserError',
+  roomName = 'roomName',
+  divider = 'divider',
+  header = 'header',
+  subtitle = 'subtitle',
+  userInput = 'userInput',
+  userInputDebug = 'userInputDebug',
+  engine = 'engine',
+  narrative = 'narrative'
 }

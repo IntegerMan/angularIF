@@ -33,7 +33,7 @@ export class TextOutputService {
   }
 
   displaySubtitle(text: string): void {
-    this.addLine(new TextLine(text, CommandType.subHeader));
+    this.addLine(new TextLine(text, CommandType.subtitle));
   }
 
   displaySystem(text: string): void {
