@@ -45,11 +45,6 @@ export abstract class VerbHandler {
     return false;
   }
 
-  handleCommand(command: Command, context: CommandContext): boolean {
-
-    context.outputService.displayStory('You do the thing');
-
-    return true;
-  }
+  abstract handleCommand(command: Command, context: CommandContext): boolean;
 
 }

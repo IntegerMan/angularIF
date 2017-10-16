@@ -18,4 +18,24 @@ export class Room {
     this._name = name;
   }
 
+  southTo(target: Room): Room {
+
+    return this;
+  }
+
+  westTo(target: Room): Room {
+
+    return this;
+  }
+
+  eastTo(target: Room): Room {
+
+    return this;
+  }
+
+  northTo(target: Room): Room {
+
+    return this;
+  }
+
 }
