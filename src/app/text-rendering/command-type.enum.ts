@@ -5,7 +5,6 @@ export enum CommandType {
   header = 'header',
   subtitle = 'subtitle',
   userInput = 'userInput',
-  userInputDebug = 'userInputDebug',
   engine = 'engine',
   narrative = 'narrative'
 }

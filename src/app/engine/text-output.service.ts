@@ -12,18 +12,10 @@ export class TextOutputService {
   constructor(private logger: LoggingService) {
   }
 
-  displayUserCommand(command: string, tokens: any): void {
+  displayUserCommand(command: string, sentence: any): void {
 
     const line = new TextLine(command, CommandType.userInput);
-    line.data = tokens;
-
-    this.addLine(line);
-  }
-
-  displaySentenceDebugInfo(command: Command): void {
-
-    const line = new TextLine(command.userInput, CommandType.userInputDebug);
-    line.data = command;
+    line.data = sentence;
 
     this.addLine(line);
   }

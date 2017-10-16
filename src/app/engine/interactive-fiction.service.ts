@@ -26,7 +26,6 @@ export class InteractiveFictionService {
 
   story: Story;
 
-  private isDebugMode: boolean = true;
   private verbHandlers: VerbHandler[];
 
   constructor(private logger: LoggingService,
@@ -108,11 +107,6 @@ export class InteractiveFictionService {
 
     this.logger.log(`Handling command associated with sentence ${command.userInput}`);
     this.logger.log(command);
-
-    // Allow us to easily see how sentences are being structured, should we desire
-    if (this.isDebugMode) {
-      this.outputService.displaySentenceDebugInfo(command);
-    }
 
     // We have to have a verb here
     if (!command.verb) {

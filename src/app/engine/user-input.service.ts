@@ -26,7 +26,8 @@ export class UserInputService {
 
     // Break down the input into command tokens
     const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
-    this.outputService.displayUserCommand(sentence, tokens);
+    const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
+    this.outputService.displayUserCommand(sentence, command);
 
     // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
@@ -36,7 +37,6 @@ export class UserInputService {
     }
 
     // Okay, we can send the command off to be interpreted and just return the result
-    const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
     return this.ifService.handleUserCommand(command);
   }
 

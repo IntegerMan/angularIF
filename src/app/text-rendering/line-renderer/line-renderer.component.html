@@ -4,14 +4,16 @@
 
   <span *ngSwitchCase="'parserError'" class="text-warning font-weight-bold"><samp>{{line.text}}</samp></span>
 
-  <p *ngSwitchCase="'userInput'" class="my-2 text-secondary font-weight-bold">&gt;&nbsp;<kbd>{{line.text}}</kbd></p>
+  <div *ngSwitchCase="'userInput'">
+    <p  class="my-2 text-secondary font-weight-bold">&gt;&nbsp;<kbd>{{line.text}}</kbd></p>
+    <if-sentence-debug-card [command]="line.data"></if-sentence-debug-card>
+  </div>
 
   <h1 *ngSwitchCase="'header'" class="lead">{{line.text}}</h1>
 
   <span *ngSwitchCase="'subtitle'" class="text-info">{{line.text}}</span>
 
   <div *ngSwitchCase="'divider'" class="my-3"></div>
-  <if-sentence-debug-card *ngSwitchCase="'userInputDebug'" [command]="line.data"></if-sentence-debug-card>
 
   <p *ngSwitchCase="'narrative'">{{line.text}}</p>
   <p *ngSwitchCase="'roomName'"  class="text my-4"><strong>{{line.text}}</strong></p>
