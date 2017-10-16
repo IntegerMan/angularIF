@@ -90,7 +90,7 @@ export class InteractiveFictionService {
     this.describeRoom(story.player, story.player.currentRoom);
   }
 
-  private describeRoom(player: Player, room: Room) {
+  describeRoom(player: Player, room: Room) {
 
     this.outputService.displayRoomName(room.name);
     this.outputService.displayBlankLine();
