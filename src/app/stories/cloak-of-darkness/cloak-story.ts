@@ -65,9 +65,14 @@ export class CloakStory extends Story {
     this._foyer.description = 'You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers ' +
       'overhead. The entrance from the street is to the north, and there are doorways south and west.';
 
+    // Can't go north, but use a custom message for it
+    this.navService.northTo(this._foyer,
+      null,
+      'You\'ve only just arrived, and besides, the weather outside seems to be getting worse.');
+
     this.navService.southTo(this._foyer, this._bar);
     this.navService.westTo(this._foyer, this._cloakroom);
 
   }
-  
+
 }
