@@ -26,6 +26,8 @@ export class CloakStory extends Story {
     this.author = 'Matt Eland';
     this.version = '0.1 Pre-Alpha';
 
+    // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
+
     // Define the room objects
     this._foyer = new Room('Foyer of the Opera House');
     this._cloakroom = new Room('Cloakroom');
@@ -36,42 +38,41 @@ export class CloakStory extends Story {
     this._player.currentRoom = this._foyer;
 
     // Build out our rooms
-    this.configureFoyer();
-    this.configureCloakroom();
-    this.configureBar();
+    this.configureFoyer(this._foyer);
+    this.configureCloakroom(this._cloakroom);
+    this.configureBar(this._bar);
 
   }
 
-  private configureBar(): void {
+  private configureBar(room: Room): void {
 
-    this._bar.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
+    room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
       'completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.';
 
-    this.navService.northTo(this._bar, this._foyer);
+    this.navService.northTo(room, this._foyer);
 
   }
 
-  private configureCloakroom(): void {
+  private configureCloakroom(room: Room): void {
 
-    this._cloakroom.description = 'The walls of this small room were clearly once lined with hooks, though now only one remains. ' +
+    room.description = 'The walls of this small room were clearly once lined with hooks, though now only one remains. ' +
       'The exit is a door to the east.';
 
-    this.navService.eastTo(this._cloakroom, this._foyer);
+    this.navService.eastTo(room, this._foyer);
 
   }
 
-  private configureFoyer(): void {
+  private configureFoyer(room: Room): void {
 
-    this._foyer.description = 'You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers ' +
+    room.description = 'You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers ' +
       'overhead. The entrance from the street is to the north, and there are doorways south and west.';
 
     // Can't go north, but use a custom message for it
-    this.navService.northTo(this._foyer,
-      null,
+    this.navService.cannotGoNorth(room,
       'You\'ve only just arrived, and besides, the weather outside seems to be getting worse.');
 
-    this.navService.southTo(this._foyer, this._bar);
-    this.navService.westTo(this._foyer, this._cloakroom);
+    this.navService.southTo(room, this._bar);
+    this.navService.westTo(room, this._cloakroom);
 
   }
 

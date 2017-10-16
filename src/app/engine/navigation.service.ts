@@ -49,4 +49,24 @@ export class NavigationService {
     return this.navTo(origin, 'west', target, message);
   }
 
+  public cannotGo(origin: Room, direction: string, message: string): RoomLink {
+    return this.navTo(origin, direction, null, message);
+  }
+
+  public cannotGoNorth(origin: Room, message: string): RoomLink {
+    return this.cannotGo(origin, 'north', message);
+  }
+
+  public cannotGoEast(origin: Room, message: string): RoomLink {
+    return this.cannotGo(origin, 'east', message);
+  }
+
+  public cannotGoSouth(origin: Room, message: string): RoomLink {
+    return this.cannotGo(origin, 'south', message);
+  }
+
+  public cannotGoWest(origin: Room, message: string): RoomLink {
+    return this.cannotGo(origin, 'west', message);
+  }
+
 }
