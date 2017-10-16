@@ -13,6 +13,7 @@ import {SentenceParserService} from './tokenizer/sentence-parser.service';
 import {Command} from './tokenizer/command';
 import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
+import {NavigationService} from './navigation.service';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -32,6 +33,7 @@ export class InteractiveFictionService {
               private tokenizer: TokenizerService,
               private sentenceParser: SentenceParserService,
               private outputService: TextOutputService,
+              private navService: NavigationService,
               private lexer: LexiconService) {
 
     // Ensure we start with a unique empty list
@@ -129,7 +131,7 @@ export class InteractiveFictionService {
 
     // Create a command context. This will give the command handler more utility information
     const context: CommandContext =
-      new CommandContext(this.story, this, this.outputService, this.logger);
+      new CommandContext(this.story, this, this.outputService, this.navService, this.logger);
 
     // TODO: This will likely need a command context
     return verbHandler.handleCommand(command, context);

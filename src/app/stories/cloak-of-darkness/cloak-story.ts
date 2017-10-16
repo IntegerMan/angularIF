@@ -1,6 +1,7 @@
 import {Story} from '../../engine/story';
 import {Room} from '../../engine/room';
 import {Player} from '../../engine/player';
+import {NavigationService} from '../../engine/navigation.service';
 
 export class CloakStory extends Story {
 
@@ -17,7 +18,7 @@ export class CloakStory extends Story {
     return this._player;
   }
 
-  constructor() {
+  constructor(private navService: NavigationService) {
     super();
 
     // Basic Metadata
@@ -28,7 +29,7 @@ export class CloakStory extends Story {
     // Define the room objects
     this._foyer = new Room('Foyer of the Opera House');
     this._cloakroom = new Room('Cloakroom');
-    this._bar = new Room('Foyer bar');
+    this._bar = new Room('Foyer Bar');
 
     // Set up the player
     this._player = new Player('You');
@@ -43,29 +44,30 @@ export class CloakStory extends Story {
 
   private configureBar(): void {
 
-    this._bar.description = 'The bar, much rougher than you\'d have guessed after the opulence of the [foyer] to the {north}, is ' +
-      'completely empty. There seems to be some sort of [message] scrawled in the [sawdust] on the [floor].';
-    
-    this._bar.northTo(this._foyer);
+    this._bar.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
+      'completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.';
+
+    this.navService.northTo(this._bar, this._foyer);
 
   }
 
   private configureCloakroom(): void {
 
-    this._cloakroom.description = 'The walls of this small room were clearly once lined with [hooks], though now only one remains. ' +
-      'The exit is a [door] to the {east}.';
+    this._cloakroom.description = 'The walls of this small room were clearly once lined with hooks, though now only one remains. ' +
+      'The exit is a door to the east.';
 
-    this._cloakroom.eastTo(this._foyer);
+    this.navService.eastTo(this._cloakroom, this._foyer);
 
   }
 
   private configureFoyer(): void {
 
-    this._foyer.description = 'You are standing in a spacious hall, splendidly decorated in red and gold, with glittering [chandeliers] ' +
-      'overhead. The entrance from the street is to the {north}, and there are doorways {south} and {west}.';
+    this._foyer.description = 'You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers ' +
+      'overhead. The entrance from the street is to the north, and there are doorways south and west.';
 
-    this._foyer.southTo(this._bar);
-    this._foyer.westTo(this._cloakroom);
+    this.navService.southTo(this._foyer, this._bar);
+    this.navService.westTo(this._foyer, this._cloakroom);
 
   }
+  
 }
