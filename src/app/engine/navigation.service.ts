@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Room} from './room';
+import {RoomLink} from './room-link';
 
 @Injectable()
 export class NavigationService {
@@ -8,40 +9,44 @@ export class NavigationService {
 
   }
 
-  public navTo(origin: any, target: Room, direction: string): void {
+  public navTo(origin: any, direction: string, target: Room = null, message: string = null): RoomLink {
 
-    if (!origin.navMesh) {
-      origin.navMesh = {};
+    if (!origin.roomLink) {
+      origin.roomLink = {};
     }
 
-    origin.navMesh[direction] = target;
+    const link = new RoomLink(origin, direction, target);
+    link.message = message;
 
+    origin.roomLink[direction] = link;
+
+    return link;
   }
 
-  public getLinkedRoom(origin: any, direction: string): Room {
+  public getLink(origin: any, direction: string): RoomLink {
 
-    if (!origin || !direction || !origin.navMesh) {
+    if (!origin || !direction || !origin.roomLink) {
       return null;
     }
 
-    return origin.navMesh[direction];
+    return origin.roomLink[direction];
 
   }
 
-  public southTo(origin: Room, target: Room): void {
-    this.navTo(origin, target, 'south');
+  public northTo(origin: Room, target: Room = null, message: string = null): RoomLink {
+    return this.navTo(origin, 'north', target, message);
   }
 
-  public westTo(origin: Room, target: Room): void {
-    this.navTo(origin, target, 'west');
+  public eastTo(origin: Room, target: Room = null, message: string = null): RoomLink {
+    return this.navTo(origin, 'east', target, message);
   }
 
-  public eastTo(origin: Room, target: Room): void {
-    this.navTo(origin, target, 'east');
+  public southTo(origin: Room, target: Room = null, message: string = null): RoomLink {
+    return this.navTo(origin, 'south', target, message);
   }
 
-  public northTo(origin: Room, target: Room): void {
-    this.navTo(origin, target, 'north');
+  public westTo(origin: Room, target: Room = null, message: string = null): RoomLink {
+    return this.navTo(origin, 'west', target, message);
   }
 
 }

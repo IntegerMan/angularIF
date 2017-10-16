@@ -4,12 +4,13 @@ import {Command} from '../tokenizer/command';
 import {CommandToken} from '../tokenizer/command-token';
 import {TokenClassification} from '../tokenizer/token-classification.enum';
 import {Room} from '../room';
+import {RoomLink} from '../room-link';
 
 export class GoHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): boolean {
 
-    let direction: CommandToken = this.getFirstDirection(command);
+    const direction: CommandToken = this.getFirstDirection(command);
 
     // If we don't have an explicit direction, grab the first noun and assume that will map to a direction somehow
     /*
@@ -25,16 +26,37 @@ export class GoHandler extends VerbHandler {
 
     const room: Room = context.currentRoom;
 
-    const target: Room = context.navService.getLinkedRoom(room, direction.name);
+    const link: RoomLink = context.navService.getLink(room, direction.name);
 
-    if (!target) {
+    if (!link) {
       context.outputService.displayStory('You can\'t go that way.');
       return false;
     }
 
-    // TODO: Update the player's location
-    context.outputService.displayStory(`You go ${direction.name}.`);
-    return true;
+    // Regardless of success or failure, we'll want to go with the customized message
+    if (link.message) {
+      context.outputService.displayStory(link.message);
+    }
+
+    if (link.target) {
+
+      if (!link.message) {
+        context.outputService.displayStory(`You go ${direction.name}.`);
+      }
+
+      // Move the player
+      context.ifService.setActorRoom(context.player, link.target);
+
+      return true;
+
+    } else {
+
+      if (!link.message) {
+        context.outputService.displayStory('Unseen forces prevent you from going that way.');
+      }
+
+      return false;
+    }
 
   }
 

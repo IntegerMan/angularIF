@@ -153,4 +153,16 @@ export class InteractiveFictionService {
     return null;
   }
 
+  setActorRoom(actor: Player, room: Room, isSilent : Boolean = false) {
+
+    const oldRoom: Room = actor.currentRoom;
+
+    actor.currentRoom = room;
+
+    // If it's the player and they changed rooms, describe their new location
+    if (actor === this.story.player && room !== oldRoom && !isSilent) {
+      this.describeRoom(actor, room);
+    }
+
+  }
 }

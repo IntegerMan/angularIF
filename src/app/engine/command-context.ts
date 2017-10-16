@@ -4,11 +4,16 @@ import {Story} from './story';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {Room} from './room';
 import {NavigationService} from './navigation.service';
+import {Player} from './player';
 
 export class CommandContext {
 
+  get player(): Player {
+    return this.story.player;
+  }
+
   get currentRoom(): Room {
-    return this.story.player.currentRoom;
+    return this.player.currentRoom;
   }
 
   logger: LoggingService;
