@@ -31,14 +31,13 @@ export class DropHandler extends VerbHandler {
       return false;
     }
 
-    // Grab the description from the entity
-    let description: string = entity.getExamineDescription(context);
-    if (!description) {
-      description = `You stare at the ${token.name} for awhile, but fail to notice anything more noteworthy.`;
+    // Protect against invalid class since we need a Scenery instance up ahead
+    if (!(entity instanceof Scenery)) {
+      context.outputService.displayParserError(`You can't drop that!`);
+      return false;
     }
 
-    context.outputService.displayStory(description);
-    return true;
+    return this.dropItem(entity, context);
 
   }
 
@@ -61,12 +60,15 @@ export class DropHandler extends VerbHandler {
     return result;
   }
 
-  dropItem(item: Scenery, context: CommandContext) {
+  dropItem(item: Scenery, context: CommandContext): boolean {
 
     if (context.player.removeFromInventory(item, context)) {
       item.currentRoom = context.currentRoom;
+
+      return true;
     }
 
+    return false;
   }
 
 }

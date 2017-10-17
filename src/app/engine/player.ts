@@ -43,6 +43,8 @@ export class Player extends WorldEntity {
     // Okay, let's remove it!
     if (ArrayHelper.removeIfPresent(this.inventory, item)) {
 
+      LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
+
       if (context) {
         context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
       }
