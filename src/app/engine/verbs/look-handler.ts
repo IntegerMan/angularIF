@@ -12,13 +12,11 @@ export class LookHandler extends VerbHandler {
 
     if (!context.player.inventory || context.player.inventory.length <= 0) {
 
-      context.outputService.displayHelpText('You aren\'t carrying anything right now.');
+      context.outputService.displaySystem('You aren\'t carrying anything right now.');
 
     } else {
 
-      const itemNames: string[] = context.player.inventory.map(i => i.name);
-
-      // TODO: Alphabetize these
+      const itemNames: string[] = context.player.inventory.map(i => i.name).sort();
 
       context.outputService.displayList(`You are currently carrying:`, itemNames);
     }
@@ -29,9 +27,7 @@ export class LookHandler extends VerbHandler {
 
   private static listVerbs(context: CommandContext): boolean {
 
-    const handlers: string[] = context.story.verbHandlers.map(vh => vh.name);
-
-    // TODO: Alphabetize these
+    const handlers: string[] = context.story.verbHandlers.map(vh => vh.name).sort();
 
     context.outputService.displayList(`The verbs I know how to respond to are:`, handlers);
 
