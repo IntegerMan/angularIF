@@ -6,7 +6,7 @@ import {ArrayHelper} from '../utility/array-helper';
 
 export class Room extends WorldEntity {
 
-  contents: Scenery[];
+  contents: WorldEntity[];
 
   constructor(name: string) {
     super(name);
@@ -14,14 +14,14 @@ export class Room extends WorldEntity {
     this.contents = [];
   }
 
-  addObject(object: Scenery): void {
+  addObject(object: WorldEntity): void {
 
     object.currentRoom = this;
     this.contents.push(object);
 
   }
 
-  removeObject(object: Scenery): boolean {
+  removeObject(object: WorldEntity): boolean {
     return ArrayHelper.removeIfPresent(this.contents, object);
   }
 
@@ -30,16 +30,15 @@ export class Room extends WorldEntity {
     const results: WorldEntity[] = [];
 
     // Evaluate scenery
-    for (const s of this.contents) {
+    for (const entity of this.contents) {
 
-      if (s.isDescribedByToken(token, context)) {
-        results.push(s);
+      if (entity.isDescribedByToken(token, context)) {
+        results.push(entity);
       }
 
-    }
+      // TODO: Some entities contain others. This can include open containers, the player's inventory, etc. Detect this and list 'em
 
-    // TODO: Evaluate actors here, including the player
-    // TODO: Evaluate actor's inventory (at least the visible portions thereof)
+    }
 
     // TODO: Evaluate the room in case you're trying to find the room or the floor or whatever
 

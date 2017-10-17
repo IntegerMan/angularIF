@@ -44,7 +44,7 @@ export class CloakStory extends Story {
 
     // Set up the player
     this._player = new Player('You');
-    this._player.currentRoom = this._foyer;
+    this._foyer.addObject(this._player);
     this._player.addToInventory(this._cloak);
 
     // Build out our rooms

@@ -149,11 +149,13 @@ export class InteractiveFictionService {
     return null;
   }
 
-  setActorRoom(actor: Player, room: Room, isSilent: Boolean = false) {
+  setActorRoom(actor: Player, room: Room, isSilent: Boolean = false): void {
 
     const oldRoom: Room = actor.currentRoom;
 
-    actor.currentRoom = room;
+    // Calling remove and add object methods ensures that token lookup remains accurate
+    oldRoom.removeObject(actor);
+    room.addObject(actor);
 
     // Log it to the console for debug purposes
     this.logger.log(`${actor.name} has been moved to ${room.name}`);
@@ -161,7 +163,6 @@ export class InteractiveFictionService {
 
     // If it's the player and they changed rooms, describe their new location
     if (actor === this.story.player && room !== oldRoom && !isSilent) {
-
       this.describeRoom(actor, room);
     }
 
