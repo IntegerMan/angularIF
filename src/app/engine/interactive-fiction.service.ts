@@ -104,10 +104,10 @@ export class InteractiveFictionService {
 
     // Validate input
     if (!command) {
-      throw new Error('Can\'t respond to a command that isn\'t there');
+      throw new Error('Can\'t respond to a command that isn\'t there.');
     }
 
-    this.logger.log(`Handling command associated with sentence ${command.userInput}`);
+    this.logger.log(`Handling command associated with sentence ${command.userInput}.`);
     this.logger.log(command);
 
     // We have to have a verb here
@@ -158,7 +158,7 @@ export class InteractiveFictionService {
     room.addObject(actor);
 
     // Log it to the console for debug purposes
-    this.logger.log(`${actor.name} has been moved to ${room.name}`);
+    this.logger.log(`${actor.name} has been moved to ${room.name}.`);
     this.logger.log(room);
 
     // If it's the player and they changed rooms, describe their new location

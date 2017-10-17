@@ -63,7 +63,7 @@ export class DropHandler extends VerbHandler {
   dropItem(item: Scenery, context: CommandContext): boolean {
 
     if (context.player.removeFromInventory(item, context)) {
-      item.currentRoom = context.currentRoom;
+      context.currentRoom.addObject(item);
 
       return true;
     }

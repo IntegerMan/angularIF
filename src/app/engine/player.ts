@@ -3,8 +3,9 @@ import {Scenery} from './scenery';
 import {LoggingService} from '../logging.service';
 import {ArrayHelper} from '../utility/array-helper';
 import {CommandContext} from './command-context';
+import {ICanContainEntities} from './i-can-contain-entities';
 
-export class Player extends WorldEntity {
+export class Player extends WorldEntity implements ICanContainEntities {
 
   inventory: Scenery[];
 
@@ -55,5 +56,20 @@ export class Player extends WorldEntity {
     return false;
 
   }
+
+  getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[] {
+
+    const items: WorldEntity[] = [];
+
+    // By default, inventory items are only visible to the person carrying them
+    if (includeHidden || context.player === this) {
+      for (const item of this.inventory) {
+        items.push(item);
+      }
+    }
+
+    return items;
+  }
+
 
 }
