@@ -4,6 +4,8 @@
 
   <span *ngSwitchCase="'helpText'" class="text-info">{{line.text}}</span>
 
+  <if-text-list *ngSwitchCase="'list'" [text]="line.text" [items]="line.data"></if-text-list>
+
   <span *ngSwitchCase="'parserError'" class="text-warning font-weight-bold"><samp>{{line.text}}</samp></span>
 
   <if-user-input *ngSwitchCase="'userInput'" [text]="line.text" [command]="line.data"></if-user-input>

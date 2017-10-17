@@ -6,8 +6,9 @@ export class TextLine {
   commandType: CommandType;
   data: any;
 
-  constructor(text: string, commmandType: CommandType) {
+  constructor(text: string, commmandType: CommandType, data: any = null) {
     this.text = text;
     this.commandType = commmandType;
+    this.data = data;
   }
 }

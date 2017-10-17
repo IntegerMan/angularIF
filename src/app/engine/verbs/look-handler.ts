@@ -16,10 +16,11 @@ export class LookHandler extends VerbHandler {
 
     } else {
 
-      // TODO: It might be nice to have a dedicated inventory list display type, but for now, this is fine.
-
       const itemNames: string[] = context.player.inventory.map(i => i.name);
-      context.outputService.displayHelpText(`You are currently carrying: ${StringHelper.toOxfordCommaList(itemNames)}.`);
+
+      // TODO: Alphabetize these
+
+      context.outputService.displayList(`You are currently carrying:`, itemNames);
     }
 
     // It shouldn't cost you a turn to list the things you already have
@@ -30,7 +31,9 @@ export class LookHandler extends VerbHandler {
 
     const handlers: string[] = context.story.verbHandlers.map(vh => vh.name);
 
-    context.outputService.displayHelpText(`The verbs I know how to respond to are: ${StringHelper.toOxfordCommaList(handlers)}.`);
+    // TODO: Alphabetize these
+
+    context.outputService.displayList(`The verbs I know how to respond to are:`, handlers);
 
     // We're going to return false to this since asking for a list of verbs that we can execute shouldn't count as a move
     return false;

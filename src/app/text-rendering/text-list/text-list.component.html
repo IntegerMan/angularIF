@@ -1,0 +1,8 @@
+<div class="card card-outline-info" *ngIf="(items && items.length > 0) || text">
+  <div class="card-header bg-info" *ngIf="text">{{text}}</div>
+  <div class="card-block">
+    <ul *ngIf="items && items.length > 0">
+      <li *ngFor="let item of items">{{item}}</li>
+    </ul>
+  </div>
+</div>

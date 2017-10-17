@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {LoggingService} from '../logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {CommandType} from '../text-rendering/command-type.enum';
-import {Command} from './tokenizer/command';
 
 @Injectable()
 export class TextOutputService {
@@ -13,17 +12,11 @@ export class TextOutputService {
   }
 
   displayUserCommand(command: string, sentence: any): void {
-
-    const line = new TextLine(command, CommandType.userInput);
-    line.data = sentence;
-
-    this.addLine(line);
+    this.addLine(new TextLine(command, CommandType.userInput, sentence));
   }
 
   displayTitle(text: string, smallText: string): void {
-    const line = new TextLine(text, CommandType.header);
-    line.data = smallText;
-    this.addLine(line);
+    this.addLine(new TextLine(text, CommandType.header, smallText));
   }
 
   displaySubtitle(text: string): void {
@@ -36,6 +29,10 @@ export class TextOutputService {
 
   displayHelpText(text: string) {
     this.addLine(new TextLine(text, CommandType.helpText));
+  }
+
+  displayList(text: string, items: string[]) {
+    this.addLine(new TextLine(text, CommandType.list, items));
   }
 
   displayRoomName(text: string): void {

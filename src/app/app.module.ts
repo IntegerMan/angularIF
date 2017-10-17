@@ -16,6 +16,7 @@ import { SentenceDebugCardComponent } from './text-rendering/sentence-debug-card
 import { LineRendererComponent } from './text-rendering/line-renderer/line-renderer.component';
 import { TokenComponent } from './text-rendering/token/token.component';
 import { UserInputComponent } from './text-rendering/user-input/user-input.component';
+import { TextListComponent } from './text-rendering/text-list/text-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { UserInputComponent } from './text-rendering/user-input/user-input.compo
     SentenceDebugCardComponent,
     LineRendererComponent,
     TokenComponent,
-    UserInputComponent
+    UserInputComponent,
+    TextListComponent
   ],
   imports: [
     BrowserAnimationsModule,
