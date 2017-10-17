@@ -110,7 +110,7 @@ export class InteractiveFictionService {
 
     // We have to have a verb here
     if (!command.verb) {
-      this.outputService.displayParserError('I couldn\'t figure out what you want me to do. Try starting your command with a verb.');
+      this.outputService.displayParserError('I couldn\'t figure out what you want to do. Try starting with a verb.');
       return false;
     }
 

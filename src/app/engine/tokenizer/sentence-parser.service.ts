@@ -73,6 +73,14 @@ export class SentenceParserService {
     return token;
   }
 
+  private buildLookToken(): CommandToken {
+
+    const token = this.tokenizer.getTokenForWord('look ');
+    token.isInferred = true;
+
+    return token;
+  }
+
   public buildCommandFromSentenceTokens(sentence: string, tokens: CommandToken[]): Command {
 
     // Validate inputs since we're an entry method
@@ -97,6 +105,9 @@ export class SentenceParserService {
     // At this point we MAY have a subject depending on the verb / noun order, but typically we won't. Assume it is "I" if no subject
     this.inferSubjectIfNeeded(command);
 
+    // For some specialized commands such as "Inventory", there may not be a verb. Handle those as needed.
+    this.inferVerbIfNeeded(command);
+
     // Build a list of raw tokens including inferred verb and subject
     this.identifyRawTokensIncludingInferred(command, tokens);
 
@@ -116,9 +127,17 @@ export class SentenceParserService {
 
     // If we didn't have a noun that qualified as a subject, go ahead and add an implicit self token to the beginning of the sentence
     if (!command.subject) {
+      command.subject = this.buildSelfToken();
+    }
 
-      const self: CommandToken = this.buildSelfToken();
-      command.subject = self;
+  }
+
+
+  private inferVerbIfNeeded(command: Command) {
+
+    // This will handle some specialized commands such as "Inventory" or "Verbs"
+    if (!command.verb && command.objects.length === 1) {
+      command.verb = this.buildLookToken();
     }
 
   }
@@ -221,5 +240,4 @@ export class SentenceParserService {
     }
 
   }
-
 }
