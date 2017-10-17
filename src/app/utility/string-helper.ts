@@ -14,4 +14,16 @@ export class StringHelper {
 
   }
 
+  static capitalize(input: string): string {
+
+    if (!input || input.length < 1) {
+      return input;
+    } else if (input.length === 1) {
+      return input.charAt(0).toUpperCase();
+    } else {
+      return input.charAt(0).toUpperCase() + input.slice(1);
+    }
+
+  }
+
 }

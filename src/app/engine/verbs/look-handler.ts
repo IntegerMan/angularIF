@@ -16,6 +16,7 @@ export class LookHandler extends VerbHandler {
 
     } else {
 
+      // TODO: It might be nice to initial capitalize each one of these items
       const itemNames: string[] = context.player.inventory.map(i => i.name).sort();
 
       context.outputService.displayList(`You are currently carrying:`, itemNames);
