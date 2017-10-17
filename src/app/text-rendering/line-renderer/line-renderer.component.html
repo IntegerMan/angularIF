@@ -1,6 +1,8 @@
 <div [ngSwitch]="line.commandType">
 
-  <span *ngSwitchCase="'engine'" class="text-secondary"><samp>{{line.text}}</samp></span>
+  <span *ngSwitchCase="'engine'" class="text-muted"><samp>{{line.text}}</samp></span>
+
+  <span *ngSwitchCase="'helpText'" class="text-info">{{line.text}}</span>
 
   <span *ngSwitchCase="'parserError'" class="text-warning font-weight-bold"><samp>{{line.text}}</samp></span>
 

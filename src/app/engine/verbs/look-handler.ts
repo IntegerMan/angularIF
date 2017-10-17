@@ -3,8 +3,38 @@ import {CommandContext} from '../command-context';
 import {Command} from '../tokenizer/command';
 import {CommandToken} from '../tokenizer/command-token';
 import {WorldEntity} from '../world-entity';
+import {StringHelper} from '../../utility/string-helper';
 
 export class LookHandler extends VerbHandler {
+
+
+  private static listPlayerInventory(context: CommandContext): boolean {
+
+    if (!context.player.inventory || context.player.inventory.length <= 0) {
+
+      context.outputService.displayHelpText('You aren\'t carrying anything right now.');
+
+    } else {
+
+      // TODO: It might be nice to have a dedicated inventory list display type, but for now, this is fine.
+
+      const itemNames: string[] = context.player.inventory.map(i => i.name);
+      context.outputService.displayHelpText(`You are currently carrying: ${StringHelper.toOxfordCommaList(itemNames)}.`);
+    }
+
+    // It shouldn't cost you a turn to list the things you already have
+    return false;
+  }
+
+  private static listVerbs(context: CommandContext): boolean {
+
+    const handlers: string[] = context.story.verbHandlers.map(vh => vh.name);
+
+    context.outputService.displayHelpText(`The verbs I know how to respond to are: ${StringHelper.toOxfordCommaList(handlers)}.`);
+
+    // We're going to return false to this since asking for a list of verbs that we can execute shouldn't count as a move
+    return false;
+  }
 
   handleCommand(command: Command, context: CommandContext): boolean {
 
@@ -18,6 +48,13 @@ export class LookHandler extends VerbHandler {
 
     const token: CommandToken = command.objects[0];
 
+    // Handle special cases
+    if (token.name === 'inventory') {
+      return LookHandler.listPlayerInventory(context);
+    } else if (token.name === 'verbs') {
+      return LookHandler.listVerbs(context);
+    }
+
     const entities: WorldEntity[] = context.currentRoom.findObjectsForToken(token, context);
 
     // No matches yields an "it's not here" message
@@ -30,7 +67,7 @@ export class LookHandler extends VerbHandler {
     // If we have more than one best match, show a disambiguation message
     if (entities.length > 1) {
 
-      context.logger.log(`Possible matches for '${token.name}': ${entities.map(e => e.name).join(', ')}`);
+      context.logger.log(`Possible matches for '${token.name}': ${StringHelper.toOxfordCommaList(entities.map(e => e.name))}`);
 
       // TODO: Better disambiguation is needed here
       context.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);

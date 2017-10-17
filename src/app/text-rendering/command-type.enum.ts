@@ -6,5 +6,6 @@ export enum CommandType {
   subtitle = 'subtitle',
   userInput = 'userInput',
   engine = 'engine',
-  narrative = 'narrative'
+  narrative = 'narrative',
+  helpText = 'helpText'
 }

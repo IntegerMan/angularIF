@@ -34,6 +34,10 @@ export class TextOutputService {
     this.addLine(new TextLine(text, CommandType.engine));
   }
 
+  displayHelpText(text: string) {
+    this.addLine(new TextLine(text, CommandType.helpText));
+  }
+
   displayRoomName(text: string): void {
     this.addLine(new TextLine(text, CommandType.roomName));
   }
