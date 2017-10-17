@@ -12,6 +12,7 @@ export class CloakStory extends Story {
   private _cloakroom: Room;
   private _bar: Room;
   private _player: Player;
+  private _cloak: Scenery;
 
   protected getRooms(): Room[] {
     return [this._foyer, this._cloakroom, this._bar];
@@ -36,9 +37,15 @@ export class CloakStory extends Story {
     this._cloakroom = new Room('Cloakroom');
     this._bar = new Room('Foyer Bar');
 
+    // Define the titular cloak
+    this._cloak = new Scenery('black velvet cloak');
+    this._cloak.description = 'A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops. ' +
+      'Its blackness is so deep that it almost seems to suck light from the room.';
+
     // Set up the player
     this._player = new Player('You');
     this._player.currentRoom = this._foyer;
+    this._player.addToInventory(this._cloak);
 
     // Build out our rooms
     this.configureFoyer(this._foyer);
@@ -95,9 +102,18 @@ export class CloakStory extends Story {
 
   }
 
-  private addToRoom(scenery: Scenery, room: Room) {
+  private addToRoom(scenery: Scenery, room: Room): void {
+
+    // Remove it from whatever it was in before
+    if (scenery.currentRoom) {
+      scenery.currentRoom.removeObject(scenery);
+    }
+    scenery.currentRoom = null;
+
+    // Add it to the new room
     this.logger.log(`Adding object ${scenery.name} to room ${room.name}`);
     room.addObject(scenery);
+
   }
 
 }

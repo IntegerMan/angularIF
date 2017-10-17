@@ -1,20 +1,11 @@
 import {Room} from './room';
 import {WorldEntity} from './world-entity';
 import {Scenery} from './scenery';
+import {LoggingService} from '../logging.service';
 
 export class Player extends WorldEntity {
 
   inventory: Scenery[];
-
-  get currentRoom(): Room {
-    return this._currentRoom;
-  }
-
-  set currentRoom(value: Room) {
-    this._currentRoom = value;
-  }
-
-  private _currentRoom: Room;
 
   constructor(name: string) {
     super(name);
@@ -24,4 +15,11 @@ export class Player extends WorldEntity {
     // TODO: Give a default self-description here
   }
 
+  addToInventory(item: Scenery) {
+
+    LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
+
+    item.currentRoom = null;
+    this.inventory.push(item);
+  }
 }

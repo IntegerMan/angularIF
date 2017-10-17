@@ -13,22 +13,19 @@ export class Room extends WorldEntity {
     this.contents = [];
   }
 
-  private _description: string = null;
+  addObject(object: Scenery): void {
 
-  get description(): string {
-    return this._description;
-  }
-
-  set description(value: string) {
-    this._description = value;
-  }
-
-  getExamineDescription(context: CommandContext): string {
-    return this.description;
-  }
-
-  addObject(object: Scenery) {
+    object.currentRoom = this;
     this.contents.push(object);
+
+  }
+
+  removeObject(object: Scenery): void {
+    const index: number = this.contents.indexOf(object);
+    if (index >= 0) {
+      // TODO: This might be nice to extract out to an array utility of some sort
+      this.contents.splice(index, 1);
+    }
   }
 
   findObjectsForToken(token: CommandToken, context: CommandContext): WorldEntity[] {
