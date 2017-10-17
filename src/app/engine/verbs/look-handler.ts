@@ -2,8 +2,6 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../tokenizer/command';
 import {CommandToken} from '../tokenizer/command-token';
-import {WorldEntity} from '../world-entity';
-import {StringHelper} from '../../utility/string-helper';
 
 export class LookHandler extends VerbHandler {
 
@@ -55,27 +53,12 @@ export class LookHandler extends VerbHandler {
       return LookHandler.listVerbs(context);
     }
 
-    const entities: WorldEntity[] = context.currentRoom.findObjectsForToken(token, context);
-
-    // No matches yields an "it's not here" message
-    if (!entities || entities.length <= 0) {
-      context.logger.log(`No local found for '${token.name}'`);
-      context.outputService.displayParserError(`You don't see a ${token.name} here.`);
+    // Let the context object take care of disambiguation and lookup
+    const entity = context.getSingleObjectForToken(token);
+    if (!entity) {
+      // The context lookup took care of output to the user, so we just need to abort
       return false;
     }
-
-    // If we have more than one best match, show a disambiguation message
-    if (entities.length > 1) {
-
-      context.logger.log(`Possible matches for '${token.name}': ${StringHelper.toOxfordCommaList(entities.map(e => e.name))}`);
-
-      // TODO: Better disambiguation is needed here
-      context.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);
-      return false;
-    }
-
-    const entity: WorldEntity = entities[0];
-    context.logger.log(`Match found for '${token.name}': ${entity.name}`);
 
     // Grab the description from the entity
     let description: string = entity.getExamineDescription(context);

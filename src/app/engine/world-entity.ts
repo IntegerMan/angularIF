@@ -23,7 +23,6 @@ export abstract class WorldEntity {
     return this._name;
   }
 
-
   private _description: string = null;  // To be implemented by concrete classes. Fallbacks will be handled by verb handlers
 
   get description(): string {

@@ -8,6 +8,7 @@ export class Scenery extends WorldEntity {
 
   nouns: string[];
   adjectives: string[];
+  article: string = 'the';
 
   constructor(name: string) {
     super(name);

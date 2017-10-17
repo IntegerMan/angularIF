@@ -27,7 +27,7 @@ export class CloakStory extends Story {
     super();
 
     // Basic Metadata
-    this.title = 'Angular Cloak of Darkness';
+    this.title = 'Cloak of Darkness';
     this.version = '0.1 Pre-Alpha';
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.

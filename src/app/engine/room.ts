@@ -2,6 +2,7 @@ import {Scenery} from './scenery';
 import {CommandToken} from './tokenizer/command-token';
 import {WorldEntity} from './world-entity';
 import {CommandContext} from './command-context';
+import {ArrayHelper} from '../utility/array-helper';
 
 export class Room extends WorldEntity {
 
@@ -20,12 +21,8 @@ export class Room extends WorldEntity {
 
   }
 
-  removeObject(object: Scenery): void {
-    const index: number = this.contents.indexOf(object);
-    if (index >= 0) {
-      // TODO: This might be nice to extract out to an array utility of some sort
-      this.contents.splice(index, 1);
-    }
+  removeObject(object: Scenery): boolean {
+    return ArrayHelper.removeIfPresent(this.contents, object);
   }
 
   findObjectsForToken(token: CommandToken, context: CommandContext): WorldEntity[] {
