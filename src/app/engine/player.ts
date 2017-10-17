@@ -1,10 +1,7 @@
 import {Room} from './room';
+import {WorldEntity} from './world-entity';
 
-export class Player {
-
-  get name(): string {
-    return this._name;
-  }
+export class Player extends WorldEntity {
 
   get currentRoom(): Room {
     return this._currentRoom;
@@ -14,12 +11,12 @@ export class Player {
     this._currentRoom = value;
   }
 
-  private _name: string;
-
   private _currentRoom: Room;
 
   constructor(name: string) {
-    this._name = name;
+    super(name);
+
+    // TODO: Give a default self-description here
   }
 
 }

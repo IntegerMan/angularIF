@@ -1,15 +1,16 @@
 import {CommandContext} from './command-context';
 import {NaturalLanguageService} from './tokenizer/natural-language.service';
 import {LoggingService} from '../logging.service';
+import {WorldEntity} from './world-entity';
+import {CommandToken} from './tokenizer/command-token';
 
-export class Scenery {
+export class Scenery extends WorldEntity {
 
-  name: string;
   nouns: string[];
   adjectives: string[];
 
   constructor(name: string) {
-    this.name = name;
+    super(name);
 
     this.nouns = [];
     this.adjectives = [];
@@ -40,19 +41,35 @@ export class Scenery {
   addNounAlias(noun: string): void {
 
     LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
-    this.nouns.push(noun);
+    this.nouns.push(noun.toLocaleLowerCase());
 
   }
 
   addAdjectiveAlias(adjective: string): void {
 
     LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
-    this.adjectives.push(adjective);
+    this.adjectives.push(adjective.toLocaleLowerCase());
 
   }
 
-  getExamineDescription(context: CommandContext): string {
-    return `The ${name} looks fairly ordinary.`;
+  isDescribedByToken(token: CommandToken, context: CommandContext): boolean {
+
+    // Search by nouns registered for the object
+    for (const noun of this.nouns) {
+      if (noun === token.name) {
+        return true;
+      }
+    }
+
+    // Adjective matches without a noun match are probably a pretty bad idea, but let's do that for now
+    for (const adj of this.adjectives) {
+      if (adj === token.name) {
+        return true;
+      }
+    }
+
+    // No prayer
+    return false;
   }
 
 }

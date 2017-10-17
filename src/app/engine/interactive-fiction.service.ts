@@ -21,7 +21,7 @@ export class InteractiveFictionService {
   engineName: string = 'Angular Interactive Fiction Engine';
   engineVersion: string = '0.1';
   engineAuthor: string = 'Matt Eland';
-  copyrightText: string = 'Copyright &copy; 2017 Matt Eland';
+  copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
 
   story: Story;
@@ -147,14 +147,19 @@ export class InteractiveFictionService {
     return null;
   }
 
-  setActorRoom(actor: Player, room: Room, isSilent : Boolean = false) {
+  setActorRoom(actor: Player, room: Room, isSilent: Boolean = false) {
 
     const oldRoom: Room = actor.currentRoom;
 
     actor.currentRoom = room;
 
+    // Log it to the console for debug purposes
+    this.logger.log(`${actor.name} has been moved to ${room.name}`);
+    this.logger.log(room);
+
     // If it's the player and they changed rooms, describe their new location
     if (actor === this.story.player && room !== oldRoom && !isSilent) {
+
       this.describeRoom(actor, room);
     }
 

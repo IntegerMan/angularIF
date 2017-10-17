@@ -6,9 +6,9 @@ export class Hook extends Scenery {
 
   getExamineDescription(): string {
     if (this.hungObject) {
-      return `It's just a ${name} with a ${this.hungObject.name} hanging on it.`;
+      return `It's just a ${this.name} with a ${this.hungObject.name} hanging on it.`;
     } else {
-      return `It's just a ${name} screwed to the wall.`;
+      return `It's just a ${this.name} screwed to the wall.`;
     }
   }
 
