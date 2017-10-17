@@ -20,7 +20,7 @@ export abstract class Story {
   constructor() {
 
     this.title = 'Untitled';
-    this.author = 'Anonymous';
+    this.author = 'Unattributed';
     this.version = '1.0';
 
     // Initialize empty lists

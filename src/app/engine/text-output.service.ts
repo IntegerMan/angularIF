@@ -20,8 +20,10 @@ export class TextOutputService {
     this.addLine(line);
   }
 
-  displayTitle(text: string): void {
-    this.addLine(new TextLine(text, CommandType.header));
+  displayTitle(text: string, smallText: string): void {
+    const line = new TextLine(text, CommandType.header);
+    line.data = smallText;
+    this.addLine(line);
   }
 
   displaySubtitle(text: string): void {

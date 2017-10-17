@@ -52,8 +52,8 @@ export class InteractiveFictionService {
 
   private initializeEngine() {
 
-    this.outputService.displayTitle(`${this.engineName}`);
-    this.outputService.displaySubtitle(`v${this.engineVersion} by ${this.engineAuthor}`);
+    this.outputService.displayTitle(`${this.engineName}`, `v${this.engineVersion}`);
+    this.outputService.displaySubtitle(`Developed by ${this.engineAuthor}`);
     this.outputService.displayBlankLine();
     this.outputService.displaySystem(this.copyrightText);
     this.outputService.displaySystem(this.licenseText);
@@ -68,8 +68,10 @@ export class InteractiveFictionService {
     story.initialize();
 
     this.story = story;
-    this.outputService.displayTitle(`${story.title} v${story.version}`);
-    this.outputService.displaySubtitle(`by ${story.author}`);
+    this.outputService.displayTitle(story.title, `v${story.version}`);
+    if (story.author.indexOf('Unattributed') < 0) {
+      this.outputService.displaySubtitle(`Written by ${story.author}`);
+    }
     this.outputService.displayBlankLine();
 
     // Grab verb handlers from the story.

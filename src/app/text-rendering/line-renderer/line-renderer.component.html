@@ -6,7 +6,7 @@
 
   <if-user-input *ngSwitchCase="'userInput'" [text]="line.text" [command]="line.data"></if-user-input>
 
-  <h1 *ngSwitchCase="'header'" class="lead">{{line.text}}</h1>
+  <h1 *ngSwitchCase="'header'" class="lead">{{line.text}}<small class="text-muted ml-2" *ngIf="line.data">{{line.data}}</small></h1>
 
   <span *ngSwitchCase="'subtitle'" class="text-info">{{line.text}}</span>
 

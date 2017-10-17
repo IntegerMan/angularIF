@@ -19,12 +19,15 @@ export class LookHandler extends VerbHandler {
     const token: CommandToken = command.objects[0];
 
     const entities: WorldEntity[] = context.currentRoom.findObjectsForToken(token, context);
+
+    // No matches yields an "it's not here" message
     if (!entities || entities.length <= 0) {
       context.logger.log(`No local found for '${token.name}'`);
       context.outputService.displayParserError(`You don't see a ${token.name} here.`);
       return false;
     }
 
+    // If we have more than one best match, show a disambiguation message
     if (entities.length > 1) {
 
       context.logger.log(`Possible matches for '${token.name}': ${entities.map(e => e.name).join(', ')}`);
