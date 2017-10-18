@@ -141,7 +141,7 @@ export class InteractiveFictionService {
     return verbHandler.handleCommand(command, context);
   }
 
-  private buildCommandContext(): CommandContext {
+  buildCommandContext(): CommandContext {
     return new CommandContext(this.story, this, this.outputService, this.navService, this.logger);
   }
 

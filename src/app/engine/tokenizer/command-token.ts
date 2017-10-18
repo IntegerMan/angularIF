@@ -1,5 +1,6 @@
 import {TokenClassification} from './token-classification.enum';
 import {LanguageTerm} from './language-term';
+import {WorldEntity} from '../world-entity';
 
 export class CommandToken {
 
@@ -12,6 +13,9 @@ export class CommandToken {
   nextToken: CommandToken;
   modifies: CommandToken;
   modifiedBy: CommandToken[];
+
+  // TODO: Do I want entity or entities?  How should disambiguation work?
+  entity: WorldEntity;
 
   get userInput(): string {
     return this.term.text;

@@ -9,6 +9,7 @@ import {SentenceParserService} from './tokenizer/sentence-parser.service';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {StringHelper} from '../utility/string-helper';
 import {ArrayHelper} from '../utility/array-helper';
+import {CommandContext} from './command-context';
 
 @Injectable()
 export class UserInputService {
@@ -21,16 +22,10 @@ export class UserInputService {
 
   public handleUserSentence(sentence: string): boolean {
 
-    // Log it to console and stick the command into the main window for user reference
-    this.logger.log(`Input sentence: '${sentence}'`);
+    // Break the user's input down to tokens with parts of speech defined. This will also perform smart-replacement.
+    const tokens = this.extractTokensFromInput(sentence);
 
-    sentence = this.substituteWordsAsNeeded(sentence);
-
-    // Break down the input into command tokens
-    const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
-
-    this.expandTokensAsNeeded(tokens);
-
+    // Now that we know what the user said, try to figure out what it means
     const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
     this.outputService.displayUserCommand(sentence, command);
 
@@ -41,8 +36,37 @@ export class UserInputService {
       return false;
     }
 
+    // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
+    this.resolveNouns(tokens);
+
     // Okay, we can send the command off to be interpreted and just return the result
     return this.ifService.handleUserCommand(command);
+  }
+
+  private resolveNouns(tokens: CommandToken[]) {
+
+    const context: CommandContext = this.ifService.buildCommandContext();
+    const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
+    for (const noun of nouns) {
+      noun.entity = context.getSingleObjectForToken(noun);
+    }
+
+  }
+
+  private extractTokensFromInput(sentence: string): CommandToken[] {
+
+    // Log it to console and stick the command into the main window for user reference
+    this.logger.log(`Input sentence: '${sentence}'`);
+
+    sentence = this.substituteWordsAsNeeded(sentence);
+
+    // Break down the input into command tokens
+    const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
+
+    // Some tokens are shortcuts for common actions. These should be replaced as if the user had spoken the full word.
+    this.expandTokensAsNeeded(tokens);
+
+    return tokens;
   }
 
   private displayParserError(unknowns: CommandToken[]): void {
