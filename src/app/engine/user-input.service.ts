@@ -7,6 +7,8 @@ import {TextOutputService} from './text-output.service';
 import {Command} from './tokenizer/command';
 import {SentenceParserService} from './tokenizer/sentence-parser.service';
 import {InteractiveFictionService} from './interactive-fiction.service';
+import {StringHelper} from '../utility/string-helper';
+import {ArrayHelper} from '../utility/array-helper';
 
 @Injectable()
 export class UserInputService {
@@ -22,10 +24,13 @@ export class UserInputService {
     // Log it to console and stick the command into the main window for user reference
     this.logger.log(`Input sentence: '${sentence}'`);
 
-    // TODO: From this thing's perspective, it's probably best to work with a single sentence or command object aggregating the tokens
+    sentence = this.substituteWordsAsNeeded(sentence);
 
     // Break down the input into command tokens
     const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
+
+    this.expandTokensAsNeeded(tokens);
+
     const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
     this.outputService.displayUserCommand(sentence, command);
 
@@ -41,27 +46,68 @@ export class UserInputService {
   }
 
   private displayParserError(unknowns: CommandToken[]): void {
-    let message: string;
 
-    if (unknowns.length === 1) {
-      message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' means.`;
-    } else if (unknowns.length === 2) {
-      message = `I'm sorry, but I don't know what '${unknowns[0].userInput}' or '${unknowns[1].userInput}' mean.`;
+    if (unknowns && unknowns.length === 1) {
+
+      this.outputService.displayParserError(`I don't know what ${unknowns[0]} means.`);
+
     } else {
 
-      let wordStrings: string = '';
-      for (const t of unknowns) {
+      const friendlyText = StringHelper.toOxfordCommaList(unknowns.map(u => u.userInput), 'or');
+      this.outputService.displayParserError(`I don't know what ${friendlyText} mean.`);
 
-        if (t === unknowns[unknowns.length - 1]) {
-          wordStrings += `or '${t.userInput}'`;
-        } else {
-          wordStrings += `'${t.userInput}', `;
-        }
+    }
+  }
 
+  private substituteWordsAsNeeded(sentence: string): string {
+
+    // TODO: It'd be nice to make this accessible for extension
+    sentence = StringHelper.replaceAll(sentence, 'pick up', 'get', false);
+    sentence = StringHelper.replaceAll(sentence, 'turn on', 'activate', false);
+    sentence = StringHelper.replaceAll(sentence, 'turn off', 'deactivate', false);
+    sentence = StringHelper.replaceAll(sentence, 'north east', 'northeast', false);
+    sentence = StringHelper.replaceAll(sentence, 'north west', 'northwest', false);
+    sentence = StringHelper.replaceAll(sentence, 'south east', 'southeast', false);
+    sentence = StringHelper.replaceAll(sentence, 'south west', 'southwest', false);
+
+    return sentence;
+  }
+
+  private expandTokensAsNeeded(tokens: CommandToken[]): CommandToken[] {
+
+    // TODO: It'd be nice to make this accessible for extension
+    const replacementValues = {};
+    replacementValues['x'] = 'examine';
+    replacementValues['i'] = 'inventory';
+    replacementValues['l'] = 'look';
+    replacementValues['e'] = 'east';
+    replacementValues['w'] = 'west';
+    replacementValues['s'] = 'south';
+    replacementValues['n'] = 'north';
+    replacementValues['u'] = 'up';
+    replacementValues['d'] = 'down';
+    replacementValues['ne'] = 'northeast';
+    replacementValues['nw'] = 'northwest';
+    replacementValues['sw'] = 'southwest';
+    replacementValues['se'] = 'southeast';
+
+    for (const t of tokens) {
+
+      const replacementValue = replacementValues[t.name];
+
+      if (replacementValue) {
+
+        // Let's build an entirely new token for it
+        const replacementToken: CommandToken = this.tokenizer.getTokenForWord(replacementValue);
+
+        // Preserve the user input for traceability
+        replacementToken.userInput = t.userInput;
+
+        ArrayHelper.replace(tokens, t, replacementToken);
       }
-      message = `I'm sorry, but I don't know what ${wordStrings} mean.`;
     }
 
-    this.outputService.displayParserError(message);
+    return tokens;
   }
+
 }

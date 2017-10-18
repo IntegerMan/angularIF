@@ -8,11 +8,10 @@ export class DropHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): boolean {
 
-
     // If it's just a plain old look without a target, describe the room
     if (command.objects.length <= 0) {
 
-      context.ifService.describeRoom(context.player, context.currentRoom);
+      context.ifService.describeRoom(context.currentRoom, context);
 
       return true;
     }

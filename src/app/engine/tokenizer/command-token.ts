@@ -17,6 +17,10 @@ export class CommandToken {
     return this.term.text;
   }
 
+  set userInput(value: string) {
+    this.term.text = value;
+  }
+
   constructor(term: LanguageTerm) {
 
     this.term = term;
