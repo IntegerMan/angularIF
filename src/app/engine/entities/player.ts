@@ -4,6 +4,8 @@ import {LoggingService} from '../../logging.service';
 import {ArrayHelper} from '../../utility/array-helper';
 import {CommandContext} from '../command-context';
 import {ICanContainEntities} from './i-can-contain-entities';
+import {EntitySize} from './entity-size.enum';
+import {EntityWeight} from './entity-weight.enum';
 
 export class Player extends WorldEntity implements ICanContainEntities {
 
@@ -28,6 +30,10 @@ export class Player extends WorldEntity implements ICanContainEntities {
     this.description = 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
     this.examineDescription = 'Taking some time, you look yourself over, finding the same old scars and blemishes you\'ve accrued ' +
       'over the years. You don\'t love everything about your body, but it\'s yours and you\'re used to it.';
+
+    this.weight = EntityWeight.person;
+    this.size = EntitySize.person;
+
   }
 
   addToInventory(item: Scenery, context: CommandContext = null): boolean {

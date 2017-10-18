@@ -1,4 +1,5 @@
 import {Scenery} from '../../engine/entities/scenery';
+import {CommandContext} from '../../engine/command-context';
 
 export class Hook extends Scenery {
 
@@ -12,4 +13,8 @@ export class Hook extends Scenery {
     }
   }
 
+  shouldDescribeWithRoom(context: CommandContext): boolean {
+    // TODO: May want to subclass scenery here
+    return false;
+  }
 }
