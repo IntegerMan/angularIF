@@ -9,13 +9,27 @@ export class Player extends WorldEntity implements ICanContainEntities {
 
   inventory: Scenery[];
 
-  constructor(name: string) {
-    super(name);
+  constructor() {
+    super('you');
 
     this.inventory = [];
     this.article = '';
 
+    // Add some common synonyms for helping the player refer to their character
+    this.addNounAlias('me');
+    this.addNounAlias('self');
+    this.addNounAlias('yourself');
+    this.addNounAlias('myself');
+    this.addNounAlias('character');
+    this.addNounAlias('avatar');
+    this.addNounAlias('player');
+
     // TODO: Give a default self-description here
+  }
+
+  getExamineDescription(context: CommandContext): string {
+    // TODO: At some point, we may want to introduce health / wear and tear, etc.
+    return 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
   }
 
   addToInventory(item: Scenery, context: CommandContext = null): boolean {
