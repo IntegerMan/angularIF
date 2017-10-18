@@ -24,7 +24,7 @@ export class DropHandler extends VerbHandler {
     }
 
     // Let the context object take care of disambiguation and lookup
-    const entity = context.getSingleObjectForToken(token);
+    const entity = token.entity;
     if (!entity) {
       // The context lookup took care of output to the user, so we just need to abort
       return false;
