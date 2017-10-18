@@ -1,7 +1,7 @@
-import {CommandToken} from './tokenizer/command-token';
+import {CommandToken} from '../tokenizer/command-token';
 import {WorldEntity} from './world-entity';
-import {CommandContext} from './command-context';
-import {ArrayHelper} from '../utility/array-helper';
+import {CommandContext} from '../command-context';
+import {ArrayHelper} from '../../utility/array-helper';
 import {ICanContainEntities} from './i-can-contain-entities';
 
 export class Room extends WorldEntity implements ICanContainEntities {

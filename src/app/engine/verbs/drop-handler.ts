@@ -2,7 +2,7 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../tokenizer/command';
 import {CommandToken} from '../tokenizer/command-token';
-import {Scenery} from '../scenery';
+import {Scenery} from '../entities/scenery';
 
 export class DropHandler extends VerbHandler {
 

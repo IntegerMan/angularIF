@@ -1,8 +1,8 @@
 import {WorldEntity} from './world-entity';
 import {Scenery} from './scenery';
-import {LoggingService} from '../logging.service';
-import {ArrayHelper} from '../utility/array-helper';
-import {CommandContext} from './command-context';
+import {LoggingService} from '../../logging.service';
+import {ArrayHelper} from '../../utility/array-helper';
+import {CommandContext} from '../command-context';
 import {ICanContainEntities} from './i-can-contain-entities';
 
 export class Player extends WorldEntity implements ICanContainEntities {

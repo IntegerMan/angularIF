@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../logging.service';
-import {Story} from './story';
-import {Room} from './room';
-import {Player} from './player';
+import {Story} from './entities/story';
+import {Room} from './entities/room';
+import {Player} from './entities/player';
 import {TokenizerService} from './tokenizer/tokenizer.service';
 import {CommandToken} from './tokenizer/command-token';
 import {TokenClassification} from './tokenizer/token-classification.enum';
@@ -14,7 +14,7 @@ import {Command} from './tokenizer/command';
 import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
-import {WorldEntity} from './world-entity';
+import {WorldEntity} from './entities/world-entity';
 
 @Injectable()
 export class InteractiveFictionService {

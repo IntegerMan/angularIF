@@ -1,8 +1,8 @@
-import {CommandContext} from './command-context';
+import {CommandContext} from '../command-context';
 import {Room} from './room';
-import {LoggingService} from '../logging.service';
-import {NaturalLanguageService} from './tokenizer/natural-language.service';
-import {CommandToken} from './tokenizer/command-token';
+import {LoggingService} from '../../logging.service';
+import {NaturalLanguageService} from '../tokenizer/natural-language.service';
+import {CommandToken} from '../tokenizer/command-token';
 
 export abstract class WorldEntity {
 

@@ -1,8 +1,8 @@
-import {Story} from '../../engine/story';
-import {Room} from '../../engine/room';
-import {Player} from '../../engine/player';
+import {Story} from '../../engine/entities/story';
+import {Room} from '../../engine/entities/room';
+import {Player} from '../../engine/entities/player';
 import {NavigationService} from '../../engine/navigation.service';
-import {Scenery} from '../../engine/scenery';
+import {Scenery} from '../../engine/entities/scenery';
 import {LoggingService} from '../../logging.service';
 import {Hook} from './hook';
 

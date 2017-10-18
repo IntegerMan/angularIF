@@ -1,4 +1,4 @@
-import {Scenery} from '../../engine/scenery';
+import {Scenery} from '../../engine/entities/scenery';
 
 export class Hook extends Scenery {
 

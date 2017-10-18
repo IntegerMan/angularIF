@@ -1,6 +1,6 @@
 import {TokenClassification} from './token-classification.enum';
 import {LanguageTerm} from './language-term';
-import {WorldEntity} from '../world-entity';
+import {WorldEntity} from '../entities/world-entity';
 
 export class CommandToken {
 
