@@ -6,10 +6,11 @@ import {CommandContext} from '../command-context';
 import {ICanContainEntities} from './i-can-contain-entities';
 import {EntitySize} from './entity-size.enum';
 import {EntityWeight} from './entity-weight.enum';
+import {IGettable} from './i-gettable';
 
-export class Player extends WorldEntity implements ICanContainEntities {
+export class Player extends WorldEntity implements ICanContainEntities, IGettable {
 
-  inventory: Scenery[];
+  inventory: WorldEntity[];
 
   constructor() {
     super('you');
@@ -36,7 +37,14 @@ export class Player extends WorldEntity implements ICanContainEntities {
 
   }
 
-  addToInventory(item: Scenery, context: CommandContext = null): boolean {
+  allowPickup(context: CommandContext): boolean {
+
+    context.outputService.displayFailedAction('You try your best best lines, but you are not impressed.');
+
+    return false;
+  }
+
+  addToInventory(item: WorldEntity, context: CommandContext = null): boolean {
 
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
 
@@ -46,13 +54,13 @@ export class Player extends WorldEntity implements ICanContainEntities {
     return true;
   }
 
-  removeFromInventory(item: Scenery, context: CommandContext = null): boolean {
+  removeFromInventory(item: WorldEntity, context: CommandContext = null): boolean {
 
     // Display a warning if you're trying to do something stupid
     if (this.inventory.indexOf(item) < 0) {
 
       if (context) {
-        context.outputService.displayParserError(`You aren't carrying ${item.article} ${item.name}.`);
+        context.outputService.displayFailedAction(`You aren't carrying ${item.article} ${item.name}.`);
       }
 
       return false;
@@ -66,7 +74,7 @@ export class Player extends WorldEntity implements ICanContainEntities {
       LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
 
       if (context) {
-        context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
+        context.outputService.displaySuccessAction(`You drop ${item.article} ${item.name}.`);
       }
 
       return true;

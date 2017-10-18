@@ -19,6 +19,10 @@ export class TokenizerService {
     return token;
   }
 
+  static isSpecialNoun(token: CommandToken): boolean {
+    return (token.name === 'all' || token.name === 'inventory' || token.name === 'verbs' || token.name === 'room');
+  }
+
   private static getClassificationFromTerm(term: LanguageTerm): TokenClassification {
 
     const classifications = Object.keys(TokenClassification);

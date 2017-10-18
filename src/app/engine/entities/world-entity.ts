@@ -125,6 +125,13 @@ export abstract class WorldEntity {
 
   isDescribedByToken(token: CommandToken, context: CommandContext): boolean {
 
+    // TODO: May not belong at the entity level
+
+    // Special keywords to talk about the room the player is in
+    if (token.name === 'room' || token.name === 'here') {
+      return (this === (context.currentRoom as WorldEntity));
+    }
+
     // Search by nouns registered for the object
     for (const noun of this.nouns) {
       if (noun === token.name) {
