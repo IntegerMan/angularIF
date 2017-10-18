@@ -1,7 +1,18 @@
 import {Scenery} from '../../engine/entities/scenery';
 import {CommandContext} from '../../engine/command-context';
+import {EntitySize} from '../../engine/entities/entity-size.enum';
+import {EntityWeight} from '../../engine/entities/entity-weight.enum';
 
 export class Hook extends Scenery {
+
+
+  constructor(name: string) {
+    super(name);
+
+    this.size = EntitySize.cup;
+    this.weight = EntityWeight.watch;
+
+  }
 
   hungObject: Scenery = null;
 
