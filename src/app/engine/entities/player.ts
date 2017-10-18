@@ -6,8 +6,9 @@ import {CommandContext} from '../command-context';
 import {ICanContainEntities} from './i-can-contain-entities';
 import {EntitySize} from './entity-size.enum';
 import {EntityWeight} from './entity-weight.enum';
+import {IGettable} from './i-gettable';
 
-export class Player extends WorldEntity implements ICanContainEntities {
+export class Player extends WorldEntity implements ICanContainEntities, IGettable {
 
   inventory: Scenery[];
 
@@ -36,6 +37,13 @@ export class Player extends WorldEntity implements ICanContainEntities {
 
   }
 
+  allowPickup(context: CommandContext): boolean {
+
+    context.outputService.displayFailedAction('You try your best best lines, but you are not impressed.');
+
+    return false;
+  }
+
   addToInventory(item: Scenery, context: CommandContext = null): boolean {
 
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
@@ -52,7 +60,7 @@ export class Player extends WorldEntity implements ICanContainEntities {
     if (this.inventory.indexOf(item) < 0) {
 
       if (context) {
-        context.outputService.displayParserError(`You aren't carrying ${item.article} ${item.name}.`);
+        context.outputService.displayFailedAction(`You aren't carrying ${item.article} ${item.name}.`);
       }
 
       return false;

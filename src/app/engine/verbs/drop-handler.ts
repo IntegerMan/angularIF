@@ -32,7 +32,7 @@ export class DropHandler extends VerbHandler {
 
     // Protect against invalid class since we need a Scenery instance up ahead
     if (!(entity instanceof Scenery)) {
-      context.outputService.displayParserError(`You can't drop that!`);
+      context.outputService.displayFailedAction(`You can't drop that!`);
       return false;
     }
 
@@ -44,7 +44,7 @@ export class DropHandler extends VerbHandler {
 
     // Don't do any dropping if the player isn't carrying anything
     if (context.player.inventory.length <= 0) {
-      context.outputService.displayParserError('You aren\'t currently carrying anything.');
+      context.outputService.displayFailedAction('You aren\'t currently carrying anything.');
       return false;
     }
 

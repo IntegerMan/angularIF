@@ -47,6 +47,14 @@ export class TextOutputService {
     this.addLine(new TextLine(text, CommandType.parserError));
   }
 
+  displayFailedAction(text: string): void {
+    this.addLine(new TextLine(text, CommandType.failureAction));
+  }
+
+  displaySuccessAction(text: string): void {
+    this.addLine(new TextLine(text, CommandType.successAction));
+  }
+
   displayBlankLine(): void {
     this.addLine(new TextLine('', CommandType.divider));
   }
