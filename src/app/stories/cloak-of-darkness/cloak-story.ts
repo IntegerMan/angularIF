@@ -43,7 +43,7 @@ export class CloakStory extends Story {
       'Its blackness is so deep that it almost seems to suck light from the room.';
 
     // Set up the player
-    this._player = new Player('You');
+    this._player = new Player('you');
     this._foyer.addObject(this._player);
     this._player.addToInventory(this._cloak);
 

@@ -14,6 +14,7 @@ import {Command} from './tokenizer/command';
 import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
+import {WorldEntity} from './world-entity';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -89,14 +90,22 @@ export class InteractiveFictionService {
     this.outputService.displayStory('The story begins...');
     this.outputService.displayBlankLine();
 
-    this.describeRoom(story.player, story.player.currentRoom);
+    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
   }
 
-  describeRoom(player: Player, room: Room) {
+  describeRoom(room: Room, context: CommandContext): void {
 
     this.outputService.displayRoomName(room.name);
     this.outputService.displayBlankLine();
-    this.outputService.displayStory(room.description);
+    this.outputService.displayStory(room.getExamineDescription(context));
+
+    // Now list all notable items that are present here
+    const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));
+    for (const entity of notableItems) {
+      this.outputService.displayBlankLine();
+      this.outputService.displayStory(entity.getInRoomDescription(context));
+    }
+
 
   }
 
@@ -126,11 +135,14 @@ export class InteractiveFictionService {
     }
 
     // Create a command context. This will give the command handler more utility information
-    const context: CommandContext =
-      new CommandContext(this.story, this, this.outputService, this.navService, this.logger);
+    const context: CommandContext = this.buildCommandContext();
 
     // TODO: This will likely need a command context
     return verbHandler.handleCommand(command, context);
+  }
+
+  private buildCommandContext(): CommandContext {
+    return new CommandContext(this.story, this, this.outputService, this.navService, this.logger);
   }
 
   private getVerbHandler(verbToken: CommandToken): VerbHandler {
@@ -163,7 +175,7 @@ export class InteractiveFictionService {
 
     // If it's the player and they changed rooms, describe their new location
     if (actor === this.story.player && room !== oldRoom && !isSilent) {
-      this.describeRoom(actor, room);
+      this.describeRoom(room, this.buildCommandContext());
     }
 
   }
