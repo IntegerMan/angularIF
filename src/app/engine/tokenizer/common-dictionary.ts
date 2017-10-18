@@ -18,6 +18,7 @@ export class CommonDictionary extends LexiconDictionary {
 
     // Identify some problem nouns
     this.lexer.addNoun('Hall');
+    this.lexer.addNoun('Chandelier');
 
     // Identify some problem adjectives
     this.lexer.addAdjective('Brass');

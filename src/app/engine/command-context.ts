@@ -46,7 +46,12 @@ export class CommandContext {
     // No matches yields an "it's not here" message
     if (!entities || entities.length <= 0) {
       this.logger.log(`No local match found for '${token.name}'`);
-      this.outputService.displayParserError(`You don't see a ${token.name} here.`);
+
+      if (token.isPlural) {
+        this.outputService.displayParserError(`You don't see ${token.name} here.`);
+      } else {
+        this.outputService.displayParserError(`You don't see a ${token.name} here.`);
+      }
 
       return null;
     }

@@ -37,7 +37,6 @@ export class LookHandler extends VerbHandler {
     return this.handleLookOrExamine(command, context, false);
   }
 
-
   protected handleLookOrExamine(command: Command, context: CommandContext, isScrutinize: boolean): boolean {
 
     // If it's just a plain old look without a target, describe the room
