@@ -1,10 +1,15 @@
-import {CommandContext} from './command-context';
+import {CommandContext} from '../command-context';
 import {Room} from './room';
-import {LoggingService} from '../logging.service';
-import {NaturalLanguageService} from './tokenizer/natural-language.service';
-import {CommandToken} from './tokenizer/command-token';
+import {LoggingService} from '../../logging.service';
+import {NaturalLanguageService} from '../tokenizer/natural-language.service';
+import {CommandToken} from '../tokenizer/command-token';
+import {EntityWeight} from './entity-weight.enum';
+import {EntitySize} from './entity-size.enum';
 
 export abstract class WorldEntity {
+
+  private _weight: EntityWeight;
+  private _size: EntitySize;
 
   nouns: string[];
   adjectives: string[];
@@ -19,6 +24,10 @@ export abstract class WorldEntity {
 
     this.nouns = [];
     this.adjectives = [];
+
+    // Set some default sizes for things
+    this._weight = EntityWeight.textbook;
+    this._size = EntitySize.person;
 
     this.autodetectNounsAndAdjectives();
   }
@@ -35,6 +44,21 @@ export abstract class WorldEntity {
 
   get name(): string {
     return this._name;
+  }
+
+  get size(): EntitySize {
+    return this._size;
+  }
+
+  set size(value: EntitySize) {
+    this._size = value;
+  }
+  get weight(): EntityWeight {
+    return this._weight;
+  }
+
+  set weight(value: EntityWeight) {
+    this._weight = value;
   }
 
   private _description: string = null;

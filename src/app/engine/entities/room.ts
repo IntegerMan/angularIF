@@ -1,8 +1,10 @@
-import {CommandToken} from './tokenizer/command-token';
+import {CommandToken} from '../tokenizer/command-token';
 import {WorldEntity} from './world-entity';
-import {CommandContext} from './command-context';
-import {ArrayHelper} from '../utility/array-helper';
+import {CommandContext} from '../command-context';
+import {ArrayHelper} from '../../utility/array-helper';
 import {ICanContainEntities} from './i-can-contain-entities';
+import {EntityWeight} from './entity-weight.enum';
+import {EntitySize} from './entity-size.enum';
 
 export class Room extends WorldEntity implements ICanContainEntities {
 
@@ -12,6 +14,10 @@ export class Room extends WorldEntity implements ICanContainEntities {
     super(name);
 
     this.contents = [];
+
+    this.weight = EntityWeight.building;
+    this.size = EntitySize.building;
+
   }
 
   addObject(object: WorldEntity): void {

@@ -1,10 +1,12 @@
-import {Story} from '../../engine/story';
-import {Room} from '../../engine/room';
-import {Player} from '../../engine/player';
+import {Story} from '../../engine/entities/story';
+import {Room} from '../../engine/entities/room';
+import {Player} from '../../engine/entities/player';
 import {NavigationService} from '../../engine/navigation.service';
-import {Scenery} from '../../engine/scenery';
+import {Scenery} from '../../engine/entities/scenery';
 import {LoggingService} from '../../logging.service';
 import {Hook} from './hook';
+import {EntityWeight} from '../../engine/entities/entity-weight.enum';
+import {EntitySize} from '../../engine/entities/entity-size.enum';
 
 export class CloakStory extends Story {
 
@@ -63,6 +65,8 @@ export class CloakStory extends Story {
 
     // TODO: Examining the sawdust should end the game in victory or loss
     const message: Scenery = new Scenery('scrawled message');
+    message.weight = EntityWeight.feather;
+    message.size = EntitySize.backpack;
     message.addAdjectiveAlias('written');
     message.addNounAlias('writing');
     message.addNounAlias('sawdust');

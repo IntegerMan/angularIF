@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WorldEntity} from '../../engine/world-entity';
+import {WorldEntity} from '../../engine/entities/world-entity';
 
 @Component({
   selector: 'if-entity-reference',

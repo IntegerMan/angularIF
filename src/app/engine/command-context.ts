@@ -1,11 +1,11 @@
 import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../logging.service';
-import {Story} from './story';
+import {Story} from './entities/story';
 import {InteractiveFictionService} from './interactive-fiction.service';
-import {Room} from './room';
+import {Room} from './entities/room';
 import {NavigationService} from './navigation.service';
-import {Player} from './player';
-import {WorldEntity} from './world-entity';
+import {Player} from './entities/player';
+import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './tokenizer/command-token';
 

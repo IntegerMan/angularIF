@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {InteractiveFictionService} from './engine/interactive-fiction.service';
-import {Story} from './engine/story';
+import {Story} from './engine/entities/story';
 import {CloakStory} from './stories/cloak-of-darkness/cloak-story';
 import {CommonVerbService} from './engine/verbs/common-verb.service';
 import {NavigationService} from './engine/navigation.service';

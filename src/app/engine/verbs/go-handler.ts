@@ -3,7 +3,7 @@ import {CommandContext} from '../command-context';
 import {Command} from '../tokenizer/command';
 import {CommandToken} from '../tokenizer/command-token';
 import {TokenClassification} from '../tokenizer/token-classification.enum';
-import {Room} from '../room';
+import {Room} from '../entities/room';
 import {RoomLink} from '../room-link';
 
 export class GoHandler extends VerbHandler {
