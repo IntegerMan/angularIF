@@ -109,7 +109,8 @@ export abstract class WorldEntity {
       return this._inRoomDescription;
     }
 
-    return `There is ${this.article} ${this.name} laying on the ground here.`;
+    // TODO: Should this use article instead? Do we need an isSingular flag?
+    return `There is a ${this.name} laying on the ground here.`;
   }
 
   set inRoomDescription(value: string) {
@@ -122,4 +123,9 @@ export abstract class WorldEntity {
     return this.inRoomDescription;
 
   }
+
+  shouldDescribeWithRoom(context: CommandContext): boolean {
+    return false;
+  }
+
 }

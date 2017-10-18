@@ -100,7 +100,7 @@ export class InteractiveFictionService {
     this.outputService.displayStory(room.getExamineDescription(context));
 
     // Now list all notable items that are present here
-    const notableItems: WorldEntity[] = room.contents; // TODO: Filter out some items
+    const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));
     for (const entity of notableItems) {
       this.outputService.displayBlankLine();
       this.outputService.displayStory(entity.getInRoomDescription(context));
