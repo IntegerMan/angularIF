@@ -21,15 +21,7 @@ export class UserInputService {
 
   public handleUserSentence(sentence: string): boolean {
 
-    // Log it to console and stick the command into the main window for user reference
-    this.logger.log(`Input sentence: '${sentence}'`);
-
-    sentence = this.substituteWordsAsNeeded(sentence);
-
-    // Break down the input into command tokens
-    const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
-
-    this.expandTokensAsNeeded(tokens);
+    const tokens = this.extractTokensFromInput(sentence);
 
     const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
     this.outputService.displayUserCommand(sentence, command);
@@ -43,6 +35,22 @@ export class UserInputService {
 
     // Okay, we can send the command off to be interpreted and just return the result
     return this.ifService.handleUserCommand(command);
+  }
+
+  private extractTokensFromInput(sentence: string): CommandToken[] {
+
+    // Log it to console and stick the command into the main window for user reference
+    this.logger.log(`Input sentence: '${sentence}'`);
+
+    sentence = this.substituteWordsAsNeeded(sentence);
+
+    // Break down the input into command tokens
+    const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
+
+    // Some tokens are shortcuts for common actions. These should be replaced as if the user had spoken the full word.
+    this.expandTokensAsNeeded(tokens);
+
+    return tokens;
   }
 
   private displayParserError(unknowns: CommandToken[]): void {
