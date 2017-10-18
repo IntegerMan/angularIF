@@ -47,7 +47,7 @@ export abstract class WorldEntity {
     this._description = value;
   }
 
-  getExamineDescription(context: CommandContext): string {
+  getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
     return this.description;
   }
 
@@ -117,7 +117,7 @@ export abstract class WorldEntity {
     this._inRoomDescription = value;
   }
 
-  getInRoomDescription(context: CommandContext): string {
+  getInRoomDescription(context: CommandContext, isScrutinize: boolean): string {
 
     // We accept context so that individual items can customize their appearance as needed, but by default, we'll go with the property
     return this.inRoomDescription;

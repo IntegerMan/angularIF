@@ -93,19 +93,18 @@ export class InteractiveFictionService {
     this.describeRoom(story.player.currentRoom, this.buildCommandContext());
   }
 
-  describeRoom(room: Room, context: CommandContext): void {
+  describeRoom(room: Room, context: CommandContext, isScrutinize: boolean = false): void {
 
     this.outputService.displayRoomName(room.name);
     this.outputService.displayBlankLine();
-    this.outputService.displayStory(room.getExamineDescription(context));
+    this.outputService.displayStory(room.getExamineDescription(context, isScrutinize));
 
     // Now list all notable items that are present here
     const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));
     for (const entity of notableItems) {
       this.outputService.displayBlankLine();
-      this.outputService.displayStory(entity.getInRoomDescription(context));
+      this.outputService.displayStory(entity.getInRoomDescription(context, isScrutinize));
     }
-
 
   }
 

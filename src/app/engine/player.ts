@@ -27,9 +27,17 @@ export class Player extends WorldEntity implements ICanContainEntities {
     // TODO: Give a default self-description here
   }
 
-  getExamineDescription(context: CommandContext): string {
+  getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
+
     // TODO: At some point, we may want to introduce health / wear and tear, etc.
-    return 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
+
+    if (isScrutinize) {
+      return 'Taking some time, you look yourself over, finding the same old scars and blemishes you\'ve accrued over the years. ' +
+        'You don\'t love everything about your body, but it\'s yours and you\'re used to it.';
+    } else {
+      return 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
+    }
+
   }
 
   addToInventory(item: Scenery, context: CommandContext = null): boolean {

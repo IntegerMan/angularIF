@@ -5,7 +5,6 @@ import {CommandToken} from '../tokenizer/command-token';
 
 export class LookHandler extends VerbHandler {
 
-
   private static listPlayerInventory(context: CommandContext): boolean {
 
     if (!context.player.inventory || context.player.inventory.length <= 0) {
@@ -35,11 +34,16 @@ export class LookHandler extends VerbHandler {
   }
 
   handleCommand(command: Command, context: CommandContext): boolean {
+    return this.handleLookOrExamine(command, context, false);
+  }
+
+
+  protected handleLookOrExamine(command: Command, context: CommandContext, isScrutinize: boolean): boolean {
 
     // If it's just a plain old look without a target, describe the room
     if (command.objects.length <= 0) {
 
-      context.ifService.describeRoom(context.currentRoom, context);
+      context.ifService.describeRoom(context.currentRoom, context, isScrutinize);
 
       return true;
     }
@@ -61,7 +65,7 @@ export class LookHandler extends VerbHandler {
     }
 
     // Grab the description from the entity
-    let description: string = entity.getExamineDescription(context);
+    let description: string = entity.getExamineDescription(context, isScrutinize);
     if (!description) {
       description = `You stare at the ${token.name} for awhile, but fail to notice anything more noteworthy.`;
     }
@@ -70,5 +74,4 @@ export class LookHandler extends VerbHandler {
     return true;
 
   }
-
 }
