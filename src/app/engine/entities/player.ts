@@ -10,7 +10,7 @@ import {IGettable} from './i-gettable';
 
 export class Player extends WorldEntity implements ICanContainEntities, IGettable {
 
-  inventory: Scenery[];
+  inventory: WorldEntity[];
 
   constructor() {
     super('you');
@@ -44,7 +44,7 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
     return false;
   }
 
-  addToInventory(item: Scenery, context: CommandContext = null): boolean {
+  addToInventory(item: WorldEntity, context: CommandContext = null): boolean {
 
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
 
@@ -54,7 +54,7 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
     return true;
   }
 
-  removeFromInventory(item: Scenery, context: CommandContext = null): boolean {
+  removeFromInventory(item: WorldEntity, context: CommandContext = null): boolean {
 
     // Display a warning if you're trying to do something stupid
     if (this.inventory.indexOf(item) < 0) {
@@ -74,7 +74,7 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
       LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
 
       if (context) {
-        context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
+        context.outputService.displaySuccessAction(`You drop ${item.article} ${item.name}.`);
       }
 
       return true;

@@ -2,6 +2,7 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../tokenizer/command';
 import {WorldEntity} from '../entities/world-entity';
+import {IGettable} from '../entities/i-gettable';
 
 export class GetHandler extends VerbHandler {
 
@@ -17,7 +18,7 @@ export class GetHandler extends VerbHandler {
     for (const entity of entities) {
 
       if (context.player.inventory.indexOf(entity) >= 0) {
-        context.outputService.displayStory(`You already have ${entity.article} ${entity.name}!`);
+        context.outputService.displayFailedAction(`You already have ${entity.article} ${entity.name}!`);
       } else {
         this.attemptPickup(entity, context);
       }
@@ -30,9 +31,18 @@ export class GetHandler extends VerbHandler {
 
   private attemptPickup(entity: WorldEntity, context: CommandContext): boolean {
 
+    const item: IGettable = ((entity as any) as IGettable);
+    if (item && item.allowPickup !== undefined) {
+
+      const result = item.allowPickup(context);
+      if (result) {
+        context.player.addToInventory(entity, context);
+      }
+
+      return result;
+    }
 
     context.outputService.displayStory(`You can't pick up ${entity.article} ${entity.name}.`);
-
     return false;
 
   }
