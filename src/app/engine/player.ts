@@ -13,6 +13,7 @@ export class Player extends WorldEntity implements ICanContainEntities {
     super(name);
 
     this.inventory = [];
+    this.article = '';
 
     // TODO: Give a default self-description here
   }
