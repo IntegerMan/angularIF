@@ -24,12 +24,10 @@ export class Player extends WorldEntity implements ICanContainEntities {
     this.addNounAlias('avatar');
     this.addNounAlias('player');
 
-    // TODO: Give a default self-description here
-  }
-
-  getExamineDescription(context: CommandContext): string {
-    // TODO: At some point, we may want to introduce health / wear and tear, etc.
-    return 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
+    // Give default self-descriptions here
+    this.description = 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
+    this.examineDescription = 'Taking some time, you look yourself over, finding the same old scars and blemishes you\'ve accrued ' +
+      'over the years. You don\'t love everything about your body, but it\'s yours and you\'re used to it.';
   }
 
   addToInventory(item: Scenery, context: CommandContext = null): boolean {

@@ -37,7 +37,16 @@ export abstract class WorldEntity {
     return this._name;
   }
 
-  private _description: string = null;  // To be implemented by concrete classes. Fallbacks will be handled by verb handlers
+  private _description: string = null;
+  private _examineDescription: string = null;
+
+  get examineDescription(): string {
+    return this._examineDescription;
+  }
+
+  set examineDescription(value: string) {
+    this._examineDescription = value;
+  }
 
   get description(): string {
     return this._description;
@@ -47,7 +56,13 @@ export abstract class WorldEntity {
     this._description = value;
   }
 
-  getExamineDescription(context: CommandContext): string {
+  getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
+
+    // If we're scrutinizing and an examine description is present, go with that.
+    if (isScrutinize && this.examineDescription) {
+      return this.examineDescription;
+    }
+
     return this.description;
   }
 
@@ -117,7 +132,7 @@ export abstract class WorldEntity {
     this._inRoomDescription = value;
   }
 
-  getInRoomDescription(context: CommandContext): string {
+  getInRoomDescription(context: CommandContext, isScrutinize: boolean): string {
 
     // We accept context so that individual items can customize their appearance as needed, but by default, we'll go with the property
     return this.inRoomDescription;
