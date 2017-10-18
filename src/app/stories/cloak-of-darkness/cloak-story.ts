@@ -41,6 +41,8 @@ export class CloakStory extends Story {
     this._cloak = new Scenery('black velvet cloak');
     this._cloak.description = 'A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops. ' +
       'Its blackness is so deep that it almost seems to suck light from the room.';
+    this._cloak.examineDescription = 'The velvet cloak almost seems to have darkness woven into its very fabric. ' +
+      'Everything about it is darker than it should be.';
 
     // Set up the player
     this._player = new Player();

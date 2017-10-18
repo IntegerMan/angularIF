@@ -37,7 +37,16 @@ export abstract class WorldEntity {
     return this._name;
   }
 
-  private _description: string = null;  // To be implemented by concrete classes. Fallbacks will be handled by verb handlers
+  private _description: string = null;
+  private _examineDescription: string = null;
+
+  get examineDescription(): string {
+    return this._examineDescription;
+  }
+
+  set examineDescription(value: string) {
+    this._examineDescription = value;
+  }
 
   get description(): string {
     return this._description;
@@ -48,6 +57,12 @@ export abstract class WorldEntity {
   }
 
   getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
+
+    // If we're scrutinizing and an examine description is present, go with that.
+    if (isScrutinize && this.examineDescription) {
+      return this.examineDescription;
+    }
+
     return this.description;
   }
 
