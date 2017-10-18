@@ -16,6 +16,10 @@
 
   <div *ngSwitchCase="'divider'" class="my-3"></div>
 
+  <p *ngSwitchCase="'failureAction'" class="text-danger">{{line.text}}</p>
+
+  <p *ngSwitchCase="'successAction'" class="text-success">{{line.text}}</p>
+
   <p *ngSwitchCase="'narrative'">{{line.text}}</p>
   <p *ngSwitchCase="'roomName'"  class="text my-4"><strong>{{line.text}}</strong></p>
 

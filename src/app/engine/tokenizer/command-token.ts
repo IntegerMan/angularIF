@@ -1,5 +1,6 @@
 import {TokenClassification} from './token-classification.enum';
 import {LanguageTerm} from './language-term';
+import {WorldEntity} from '../entities/world-entity';
 
 export class CommandToken {
 
@@ -13,8 +14,23 @@ export class CommandToken {
   modifies: CommandToken;
   modifiedBy: CommandToken[];
 
+  // TODO: Do I want entity or entities?  How should disambiguation work?
+  entity: WorldEntity;
+
+  /***
+   * Gets a value indicating whether or not the term associated with this token was identified as plural
+   * @returns {boolean} whether or not the term is plural
+   */
+  get isPlural(): boolean {
+    return this.term && this.term.tags.filter(t => t === 'Plural').length > 0;
+  }
+
   get userInput(): string {
     return this.term.text;
+  }
+
+  set userInput(value: string) {
+    this.term.text = value;
   }
 
   constructor(term: LanguageTerm) {

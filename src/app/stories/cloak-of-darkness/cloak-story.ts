@@ -1,10 +1,13 @@
-import {Story} from '../../engine/story';
-import {Room} from '../../engine/room';
-import {Player} from '../../engine/player';
+import {Story} from '../../engine/entities/story';
+import {Room} from '../../engine/entities/room';
+import {Player} from '../../engine/entities/player';
 import {NavigationService} from '../../engine/navigation.service';
-import {Scenery} from '../../engine/scenery';
+import {Scenery} from '../../engine/entities/scenery';
 import {LoggingService} from '../../logging.service';
 import {Hook} from './hook';
+import {EntityWeight} from '../../engine/entities/entity-weight.enum';
+import {EntitySize} from '../../engine/entities/entity-size.enum';
+import {PortableEntity} from '../../engine/entities/portable-entity';
 
 export class CloakStory extends Story {
 
@@ -12,7 +15,7 @@ export class CloakStory extends Story {
   private _cloakroom: Room;
   private _bar: Room;
   private _player: Player;
-  private _cloak: Scenery;
+  private _cloak: PortableEntity;
 
   protected getRooms(): Room[] {
     return [this._foyer, this._cloakroom, this._bar];
@@ -38,12 +41,11 @@ export class CloakStory extends Story {
     this._bar = new Room('Foyer Bar');
 
     // Define the titular cloak
-    this._cloak = new Scenery('black velvet cloak');
-    this._cloak.description = 'A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops. ' +
-      'Its blackness is so deep that it almost seems to suck light from the room.';
+    this._cloak = new PortableEntity('black velvet cloak');
+    this.configureCloak(this._cloak);
 
     // Set up the player
-    this._player = new Player('you');
+    this._player = new Player();
     this._foyer.addObject(this._player);
     this._player.addToInventory(this._cloak);
 
@@ -54,6 +56,19 @@ export class CloakStory extends Story {
 
   }
 
+  private configureCloak(cloak: PortableEntity): void {
+
+    cloak.weight = EntityWeight.textbook;
+    cloak.size = EntitySize.person;
+
+    cloak.description = 'A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops. ' +
+      'Its blackness is so deep that it almost seems to suck light from the room.';
+    cloak.examineDescription = 'The velvet cloak almost seems to have darkness woven into its very fabric. ' +
+      'Everything about it is darker than it should be.';
+
+    cloak.inRoomDescription = 'A dark black velvet cloak rests in a heap on the floor.';
+  }
+
   private configureBar(room: Room): void {
 
     room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
@@ -61,6 +76,8 @@ export class CloakStory extends Story {
 
     // TODO: Examining the sawdust should end the game in victory or loss
     const message: Scenery = new Scenery('scrawled message');
+    message.weight = EntityWeight.feather;
+    message.size = EntitySize.backpack;
     message.addAdjectiveAlias('written');
     message.addNounAlias('writing');
     message.addNounAlias('sawdust');

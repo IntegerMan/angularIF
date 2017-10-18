@@ -1,10 +1,15 @@
-import {CommandContext} from './command-context';
+import {CommandContext} from '../command-context';
 import {Room} from './room';
-import {LoggingService} from '../logging.service';
-import {NaturalLanguageService} from './tokenizer/natural-language.service';
-import {CommandToken} from './tokenizer/command-token';
+import {LoggingService} from '../../logging.service';
+import {NaturalLanguageService} from '../tokenizer/natural-language.service';
+import {CommandToken} from '../tokenizer/command-token';
+import {EntityWeight} from './entity-weight.enum';
+import {EntitySize} from './entity-size.enum';
 
 export abstract class WorldEntity {
+
+  private _weight: EntityWeight;
+  private _size: EntitySize;
 
   nouns: string[];
   adjectives: string[];
@@ -19,6 +24,10 @@ export abstract class WorldEntity {
 
     this.nouns = [];
     this.adjectives = [];
+
+    // Set some default sizes for things
+    this._weight = EntityWeight.textbook;
+    this._size = EntitySize.person;
 
     this.autodetectNounsAndAdjectives();
   }
@@ -37,7 +46,31 @@ export abstract class WorldEntity {
     return this._name;
   }
 
-  private _description: string = null;  // To be implemented by concrete classes. Fallbacks will be handled by verb handlers
+  get size(): EntitySize {
+    return this._size;
+  }
+
+  set size(value: EntitySize) {
+    this._size = value;
+  }
+  get weight(): EntityWeight {
+    return this._weight;
+  }
+
+  set weight(value: EntityWeight) {
+    this._weight = value;
+  }
+
+  private _description: string = null;
+  private _examineDescription: string = null;
+
+  get examineDescription(): string {
+    return this._examineDescription;
+  }
+
+  set examineDescription(value: string) {
+    this._examineDescription = value;
+  }
 
   get description(): string {
     return this._description;
@@ -47,7 +80,13 @@ export abstract class WorldEntity {
     this._description = value;
   }
 
-  getExamineDescription(context: CommandContext): string {
+  getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
+
+    // If we're scrutinizing and an examine description is present, go with that.
+    if (isScrutinize && this.examineDescription) {
+      return this.examineDescription;
+    }
+
     return this.description;
   }
 
@@ -86,6 +125,13 @@ export abstract class WorldEntity {
 
   isDescribedByToken(token: CommandToken, context: CommandContext): boolean {
 
+    // TODO: May not belong at the entity level
+
+    // Special keywords to talk about the room the player is in
+    if (token.name === 'room' || token.name === 'here') {
+      return (this === (context.currentRoom as WorldEntity));
+    }
+
     // Search by nouns registered for the object
     for (const noun of this.nouns) {
       if (noun === token.name) {
@@ -117,7 +163,7 @@ export abstract class WorldEntity {
     this._inRoomDescription = value;
   }
 
-  getInRoomDescription(context: CommandContext): string {
+  getInRoomDescription(context: CommandContext, isScrutinize: boolean): string {
 
     // We accept context so that individual items can customize their appearance as needed, but by default, we'll go with the property
     return this.inRoomDescription;

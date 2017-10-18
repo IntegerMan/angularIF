@@ -1,4 +1,4 @@
-import {Room} from './room';
+import {Room} from './entities/room';
 
 /**
  * Represents a unidirectional link from one room to a direction from that room, possibly resulting in navigation into another room. This

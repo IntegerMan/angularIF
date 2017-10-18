@@ -15,6 +15,9 @@ export class TokenComponent implements OnInit {
   @Input()
   includeModifiers: boolean = false;
 
+  @Input()
+  includeEntity: boolean = false;
+
   constructor() { }
 
   ngOnInit() {

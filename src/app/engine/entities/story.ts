@@ -1,8 +1,8 @@
 import {Room} from './room';
 import {Player} from './player';
-import {LexiconDictionary} from './tokenizer/lexicon-dictionary';
-import {VerbHandler} from './verbs/verb-handler';
-import {CommonVerbService} from './verbs/common-verb.service';
+import {LexiconDictionary} from '../tokenizer/lexicon-dictionary';
+import {VerbHandler} from '../verbs/verb-handler';
+import {CommonVerbService} from '../verbs/common-verb.service';
 
 export abstract class Story {
 

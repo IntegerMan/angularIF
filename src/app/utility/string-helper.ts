@@ -26,4 +26,38 @@ export class StringHelper {
 
   }
 
+  /**
+   * Replaces every instance of the search string in the input string with the replacement string. This is different than the replace
+   * method which only replaces the first instance
+   * @param {string} input The string to search and replace
+   * @param {string} search The string to search input for.
+   * @param {string} replacement The string to replace all instances of search in input with.
+   * @param caseSensitive {boolean} Whether casing should be taken into account for the search. By default, this is true.
+   * @returns {string} A modified version of input.
+   */
+  static replaceAll(input: string, search: string, replacement: string, caseSensitive: boolean = true): string {
+
+    if (!input) {
+      return null;
+    }
+
+    if (caseSensitive) {
+
+      return input.split(search).join(replacement);
+
+    } else {
+
+      // Case insensitive search will replace all instances and sub in the replacement value (including its casing)
+      let pos = input.toLowerCase().indexOf(search.toLowerCase());
+
+      while (pos >= 0) {
+        input = input.substr(0, pos) + replacement + input.substr(pos + search.length);
+        pos = input.toLowerCase().indexOf(search.toLowerCase());
+      }
+
+      return input;
+
+    }
+  }
+
 }

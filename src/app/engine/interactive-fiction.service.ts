@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../logging.service';
-import {Story} from './story';
-import {Room} from './room';
-import {Player} from './player';
+import {Story} from './entities/story';
+import {Room} from './entities/room';
+import {Player} from './entities/player';
 import {TokenizerService} from './tokenizer/tokenizer.service';
 import {CommandToken} from './tokenizer/command-token';
 import {TokenClassification} from './tokenizer/token-classification.enum';
@@ -14,7 +14,7 @@ import {Command} from './tokenizer/command';
 import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
-import {WorldEntity} from './world-entity';
+import {WorldEntity} from './entities/world-entity';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -93,19 +93,18 @@ export class InteractiveFictionService {
     this.describeRoom(story.player.currentRoom, this.buildCommandContext());
   }
 
-  describeRoom(room: Room, context: CommandContext): void {
+  describeRoom(room: Room, context: CommandContext, isScrutinize: boolean = false): void {
 
     this.outputService.displayRoomName(room.name);
     this.outputService.displayBlankLine();
-    this.outputService.displayStory(room.getExamineDescription(context));
+    this.outputService.displayStory(room.getExamineDescription(context, isScrutinize));
 
     // Now list all notable items that are present here
     const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));
     for (const entity of notableItems) {
       this.outputService.displayBlankLine();
-      this.outputService.displayStory(entity.getInRoomDescription(context));
+      this.outputService.displayStory(entity.getInRoomDescription(context, isScrutinize));
     }
-
 
   }
 
@@ -141,7 +140,7 @@ export class InteractiveFictionService {
     return verbHandler.handleCommand(command, context);
   }
 
-  private buildCommandContext(): CommandContext {
+  buildCommandContext(): CommandContext {
     return new CommandContext(this.story, this, this.outputService, this.navService, this.logger);
   }
 

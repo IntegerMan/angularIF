@@ -2,17 +2,16 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../tokenizer/command';
 import {CommandToken} from '../tokenizer/command-token';
-import {Scenery} from '../scenery';
+import {Scenery} from '../entities/scenery';
 
 export class DropHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): boolean {
 
-
     // If it's just a plain old look without a target, describe the room
     if (command.objects.length <= 0) {
 
-      context.ifService.describeRoom(context.player, context.currentRoom);
+      context.ifService.describeRoom(context.currentRoom, context);
 
       return true;
     }
@@ -25,7 +24,7 @@ export class DropHandler extends VerbHandler {
     }
 
     // Let the context object take care of disambiguation and lookup
-    const entity = context.getSingleObjectForToken(token);
+    const entity = token.entity;
     if (!entity) {
       // The context lookup took care of output to the user, so we just need to abort
       return false;
@@ -33,7 +32,7 @@ export class DropHandler extends VerbHandler {
 
     // Protect against invalid class since we need a Scenery instance up ahead
     if (!(entity instanceof Scenery)) {
-      context.outputService.displayParserError(`You can't drop that!`);
+      context.outputService.displayFailedAction(`You can't drop that!`);
       return false;
     }
 
@@ -45,7 +44,7 @@ export class DropHandler extends VerbHandler {
 
     // Don't do any dropping if the player isn't carrying anything
     if (context.player.inventory.length <= 0) {
-      context.outputService.displayParserError('You aren\'t currently carrying anything.');
+      context.outputService.displayFailedAction('You aren\'t currently carrying anything.');
       return false;
     }
 

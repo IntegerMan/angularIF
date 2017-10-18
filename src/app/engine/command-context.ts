@@ -1,13 +1,14 @@
 import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../logging.service';
-import {Story} from './story';
+import {Story} from './entities/story';
 import {InteractiveFictionService} from './interactive-fiction.service';
-import {Room} from './room';
+import {Room} from './entities/room';
 import {NavigationService} from './navigation.service';
-import {Player} from './player';
-import {WorldEntity} from './world-entity';
+import {Player} from './entities/player';
+import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './tokenizer/command-token';
+import {TokenizerService} from './tokenizer/tokenizer.service';
 
 export class CommandContext {
 
@@ -41,13 +42,21 @@ export class CommandContext {
 
   getSingleObjectForToken(token: CommandToken): WorldEntity {
 
+    // TODO: This shouldn't really live in the context object
+
     const entities: WorldEntity[] = this.currentRoom.findObjectsForToken(token, this);
 
     // No matches yields an "it's not here" message
     if (!entities || entities.length <= 0) {
       this.logger.log(`No local match found for '${token.name}'`);
-      this.outputService.displayParserError(`You don't see a ${token.name} here.`);
 
+      if (!TokenizerService.isSpecialNoun(token)) {
+        if (token.isPlural) {
+          this.outputService.displayParserError(`You don't see ${token.name} here.`);
+        } else {
+          this.outputService.displayParserError(`You don't see a ${token.name} here.`);
+        }
+      }
       return null;
     }
 

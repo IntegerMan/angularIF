@@ -6,6 +6,7 @@ import {LookHandler} from './look-handler';
 import {GoHandler} from './go-handler';
 import {GetHandler} from './get-handler';
 import {DropHandler} from './drop-handler';
+import {ExamineHandler} from './examine-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -17,8 +18,9 @@ export class CommonVerbService {
     const verbs: VerbHandler[] = [];
 
     // TODO: It'd be real nice to have some automated way of getting synonyms within the engine
-    verbs.push(new LookHandler(['look', 'getExamineDescription', 'x', 'l']));
-    verbs.push(new GoHandler(['go', 'walk', 'run', 'travel', 'head']));
+    verbs.push(new LookHandler(['look']));
+    verbs.push(new ExamineHandler(['examine']));
+    verbs.push(new GoHandler(['go', 'walk', 'run', 'travel']));
     verbs.push(new GetHandler(['get', 'take', 'procure']));
     verbs.push(new DropHandler(['drop', 'discard']));
     verbs.push(new OpenHandler(['open']));

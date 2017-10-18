@@ -17,6 +17,7 @@ import { LineRendererComponent } from './text-rendering/line-renderer/line-rende
 import { TokenComponent } from './text-rendering/token/token.component';
 import { UserInputComponent } from './text-rendering/user-input/user-input.component';
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
+import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TextListComponent } from './text-rendering/text-list/text-list.componen
     LineRendererComponent,
     TokenComponent,
     UserInputComponent,
-    TextListComponent
+    TextListComponent,
+    EntityReferenceComponent
   ],
   imports: [
     BrowserAnimationsModule,

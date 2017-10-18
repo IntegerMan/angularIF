@@ -8,3 +8,7 @@
   </span>
   {{token.term.spaceAfter}}
 </span>
+<span *ngIf="includeEntity && token.entity">
+  -&gt;
+  <if-entity-reference [entity]="token.entity"></if-entity-reference>
+</span>

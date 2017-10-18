@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Room} from './room';
+import {Room} from './entities/room';
 import {RoomLink} from './room-link';
 
 @Injectable()

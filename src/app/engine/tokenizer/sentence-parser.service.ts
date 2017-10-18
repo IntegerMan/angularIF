@@ -170,6 +170,11 @@ export class SentenceParserService {
         this.logger.log(`Associating modifier '${modifier.name}' with '${nextNoun.name}'`);
         nextNoun.setModifiedBy(modifier);
 
+      } else if (command.verb && modifier.classification === TokenClassification.Preposition) {
+
+        // When we're ending a sentence in a preposition, we're going to say it modifies the verb. Case in point: "Look around"
+        command.verb.setModifiedBy(modifier);
+
       } else {
 
         this.logger.warning(`Could not find a word to associate with the modifier '${modifier.name}'`);
