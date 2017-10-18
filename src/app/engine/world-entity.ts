@@ -9,10 +9,12 @@ export abstract class WorldEntity {
   nouns: string[];
   adjectives: string[];
   article: string = 'the';
+  private _inRoomDescription: string = null;
 
   private _name: string;
 
   constructor(name: string) {
+
     this._name = name;
 
     this.nouns = [];
@@ -48,7 +50,6 @@ export abstract class WorldEntity {
   getExamineDescription(context: CommandContext): string {
     return this.description;
   }
-
 
   private autodetectNounsAndAdjectives(): void {
 
@@ -103,4 +104,22 @@ export abstract class WorldEntity {
     return false;
   }
 
+  get inRoomDescription(): string {
+    if (this._inRoomDescription) {
+      return this._inRoomDescription;
+    }
+
+    return `There is ${this.article} ${this.name} laying on the ground here.`;
+  }
+
+  set inRoomDescription(value: string) {
+    this._inRoomDescription = value;
+  }
+
+  getInRoomDescription(context: CommandContext): string {
+
+    // We accept context so that individual items can customize their appearance as needed, but by default, we'll go with the property
+    return this.inRoomDescription;
+
+  }
 }
