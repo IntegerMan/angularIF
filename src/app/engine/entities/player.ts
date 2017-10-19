@@ -98,5 +98,22 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
     return items;
   }
 
+  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean {
+    for (const item of this.inventory) {
+      if (item === entity) {
+        return true;
+      }
+
+      if (isRecursive) {
+        const childContainer: ICanContainEntities = ((item as any) as ICanContainEntities);
+        if (childContainer && childContainer.containsEntity && childContainer.containsEntity(entity, isRecursive)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
 
 }

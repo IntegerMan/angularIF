@@ -5,8 +5,11 @@ import {ArrayHelper} from '../../utility/array-helper';
 import {ICanContainEntities} from './i-can-contain-entities';
 import {EntityWeight} from './entity-weight.enum';
 import {EntitySize} from './entity-size.enum';
+import {LightLevel} from './light-level.enum';
 
 export class Room extends WorldEntity implements ICanContainEntities {
+
+  lighting: LightLevel;
 
   contents: WorldEntity[];
 
@@ -17,6 +20,7 @@ export class Room extends WorldEntity implements ICanContainEntities {
 
     this.weight = EntityWeight.building;
     this.size = EntitySize.building;
+    this.lighting = LightLevel.wellLit;
 
   }
 
@@ -81,4 +85,26 @@ export class Room extends WorldEntity implements ICanContainEntities {
     return items;
   }
 
+  hasLight(context: CommandContext): boolean {
+    // By default, we'll just examine the lighting enum
+    return this.lighting > LightLevel.dim;
+  }
+
+  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean {
+
+    for (const item of this.contents) {
+      if (item === entity) {
+        return true;
+      }
+
+      if (isRecursive) {
+        const childContainer: ICanContainEntities = ((item as any) as ICanContainEntities);
+        if (childContainer && childContainer.containsEntity && childContainer.containsEntity(entity, isRecursive)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
 }

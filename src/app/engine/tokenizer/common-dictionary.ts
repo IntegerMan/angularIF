@@ -19,12 +19,15 @@ export class CommonDictionary extends LexiconDictionary {
     // Identify some problem nouns
     this.lexer.addNoun('Hall');
     this.lexer.addNoun('Chandelier');
+    this.lexer.addNoun('Message');
+    this.lexer.addNoun('Note');
 
     // Identify some problem adjectives
     this.lexer.addAdjective('Brass');
     this.lexer.addAdjective('Bronze');
     this.lexer.addAdjective('Decorated');
     this.lexer.addAdjective('Glittering');
+    this.lexer.addAdjective('Scrawled');
 
     // Give directions a custom verb
     this.lexer.addDirection('North');
