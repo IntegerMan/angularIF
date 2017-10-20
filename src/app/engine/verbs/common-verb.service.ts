@@ -7,6 +7,7 @@ import {GoHandler} from './go-handler';
 import {GetHandler} from './get-handler';
 import {DropHandler} from './drop-handler';
 import {ExamineHandler} from './examine-handler';
+import {RestartHandler} from './restart-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -25,6 +26,7 @@ export class CommonVerbService {
     verbs.push(new DropHandler(['drop', 'discard']));
     verbs.push(new OpenHandler(['open']));
     verbs.push(new CloseHandler(['close', 'shut']));
+    verbs.push(new RestartHandler(['restart', 'reset']));
 
     return verbs;
 

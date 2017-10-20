@@ -1,6 +1,6 @@
 import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
-import {Command} from '../tokenizer/command';
+import {Command} from '../parser/command';
 import {WorldEntity} from '../entities/world-entity';
 import {IGettable} from '../entities/i-gettable';
 

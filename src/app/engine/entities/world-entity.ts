@@ -1,8 +1,8 @@
 import {CommandContext} from '../command-context';
 import {Room} from './room';
 import {LoggingService} from '../../logging.service';
-import {NaturalLanguageService} from '../tokenizer/natural-language.service';
-import {CommandToken} from '../tokenizer/command-token';
+import {NaturalLanguageService} from '../parser/natural-language.service';
+import {CommandToken} from '../parser/command-token';
 import {EntityWeight} from './entity-weight.enum';
 import {EntitySize} from './entity-size.enum';
 
@@ -32,7 +32,7 @@ export abstract class WorldEntity {
     this._weight = EntityWeight.textbook;
     this._size = EntitySize.person;
 
-    this.autodetectNounsAndAdjectives();
+    // Auto-detecting here seems like it would make sense, but we don't yet have adequate dictionaries
   }
 
   get currentRoom(): Room {
@@ -93,18 +93,17 @@ export abstract class WorldEntity {
     return this.description;
   }
 
-  private autodetectNounsAndAdjectives(): void {
-
-    this.nouns.length = 0;
-    this.adjectives.length = 0;
+  autodetectNounsAndAdjectives(): void {
 
     // Strip the phrase and analyze the nouns present
-    for (const noun of NaturalLanguageService.instance.getNouns(this.name)) {
+    const nouns = NaturalLanguageService.instance.getNouns(this.name);
+    for (const noun of nouns) {
       this.addNounAlias(noun);
     }
 
     // Strip the phrase and analyze the adjectives present
-    for (const adjective of NaturalLanguageService.instance.getAdjectives(this.name)) {
+    const adjectives = NaturalLanguageService.instance.getAdjectives(this.name);
+    for (const adjective of adjectives) {
       this.addAdjectiveAlias(adjective);
     }
 

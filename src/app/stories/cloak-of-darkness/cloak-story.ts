@@ -32,9 +32,14 @@ export class CloakStory extends Story {
 
     // Basic Metadata
     this.title = 'Cloak of Darkness';
-    this.version = '0.2';
+    this.version = '0.21';
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
+    this.reset();
+
+  }
+
+  reset(): void {
 
     // Define the titular cloak
     this._cloak = new PortableEntity('black velvet cloak');
@@ -55,7 +60,6 @@ export class CloakStory extends Story {
     this.configureFoyer(this._foyer);
     this.configureCloakroom(this._cloakroom);
     this.configureBar(this._bar);
-
   }
 
   private configureCloak(cloak: PortableEntity): void {

@@ -4,13 +4,13 @@ import {LoggingService} from '../logging.service';
 import {Story} from './entities/story';
 import {Room} from './entities/room';
 import {Player} from './entities/player';
-import {TokenizerService} from './tokenizer/tokenizer.service';
-import {CommandToken} from './tokenizer/command-token';
-import {TokenClassification} from './tokenizer/token-classification.enum';
-import {CommonDictionary} from './tokenizer/common-dictionary';
-import {LexiconService} from './tokenizer/lexicon.service';
-import {SentenceParserService} from './tokenizer/sentence-parser.service';
-import {Command} from './tokenizer/command';
+import {TokenizerService} from './parser/tokenizer.service';
+import {CommandToken} from './parser/command-token';
+import {TokenClassification} from './parser/token-classification.enum';
+import {CommonDictionary} from './parser/common-dictionary';
+import {LexiconService} from './parser/lexicon.service';
+import {SentenceParserService} from './parser/sentence-parser.service';
+import {Command} from './parser/command';
 import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
@@ -21,7 +21,7 @@ import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
-  engineVersion: string = '0.2';
+  engineVersion: string = '0.21';
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
@@ -74,6 +74,10 @@ export class InteractiveFictionService {
 
     story.initialize();
 
+    this.beginStory(story);
+  }
+
+  private beginStory(story: Story) {
     this.story = story;
 
     this.outputService.displayTitle(story.title, `v${story.version}`);
@@ -83,6 +87,7 @@ export class InteractiveFictionService {
     this.outputService.displayBlankLine();
 
     // Grab verb handlers from the story.
+    this.verbHandlers.length = 0;
     for (const verb of story.verbHandlers) {
       this.logger.log(`Loaded verb handler: ${verb.name}`);
       this.verbHandlers.push(verb);
@@ -129,7 +134,7 @@ export class InteractiveFictionService {
 
   }
 
-  public handleUserCommand(command: Command): boolean {
+  public handleUserCommand(command: Command, context: CommandContext): boolean {
 
     // Validate input
     if (!command) {
@@ -138,10 +143,6 @@ export class InteractiveFictionService {
 
     // Increment our command counter
     this.commandId += 1;
-
-    // Create a command context. This will give the command handler more utility information
-    const context: CommandContext = this.buildCommandContext();
-    this.logUserCommandToAnalytics(context, command);
 
     this.logger.log(`Handling command associated with sentence ${command.userInput}.`);
     this.logger.log(command);
@@ -164,9 +165,7 @@ export class InteractiveFictionService {
     return verbHandler.handleCommand(command, context);
   }
 
-  private logUserCommandToAnalytics(context: CommandContext, command: Command): void {
-
-    // TODO: It'd be nice not to do this in dev mode.
+  logUserCommandToAnalytics(context: CommandContext, command: Command): void {
 
     this.analytics.emitEvent(
       context.story.title,
@@ -212,6 +211,17 @@ export class InteractiveFictionService {
     if (actor === this.story.player && room !== oldRoom && !isSilent) {
       this.describeRoom(room, this.buildCommandContext());
     }
+
+  }
+
+  restartStory(): void {
+
+    this.outputService.displaySystem('Restarting story...');
+    this.outputService.displayBlankLine();
+
+    this.story.restart();
+
+    this.beginStory(this.story);
 
   }
 

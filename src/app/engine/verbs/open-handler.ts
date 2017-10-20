@@ -1,6 +1,6 @@
 import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
-import {Command} from '../tokenizer/command';
+import {Command} from '../parser/command';
 
 export class OpenHandler extends VerbHandler {
 
