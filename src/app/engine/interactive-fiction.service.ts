@@ -20,7 +20,7 @@ import {WorldEntity} from './entities/world-entity';
 export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
-  engineVersion: string = '0.1';
+  engineVersion: string = '0.15';
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
@@ -150,7 +150,6 @@ export class InteractiveFictionService {
     // Create a command context. This will give the command handler more utility information
     const context: CommandContext = this.buildCommandContext();
 
-    // TODO: This will likely need a command context
     return verbHandler.handleCommand(command, context);
   }
 

@@ -1,21 +1,16 @@
 import {WorldEntity} from './world-entity';
-import {Scenery} from './scenery';
 import {LoggingService} from '../../logging.service';
 import {ArrayHelper} from '../../utility/array-helper';
 import {CommandContext} from '../command-context';
-import {ICanContainEntities} from './i-can-contain-entities';
 import {EntitySize} from './entity-size.enum';
 import {EntityWeight} from './entity-weight.enum';
 import {IGettable} from './i-gettable';
 
-export class Player extends WorldEntity implements ICanContainEntities, IGettable {
-
-  inventory: WorldEntity[];
+export class Player extends WorldEntity implements IGettable {
 
   constructor() {
     super('you');
 
-    this.inventory = [];
     this.article = '';
 
     // Add some common synonyms for helping the player refer to their character
@@ -49,7 +44,7 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
 
     item.currentRoom = null;
-    this.inventory.push(item);
+    this.contents.push(item);
 
     return true;
   }
@@ -57,7 +52,7 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
   removeFromInventory(item: WorldEntity, context: CommandContext = null): boolean {
 
     // Display a warning if you're trying to do something stupid
-    if (this.inventory.indexOf(item) < 0) {
+    if (this.contents.indexOf(item) < 0) {
 
       if (context) {
         context.outputService.displayFailedAction(`You aren't carrying ${item.article} ${item.name}.`);
@@ -69,7 +64,7 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
     // TODO: Some items may want checks or separate actions if the player is going to remove them
 
     // Okay, let's remove it!
-    if (ArrayHelper.removeIfPresent(this.inventory, item)) {
+    if (ArrayHelper.removeIfPresent(this.contents, item)) {
 
       LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
 
@@ -83,37 +78,5 @@ export class Player extends WorldEntity implements ICanContainEntities, IGettabl
     return false;
 
   }
-
-  getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[] {
-
-    const items: WorldEntity[] = [];
-
-    // By default, inventory items are only visible to the person carrying them
-    if (includeHidden || context.player === this) {
-      for (const item of this.inventory) {
-        items.push(item);
-      }
-    }
-
-    return items;
-  }
-
-  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean {
-    for (const item of this.inventory) {
-      if (item === entity) {
-        return true;
-      }
-
-      if (isRecursive) {
-        const childContainer: ICanContainEntities = ((item as any) as ICanContainEntities);
-        if (childContainer && childContainer.containsEntity && childContainer.containsEntity(entity, isRecursive)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
 
 }

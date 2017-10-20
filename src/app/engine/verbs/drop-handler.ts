@@ -43,14 +43,14 @@ export class DropHandler extends VerbHandler {
   dropEverything(context: CommandContext): boolean {
 
     // Don't do any dropping if the player isn't carrying anything
-    if (context.player.inventory.length <= 0) {
+    if (context.player.contents.length <= 0) {
       context.outputService.displayFailedAction('You aren\'t currently carrying anything.');
       return false;
     }
 
     let result: boolean = false;
 
-    for (const item of context.player.inventory) {
+    for (const item of context.player.contents) {
       if (this.dropItem(item, context)) {
         result = true;
       }

@@ -2,12 +2,11 @@ import {CommandToken} from '../tokenizer/command-token';
 import {WorldEntity} from './world-entity';
 import {CommandContext} from '../command-context';
 import {ArrayHelper} from '../../utility/array-helper';
-import {ICanContainEntities} from './i-can-contain-entities';
 import {EntityWeight} from './entity-weight.enum';
 import {EntitySize} from './entity-size.enum';
 import {LightLevel} from './light-level.enum';
 
-export class Room extends WorldEntity implements ICanContainEntities {
+export class Room extends WorldEntity {
 
   lighting: LightLevel;
 
@@ -16,8 +15,6 @@ export class Room extends WorldEntity implements ICanContainEntities {
   constructor(name: string) {
     super(name);
 
-    this.contents = [];
-
     this.weight = EntityWeight.building;
     this.size = EntitySize.building;
     this.lighting = LightLevel.wellLit;
@@ -25,10 +22,8 @@ export class Room extends WorldEntity implements ICanContainEntities {
   }
 
   addObject(object: WorldEntity): void {
-
     object.currentRoom = this;
     this.contents.push(object);
-
   }
 
   removeObject(object: WorldEntity): boolean {
@@ -48,7 +43,7 @@ export class Room extends WorldEntity implements ICanContainEntities {
     return results;
   }
 
-  private addItemsFromContainer(container: ICanContainEntities, token: CommandToken, context: CommandContext): WorldEntity[] {
+  private addItemsFromContainer(container: WorldEntity, token: CommandToken, context: CommandContext): WorldEntity[] {
 
     const results: WorldEntity[] = [];
 
@@ -58,15 +53,9 @@ export class Room extends WorldEntity implements ICanContainEntities {
         results.push(entity);
       }
 
-      // Yuck. I just want to see if it supports getting the contained entities
-      const childContainer: ICanContainEntities = ((entity as any) as ICanContainEntities);
-      if (childContainer && childContainer.getContainedEntities !== undefined) {
-
-        const fromContainer = this.addItemsFromContainer(childContainer, token, context);
-        for (const e of fromContainer) {
-          results.push(e);
-        }
-
+      const fromContainer = this.addItemsFromContainer(entity, token, context);
+      for (const e of fromContainer) {
+        results.push(e);
       }
     }
 

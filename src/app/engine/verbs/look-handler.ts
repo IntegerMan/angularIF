@@ -7,14 +7,14 @@ export class LookHandler extends VerbHandler {
 
   private static listPlayerInventory(context: CommandContext): boolean {
 
-    if (!context.player.inventory || context.player.inventory.length <= 0) {
+    if (!context.player.contents || context.player.contents.length <= 0) {
 
       context.outputService.displaySystem('You aren\'t carrying anything right now.');
 
     } else {
 
       // TODO: It might be nice to initial capitalize each one of these items
-      const itemNames: string[] = context.player.inventory.map(i => i.name).sort();
+      const itemNames: string[] = context.player.contents.map(i => i.name).sort();
 
       context.outputService.displayList(`You are currently carrying:`, itemNames);
     }
