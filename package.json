@@ -30,6 +30,7 @@
     "@angular/cli": "latest",
     "@angular/compiler-cli": "latest",
     "@angular/language-service": "latest",
+    "@types/google.analytics": "0.0.35",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",

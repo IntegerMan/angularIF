@@ -15,6 +15,7 @@ import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
 import {WorldEntity} from './entities/world-entity';
+import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -28,13 +29,15 @@ export class InteractiveFictionService {
   story: Story;
 
   private verbHandlers: VerbHandler[];
+  private commandId: number;
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
               private sentenceParser: SentenceParserService,
               private outputService: TextOutputService,
               private navService: NavigationService,
-              private lexer: LexiconService) {
+              private lexer: LexiconService,
+              private analytics: GoogleAnalyticsService) {
 
     // Ensure we start with a unique empty list
     this.verbHandlers = [];
@@ -62,6 +65,9 @@ export class InteractiveFictionService {
   }
 
   private initializeStory(story: Story) {
+
+    // Restart our numbering
+    this.commandId = 0;
 
     // Ensure the story has the base dictionary at least
     story.addDictionary(new CommonDictionary(this.lexer));
@@ -129,6 +135,13 @@ export class InteractiveFictionService {
       throw new Error('Can\'t respond to a command that isn\'t there.');
     }
 
+    // Increment our command counter
+    this.commandId += 1;
+
+    // Create a command context. This will give the command handler more utility information
+    const context: CommandContext = this.buildCommandContext();
+    this.logUserCommandToAnalytics(context, command);
+
     this.logger.log(`Handling command associated with sentence ${command.userInput}.`);
     this.logger.log(command);
 
@@ -147,10 +160,19 @@ export class InteractiveFictionService {
       return false;
     }
 
-    // Create a command context. This will give the command handler more utility information
-    const context: CommandContext = this.buildCommandContext();
-
     return verbHandler.handleCommand(command, context);
+  }
+
+  private logUserCommandToAnalytics(context: CommandContext, command: Command): void {
+
+    // TODO: It'd be nice not to do this in dev mode.
+
+    this.analytics.emitEvent(
+      context.story.title,
+      command.userInput,
+      context.currentRoom.name,
+      this.commandId);
+
   }
 
   buildCommandContext(): CommandContext {

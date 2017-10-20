@@ -18,6 +18,7 @@ import { TokenComponent } from './text-rendering/token/token.component';
 import { UserInputComponent } from './text-rendering/user-input/user-input.component';
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
+import {GoogleAnalyticsService} from './utility/google-analytics.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { EntityReferenceComponent } from './text-rendering/entity-reference/enti
   providers: [
     LoggingService,
     TextOutputService,
-    CommandEntryService
+    CommandEntryService,
+    GoogleAnalyticsService
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
