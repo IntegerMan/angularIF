@@ -189,4 +189,21 @@ export abstract class WorldEntity {
     return items;
   }
 
+  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean {
+
+    for (const item of this.contents) {
+      if (item === entity) {
+        return true;
+      }
+
+      if (isRecursive) {
+        if (item.containsEntity(entity, isRecursive)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
 }

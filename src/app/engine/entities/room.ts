@@ -62,38 +62,9 @@ export class Room extends WorldEntity {
     return results;
   }
 
-  getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[] {
-
-    const items: WorldEntity[] = [];
-
-    for (const item of this.contents) {
-      // TODO: May want to check to see if an item is hidden
-      items.push(item);
-    }
-
-    return items;
-  }
-
   hasLight(context: CommandContext): boolean {
     // By default, we'll just examine the lighting enum
     return this.lighting > LightLevel.dim;
   }
 
-  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean {
-
-    for (const item of this.contents) {
-      if (item === entity) {
-        return true;
-      }
-
-      if (isRecursive) {
-        const childContainer: ICanContainEntities = ((item as any) as ICanContainEntities);
-        if (childContainer && childContainer.containsEntity && childContainer.containsEntity(entity, isRecursive)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
 }
