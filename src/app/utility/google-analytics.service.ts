@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {environment} from '../../environments/environment';
 
 declare let ga: any;
 
@@ -10,12 +11,16 @@ export class GoogleAnalyticsService {
                    eventLabel: string = null,
                    eventValue: number = null) {
 
-    ga('send', 'event', {
-      eventCategory: eventCategory,
-      eventLabel: eventLabel,
-      eventAction: eventAction,
-      eventValue: eventValue
-    });
+    if (environment.production) {
+
+      ga('send', 'event', {
+        eventCategory: eventCategory,
+        eventLabel: eventLabel,
+        eventAction: eventAction,
+        eventValue: eventValue
+      });
+
+    }
 
   }
 
