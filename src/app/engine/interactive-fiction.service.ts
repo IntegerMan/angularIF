@@ -95,16 +95,30 @@ export class InteractiveFictionService {
 
   describeRoom(room: Room, context: CommandContext, isScrutinize: boolean = false): void {
 
-    this.outputService.displayRoomName(room.name);
-    this.outputService.displayBlankLine();
-    this.outputService.displayStory(room.getExamineDescription(context, isScrutinize));
+    if (!room.hasLight(context)) {
+      this.describeDarkRoom(context);
+      return;
+    }
+
+    context.outputService.displayRoomName(room.name);
+    context.outputService.displayBlankLine();
+    context.outputService.displayStory(room.getExamineDescription(context, isScrutinize));
 
     // Now list all notable items that are present here
     const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));
     for (const entity of notableItems) {
-      this.outputService.displayBlankLine();
-      this.outputService.displayStory(entity.getInRoomDescription(context, isScrutinize));
+      context.outputService.displayBlankLine();
+      context.outputService.displayStory(entity.getInRoomDescription(context, isScrutinize));
     }
+
+  }
+
+  describeDarkRoom(context: CommandContext): void {
+
+    // TODO: We may want story authors to be able to customize these at some point, but for now, this is fine.
+    context.outputService.displayRoomName(`Darkness`);
+    context.outputService.displayBlankLine();
+    context.outputService.displayStory(`It is pitch dark, and you can't see a thing.`);
 
   }
 
@@ -178,4 +192,5 @@ export class InteractiveFictionService {
     }
 
   }
+
 }

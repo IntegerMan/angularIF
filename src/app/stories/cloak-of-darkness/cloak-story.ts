@@ -8,12 +8,13 @@ import {Hook} from './hook';
 import {EntityWeight} from '../../engine/entities/entity-weight.enum';
 import {EntitySize} from '../../engine/entities/entity-size.enum';
 import {PortableEntity} from '../../engine/entities/portable-entity';
+import {Bar} from './bar';
 
 export class CloakStory extends Story {
 
   private _foyer: Room;
   private _cloakroom: Room;
-  private _bar: Room;
+  private _bar: Bar;
   private _player: Player;
   private _cloak: PortableEntity;
 
@@ -35,14 +36,15 @@ export class CloakStory extends Story {
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
 
-    // Define the rooms
-    this._foyer = new Room('Foyer of the Opera House');
-    this._cloakroom = new Room('Cloakroom');
-    this._bar = new Room('Foyer Bar');
-
     // Define the titular cloak
     this._cloak = new PortableEntity('black velvet cloak');
     this.configureCloak(this._cloak);
+
+    // Define the rooms
+    this._foyer = new Room('Foyer of the Opera House');
+    this._cloakroom = new Room('Cloakroom');
+    this._bar = new Bar('Foyer Bar');
+    this._bar.cloak = this._cloak;
 
     // Set up the player
     this._player = new Player();

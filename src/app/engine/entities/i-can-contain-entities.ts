@@ -5,4 +5,5 @@ export interface ICanContainEntities {
 
   getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[];
 
+  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean;
 }
