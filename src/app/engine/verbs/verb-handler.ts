@@ -1,5 +1,5 @@
-import {CommandToken} from '../tokenizer/command-token';
-import {Command} from '../tokenizer/command';
+import {CommandToken} from '../parser/command-token';
+import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 
 export abstract class VerbHandler {

@@ -7,8 +7,8 @@ import {NavigationService} from './navigation.service';
 import {Player} from './entities/player';
 import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
-import {CommandToken} from './tokenizer/command-token';
-import {TokenizerService} from './tokenizer/tokenizer.service';
+import {CommandToken} from './parser/command-token';
+import {TokenizerService} from './parser/tokenizer.service';
 
 export class CommandContext {
 
@@ -25,6 +25,7 @@ export class CommandContext {
   ifService: InteractiveFictionService;
   navService: NavigationService;
   story: Story;
+  wasConfused: boolean = false;
 
   constructor(story: Story,
               ifService: InteractiveFictionService,
@@ -51,11 +52,8 @@ export class CommandContext {
       this.logger.log(`No local match found for '${token.name}'`);
 
       if (!TokenizerService.isSpecialNoun(token)) {
-        if (token.isPlural) {
-          this.outputService.displayParserError(`You don't see ${token.name} here.`);
-        } else {
-          this.outputService.displayParserError(`You don't see a ${token.name} here.`);
-        }
+        this.outputService.displayParserError(`You don't see ${token.getCannotSeeName()} here.`);
+        this.wasConfused = true;
       }
       return null;
     }
@@ -67,6 +65,8 @@ export class CommandContext {
 
       // TODO: Better disambiguation is needed here
       this.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);
+
+      this.wasConfused = true;
 
       return null;
     }

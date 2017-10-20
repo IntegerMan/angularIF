@@ -1,6 +1,6 @@
 import {Room} from './room';
 import {Player} from './player';
-import {LexiconDictionary} from '../tokenizer/lexicon-dictionary';
+import {LexiconDictionary} from '../parser/lexicon-dictionary';
 import {VerbHandler} from '../verbs/verb-handler';
 import {CommonVerbService} from '../verbs/common-verb.service';
 import {WorldEntity} from './world-entity';

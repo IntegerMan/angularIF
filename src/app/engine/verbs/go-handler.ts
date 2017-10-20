@@ -1,8 +1,8 @@
 import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
-import {Command} from '../tokenizer/command';
-import {CommandToken} from '../tokenizer/command-token';
-import {TokenClassification} from '../tokenizer/token-classification.enum';
+import {Command} from '../parser/command';
+import {CommandToken} from '../parser/command-token';
+import {TokenClassification} from '../parser/token-classification.enum';
 import {Room} from '../entities/room';
 import {RoomLink} from '../room-link';
 

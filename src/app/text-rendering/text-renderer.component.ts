@@ -3,9 +3,9 @@ import {TextOutputService} from '../engine/text-output.service';
 import {LoggingService} from '../logging.service';
 import {TextLine} from './text-line';
 import {CommandType} from './command-type.enum';
-import {CommandToken} from '../engine/tokenizer/command-token';
-import {TokenClassification} from '../engine/tokenizer/token-classification.enum';
-import {Command} from '../engine/tokenizer/command';
+import {CommandToken} from '../engine/parser/command-token';
+import {TokenClassification} from '../engine/parser/token-classification.enum';
+import {Command} from '../engine/parser/command';
 
 @Component({
   selector: 'if-text-renderer',

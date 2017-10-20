@@ -4,13 +4,13 @@ import {LoggingService} from '../logging.service';
 import {Story} from './entities/story';
 import {Room} from './entities/room';
 import {Player} from './entities/player';
-import {TokenizerService} from './tokenizer/tokenizer.service';
-import {CommandToken} from './tokenizer/command-token';
-import {TokenClassification} from './tokenizer/token-classification.enum';
-import {CommonDictionary} from './tokenizer/common-dictionary';
-import {LexiconService} from './tokenizer/lexicon.service';
-import {SentenceParserService} from './tokenizer/sentence-parser.service';
-import {Command} from './tokenizer/command';
+import {TokenizerService} from './parser/tokenizer.service';
+import {CommandToken} from './parser/command-token';
+import {TokenClassification} from './parser/token-classification.enum';
+import {CommonDictionary} from './parser/common-dictionary';
+import {LexiconService} from './parser/lexicon.service';
+import {SentenceParserService} from './parser/sentence-parser.service';
+import {Command} from './parser/command';
 import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
@@ -129,7 +129,7 @@ export class InteractiveFictionService {
 
   }
 
-  public handleUserCommand(command: Command): boolean {
+  public handleUserCommand(command: Command, context: CommandContext): boolean {
 
     // Validate input
     if (!command) {
@@ -138,10 +138,6 @@ export class InteractiveFictionService {
 
     // Increment our command counter
     this.commandId += 1;
-
-    // Create a command context. This will give the command handler more utility information
-    const context: CommandContext = this.buildCommandContext();
-    this.logUserCommandToAnalytics(context, command);
 
     this.logger.log(`Handling command associated with sentence ${command.userInput}.`);
     this.logger.log(command);
@@ -164,9 +160,7 @@ export class InteractiveFictionService {
     return verbHandler.handleCommand(command, context);
   }
 
-  private logUserCommandToAnalytics(context: CommandContext, command: Command): void {
-
-    // TODO: It'd be nice not to do this in dev mode.
+  logUserCommandToAnalytics(context: CommandContext, command: Command): void {
 
     this.analytics.emitEvent(
       context.story.title,
