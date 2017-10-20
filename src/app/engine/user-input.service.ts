@@ -22,6 +22,11 @@ export class UserInputService {
 
   public handleUserSentence(sentence: string): boolean {
 
+    // This is for exception handling testing
+    if (sentence === 'throw error') {
+      throw new Error('By your command.');
+    }
+
     // Break the user's input down to tokens with parts of speech defined. This will also perform smart-replacement.
     const tokens = this.extractTokensFromInput(sentence);
 
