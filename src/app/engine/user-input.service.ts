@@ -41,16 +41,25 @@ export class UserInputService {
       return false;
     }
 
+    const context: CommandContext = this.ifService.buildCommandContext();
+
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
-    this.resolveNouns(tokens);
+    this.resolveNouns(tokens, context);
+
+    // Create a command context. This will give the command handler more utility information
+    this.ifService.logUserCommandToAnalytics(context, command);
+
+    // If the parser wasn't sure what we were referring to with something, then don't send it to a verb handler.
+    if (context.wasConfused) {
+      return false;
+    }
 
     // Okay, we can send the command off to be interpreted and just return the result
-    return this.ifService.handleUserCommand(command);
+    return this.ifService.handleUserCommand(command, context);
   }
 
-  private resolveNouns(tokens: CommandToken[]) {
+  private resolveNouns(tokens: CommandToken[], context: CommandContext) {
 
-    const context: CommandContext = this.ifService.buildCommandContext();
     const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
     for (const noun of nouns) {
       noun.entity = context.getSingleObjectForToken(noun);

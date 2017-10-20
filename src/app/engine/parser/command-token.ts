@@ -1,6 +1,7 @@
 import {TokenClassification} from './token-classification.enum';
 import {LanguageTerm} from './language-term';
 import {WorldEntity} from '../entities/world-entity';
+import {StringHelper} from '../../utility/string-helper';
 
 export class CommandToken {
 
@@ -51,4 +52,17 @@ export class CommandToken {
     modifier.modifies = this;
     this.modifiedBy.push(modifier);
   }
+
+  getCannotSeeName(): string {
+
+    if (this.isPlural) {
+      return this.name;
+    } else if (StringHelper.startsWithVowel(this.name)) {
+      return `an ${this.name}`;
+    } else {
+      return `a ${this.name}`;
+    }
+
+  }
+
 }

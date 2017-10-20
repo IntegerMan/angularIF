@@ -129,7 +129,7 @@ export class InteractiveFictionService {
 
   }
 
-  public handleUserCommand(command: Command): boolean {
+  public handleUserCommand(command: Command, context: CommandContext): boolean {
 
     // Validate input
     if (!command) {
@@ -138,10 +138,6 @@ export class InteractiveFictionService {
 
     // Increment our command counter
     this.commandId += 1;
-
-    // Create a command context. This will give the command handler more utility information
-    const context: CommandContext = this.buildCommandContext();
-    this.logUserCommandToAnalytics(context, command);
 
     this.logger.log(`Handling command associated with sentence ${command.userInput}.`);
     this.logger.log(command);
@@ -164,9 +160,7 @@ export class InteractiveFictionService {
     return verbHandler.handleCommand(command, context);
   }
 
-  private logUserCommandToAnalytics(context: CommandContext, command: Command): void {
-
-    // TODO: It'd be nice not to do this in dev mode.
+  logUserCommandToAnalytics(context: CommandContext, command: Command): void {
 
     this.analytics.emitEvent(
       context.story.title,
