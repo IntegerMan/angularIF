@@ -21,7 +21,7 @@ import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
-  engineVersion: string = '0.15';
+  engineVersion: string = '0.2';
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
@@ -75,6 +75,7 @@ export class InteractiveFictionService {
     story.initialize();
 
     this.story = story;
+
     this.outputService.displayTitle(story.title, `v${story.version}`);
     if (story.author.indexOf('Unattributed') < 0) {
       this.outputService.displaySubtitle(`Written by ${story.author}`);
