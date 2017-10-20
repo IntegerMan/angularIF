@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { TextRendererComponent } from './text-rendering/text-renderer.component';
@@ -18,6 +18,9 @@ import { TokenComponent } from './text-rendering/token/token.component';
 import { UserInputComponent } from './text-rendering/user-input/user-input.component';
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
+import {GoogleAnalyticsService} from './utility/google-analytics.service';
+
+import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 
 @NgModule({
   declarations: [
@@ -41,8 +44,11 @@ import { EntityReferenceComponent } from './text-rendering/entity-reference/enti
   providers: [
     LoggingService,
     TextOutputService,
-    CommandEntryService
-  ],
+    CommandEntryService,
+    GoogleAnalyticsService,
+    { provide: ErrorHandler, useClass: RollbarErrorHandler },
+    { provide: RollbarService, useFactory: rollbarFactory }
+    ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

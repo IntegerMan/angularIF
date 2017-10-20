@@ -10,20 +10,23 @@ export abstract class WorldEntity {
 
   private _weight: EntityWeight;
   private _size: EntitySize;
+  private _inRoomDescription: string = null;
+  private _name: string;
+
+  contents: WorldEntity[];
 
   nouns: string[];
   adjectives: string[];
   article: string = 'the';
-  private _inRoomDescription: string = null;
-
-  private _name: string;
 
   constructor(name: string) {
 
     this._name = name;
 
+    // Initialize collections
     this.nouns = [];
     this.adjectives = [];
+    this.contents = [];
 
     // Set some default sizes for things
     this._weight = EntityWeight.textbook;
@@ -171,6 +174,35 @@ export abstract class WorldEntity {
   }
 
   shouldDescribeWithRoom(context: CommandContext): boolean {
+    return false;
+  }
+
+  getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[] {
+
+    const items: WorldEntity[] = [];
+
+    for (const item of this.contents) {
+      // TODO: May want to check to see if an item is hidden
+      items.push(item);
+    }
+
+    return items;
+  }
+
+  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean {
+
+    for (const item of this.contents) {
+      if (item === entity) {
+        return true;
+      }
+
+      if (isRecursive) {
+        if (item.containsEntity(entity, isRecursive)) {
+          return true;
+        }
+      }
+    }
+
     return false;
   }
 

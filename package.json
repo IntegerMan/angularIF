@@ -23,6 +23,7 @@
     "@angular/router": "^4.2.4",
     "compromise": "^10.7.2",
     "core-js": "^2.4.1",
+    "rollbar": "^2.2.10",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"
   },
@@ -30,6 +31,7 @@
     "@angular/cli": "latest",
     "@angular/compiler-cli": "latest",
     "@angular/language-service": "latest",
+    "@types/google.analytics": "0.0.35",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
