@@ -74,6 +74,10 @@ export class InteractiveFictionService {
 
     story.initialize();
 
+    this.beginStory(story);
+  }
+
+  private beginStory(story: Story) {
     this.story = story;
 
     this.outputService.displayTitle(story.title, `v${story.version}`);
@@ -83,6 +87,7 @@ export class InteractiveFictionService {
     this.outputService.displayBlankLine();
 
     // Grab verb handlers from the story.
+    this.verbHandlers.length = 0;
     for (const verb of story.verbHandlers) {
       this.logger.log(`Loaded verb handler: ${verb.name}`);
       this.verbHandlers.push(verb);
@@ -206,6 +211,17 @@ export class InteractiveFictionService {
     if (actor === this.story.player && room !== oldRoom && !isSilent) {
       this.describeRoom(room, this.buildCommandContext());
     }
+
+  }
+
+  restartStory(): void {
+
+    this.outputService.displaySystem('Restarting story...');
+    this.outputService.displayBlankLine();
+
+    this.story.restart();
+
+    this.beginStory(this.story);
 
   }
 

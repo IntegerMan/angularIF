@@ -2,8 +2,8 @@ import {Room} from './room';
 import {Player} from './player';
 import {LexiconDictionary} from '../parser/lexicon-dictionary';
 import {VerbHandler} from '../verbs/verb-handler';
-import {CommonVerbService} from '../verbs/common-verb.service';
 import {WorldEntity} from './world-entity';
+import {LoggingService} from '../../logging.service';
 
 export abstract class Story {
 
@@ -32,7 +32,7 @@ export abstract class Story {
 
   public initialize(): void {
 
-    this.reset();
+    this.reset()
 
     // Set up story variables
     this.rooms = this.getRooms();
@@ -73,9 +73,10 @@ export abstract class Story {
 
   protected abstract getPlayerActor(): Player;
 
-  protected reset() {
-    // Do stuff
+  restart(): void {
+    LoggingService.instance.log('Restarting story now.');
+    this.initialize();
   }
 
-
+  protected abstract reset();
 }

@@ -15,6 +15,8 @@ export class CommonDictionary extends LexiconDictionary {
     // Identify some problem verbs
     this.lexer.addVerb('Open');
     this.lexer.addVerb('Procure');
+    this.lexer.addVerb('Restart');
+    this.lexer.addVerb('Reset');
 
     // Identify some problem nouns
     this.lexer.addNoun('Hall');
