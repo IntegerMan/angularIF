@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {TokenClassification} from './tokenizer/token-classification.enum';
-import {CommandToken} from './tokenizer/command-token';
+import {TokenClassification} from './parser/token-classification.enum';
+import {CommandToken} from './parser/command-token';
 import {LoggingService} from '../logging.service';
-import {TokenizerService} from './tokenizer/tokenizer.service';
+import {TokenizerService} from './parser/tokenizer.service';
 import {TextOutputService} from './text-output.service';
-import {Command} from './tokenizer/command';
-import {SentenceParserService} from './tokenizer/sentence-parser.service';
+import {Command} from './parser/command';
+import {SentenceParserService} from './parser/sentence-parser.service';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {StringHelper} from '../utility/string-helper';
 import {ArrayHelper} from '../utility/array-helper';

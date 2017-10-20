@@ -1,4 +1,4 @@
-import {CommandToken} from '../tokenizer/command-token';
+import {CommandToken} from '../parser/command-token';
 import {WorldEntity} from './world-entity';
 import {CommandContext} from '../command-context';
 import {ArrayHelper} from '../../utility/array-helper';

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Command} from '../../engine/tokenizer/command';
+import {Command} from '../../engine/parser/command';
 
 @Component({
   selector: 'if-sentence-debug-card',

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommandToken} from '../../engine/tokenizer/command-token';
-import {TokenClassification} from '../../engine/tokenizer/token-classification.enum';
+import {CommandToken} from '../../engine/parser/command-token';
+import {TokenClassification} from '../../engine/parser/token-classification.enum';
 
 @Component({
   selector: 'if-token',

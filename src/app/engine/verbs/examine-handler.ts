@@ -1,4 +1,4 @@
-import {Command} from '../tokenizer/command';
+import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {LookHandler} from './look-handler';
 

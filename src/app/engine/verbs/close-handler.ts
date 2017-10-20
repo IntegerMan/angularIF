@@ -1,5 +1,5 @@
 import {VerbHandler} from './verb-handler';
-import {Command} from '../tokenizer/command';
+import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 
 export class CloseHandler extends VerbHandler {

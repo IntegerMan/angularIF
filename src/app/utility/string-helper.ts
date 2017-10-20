@@ -60,4 +60,23 @@ export class StringHelper {
     }
   }
 
+  static startsWithVowel(character: string): boolean {
+
+    if (!character || character.length <= 0) {
+      return false;
+    }
+
+    switch (character[0].toLowerCase()) {
+      case 'a':
+      case 'e':
+      case 'i':
+      case 'o':
+      case 'u':
+        return true;
+
+      default:
+        return false;
+    }
+
+  }
 }
