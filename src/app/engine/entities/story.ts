@@ -18,6 +18,9 @@ export abstract class Story {
 
   private dictionaries: LexiconDictionary[];
   fontAwesomeIcon: string = 'fa-book';
+  movesTaken: number = 0;
+  score: number = 0;
+  maxScore: number = 0;
 
   constructor() {
 
@@ -33,11 +36,13 @@ export abstract class Story {
 
   public initialize(): void {
 
-    this.reset()
+    this.reset();
 
     // Set up story variables
     this.rooms = this.getRooms();
     this.player = this.getPlayerActor();
+    this.movesTaken = 0;
+    this.score = 0;
 
     // Add our terms to the lexer
     for (const dictionary of this.dictionaries) {

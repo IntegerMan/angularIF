@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
+import {Story} from '../../engine/entities/story';
 
 @Component({
   selector: 'if-game-state-header',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameStateHeaderComponent implements OnInit {
 
-  constructor() { }
+  private story: Story;
+
+  constructor(private ifService: InteractiveFictionService) {
+
+  }
 
   ngOnInit() {
+    this.story = this.ifService.story;
+  }
+
+  getMovesTakenText(): string {
+
+    const moves: number = this.story.movesTaken;
+
+    if (moves === 1) {
+      return '1 Move';
+    } else {
+      return `${moves} Moves`;
+    }
   }
 
 }
