@@ -18,7 +18,7 @@ import { UserInputComponent } from './text-rendering/user-input/user-input.compo
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
 import {GoogleAnalyticsService} from './utility/google-analytics.service';
-import {TooltipModule, InputTextModule} from 'primeng/primeng';
+import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 
 @NgModule({
@@ -38,14 +38,18 @@ import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rol
     BrowserModule,
     BrowserAnimationsModule,
     EngineModule,
+    // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     TooltipModule,
-    InputTextModule
+    InputTextModule,
+    ConfirmDialogModule
   ],
   providers: [
     LoggingService,
     TextOutputService,
     CommandEntryService,
     GoogleAnalyticsService,
+    // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
+    ConfirmationService,
     { provide: ErrorHandler, useClass: RollbarErrorHandler },
     { provide: RollbarService, useFactory: rollbarFactory }
     ],

@@ -16,6 +16,7 @@ import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
 import {WorldEntity} from './entities/world-entity';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
+import {ConfirmationService} from 'primeng/primeng';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -37,6 +38,7 @@ export class InteractiveFictionService {
               private outputService: TextOutputService,
               private navService: NavigationService,
               private lexer: LexiconService,
+              private confirmService: ConfirmationService,
               private analytics: GoogleAnalyticsService) {
 
     // Ensure we start with a unique empty list
@@ -183,7 +185,11 @@ export class InteractiveFictionService {
   }
 
   buildCommandContext(): CommandContext {
-    return new CommandContext(this.story, this, this.outputService, this.navService);
+    return new CommandContext(
+      this,
+      this.outputService,
+      this.navService,
+      this.confirmService);
   }
 
   private getVerbHandler(verbToken: CommandToken): VerbHandler {

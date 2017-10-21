@@ -10,6 +10,7 @@ import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './parser/command-token';
 import {TokenizerService} from './parser/tokenizer.service';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
+import {ConfirmationService} from 'primeng/primeng';
 
 export class CommandContext {
 
@@ -26,18 +27,20 @@ export class CommandContext {
   outputService: TextOutputService;
   ifService: InteractiveFictionService;
   navService: NavigationService;
+  confirmService: ConfirmationService;
   story: Story;
   wasConfused: boolean = false;
 
-  constructor(story: Story,
-              ifService: InteractiveFictionService,
+  constructor(ifService: InteractiveFictionService,
               outputService: TextOutputService,
-              navService: NavigationService) {
+              navService: NavigationService,
+              confirmService: ConfirmationService) {
 
-    this.outputService = outputService;
-    this.story = story;
-    this.navService = navService;
     this.ifService = ifService;
+    this.story = ifService.story;
+    this.outputService = outputService;
+    this.navService = navService;
+    this.confirmService = confirmService;
 
     // These are commonly needed by classes and shouldn't be injected
     this.logger = LoggingService.instance;
