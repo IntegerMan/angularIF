@@ -9,6 +9,8 @@
         <p class="h4"><span class="fa fa-fw {{icon}}"></span><span class="ml-2">{{title}}</span></p>
       </div>
 
+      <if-game-state-header></if-game-state-header>
+
       <div class="card-body bg-dark text-white" #scrollMe style="overflow-y: auto;">
         <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
       </div>
