@@ -34,22 +34,6 @@ export class LexiconService {
     }
   }
 
-  public addVerb(term: string): void {
-    this.addCustom(term, 'Verb');
-  }
-
-  public addAdjective(term: string): void {
-    this.addCustom(term, 'Adjective');
-  }
-
-  public addNoun(term: string): void {
-    this.addCustom(term, 'Noun');
-  }
-
-  public addDirection(term: string): void {
-    this.addCustom(term, 'Direction');
-  }
-
   public addIgnorable(term: string): void {
     this.addCustom(term, 'Ignorable');
   }
