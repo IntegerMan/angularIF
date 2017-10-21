@@ -34,6 +34,7 @@ export class CloakStory extends Story {
     // Basic Metadata
     this.title = 'Cloak of Darkness';
     this.version = '0.21';
+    this.fontAwesomeIcon = 'fa-bookmark-o';
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
     this.reset();

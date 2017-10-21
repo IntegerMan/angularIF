@@ -17,6 +17,7 @@ export abstract class Story {
   verbHandlers: VerbHandler[];
 
   private dictionaries: LexiconDictionary[];
+  fontAwesomeIcon: string = 'fa-book';
 
   constructor() {
 

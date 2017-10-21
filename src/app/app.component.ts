@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   lines: TextLine[] = [];
   title: string;
+  icon: string = 'fa-book';
 
   @ViewChild('scrollMe') private scrollContainer: ElementRef;
 
@@ -73,6 +74,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     ifService.initialize(story);
 
     this.title = story.title;
+    this.icon = story.fontAwesomeIcon;
   }
 
   private onLinesChanged(): void {
