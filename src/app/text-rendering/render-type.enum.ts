@@ -1,4 +1,4 @@
-export enum CommandType {
+export enum RenderType {
   parserError = 'parserError',
   successAction = 'successAction',
   failureAction = 'failureAction',

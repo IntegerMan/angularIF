@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
-import {CommandType} from '../text-rendering/command-type.enum';
+import {RenderType} from '../text-rendering/render-type.enum';
 
 @Injectable()
 export class TextOutputService {
@@ -16,51 +16,51 @@ export class TextOutputService {
   }
 
   displayUserCommand(command: string, sentence: any): void {
-    this.addLine(new TextLine(command, CommandType.userInput, sentence));
+    this.addLine(new TextLine(command, RenderType.userInput, sentence));
   }
 
   displayTitle(text: string, smallText: string): void {
-    this.addLine(new TextLine(text, CommandType.header, smallText));
+    this.addLine(new TextLine(text, RenderType.header, smallText));
   }
 
   displaySubtitle(text: string): void {
-    this.addLine(new TextLine(text, CommandType.subtitle));
+    this.addLine(new TextLine(text, RenderType.subtitle));
   }
 
   displaySystem(text: string): void {
-    this.addLine(new TextLine(text, CommandType.engine));
+    this.addLine(new TextLine(text, RenderType.engine));
   }
 
   displayHelpText(text: string) {
-    this.addLine(new TextLine(text, CommandType.helpText));
+    this.addLine(new TextLine(text, RenderType.helpText));
   }
 
   displayList(text: string, items: string[]) {
-    this.addLine(new TextLine(text, CommandType.list, items));
+    this.addLine(new TextLine(text, RenderType.list, items));
   }
 
   displayRoomName(text: string): void {
-    this.addLine(new TextLine(text, CommandType.roomName));
+    this.addLine(new TextLine(text, RenderType.roomName));
   }
 
   displayStory(text: string): void {
-    this.addLine(new TextLine(text, CommandType.narrative));
+    this.addLine(new TextLine(text, RenderType.narrative));
   }
 
   displayParserError(text: string): void {
-    this.addLine(new TextLine(text, CommandType.parserError));
+    this.addLine(new TextLine(text, RenderType.parserError));
   }
 
   displayFailedAction(text: string): void {
-    this.addLine(new TextLine(text, CommandType.failureAction));
+    this.addLine(new TextLine(text, RenderType.failureAction));
   }
 
   displaySuccessAction(text: string): void {
-    this.addLine(new TextLine(text, CommandType.successAction));
+    this.addLine(new TextLine(text, RenderType.successAction));
   }
 
   displayBlankLine(): void {
-    this.addLine(new TextLine('', CommandType.divider));
+    this.addLine(new TextLine('', RenderType.divider));
   }
 
   clear(): void {

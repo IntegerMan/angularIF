@@ -4,7 +4,7 @@ import {Story} from '../../engine/entities/story';
 import {TextOutputService} from '../../engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
 import {TextLine} from '../text-line';
-import {CommandType} from '../command-type.enum';
+import {RenderType} from '../render-type.enum';
 
 @Component({
   selector: 'if-game-state-header',
@@ -47,8 +47,8 @@ export class GameStateHeaderComponent implements OnInit, OnDestroy {
 
   private handleLineAdded(line: TextLine): void {
 
-    if (line.commandType === CommandType.roomName ||
-        line.commandType === CommandType.header) {
+    if (line.commandType === RenderType.roomName ||
+        line.commandType === RenderType.header) {
 
       this.mainText = line.text;
 
