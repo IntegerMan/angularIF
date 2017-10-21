@@ -1,7 +1,7 @@
 <span *ngIf="includeModifiers">
   <if-token *ngFor="let modifier of token.modifiedBy" [includeModifiers]="false" [token]="modifier"></if-token>
 </span>
-<span title="{{tooltip}}">
+<span pTooltip="{{tooltip}}">
   {{token.term.spaceBefore}}
   <span class="{{cssClasses}}">
     {{token.name}}
