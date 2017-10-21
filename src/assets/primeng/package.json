@@ -1,0 +1,134 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "primeng",
+        "scope": null,
+        "escapedName": "primeng",
+        "name": "primeng",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "F:\\Dev\\angularIF"
+    ]
+  ],
+  "_from": "primeng@latest",
+  "_id": "primeng@4.2.2",
+  "_inCache": true,
+  "_location": "/primeng",
+  "_nodeVersion": "7.7.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/primeng-4.2.2.tgz_1507190846344_0.6682289747986943"
+  },
+  "_npmUser": {
+    "name": "cagatay.civici",
+    "email": "cagatay.civici@gmail.com"
+  },
+  "_npmVersion": "4.1.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "primeng",
+    "scope": null,
+    "escapedName": "primeng",
+    "name": "primeng",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/primeng/-/primeng-4.2.2.tgz",
+  "_shasum": "b76116c24505ddcad7f52a4bba76b584d8e7c527",
+  "_shrinkwrap": null,
+  "_spec": "primeng",
+  "_where": "F:\\Dev\\angularIF",
+  "bugs": {
+    "url": "https://github.com/primefaces/primeng/issues"
+  },
+  "dependencies": {},
+  "description": "UI Components for Angular",
+  "devDependencies": {
+    "@angular/animations": "4.4.4",
+    "@angular/cli": "1.4.3",
+    "@angular/common": "4.4.4",
+    "@angular/compiler": "4.4.4",
+    "@angular/compiler-cli": "4.4.4",
+    "@angular/core": "4.4.4",
+    "@angular/forms": "4.4.4",
+    "@angular/http": "4.4.4",
+    "@angular/language-service": "4.4.4",
+    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser-dynamic": "4.4.4",
+    "@angular/router": "4.4.4",
+    "@types/jasmine": "2.5.54",
+    "@types/node": "6.0.88",
+    "chart.js": "2.1.3",
+    "codelyzer": "3.1.2",
+    "core-js": "2.5.1",
+    "del": "^2.2.0",
+    "font-awesome": "4.7.0",
+    "fullcalendar": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-flatten": "^0.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-uglifycss": "^1.0.6",
+    "install": "^0.10.1",
+    "intl": "^1.2.5",
+    "jasmine-core": "2.6.4",
+    "jasmine-spec-reporter": "4.1.1",
+    "jquery": "3.2.1",
+    "karma": "1.7.1",
+    "karma-chrome-launcher": "2.1.0",
+    "karma-cli": "1.0.1",
+    "karma-coverage-istanbul-reporter": "1.3.0",
+    "karma-jasmine": "1.1.0",
+    "karma-jasmine-html-reporter": "0.2.2",
+    "moment": "2.18.1",
+    "npm": "^5.0.1",
+    "prismjs": "^1.6.0",
+    "protractor": "5.1.2",
+    "quill": "^1.1.8",
+    "rxjs": "5.4.3",
+    "ts-node": "3.2.0",
+    "tslint": "5.3.2",
+    "typescript": "2.3.4",
+    "web-animations-js": "2.3.1",
+    "zone.js": "0.8.18"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "b76116c24505ddcad7f52a4bba76b584d8e7c527",
+    "tarball": "https://registry.npmjs.org/primeng/-/primeng-4.2.2.tgz"
+  },
+  "gitHead": "062f5f6e759142ae86bfc14f63db7e58e775cd40",
+  "homepage": "https://github.com/primefaces/primeng#readme",
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "cagatay.civici",
+      "email": "cagatay.civici@gmail.com"
+    }
+  ],
+  "name": "primeng",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/primefaces/primeng.git"
+  },
+  "scripts": {
+    "build": "ng build",
+    "e2e": "ng e2e",
+    "lint": "ng lint",
+    "ng": "ng",
+    "start": "ng serve",
+    "test": "ng test"
+  },
+  "version": "4.2.2"
+}

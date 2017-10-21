@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { TextRendererComponent } from './text-rendering/text-renderer.component';
 import { CommandAreaComponent } from './command-area/command-area.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TagCommandAreaComponent } from './command-area/tag-command-area/tag-command-area.component';
 import { ParserCommandAreaComponent } from './command-area/parser-command-area/parser-command-area.component';
 import { LoggingService } from './utility/logging.service';
@@ -37,8 +37,8 @@ import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rol
     EntityReferenceComponent
   ],
   imports: [
-    BrowserAnimationsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     EngineModule
   ],
   providers: [

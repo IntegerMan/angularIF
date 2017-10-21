@@ -1,12 +1,13 @@
-<label for="parserInput">What do you want to do?</label>
+<span class="ui-float-label my-2">
 
-<input #parserInput
-       autofocus
-       id="parserInput"
-       type="text"
-       placeholder="Enter your command"
-       style="width: 100%;"
-       class="border border-secondary px-2"
-       (keyup.enter)="parseInput(parserInput.value); parserInput.value = '';">
+  <input #parserInput
+         autofocus
+         pInputText
+         id="parserInput"
+         type="text"
+         style="width: 100%;"
+         class="border border-secondary px-2"
+         (keyup.enter)="parseInput(parserInput.value); parserInput.value = '';">
 
-<!--<button (click)="parseInput(parserInput.value); parserInput.value = '';">Go</button>-->
+    <label for="parserInput" class="text-info ml-1">What do you want to do?</label>
+</span>
