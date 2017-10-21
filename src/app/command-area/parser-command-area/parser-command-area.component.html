@@ -2,12 +2,15 @@
 
   <input #parserInput
          autofocus
-         pInputText
          id="parserInput"
          type="text"
-         style="width: 100%;"
-         class="border border-secondary px-2"
+         pInputText
+         pTooltip="Type a command (e.g. 'Go West' or 'Look at squirrel') and hit enter"
+         tooltipPosition="top"
+         showDelay="750"
+         class="wide-load"
          (keyup.enter)="parseInput(parserInput.value); parserInput.value = '';">
 
-    <label for="parserInput" class="text-info ml-1">What do you want to do?</label>
+    <label for="parserInput" class="text-info">What do you want to do?</label>
+
 </span>

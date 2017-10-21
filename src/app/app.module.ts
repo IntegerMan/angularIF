@@ -19,7 +19,7 @@ import { UserInputComponent } from './text-rendering/user-input/user-input.compo
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
 import {GoogleAnalyticsService} from './utility/google-analytics.service';
-
+import {TooltipModule, InputTextModule} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 
 @NgModule({
@@ -39,7 +39,9 @@ import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rol
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    EngineModule
+    EngineModule,
+    TooltipModule,
+    InputTextModule
   ],
   providers: [
     LoggingService,

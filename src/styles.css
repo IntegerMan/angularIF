@@ -8,6 +8,16 @@ html, body {
   min-height: 100%;
 }
 
+.wide-load {
+  width: 100%;
+}
+
+.ui-tooltip {
+  max-width: 100%;
+  white-space:pre-wrap;
+}
+
+
 /* Definition lists should render in a more horizontal mode */
 dl {
   padding: 0.5em;
