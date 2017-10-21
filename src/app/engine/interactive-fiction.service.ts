@@ -229,6 +229,7 @@ export class InteractiveFictionService {
 
   restartStory(): void {
 
+    this.outputService.clear();
     this.outputService.displaySystem('Restarting story...');
     this.outputService.displayBlankLine();
 
