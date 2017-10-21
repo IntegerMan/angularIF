@@ -6,8 +6,8 @@
         {{title}}
       </div>
 
-      <div class="card-body bg-dark text-white" style="overflow-y: auto;">
-        <if-text-renderer></if-text-renderer>
+      <div class="card-body bg-dark text-white" #scrollMe style="overflow-y: auto;">
+        <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
       </div>
 
       <div class="card-footer">

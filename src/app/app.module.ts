@@ -3,7 +3,6 @@ import {NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { TextRendererComponent } from './text-rendering/text-renderer.component';
 import { CommandAreaComponent } from './command-area/command-area.component';
 
 import { TagCommandAreaComponent } from './command-area/tag-command-area/tag-command-area.component';
@@ -25,7 +24,6 @@ import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rol
 @NgModule({
   declarations: [
     AppComponent,
-    TextRendererComponent,
     CommandAreaComponent,
     TagCommandAreaComponent,
     ParserCommandAreaComponent,
