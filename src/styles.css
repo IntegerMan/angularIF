@@ -17,6 +17,16 @@ html, body {
   white-space:pre-wrap;
 }
 
+/* PrimeNG dialogs were transparent in prod for some reason */
+.ui-dialog {
+  background: #ffffff;
+}
+.ui-dialog-titlebar {
+  background: #f6f7f9;
+}
+.ui-dialog-footer {
+  background: #ffffff;
+}
 
 /* Definition lists should render in a more horizontal mode */
 dl {
