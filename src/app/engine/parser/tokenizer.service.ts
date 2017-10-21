@@ -3,7 +3,7 @@ import {CommandToken} from './command-token';
 import {TokenClassification} from './token-classification.enum';
 import {NaturalLanguageService} from './natural-language.service';
 import {LanguageTerm} from './language-term';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 
 @Injectable()
 export class TokenizerService {

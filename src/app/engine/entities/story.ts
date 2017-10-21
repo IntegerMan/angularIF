@@ -3,7 +3,7 @@ import {Player} from './player';
 import {LexiconDictionary} from '../parser/lexicon-dictionary';
 import {VerbHandler} from '../verbs/verb-handler';
 import {WorldEntity} from './world-entity';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 
 export abstract class Story {
 

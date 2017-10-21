@@ -3,7 +3,7 @@ import {Room} from '../../engine/entities/room';
 import {Player} from '../../engine/entities/player';
 import {NavigationService} from '../../engine/navigation.service';
 import {Scenery} from '../../engine/entities/scenery';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 import {Hook} from './hook';
 import {EntityWeight} from '../../engine/entities/entity-weight.enum';
 import {EntitySize} from '../../engine/entities/entity-size.enum';

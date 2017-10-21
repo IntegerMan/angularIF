@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {TokenClassification} from './parser/token-classification.enum';
 import {CommandToken} from './parser/command-token';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from '../utility/logging.service';
 import {TokenizerService} from './parser/tokenizer.service';
 import {TextOutputService} from './text-output.service';
 import {Command} from './parser/command';
@@ -62,7 +62,7 @@ export class UserInputService {
 
     const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
     for (const noun of nouns) {
-      noun.entity = context.getSingleObjectForToken(noun);
+      noun.entity = context.getSingleObjectForToken(noun, context);
     }
 
   }
@@ -87,7 +87,7 @@ export class UserInputService {
 
     if (unknowns && unknowns.length === 1) {
 
-      this.outputService.displayParserError(`I don't know what ${unknowns[0]} means.`);
+      this.outputService.displayParserError(`I don't know what ${unknowns[0].userInput} means.`);
 
     } else {
 

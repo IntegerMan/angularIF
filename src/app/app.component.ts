@@ -4,7 +4,7 @@ import {Story} from './engine/entities/story';
 import {CloakStory} from './stories/cloak-of-darkness/cloak-story';
 import {CommonVerbService} from './engine/verbs/common-verb.service';
 import {NavigationService} from './engine/navigation.service';
-import {LoggingService} from './logging.service';
+import {LoggingService} from './utility/logging.service';
 
 @Component({
   selector: 'if-root',

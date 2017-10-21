@@ -5,7 +5,7 @@ import { Injectable, Injector } from '@angular/core';
 
 import { InjectionToken } from '@angular/core';
 import {environment} from '../../environments/environment';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from './logging.service';
 
 export let rollbarConfig = {
   accessToken: '2eaf4f1d5d8442ca97589706748ba22f',

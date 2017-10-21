@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {CommandType} from '../text-rendering/command-type.enum';
 

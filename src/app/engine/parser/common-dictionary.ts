@@ -13,10 +13,7 @@ export class CommonDictionary extends LexiconDictionary {
   public addTerms(): void {
 
     // Identify some problem verbs
-    this.lexer.addVerb('Open');
-    this.lexer.addVerb('Procure');
-    this.lexer.addVerb('Restart');
-    this.lexer.addVerb('Reset');
+    this.lexer.add('Verb', ['Open', 'Procure', 'Restart', 'Reset', 'Inspect']);
 
     // Identify some problem nouns
     this.lexer.addNoun('Hall');

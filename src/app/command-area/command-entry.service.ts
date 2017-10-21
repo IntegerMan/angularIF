@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {UserInputService} from '../engine/user-input.service';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from '../utility/logging.service';
 
 @Injectable()
 export class CommandEntryService {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {TextOutputService} from './text-output.service';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
 import {Room} from './entities/room';
 import {Player} from './entities/player';
@@ -158,6 +158,13 @@ export class InteractiveFictionService {
 
     // If we don't have a verb handler for the verb in question, display a generic error message
     if (!verbHandler) {
+
+      this.analytics.emitEvent(
+        'Unknown Verb',
+        command.verb.name,
+        `${context.story.title} - ${context.currentRoom.name}`,
+        this.commandId);
+
       this.outputService.displayParserError(`I don't know how to respond to the verb '${command.verb.name}' yet.`);
       return false;
     }
@@ -168,15 +175,15 @@ export class InteractiveFictionService {
   logUserCommandToAnalytics(context: CommandContext, command: Command): void {
 
     this.analytics.emitEvent(
-      context.story.title,
+      'User Command',
       command.userInput,
-      context.currentRoom.name,
+      `${context.story.title} - ${context.currentRoom.name}`,
       this.commandId);
 
   }
 
   buildCommandContext(): CommandContext {
-    return new CommandContext(this.story, this, this.outputService, this.navService, this.logger);
+    return new CommandContext(this.story, this, this.outputService, this.navService);
   }
 
   private getVerbHandler(verbToken: CommandToken): VerbHandler {

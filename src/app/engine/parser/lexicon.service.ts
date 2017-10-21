@@ -53,4 +53,11 @@ export class LexiconService {
   public addIgnorable(term: string): void {
     this.addCustom(term, 'Ignorable');
   }
+
+  public add(tag: string, terms: string[]): void {
+    for (const t of terms) {
+      this.addCustom(t, tag);
+    }
+  }
+
 }

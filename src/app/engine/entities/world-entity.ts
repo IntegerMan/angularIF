@@ -1,6 +1,6 @@
 import {CommandContext} from '../command-context';
 import {Room} from './room';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 import {NaturalLanguageService} from '../parser/natural-language.service';
 import {CommandToken} from '../parser/command-token';
 import {EntityWeight} from './entity-weight.enum';
