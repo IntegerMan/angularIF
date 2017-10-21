@@ -61,6 +61,10 @@ export class DropHandler extends VerbHandler {
 
   dropItem(item: Scenery, context: CommandContext): boolean {
 
+    if (!item.allowDrop(context)) {
+      return false;
+    }
+
     if (context.player.removeFromInventory(item, context)) {
       context.currentRoom.addObject(item);
 
