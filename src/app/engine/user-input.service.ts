@@ -11,6 +11,7 @@ import {StringHelper} from '../utility/string-helper';
 import {ArrayHelper} from '../utility/array-helper';
 import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
+import {RoomLink} from './room-link';
 
 @Injectable()
 export class UserInputService {
@@ -46,6 +47,7 @@ export class UserInputService {
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
     this.resolveNouns(tokens, context);
+    this.resolveDirections(tokens, context);
 
     // Create a command context. This will give the command handler more utility information
     this.ifService.logUserCommandToAnalytics(context, command);
@@ -64,6 +66,19 @@ export class UserInputService {
     const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
     for (const noun of nouns) {
       noun.entity = context.getSingleObjectForToken(noun, context);
+    }
+
+  }
+
+  private resolveDirections(tokens: CommandToken[], context: CommandContext) {
+
+    const directions: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Direction);
+    for (const d of directions) {
+
+      const roomLink: RoomLink = context.navService.getLink(context.currentRoom, d.name);
+      if (roomLink) {
+        d.entity = roomLink.target;
+      }
     }
 
   }

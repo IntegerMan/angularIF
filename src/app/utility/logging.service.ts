@@ -22,16 +22,20 @@ export class LoggingService {
     }
   }
 
-  public error(input: string): void {
+  public error(input: any): void {
     if (console) {
       console.error(input);
     }
   }
 
-  public warning(input: string): void {
+  public warning(input: any): void {
     if (console) {
       console.warn(input);
     }
+  }
+
+  public debug(input: any): void {
+    this.log(input);
   }
 
 }

@@ -2,8 +2,13 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
+import {VerbType} from './verb-type.enum';
 
 export class LookHandler extends VerbHandler {
+
+  get verbType(): VerbType {
+    return VerbType.look;
+  }
 
   private static listPlayerInventory(context: CommandContext): boolean {
 

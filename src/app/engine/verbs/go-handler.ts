@@ -5,19 +5,17 @@ import {CommandToken} from '../parser/command-token';
 import {TokenClassification} from '../parser/token-classification.enum';
 import {Room} from '../entities/room';
 import {RoomLink} from '../room-link';
+import {VerbType} from './verb-type.enum';
 
 export class GoHandler extends VerbHandler {
 
+  get verbType(): VerbType {
+    return VerbType.go;
+  }
+
   handleCommand(command: Command, context: CommandContext): boolean {
 
-    const direction: CommandToken = this.getFirstDirection(command);
-
-    // If we don't have an explicit direction, grab the first noun and assume that will map to a direction somehow
-    /*
-    if (!direction && command.objects && command.objects.length > 0) {
-      direction = command.objects[0];
-    }
-    */
+    const direction: CommandToken = command.getFirstDirection();
 
     if (!direction) {
       context.outputService.displayParserError('In order to go somewhere, you must include a direction. For example: "Go East"');
@@ -60,14 +58,4 @@ export class GoHandler extends VerbHandler {
 
   }
 
-  private getFirstDirection(command: Command): CommandToken {
-    let direction: CommandToken = null;
-
-    const directions: CommandToken[] = command.objects.filter(o => o.classification === TokenClassification.Direction);
-    if (directions && directions.length > 0) {
-      direction = directions[0];
-    }
-
-    return direction;
-  }
 }

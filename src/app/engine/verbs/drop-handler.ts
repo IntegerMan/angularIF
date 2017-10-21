@@ -3,8 +3,14 @@ import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
 import {Scenery} from '../entities/scenery';
+import {PortableEntity} from '../entities/portable-entity';
+import {VerbType} from './verb-type.enum';
 
 export class DropHandler extends VerbHandler {
+
+  get verbType(): VerbType {
+    return VerbType.manipulate;
+  }
 
   handleCommand(command: Command, context: CommandContext): boolean {
 
@@ -31,7 +37,7 @@ export class DropHandler extends VerbHandler {
     }
 
     // Protect against invalid class since we need a Scenery instance up ahead
-    if (!(entity instanceof Scenery)) {
+    if (!(entity instanceof PortableEntity)) {
       context.outputService.displayFailedAction(`You can't drop that!`);
       return false;
     }
@@ -51,15 +57,20 @@ export class DropHandler extends VerbHandler {
     let result: boolean = false;
 
     for (const item of context.player.contents) {
-      if (this.dropItem(item, context)) {
+
+      if (item instanceof PortableEntity &&
+          this.dropItem(<PortableEntity>item, context)) {
+
         result = true;
+
       }
+
     }
 
     return result;
   }
 
-  dropItem(item: Scenery, context: CommandContext): boolean {
+  dropItem(item: PortableEntity, context: CommandContext): boolean {
 
     if (!item.allowDrop(context)) {
       return false;

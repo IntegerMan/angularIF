@@ -30,7 +30,7 @@ export class InteractiveFictionService {
   story: Story;
 
   private verbHandlers: VerbHandler[];
-  private commandId: number;
+  commandId: number;
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
@@ -129,7 +129,7 @@ export class InteractiveFictionService {
 
   describeDarkRoom(context: CommandContext): void {
 
-    // TODO: We may want story authors to be able to customize these at some point, but for now, this is fine.
+    // TODO: Authors may need to be able to customize these at some point, but for now, this is fine.
     context.outputService.displayRoomName(`Darkness`);
     context.outputService.displayBlankLine();
     context.outputService.displayStory(`It is pitch dark, and you can't see a thing.`);
@@ -146,32 +146,11 @@ export class InteractiveFictionService {
     // Increment our command counter
     this.commandId += 1;
 
-    this.logger.log(`Handling command associated with sentence ${command.userInput}.`);
-    this.logger.log(command);
-
-    // We have to have a verb here
-    if (!command.verb) {
-      this.outputService.displayParserError('I couldn\'t figure out what you want to do. Try starting with a verb.');
-      return false;
-    }
-
     // Find the requisite verb handler for the item in question
-    const verbHandler: VerbHandler = this.getVerbHandler(command.verb);
+    command.verbHandler = this.getVerbHandler(command.verb);
 
-    // If we don't have a verb handler for the verb in question, display a generic error message
-    if (!verbHandler) {
+    return command.execute(context);
 
-      this.analytics.emitEvent(
-        'Unknown Verb',
-        command.verb.name,
-        `${context.story.title} - ${context.currentRoom.name}`,
-        this.commandId);
-
-      this.outputService.displayParserError(`I don't know how to respond to the verb '${command.verb.name}' yet.`);
-      return false;
-    }
-
-    return verbHandler.handleCommand(command, context);
   }
 
   logUserCommandToAnalytics(context: CommandContext, command: Command): void {
@@ -193,6 +172,11 @@ export class InteractiveFictionService {
   }
 
   private getVerbHandler(verbToken: CommandToken): VerbHandler {
+
+    // It's quite possible to have a sentence without a verb.
+    if (!verbToken) {
+      return null;
+    }
 
     if (verbToken.classification !== TokenClassification.Verb) {
       this.logger.error(`Asked to get a verb handler for the non-verb token '${verbToken.name}' (${verbToken.classification})`);
