@@ -7,7 +7,6 @@ import {LoggingService} from '../../utility/logging.service';
 import {Hook} from './hook';
 import {EntityWeight} from '../../engine/entities/entity-weight.enum';
 import {EntitySize} from '../../engine/entities/entity-size.enum';
-import {PortableEntity} from '../../engine/entities/portable-entity';
 import {Bar} from './bar';
 import {Cloak} from './cloak';
 
@@ -35,6 +34,7 @@ export class CloakStory extends Story {
     this.title = 'Cloak of Darkness';
     this.version = '0.25';
     this.fontAwesomeIcon = 'fa-bookmark-o';
+    this.maxScore = 2; // Oh no, whatever will we do with two whole points?
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
     this.reset();
