@@ -1,5 +1,5 @@
 import {WorldEntity} from './world-entity';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 import {ArrayHelper} from '../../utility/array-helper';
 import {CommandContext} from '../command-context';
 import {EntitySize} from './entity-size.enum';

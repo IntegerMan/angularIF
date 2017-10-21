@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {TextOutputService} from './text-output.service';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
 import {Room} from './entities/room';
 import {Player} from './entities/player';
@@ -16,12 +16,13 @@ import {CommandContext} from './command-context';
 import {NavigationService} from './navigation.service';
 import {WorldEntity} from './entities/world-entity';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
+import {ConfirmationService} from 'primeng/primeng';
 
 @Injectable()
 export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
-  engineVersion: string = '0.21';
+  engineVersion: string = '0.25';
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
@@ -29,7 +30,7 @@ export class InteractiveFictionService {
   story: Story;
 
   private verbHandlers: VerbHandler[];
-  private commandId: number;
+  commandId: number;
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
@@ -37,6 +38,7 @@ export class InteractiveFictionService {
               private outputService: TextOutputService,
               private navService: NavigationService,
               private lexer: LexiconService,
+              private confirmService: ConfirmationService,
               private analytics: GoogleAnalyticsService) {
 
     // Ensure we start with a unique empty list
@@ -127,7 +129,7 @@ export class InteractiveFictionService {
 
   describeDarkRoom(context: CommandContext): void {
 
-    // TODO: We may want story authors to be able to customize these at some point, but for now, this is fine.
+    // TODO: Authors may need to be able to customize these at some point, but for now, this is fine.
     context.outputService.displayRoomName(`Darkness`);
     context.outputService.displayBlankLine();
     context.outputService.displayStory(`It is pitch dark, and you can't see a thing.`);
@@ -144,42 +146,37 @@ export class InteractiveFictionService {
     // Increment our command counter
     this.commandId += 1;
 
-    this.logger.log(`Handling command associated with sentence ${command.userInput}.`);
-    this.logger.log(command);
-
-    // We have to have a verb here
-    if (!command.verb) {
-      this.outputService.displayParserError('I couldn\'t figure out what you want to do. Try starting with a verb.');
-      return false;
-    }
-
     // Find the requisite verb handler for the item in question
-    const verbHandler: VerbHandler = this.getVerbHandler(command.verb);
+    command.verbHandler = this.getVerbHandler(command.verb);
 
-    // If we don't have a verb handler for the verb in question, display a generic error message
-    if (!verbHandler) {
-      this.outputService.displayParserError(`I don't know how to respond to the verb '${command.verb.name}' yet.`);
-      return false;
-    }
+    return command.execute(context);
 
-    return verbHandler.handleCommand(command, context);
   }
 
   logUserCommandToAnalytics(context: CommandContext, command: Command): void {
 
     this.analytics.emitEvent(
-      context.story.title,
+      'User Command',
       command.userInput,
-      context.currentRoom.name,
+      `${context.story.title} - ${context.currentRoom.name}`,
       this.commandId);
 
   }
 
   buildCommandContext(): CommandContext {
-    return new CommandContext(this.story, this, this.outputService, this.navService, this.logger);
+    return new CommandContext(
+      this,
+      this.outputService,
+      this.navService,
+      this.confirmService);
   }
 
   private getVerbHandler(verbToken: CommandToken): VerbHandler {
+
+    // It's quite possible to have a sentence without a verb.
+    if (!verbToken) {
+      return null;
+    }
 
     if (verbToken.classification !== TokenClassification.Verb) {
       this.logger.error(`Asked to get a verb handler for the non-verb token '${verbToken.name}' (${verbToken.classification})`);
@@ -216,6 +213,7 @@ export class InteractiveFictionService {
 
   restartStory(): void {
 
+    this.outputService.clear();
     this.outputService.displaySystem('Restarting story...');
     this.outputService.displayBlankLine();
 

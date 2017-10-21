@@ -3,8 +3,13 @@ import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {WorldEntity} from '../entities/world-entity';
 import {IGettable} from '../entities/i-gettable';
+import {VerbType} from './verb-type.enum';
 
 export class GetHandler extends VerbHandler {
+
+  get verbType(): VerbType {
+    return VerbType.manipulate;
+  }
 
   handleCommand(command: Command, context: CommandContext): boolean {
 

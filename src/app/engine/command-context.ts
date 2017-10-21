@@ -1,5 +1,5 @@
 import {TextOutputService} from './text-output.service';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {Room} from './entities/room';
@@ -9,6 +9,8 @@ import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './parser/command-token';
 import {TokenizerService} from './parser/tokenizer.service';
+import {GoogleAnalyticsService} from '../utility/google-analytics.service';
+import {ConfirmationService} from 'primeng/primeng';
 
 export class CommandContext {
 
@@ -21,27 +23,32 @@ export class CommandContext {
   }
 
   logger: LoggingService;
+  analytics: GoogleAnalyticsService;
   outputService: TextOutputService;
   ifService: InteractiveFictionService;
   navService: NavigationService;
+  confirmService: ConfirmationService;
   story: Story;
   wasConfused: boolean = false;
 
-  constructor(story: Story,
-              ifService: InteractiveFictionService,
+  constructor(ifService: InteractiveFictionService,
               outputService: TextOutputService,
               navService: NavigationService,
-              logger: LoggingService) {
+              confirmService: ConfirmationService) {
 
-    this.outputService = outputService;
-    this.logger = logger;
-    this.story = story;
-    this.navService = navService;
     this.ifService = ifService;
+    this.story = ifService.story;
+    this.outputService = outputService;
+    this.navService = navService;
+    this.confirmService = confirmService;
+
+    // These are commonly needed by classes and shouldn't be injected
+    this.logger = LoggingService.instance;
+    this.analytics = GoogleAnalyticsService.instance;
 
   }
 
-  getSingleObjectForToken(token: CommandToken): WorldEntity {
+  getSingleObjectForToken(token: CommandToken, context: CommandContext): WorldEntity {
 
     // TODO: This shouldn't really live in the context object
 
@@ -52,6 +59,12 @@ export class CommandContext {
       this.logger.log(`No local match found for '${token.name}'`);
 
       if (!TokenizerService.isSpecialNoun(token)) {
+
+        this.analytics.emitEvent(
+          'Reference Not Found',
+          token.name,
+          `${context.story.title} - ${context.currentRoom.name}`);
+
         this.outputService.displayParserError(`You don't see ${token.getCannotSeeName()} here.`);
         this.wasConfused = true;
       }

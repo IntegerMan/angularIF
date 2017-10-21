@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {TokenClassification} from './parser/token-classification.enum';
 import {CommandToken} from './parser/command-token';
-import {LoggingService} from '../logging.service';
+import {LoggingService} from '../utility/logging.service';
 import {TokenizerService} from './parser/tokenizer.service';
 import {TextOutputService} from './text-output.service';
 import {Command} from './parser/command';
@@ -10,6 +10,8 @@ import {InteractiveFictionService} from './interactive-fiction.service';
 import {StringHelper} from '../utility/string-helper';
 import {ArrayHelper} from '../utility/array-helper';
 import {CommandContext} from './command-context';
+import {GoogleAnalyticsService} from '../utility/google-analytics.service';
+import {RoomLink} from './room-link';
 
 @Injectable()
 export class UserInputService {
@@ -34,17 +36,18 @@ export class UserInputService {
     const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
     this.outputService.displayUserCommand(sentence, command);
 
+    const context: CommandContext = this.ifService.buildCommandContext();
+
     // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
     if (unknowns && unknowns.length > 0) {
-      this.displayParserError(unknowns);
+      this.displayParserError(unknowns, context);
       return false;
     }
 
-    const context: CommandContext = this.ifService.buildCommandContext();
-
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
     this.resolveNouns(tokens, context);
+    this.resolveDirections(tokens, context);
 
     // Create a command context. This will give the command handler more utility information
     this.ifService.logUserCommandToAnalytics(context, command);
@@ -62,7 +65,20 @@ export class UserInputService {
 
     const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
     for (const noun of nouns) {
-      noun.entity = context.getSingleObjectForToken(noun);
+      noun.entity = context.getSingleObjectForToken(noun, context);
+    }
+
+  }
+
+  private resolveDirections(tokens: CommandToken[], context: CommandContext) {
+
+    const directions: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Direction);
+    for (const d of directions) {
+
+      const roomLink: RoomLink = context.navService.getLink(context.currentRoom, d.name);
+      if (roomLink) {
+        d.entity = roomLink.target;
+      }
     }
 
   }
@@ -83,18 +99,27 @@ export class UserInputService {
     return tokens;
   }
 
-  private displayParserError(unknowns: CommandToken[]): void {
+  private displayParserError(unknowns: CommandToken[], context: CommandContext): void {
 
+    // Tell the user they're full of it
+    let friendlyText: string;
     if (unknowns && unknowns.length === 1) {
-
-      this.outputService.displayParserError(`I don't know what ${unknowns[0]} means.`);
-
+      friendlyText = unknowns[0].userInput;
     } else {
+     friendlyText = StringHelper.toOxfordCommaList(unknowns.map(u => u.userInput), 'or');
+    }
+    this.outputService.displayParserError(`I don't know what ${friendlyText} mean.`);
 
-      const friendlyText = StringHelper.toOxfordCommaList(unknowns.map(u => u.userInput), 'or');
-      this.outputService.displayParserError(`I don't know what ${friendlyText} mean.`);
+    // Log each unknown token to Google Analytics
+    for (const token of unknowns) {
+
+      GoogleAnalyticsService.instance.emitEvent(
+        'Unknown Token',
+        token.name,
+        `${context.story.title} - ${context.currentRoom.name}`);
 
     }
+
   }
 
   private substituteWordsAsNeeded(sentence: string): string {

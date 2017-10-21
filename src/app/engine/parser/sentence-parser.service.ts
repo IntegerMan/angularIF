@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {CommandToken} from './command-token';
 import {Command} from './command';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 import {TokenClassification} from './token-classification.enum';
 import {TokenizerService} from './tokenizer.service';
 

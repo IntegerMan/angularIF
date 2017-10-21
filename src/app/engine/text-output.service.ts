@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {LoggingService} from '../logging.service';
+import {EventEmitter, Injectable} from '@angular/core';
+import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {CommandType} from '../text-rendering/command-type.enum';
 
@@ -7,8 +7,10 @@ import {CommandType} from '../text-rendering/command-type.enum';
 export class TextOutputService {
 
   lines: TextLine[] = [];
+  linesChanged: EventEmitter<TextLine[]>;
 
   constructor(private logger: LoggingService) {
+    this.linesChanged = new EventEmitter<TextLine[]>();
   }
 
   displayUserCommand(command: string, sentence: any): void {
@@ -62,6 +64,8 @@ export class TextOutputService {
   clear(): void {
     this.logger.log('Clearing output area');
     this.lines.length = 0;
+
+    this.linesChanged.emit(this.lines);
   }
 
   private addLine(line: TextLine): void {
@@ -74,7 +78,7 @@ export class TextOutputService {
     // Update the collection. If components displaying this are bound to our lines collection, they'll update
     this.lines.push(line);
 
-    // TODO: We may also need to fire an event here at some point
+    this.linesChanged.emit(this.lines);
 
   }
 

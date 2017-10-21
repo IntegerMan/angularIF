@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {LexiconService} from './lexicon.service';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 import {LanguageTerm} from './language-term';
 
 @Injectable()

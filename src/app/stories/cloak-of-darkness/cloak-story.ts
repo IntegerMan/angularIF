@@ -3,12 +3,13 @@ import {Room} from '../../engine/entities/room';
 import {Player} from '../../engine/entities/player';
 import {NavigationService} from '../../engine/navigation.service';
 import {Scenery} from '../../engine/entities/scenery';
-import {LoggingService} from '../../logging.service';
+import {LoggingService} from '../../utility/logging.service';
 import {Hook} from './hook';
 import {EntityWeight} from '../../engine/entities/entity-weight.enum';
 import {EntitySize} from '../../engine/entities/entity-size.enum';
 import {PortableEntity} from '../../engine/entities/portable-entity';
 import {Bar} from './bar';
+import {Cloak} from './cloak';
 
 export class CloakStory extends Story {
 
@@ -16,7 +17,7 @@ export class CloakStory extends Story {
   private _cloakroom: Room;
   private _bar: Bar;
   private _player: Player;
-  private _cloak: PortableEntity;
+  private _cloak: Cloak;
 
   protected getRooms(): Room[] {
     return [this._foyer, this._cloakroom, this._bar];
@@ -32,7 +33,8 @@ export class CloakStory extends Story {
 
     // Basic Metadata
     this.title = 'Cloak of Darkness';
-    this.version = '0.21';
+    this.version = '0.25';
+    this.fontAwesomeIcon = 'fa-bookmark-o';
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
     this.reset();
@@ -42,12 +44,14 @@ export class CloakStory extends Story {
   reset(): void {
 
     // Define the titular cloak
-    this._cloak = new PortableEntity('black velvet cloak');
-    this.configureCloak(this._cloak);
+    this._cloak = new Cloak();
 
     // Define the rooms
     this._foyer = new Room('Foyer of the Opera House');
+
     this._cloakroom = new Room('Cloakroom');
+    this._cloak.cloakroom = this._cloakroom;
+
     this._bar = new Bar('Foyer Bar');
     this._bar.cloak = this._cloak;
 
@@ -60,19 +64,6 @@ export class CloakStory extends Story {
     this.configureFoyer(this._foyer);
     this.configureCloakroom(this._cloakroom);
     this.configureBar(this._bar);
-  }
-
-  private configureCloak(cloak: PortableEntity): void {
-
-    cloak.weight = EntityWeight.textbook;
-    cloak.size = EntitySize.person;
-
-    cloak.description = 'A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops. ' +
-      'Its blackness is so deep that it almost seems to suck light from the room.';
-    cloak.examineDescription = 'The velvet cloak almost seems to have darkness woven into its very fabric. ' +
-      'Everything about it is darker than it should be.';
-
-    cloak.inRoomDescription = 'A dark black velvet cloak rests in a heap on the floor.';
   }
 
   private configureBar(room: Room): void {
