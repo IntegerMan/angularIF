@@ -8,9 +8,11 @@ export class TextOutputService {
 
   lines: TextLine[] = [];
   linesChanged: EventEmitter<TextLine[]>;
+  lineAdded: EventEmitter<TextLine>;
 
   constructor(private logger: LoggingService) {
     this.linesChanged = new EventEmitter<TextLine[]>();
+    this.lineAdded = new EventEmitter<TextLine>();
   }
 
   displayUserCommand(command: string, sentence: any): void {
@@ -78,6 +80,8 @@ export class TextOutputService {
     // Update the collection. If components displaying this are bound to our lines collection, they'll update
     this.lines.push(line);
 
+    // Fire events
+    this.lineAdded.emit(line);
     this.linesChanged.emit(this.lines);
 
   }

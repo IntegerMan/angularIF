@@ -114,6 +114,8 @@ export class InteractiveFictionService {
       return;
     }
 
+
+
     context.outputService.displayRoomName(room.name);
     context.outputService.displayBlankLine();
     context.outputService.displayStory(room.getExamineDescription(context, isScrutinize));
