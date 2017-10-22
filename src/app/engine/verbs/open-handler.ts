@@ -2,6 +2,7 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {VerbType} from './verb-type.enum';
+import {CommandResult} from '../command-result';
 
 export class OpenHandler extends VerbHandler {
 
@@ -9,11 +10,11 @@ export class OpenHandler extends VerbHandler {
     return VerbType.manipulate;
   }
 
-  handleCommand(command: Command, context: CommandContext): boolean {
+  handleCommand(command: Command, context: CommandContext): CommandResult {
 
     context.outputService.displayStory('You don\'t need to open that.');
 
-    return false;
+    return CommandResult.BuildActionFailedResult();
 
   }
 

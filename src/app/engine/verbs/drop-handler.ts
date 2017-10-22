@@ -5,6 +5,7 @@ import {CommandToken} from '../parser/command-token';
 import {Scenery} from '../entities/scenery';
 import {PortableEntity} from '../entities/portable-entity';
 import {VerbType} from './verb-type.enum';
+import {CommandResult} from '../command-result';
 
 export class DropHandler extends VerbHandler {
 
@@ -12,14 +13,14 @@ export class DropHandler extends VerbHandler {
     return VerbType.manipulate;
   }
 
-  handleCommand(command: Command, context: CommandContext): boolean {
+  handleCommand(command: Command, context: CommandContext): CommandResult {
 
     // If it's just a plain old look without a target, describe the room
     if (command.objects.length <= 0) {
 
       context.ifService.describeRoom(context.currentRoom, context);
 
-      return true;
+      return CommandResult.BuildActionSuccessResult();
     }
 
     const token: CommandToken = command.objects[0];
@@ -33,25 +34,25 @@ export class DropHandler extends VerbHandler {
     const entity = token.entity;
     if (!entity) {
       // The context lookup took care of output to the user, so we just need to abort
-      return false;
+      return CommandResult.BuildParseFailedResult();
     }
 
     // Protect against invalid class since we need a Scenery instance up ahead
     if (!(entity instanceof PortableEntity)) {
       context.outputService.displayFailedAction(`You can't drop that!`);
-      return false;
+      return CommandResult.BuildActionFailedResult();
     }
 
     return this.dropItem(entity, context);
 
   }
 
-  dropEverything(context: CommandContext): boolean {
+  dropEverything(context: CommandContext): CommandResult {
 
     // Don't do any dropping if the player isn't carrying anything
     if (context.player.contents.length <= 0) {
       context.outputService.displayFailedAction('You aren\'t currently carrying anything.');
-      return false;
+      return CommandResult.BuildActionFailedResult();
     }
 
     let result: boolean = false;
@@ -67,22 +68,26 @@ export class DropHandler extends VerbHandler {
 
     }
 
-    return result;
+    if (result) {
+      return CommandResult.BuildActionSuccessResult();
+    } else {
+      return CommandResult.BuildActionFailedResult();
+    }
   }
 
-  dropItem(item: PortableEntity, context: CommandContext): boolean {
+  dropItem(item: PortableEntity, context: CommandContext): CommandResult {
 
     if (!item.allowDrop(context)) {
-      return false;
+      return CommandResult.BuildActionFailedResult();
     }
 
     if (context.player.removeFromInventory(item, context)) {
       context.currentRoom.addObject(item);
 
-      return true;
+      return CommandResult.BuildActionSuccessResult();
     }
 
-    return false;
+    return CommandResult.BuildActionFailedResult();
   }
 
 }

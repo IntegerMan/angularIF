@@ -3,6 +3,11 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ScoreService {
 
-  constructor() { }
+  currentScore: number = 0;
+  maxScore: number = 0;
+
+  constructor() {
+
+  }
 
 }

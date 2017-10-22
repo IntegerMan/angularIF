@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
@@ -19,6 +19,7 @@ import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
 import {StateService} from './state.service';
 import {ScoreService} from './score.service';
+import {CommandResult} from './command-result';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -28,11 +29,14 @@ export class InteractiveFictionService {
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
+  movesTaken: number = 0;
+  commandId: number = 0;
 
   story: Story;
 
+  commandEvaluated: EventEmitter<Command>;
+
   private verbHandlers: VerbHandler[];
-  commandId: number;
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
@@ -47,6 +51,7 @@ export class InteractiveFictionService {
 
     // Ensure we start with a unique empty list
     this.verbHandlers = [];
+    this.commandEvaluated = new EventEmitter<Command>();
 
   }
 
@@ -63,7 +68,7 @@ export class InteractiveFictionService {
   private initializeEngine() {
 
     this.outputService.displayTitle(`${this.engineName}`, `v${this.engineVersion}`);
-    this.outputService.displaySubtitle(`Developed by ${this.engineAuthor}`);
+    this.outputService.displayAuthor(`Developed by ${this.engineAuthor}`);
     this.outputService.displayBlankLine();
     this.outputService.displaySystem(this.copyrightText);
     this.outputService.displaySystem(this.licenseText);
@@ -73,25 +78,24 @@ export class InteractiveFictionService {
   private initializeStory(story: Story) {
 
     // Restart our numbering
-    this.commandId = 0;
+    this.movesTaken = 0;
     this.stateService.clear();
 
     // Ensure the story has the base dictionary at least
     story.addDictionary(new CommonDictionary(this.lexer));
 
+    // Boot up the story world
     story.initialize();
+
+    // Set the initial score
+    this.scoreService.currentScore = 0;
+    this.scoreService.maxScore = story.maxScore;
 
     this.beginStory(story);
   }
 
   private beginStory(story: Story) {
     this.story = story;
-
-    this.outputService.displayTitle(story.title, `v${story.version}`);
-    if (story.author.indexOf('Unattributed') < 0) {
-      this.outputService.displaySubtitle(`Written by ${story.author}`);
-    }
-    this.outputService.displayBlankLine();
 
     // Grab verb handlers from the story.
     this.verbHandlers.length = 0;
@@ -100,16 +104,36 @@ export class InteractiveFictionService {
       this.verbHandlers.push(verb);
     }
 
+    // Display the story header and introduction
+    this.displayHeadingAndIntro(story);
+
+    // Now that we're ready to begin properly, validate
     if (!story.player || !story.player.currentRoom) {
       // TODO: I need an exception handling service somewhere...
       throw new Error('The player must be initialized and have a starting room when the story begins!');
     }
 
-    this.outputService.displayBlankLine();
-    this.outputService.displayStory('The story begins...');
+    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
+  }
+
+  private displayHeadingAndIntro(story: Story) {
+
+    this.outputService.displayTitle(story.title, `v${story.version}`);
+
+    if (story.author.indexOf('Unattributed') < 0) {
+      // TODO: It'd be nice to be able to have this be a hyperlink to open in a new window
+      this.outputService.displayAuthor(`Written by ${story.author}`);
+    }
+    if (story.description) {
+      this.outputService.displaySubtitle(story.description);
+    }
+
     this.outputService.displayBlankLine();
 
-    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
+    story.displayIntroduction(this.outputService);
+
+    this.outputService.displayBlankLine();
+
   }
 
   describeRoom(room: Room, context: CommandContext, isScrutinize: boolean = false): void {
@@ -118,8 +142,6 @@ export class InteractiveFictionService {
       this.describeDarkRoom(context);
       return;
     }
-
-
 
     context.outputService.displayRoomName(room.name);
     context.outputService.displayBlankLine();
@@ -143,7 +165,7 @@ export class InteractiveFictionService {
 
   }
 
-  public handleUserCommand(command: Command, context: CommandContext): boolean {
+  public handleUserCommand(command: Command, context: CommandContext): CommandResult {
 
     // Validate input
     if (!command) {
@@ -156,7 +178,16 @@ export class InteractiveFictionService {
     // Find the requisite verb handler for the item in question
     command.verbHandler = this.getVerbHandler(command.verb);
 
-    return command.execute(context);
+    const result: CommandResult = command.execute(context);
+
+    if (result && result.countsAsMove) {
+      this.movesTaken += 1;
+    }
+    command.result = result;
+
+    this.commandEvaluated.emit(command);
+
+    return result;
 
   }
 
@@ -231,5 +262,10 @@ export class InteractiveFictionService {
     this.beginStory(this.story);
 
   }
+
+  get currentScore(): number {
+    return this.scoreService.currentScore;
+  }
+
 
 }
