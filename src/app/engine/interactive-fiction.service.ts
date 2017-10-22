@@ -25,7 +25,7 @@ import {CommandResult} from './command-result';
 export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
-  engineVersion: string = '0.25';
+  engineVersion: string = '0.3';
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
@@ -109,7 +109,6 @@ export class InteractiveFictionService {
 
     // Now that we're ready to begin properly, validate
     if (!story.player || !story.player.currentRoom) {
-      // TODO: I need an exception handling service somewhere...
       throw new Error('The player must be initialized and have a starting room when the story begins!');
     }
 
@@ -120,7 +119,7 @@ export class InteractiveFictionService {
 
     this.outputService.displayTitle(story.title, `v${story.version}`);
 
-    if (story.author.indexOf('Unattributed') < 0) {
+    if (story.author && story.author.indexOf('Unattributed') < 0) {
       // TODO: It'd be nice to be able to have this be a hyperlink to open in a new window
       this.outputService.displayAuthor(`Written by ${story.author}`);
     }
@@ -266,6 +265,5 @@ export class InteractiveFictionService {
   get currentScore(): number {
     return this.scoreService.currentScore;
   }
-
 
 }

@@ -5,6 +5,7 @@ import {WorldEntity} from '../entities/world-entity';
 import {IGettable} from '../entities/i-gettable';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
+import {PortableEntity} from '../entities/portable-entity';
 
 export class GetHandler extends VerbHandler {
 
@@ -45,15 +46,22 @@ export class GetHandler extends VerbHandler {
 
   private attemptPickup(entity: WorldEntity, context: CommandContext): CommandResult {
 
-    const item: IGettable = ((entity as any) as IGettable);
-    if (item && item.allowPickup !== undefined) {
+    if (entity && entity instanceof PortableEntity) {
+
+      const item: PortableEntity = entity;
 
       const result = item.allowPickup(context);
       if (result) {
+
         context.player.addToInventory(entity, context);
+        item.onPickup(context);
+
         return CommandResult.BuildActionSuccessResult();
+
       } else {
+
         return CommandResult.BuildActionFailedResult();
+
       }
 
     }

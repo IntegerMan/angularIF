@@ -8,6 +8,8 @@ export class Cloak extends PortableEntity {
 
   cloakroom: Room;
 
+  private hasCountedForPoints: boolean = false;
+
   constructor() {
     super('black velvet cloak');
 
@@ -35,4 +37,14 @@ export class Cloak extends PortableEntity {
 
     return super.allowDrop(context);
   }
+
+  onDropped(context: CommandContext): void {
+    super.onDropped(context);
+
+    if (!this.hasCountedForPoints) {
+      this.hasCountedForPoints = true;
+      context.score.increaseScore(1);
+    }
+  }
+
 }
