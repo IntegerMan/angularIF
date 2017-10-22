@@ -16,9 +16,9 @@ export class GameOverComponent implements OnInit {
   @Input()
   isVictory: boolean;
 
-  private score: number;
-  private maxScore: number;
-  private movesText: string;
+  score: number;
+  maxScore: number;
+  movesText: string;
 
   constructor(private ifService: InteractiveFictionService,
               private scoreService: ScoreService) {
