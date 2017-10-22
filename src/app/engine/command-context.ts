@@ -11,6 +11,8 @@ import {CommandToken} from './parser/command-token';
 import {TokenizerService} from './parser/tokenizer.service';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
+import {StateService} from './state.service';
+import {ScoreService} from './score.service';
 
 export class CommandContext {
 
@@ -28,19 +30,25 @@ export class CommandContext {
   ifService: InteractiveFictionService;
   navService: NavigationService;
   confirmService: ConfirmationService;
+  state: StateService;
+  score: ScoreService;
   story: Story;
   wasConfused: boolean = false;
 
   constructor(ifService: InteractiveFictionService,
               outputService: TextOutputService,
               navService: NavigationService,
-              confirmService: ConfirmationService) {
+              confirmService: ConfirmationService,
+              stateService: StateService,
+              scoreService: ScoreService) {
 
     this.ifService = ifService;
     this.story = ifService.story;
     this.outputService = outputService;
     this.navService = navService;
     this.confirmService = confirmService;
+    this.state = stateService;
+    this.score = scoreService;
 
     // These are commonly needed by classes and shouldn't be injected
     this.logger = LoggingService.instance;

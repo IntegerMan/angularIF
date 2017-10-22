@@ -66,7 +66,7 @@ export class CloakStory extends Story {
     this.configureBar(this._bar);
   }
 
-  private configureBar(room: Room): void {
+  private configureBar(room: Bar): void {
 
     room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
       'completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.';
@@ -82,6 +82,7 @@ export class CloakStory extends Story {
     message.addNounAlias('word');
     message.addNounAlias('note');
     message.addNounAlias('floor');
+    room.message = message;
 
     this.addToRoom(message, room);
 

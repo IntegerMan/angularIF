@@ -17,6 +17,8 @@ import {NavigationService} from './navigation.service';
 import {WorldEntity} from './entities/world-entity';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
+import {StateService} from './state.service';
+import {ScoreService} from './score.service';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -39,7 +41,9 @@ export class InteractiveFictionService {
               private navService: NavigationService,
               private lexer: LexiconService,
               private confirmService: ConfirmationService,
-              private analytics: GoogleAnalyticsService) {
+              private analytics: GoogleAnalyticsService,
+              private stateService: StateService,
+              private scoreService: ScoreService) {
 
     // Ensure we start with a unique empty list
     this.verbHandlers = [];
@@ -70,6 +74,7 @@ export class InteractiveFictionService {
 
     // Restart our numbering
     this.commandId = 0;
+    this.stateService.clear();
 
     // Ensure the story has the base dictionary at least
     story.addDictionary(new CommonDictionary(this.lexer));
@@ -170,7 +175,9 @@ export class InteractiveFictionService {
       this,
       this.outputService,
       this.navService,
-      this.confirmService);
+      this.confirmService,
+      this.stateService,
+      this.scoreService);
   }
 
   private getVerbHandler(verbToken: CommandToken): VerbHandler {
