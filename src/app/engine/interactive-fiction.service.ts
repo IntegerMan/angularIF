@@ -20,6 +20,7 @@ import {ConfirmationService} from 'primeng/primeng';
 import {StateService} from './state.service';
 import {ScoreService} from './score.service';
 import {CommandResult} from './command-result';
+import {GameState} from './game-state.enum';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -31,11 +32,13 @@ export class InteractiveFictionService {
   licenseText: string = 'All rights reserved.';
   movesTaken: number = 0;
   commandId: number = 0;
-  isGameOver: boolean = false;
+
+  private _gameState: GameState = GameState.initializing;
 
   story: Story;
 
   commandEvaluated: EventEmitter<Command>;
+  gameStateChanged: EventEmitter<GameState>;
 
   private verbHandlers: VerbHandler[];
 
@@ -53,6 +56,7 @@ export class InteractiveFictionService {
     // Ensure we start with a unique empty list
     this.verbHandlers = [];
     this.commandEvaluated = new EventEmitter<Command>();
+    this.gameStateChanged = new EventEmitter<GameState>();
 
   }
 
@@ -61,6 +65,8 @@ export class InteractiveFictionService {
 
     this.outputService.clear();
     this.verbHandlers.length = 0;
+
+    this.gameState = GameState.initializing;
 
     this.initializeEngine();
     this.initializeStory(story);
@@ -78,10 +84,11 @@ export class InteractiveFictionService {
 
   private initializeStory(story: Story) {
 
+    this.gameState = GameState.initializing;
+
     // Restart
     this.movesTaken = 0;
     this.stateService.clear();
-    this.isGameOver = false;
 
     // Ensure the story has the base dictionary at least
     story.addDictionary(new CommonDictionary(this.lexer));
@@ -97,6 +104,7 @@ export class InteractiveFictionService {
   }
 
   private beginStory(story: Story) {
+
     this.story = story;
 
     // Grab verb handlers from the story.
@@ -115,6 +123,8 @@ export class InteractiveFictionService {
     }
 
     this.describeRoom(story.player.currentRoom, this.buildCommandContext());
+
+    this.gameState = GameState.underway;
   }
 
   private displayHeadingAndIntro(story: Story) {
@@ -274,7 +284,11 @@ export class InteractiveFictionService {
 
   endGame(isVictory: boolean, message: string = null) {
 
-    this.isGameOver = true;
+    if (isVictory) {
+      this.gameState = GameState.won;
+    } else {
+      this.gameState = GameState.lost;
+    }
 
     if (!message) {
       if (isVictory) {
@@ -295,4 +309,18 @@ export class InteractiveFictionService {
       this.scoreService.currentScore);
 
   }
+
+  get gameState(): GameState {
+    return this._gameState;
+  }
+
+  set gameState(value: GameState) {
+    this._gameState = value;
+    this.gameStateChanged.emit(value);
+  }
+
+  get isGameOver(): boolean {
+    return this.gameState !== GameState.underway;
+  }
+
 }

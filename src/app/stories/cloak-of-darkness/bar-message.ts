@@ -18,6 +18,10 @@ export class BarMessage extends Scenery {
 
   }
 
+  shouldDescribeWithRoom(context: CommandContext): boolean {
+    return false;
+  }
+
   getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
 
     const count: number = context.state.getState(this.name, 0);
