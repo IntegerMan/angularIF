@@ -24,6 +24,11 @@ export abstract class VerbHandler {
 
   abstract get verbType(): VerbType;
 
+
+  get isHidden(): boolean {
+    return false;
+  }
+
   get name(): string {
 
     if (this.registeredNormals.length > 0) {

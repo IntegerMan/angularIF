@@ -3,9 +3,9 @@ import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
-import {Confirmation} from 'primeng/primeng';
+import {environment} from '../../../environments/environment';
 
-export class DieHandler extends VerbHandler {
+export class WinHandler extends VerbHandler {
 
   get isHidden(): boolean {
     return true;
@@ -17,13 +17,15 @@ export class DieHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    const confirmation: Confirmation = {
-      message: 'Are you sure you want to just give up?',
-      accept: () => context.ifService.endGame(false),
-      reject: () => context.outputService.displaySystem('The story must go on...')
-    };
+    // Win is not a valid verb in production
+    if (environment.production) {
+      context.outputService.displaySystem('Cheaters never prosper.');
 
-    context.confirmService.confirm(confirmation);
+      return CommandResult.BuildActionSuccessResult();
+    }
+
+    // But in dev it is!
+    context.ifService.endGame(true, 'Well, that was easy.');
 
     return CommandResult.BuildActionSuccessResult();
 
