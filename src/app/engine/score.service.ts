@@ -11,7 +11,7 @@ export class ScoreService {
 
   }
 
-  increaseScore(amount: number): number {
+  increaseScore(amount: number = 1): number {
 
     this.currentScore += amount;
 
@@ -23,7 +23,7 @@ export class ScoreService {
 
   }
 
-  decreaseScore(amount: number): number {
+  decreaseScore(amount: number = 1): number {
 
     this.currentScore += amount;
 

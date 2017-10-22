@@ -24,7 +24,7 @@ export class Cloak extends PortableEntity {
 
     this.inRoomDescription = 'A dark black velvet cloak rests in a heap on the floor.';
 
-    this.addAdjectiveAlias('smart');
+    this.addAdjectiveAliases(['smart']);
   }
 
   allowDrop(context: CommandContext): boolean {

@@ -1,4 +1,5 @@
 export enum RenderType {
+  gameOver = 'gameOver',
   parserError = 'parserError',
   successAction = 'successAction',
   failureAction = 'failureAction',

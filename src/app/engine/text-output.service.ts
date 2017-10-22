@@ -8,7 +8,7 @@ export class TextOutputService {
 
   static get instance(): TextOutputService {
     if (!this._instance) {
-      this._instance = new TextOutputService()
+      this._instance = new TextOutputService();
     }
     return this._instance;
   }
@@ -98,6 +98,10 @@ export class TextOutputService {
     this.lineAdded.emit(line);
     this.linesChanged.emit(this.lines);
 
+  }
+
+  displayGameOver(message: string, isVictory: boolean): void {
+    this.addLine(new TextLine(message, RenderType.gameOver, isVictory));
   }
 
 }

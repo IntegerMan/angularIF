@@ -21,6 +21,7 @@ import {GoogleAnalyticsService} from './utility/google-analytics.service';
 import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
+import { GameOverComponent } from './text-rendering/game-over/game-over.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { GameStateHeaderComponent } from './text-rendering/game-state-header/gam
     UserInputComponent,
     TextListComponent,
     EntityReferenceComponent,
-    GameStateHeaderComponent
+    GameStateHeaderComponent,
+    GameOverComponent
   ],
   imports: [
     BrowserModule,

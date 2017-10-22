@@ -266,4 +266,30 @@ export class InteractiveFictionService {
     return this.scoreService.currentScore;
   }
 
+  get maxScore(): number {
+    return this.scoreService.maxScore;
+  }
+
+  endGame(isVictory: boolean, message: string = null) {
+
+    if (!message) {
+      if (isVictory) {
+        message = 'You have won!!!';
+      } else {
+        message = 'You have lost.';
+      }
+    }
+
+    this.outputService.displayBlankLine();
+    this.outputService.displayGameOver(message, isVictory);
+    this.outputService.displayBlankLine();
+    //
+    // // Tell the user how they did
+    // const summary = `Your score was ${this.currentScore} out of a possible ${this.maxScore} points in ${this.movesTaken} moves.`;
+    // this.outputService.displaySystem(summary);
+    // this.outputService.displaySystem('Would you like to Restart, Restore a previous game, or Quit?');
+
+    // TODO: Start impacting what the user can do
+
+  }
 }

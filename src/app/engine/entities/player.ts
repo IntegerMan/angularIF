@@ -14,13 +14,7 @@ export class Player extends WorldEntity implements IGettable {
     this.article = '';
 
     // Add some common synonyms for helping the player refer to their character
-    this.addNounAlias('me');
-    this.addNounAlias('self');
-    this.addNounAlias('yourself');
-    this.addNounAlias('myself');
-    this.addNounAlias('character');
-    this.addNounAlias('avatar');
-    this.addNounAlias('player');
+    this.addNounAliases(['me', 'self', 'yourself', 'myself', 'character', 'avatar', 'player']);
 
     // Give default self-descriptions here
     this.description = 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';

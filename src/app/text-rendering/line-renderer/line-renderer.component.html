@@ -2,6 +2,8 @@
 
   <span *ngSwitchCase="'engine'" class="text-muted"><samp>{{line.text}}</samp></span>
 
+  <if-game-over *ngSwitchCase="'gameOver'" [text]="line.text" [isVictory]="line.data"></if-game-over>
+
   <span *ngSwitchCase="'helpText'" class="text-info">{{line.text}}</span>
 
   <if-text-list *ngSwitchCase="'list'" [text]="line.text" [items]="line.data"></if-text-list>

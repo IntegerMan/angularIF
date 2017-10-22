@@ -10,6 +10,7 @@ import {EntitySize} from '../../engine/entities/entity-size.enum';
 import {Bar} from './bar';
 import {Cloak} from './cloak';
 import {TextOutputService} from '../../engine/text-output.service';
+import {BarMessage} from './bar-message';
 
 export class CloakStory extends Story {
 
@@ -79,17 +80,7 @@ export class CloakStory extends Story {
     room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
       'completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.';
 
-    // TODO: Examining the sawdust should end the game in victory or loss
-    const message: Scenery = new Scenery('scrawled message');
-    message.weight = EntityWeight.feather;
-    message.size = EntitySize.backpack;
-    message.addAdjectiveAlias('written');
-    message.addNounAlias('writing');
-    message.addNounAlias('sawdust');
-    message.addNounAlias('words');
-    message.addNounAlias('word');
-    message.addNounAlias('note');
-    message.addNounAlias('floor');
+    const message: BarMessage = new BarMessage();
     room.message = message;
 
     this.addToRoom(message, room);
@@ -104,7 +95,7 @@ export class CloakStory extends Story {
       'The exit is a door to the east.';
 
     const hook: Hook = new Hook('small brass hook');
-    hook.addNounAlias('Peg');
+    hook.addNounAliases(['Peg']);
     this.addToRoom(hook, room);
 
     this.navService.eastTo(room, this._foyer);
