@@ -7,6 +7,7 @@ import {EntitySize} from './entity-size.enum';
 import {LightLevel} from './light-level.enum';
 import {Command} from '../parser/command';
 import {VerbType} from '../verbs/verb-type.enum';
+import {CommandType} from '../command-type.enum';
 
 export class Room extends WorldEntity {
 
@@ -70,6 +71,14 @@ export class Room extends WorldEntity {
   }
 
   allowCommand(command: Command, context: CommandContext): boolean {
+
+    if (context.ifService.isGameOver && (!command.verbHandler || command.verbHandler.verbType !== VerbType.system)) {
+
+      context.outputService.displayParserError(`It's too late for that - the game is already over!`);
+      context.outputService.displayPrompt('Would you like to Restart, Restore, or Quit?');
+
+      return false;
+    }
 
     if (this.hasLight(context)) {
       return true;

@@ -1,8 +1,7 @@
 import {Scenery} from './scenery';
-import {IGettable} from './i-gettable';
 import {CommandContext} from '../command-context';
 
-export class PortableEntity extends Scenery implements IGettable {
+export class PortableEntity extends Scenery {
 
   allowPickup(context: CommandContext): boolean {
 

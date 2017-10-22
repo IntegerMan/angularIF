@@ -11,6 +11,7 @@ export enum RenderType {
   userInput = 'userInput',
   list = 'list',
   engine = 'engine',
+  enginePrompt = 'enginePrompt',
   narrative = 'narrative',
   helpText = 'helpText'
 }

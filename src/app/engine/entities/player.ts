@@ -4,9 +4,8 @@ import {ArrayHelper} from '../../utility/array-helper';
 import {CommandContext} from '../command-context';
 import {EntitySize} from './entity-size.enum';
 import {EntityWeight} from './entity-weight.enum';
-import {IGettable} from './i-gettable';
 
-export class Player extends WorldEntity implements IGettable {
+export class Player extends WorldEntity {
 
   constructor() {
     super('you');

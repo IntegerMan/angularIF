@@ -86,19 +86,11 @@ export class InteractiveFictionService {
 
     this.gameState = GameState.initializing;
 
-    // Restart
-    this.movesTaken = 0;
-    this.stateService.clear();
-
     // Ensure the story has the base dictionary at least
     story.addDictionary(new CommonDictionary(this.lexer));
 
     // Boot up the story world
     story.initialize();
-
-    // Set the initial score
-    this.scoreService.currentScore = 0;
-    this.scoreService.maxScore = story.maxScore;
 
     this.beginStory(story);
   }
@@ -106,6 +98,11 @@ export class InteractiveFictionService {
   private beginStory(story: Story) {
 
     this.story = story;
+
+    this.movesTaken = 0;
+    this.stateService.clear();
+    this.scoreService.currentScore = 0;
+    this.scoreService.maxScore = story.maxScore;
 
     // Grab verb handlers from the story.
     this.verbHandlers.length = 0;
@@ -191,7 +188,7 @@ export class InteractiveFictionService {
 
     const result: CommandResult = command.execute(context);
 
-    if (result && result.countsAsMove) {
+    if (result && result.countsAsMove && !this.isGameOver) {
       this.movesTaken += 1;
     }
     command.result = result;

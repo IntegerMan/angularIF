@@ -45,6 +45,10 @@ export class TextOutputService {
     this.addLine(new TextLine(text, RenderType.engine));
   }
 
+  displayPrompt(text: string): void {
+    this.addLine(new TextLine(text, RenderType.enginePrompt));
+  }
+
   displayHelpText(text: string) {
     this.addLine(new TextLine(text, RenderType.helpText));
   }

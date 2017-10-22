@@ -2,7 +2,6 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {WorldEntity} from '../entities/world-entity';
-import {IGettable} from '../entities/i-gettable';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
 import {PortableEntity} from '../entities/portable-entity';
