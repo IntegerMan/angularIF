@@ -63,7 +63,7 @@ export class InteractiveFictionService {
   private initializeEngine() {
 
     this.outputService.displayTitle(`${this.engineName}`, `v${this.engineVersion}`);
-    this.outputService.displaySubtitle(`Developed by ${this.engineAuthor}`);
+    this.outputService.displayAuthor(`Developed by ${this.engineAuthor}`);
     this.outputService.displayBlankLine();
     this.outputService.displaySystem(this.copyrightText);
     this.outputService.displaySystem(this.licenseText);
@@ -87,12 +87,6 @@ export class InteractiveFictionService {
   private beginStory(story: Story) {
     this.story = story;
 
-    this.outputService.displayTitle(story.title, `v${story.version}`);
-    if (story.author.indexOf('Unattributed') < 0) {
-      this.outputService.displaySubtitle(`Written by ${story.author}`);
-    }
-    this.outputService.displayBlankLine();
-
     // Grab verb handlers from the story.
     this.verbHandlers.length = 0;
     for (const verb of story.verbHandlers) {
@@ -100,16 +94,36 @@ export class InteractiveFictionService {
       this.verbHandlers.push(verb);
     }
 
+    // Display the story header and introduction
+    this.displayHeadingAndIntro(story);
+
+    // Now that we're ready to begin properly, validate
     if (!story.player || !story.player.currentRoom) {
       // TODO: I need an exception handling service somewhere...
       throw new Error('The player must be initialized and have a starting room when the story begins!');
     }
 
-    this.outputService.displayBlankLine();
-    this.outputService.displayStory('The story begins...');
+    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
+  }
+
+  private displayHeadingAndIntro(story: Story) {
+
+    this.outputService.displayTitle(story.title, `v${story.version}`);
+
+    if (story.author.indexOf('Unattributed') < 0) {
+      // TODO: It'd be nice to be able to have this be a hyperlink to open in a new window
+      this.outputService.displayAuthor(`Written by ${story.author}`);
+    }
+    if (story.description) {
+      this.outputService.displaySubtitle(story.description);
+    }
+
     this.outputService.displayBlankLine();
 
-    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
+    story.displayIntroduction(this.outputService);
+
+    this.outputService.displayBlankLine();
+
   }
 
   describeRoom(room: Room, context: CommandContext, isScrutinize: boolean = false): void {
@@ -118,8 +132,6 @@ export class InteractiveFictionService {
       this.describeDarkRoom(context);
       return;
     }
-
-
 
     context.outputService.displayRoomName(room.name);
     context.outputService.displayBlankLine();

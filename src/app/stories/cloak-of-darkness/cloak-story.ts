@@ -9,6 +9,7 @@ import {EntityWeight} from '../../engine/entities/entity-weight.enum';
 import {EntitySize} from '../../engine/entities/entity-size.enum';
 import {Bar} from './bar';
 import {Cloak} from './cloak';
+import {TextOutputService} from '../../engine/text-output.service';
 
 export class CloakStory extends Story {
 
@@ -32,13 +33,20 @@ export class CloakStory extends Story {
 
     // Basic Metadata
     this.title = 'Cloak of Darkness';
-    this.version = '0.25';
+    this.description = `A short demo story based on Roger Firth's specification to compare various Interactive Fiction development languages.`;
+    this.version = '0.6';
     this.fontAwesomeIcon = 'fa-bookmark-o';
     this.maxScore = 2; // Oh no, whatever will we do with two whole points?
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
     this.reset();
 
+  }
+
+  displayIntroduction(output: TextOutputService): void {
+    output.displayStory('Hurrying through the rainswept November night, you\'re glad to see the bright\n' +
+      'lights of the Opera House. It\'s surprising that there aren\'t more people about\n' +
+      'but, hey, what do you expect in a cheap demo game...?');
   }
 
   reset(): void {

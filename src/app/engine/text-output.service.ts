@@ -33,6 +33,10 @@ export class TextOutputService {
     this.addLine(new TextLine(text, RenderType.header, smallText));
   }
 
+  displayAuthor(text: string): void {
+    this.addLine(new TextLine(text, RenderType.author));
+  }
+
   displaySubtitle(text: string): void {
     this.addLine(new TextLine(text, RenderType.subtitle));
   }

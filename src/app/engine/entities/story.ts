@@ -4,12 +4,14 @@ import {LexiconDictionary} from '../parser/lexicon-dictionary';
 import {VerbHandler} from '../verbs/verb-handler';
 import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
+import {TextOutputService} from '../text-output.service';
 
 export abstract class Story {
 
   title: string;
   author: string;
   version: string;
+  description: string = null;
 
   rooms: Room[];
   player: Player;
@@ -85,4 +87,8 @@ export abstract class Story {
   }
 
   protected abstract reset();
+
+  displayIntroduction(output: TextOutputService) {
+    output.displayStory('The story begins...');
+  }
 }

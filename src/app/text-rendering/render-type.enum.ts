@@ -6,6 +6,7 @@ export enum RenderType {
   divider = 'divider',
   header = 'header',
   subtitle = 'subtitle',
+  author = 'author',
   userInput = 'userInput',
   list = 'list',
   engine = 'engine',
