@@ -288,5 +288,11 @@ export class InteractiveFictionService {
     this.outputService.displayGameOver(message, isVictory);
     this.outputService.displayBlankLine();
 
+    this.analytics.emitEvent(
+      'Game Over',
+      message,
+      `${this.story.title} - ${this.story.player.currentRoom.name}`,
+      this.scoreService.currentScore);
+
   }
 }

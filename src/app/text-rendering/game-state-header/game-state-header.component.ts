@@ -15,7 +15,7 @@ import {ScoreService} from '../../engine/score.service';
 export class GameStateHeaderComponent implements OnInit, OnDestroy {
 
   mainText: string = 'Loading...';
-  movesText: string = 'No Moves';
+  movesText: string = '';
   score: number;
   maxScore: number;
 
