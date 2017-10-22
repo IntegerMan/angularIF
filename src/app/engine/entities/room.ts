@@ -7,6 +7,7 @@ import {EntitySize} from './entity-size.enum';
 import {LightLevel} from './light-level.enum';
 import {Command} from '../parser/command';
 import {VerbType} from '../verbs/verb-type.enum';
+import {CommandType} from '../command-type.enum';
 
 export class Room extends WorldEntity {
 
@@ -71,46 +72,54 @@ export class Room extends WorldEntity {
 
   allowCommand(command: Command, context: CommandContext): boolean {
 
-    if (!this.hasLight(context)) {
+    if (context.ifService.isGameOver && (!command.verbHandler || command.verbHandler.verbType !== VerbType.system)) {
 
-      if (command.verbHandler) {
-        switch (command.verbHandler.verbType) {
+      context.outputService.displayParserError(`It's too late for that - the game is already over!`);
+      context.outputService.displayPrompt('Would you like to Restart, Restore, or Quit?');
 
-          case VerbType.system:
-            // Just because it's dark doesn't mean that the user shouldn't be able to interact with the engine
-            return true;
+      return false;
+    }
 
-          case VerbType.social:
-            // This might be tricky since some social interactions might be physical in nature - hugging, giving something, etc.
-            return true;
+    if (this.hasLight(context)) {
+      return true;
+    }
 
-          case VerbType.look:
-            context.outputService.displayFailedAction(`It's pitch black; you can't see a thing!`);
-            return false;
+    if (command.verbHandler) {
+      switch (command.verbHandler.verbType) {
 
-          case VerbType.go:
-            const dir: CommandToken = command.getFirstDirection();
+        case VerbType.system:
+          // Just because it's dark doesn't mean that the user shouldn't be able to interact with the engine
+          return true;
 
-            if (dir && dir.entity && dir.entity instanceof Room) {
+        case VerbType.social:
+          // This might be tricky since some social interactions might be physical in nature - hugging, giving something, etc.
+          return true;
 
-              const targetRoom: Room = dir.entity;
+        case VerbType.look:
+          context.outputService.displayStory(`It's pitch black; you can't see a thing!`);
+          return false;
 
-              // If we're walking towards a room that is lit, it's allowable.
-              if (targetRoom.hasLight(context)) {
-                return true;
-              }
+        case VerbType.go:
+          const dir: CommandToken = command.getFirstDirection();
+
+          if (dir && dir.entity && dir.entity instanceof Room) {
+
+            const targetRoom: Room = dir.entity;
+
+            // If we're walking towards a room that is lit, it's allowable.
+            if (targetRoom.hasLight(context)) {
+              return true;
             }
+          }
 
-            context.outputService.displayFailedAction(`Blundering around in the dark isn't a good idea!`);
-            return false;
+          context.outputService.displayStory(`Blundering around in the dark isn't a good idea!`);
+          return false;
 
-          case VerbType.manipulate:
-            context.outputService.displayFailedAction(`In the dark? You could easily disturb something!`);
-            return false;
+        case VerbType.manipulate:
+          context.outputService.displayStory(`In the dark? You could easily disturb something!`);
+          return false;
 
-        }
       }
-
     }
 
     return true;

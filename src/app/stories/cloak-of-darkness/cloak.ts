@@ -8,6 +8,8 @@ export class Cloak extends PortableEntity {
 
   cloakroom: Room;
 
+  private hasCountedForPoints: boolean = false;
+
   constructor() {
     super('black velvet cloak');
 
@@ -22,17 +24,27 @@ export class Cloak extends PortableEntity {
 
     this.inRoomDescription = 'A dark black velvet cloak rests in a heap on the floor.';
 
-    this.addAdjectiveAlias('smart');
+    this.addAdjectiveAliases(['smart']);
   }
 
   allowDrop(context: CommandContext): boolean {
 
     // Don't allow dropping the cloak anywhere but the cloakroom
     if (context.currentRoom !== this.cloakroom) {
-      context.outputService.displayFailedAction('This isn\'t the best place to leave a smart cloak lying around.');
+      context.outputService.displayStory('This isn\'t the best place to leave a smart cloak lying around.');
       return false;
     }
 
     return super.allowDrop(context);
   }
+
+  onDropped(context: CommandContext): void {
+    super.onDropped(context);
+
+    if (!this.hasCountedForPoints) {
+      this.hasCountedForPoints = true;
+      context.score.increaseScore(1);
+    }
+  }
+
 }

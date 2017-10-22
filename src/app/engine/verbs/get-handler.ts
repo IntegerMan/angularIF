@@ -2,9 +2,9 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {WorldEntity} from '../entities/world-entity';
-import {IGettable} from '../entities/i-gettable';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
+import {PortableEntity} from '../entities/portable-entity';
 
 export class GetHandler extends VerbHandler {
 
@@ -26,7 +26,7 @@ export class GetHandler extends VerbHandler {
     for (const entity of entities) {
 
       if (context.player.contents.indexOf(entity) >= 0) {
-        context.outputService.displayFailedAction(`You already have ${entity.article} ${entity.name}!`);
+        context.outputService.displayStory(`You already have ${entity.article} ${entity.name}!`);
       } else {
         if (this.attemptPickup(entity, context).succeeded) {
           anySuccess = true;
@@ -45,15 +45,22 @@ export class GetHandler extends VerbHandler {
 
   private attemptPickup(entity: WorldEntity, context: CommandContext): CommandResult {
 
-    const item: IGettable = ((entity as any) as IGettable);
-    if (item && item.allowPickup !== undefined) {
+    if (entity && entity instanceof PortableEntity) {
+
+      const item: PortableEntity = entity;
 
       const result = item.allowPickup(context);
       if (result) {
+
         context.player.addToInventory(entity, context);
+        item.onPickup(context);
+
         return CommandResult.BuildActionSuccessResult();
+
       } else {
+
         return CommandResult.BuildActionFailedResult();
+
       }
 
     }

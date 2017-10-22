@@ -15,12 +15,13 @@ import {ScoreService} from '../../engine/score.service';
 export class GameStateHeaderComponent implements OnInit, OnDestroy {
 
   mainText: string = 'Loading...';
-  movesText: string = 'No Moves';
+  movesText: string = '';
   score: number;
   maxScore: number;
 
   private lineAddedSubscription: Subscription;
   private commandSubscription: Subscription;
+  private gameStateSubscription: Subscription;
 
   constructor(private ifService: InteractiveFictionService,
               private output: TextOutputService,
@@ -30,8 +31,10 @@ export class GameStateHeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.mainText = this.ifService.story.player.currentRoom.name;
+
     this.lineAddedSubscription = this.output.lineAdded.subscribe(l => this.handleLineAdded(l));
-    this.commandSubscription = this.ifService.commandEvaluated.subscribe(c => this.handleCommand(c));
+    this.gameStateSubscription = this.ifService.gameStateChanged.subscribe(s => this.updateData());
+    this.commandSubscription = this.ifService.commandEvaluated.subscribe(c => this.updateData());
 
     this.score = this.scoreService.currentScore;
     this.maxScore = this.scoreService.maxScore;
@@ -43,6 +46,9 @@ export class GameStateHeaderComponent implements OnInit, OnDestroy {
     }
     if (this.commandSubscription) {
       this.commandSubscription.unsubscribe();
+    }
+    if (this.gameStateSubscription) {
+      this.gameStateSubscription.unsubscribe();
     }
   }
 
@@ -63,7 +69,7 @@ export class GameStateHeaderComponent implements OnInit, OnDestroy {
 
   }
 
-  private handleCommand(command: Command): void {
+  private updateData(): void {
 
     // Update to the current moves taken count
     this.movesText = this.getMovesTakenText(this.ifService.movesTaken);

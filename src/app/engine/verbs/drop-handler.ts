@@ -2,7 +2,6 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
-import {Scenery} from '../entities/scenery';
 import {PortableEntity} from '../entities/portable-entity';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
@@ -39,7 +38,7 @@ export class DropHandler extends VerbHandler {
 
     // Protect against invalid class since we need a Scenery instance up ahead
     if (!(entity instanceof PortableEntity)) {
-      context.outputService.displayFailedAction(`You can't drop that!`);
+      context.outputService.displayStory(`You can't drop that!`);
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -51,7 +50,7 @@ export class DropHandler extends VerbHandler {
 
     // Don't do any dropping if the player isn't carrying anything
     if (context.player.contents.length <= 0) {
-      context.outputService.displayFailedAction('You aren\'t currently carrying anything.');
+      context.outputService.displayStory('You aren\'t currently carrying anything.');
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -83,6 +82,8 @@ export class DropHandler extends VerbHandler {
 
     if (context.player.removeFromInventory(item, context)) {
       context.currentRoom.addObject(item);
+
+      item.onDropped(context);
 
       return CommandResult.BuildActionSuccessResult();
     }

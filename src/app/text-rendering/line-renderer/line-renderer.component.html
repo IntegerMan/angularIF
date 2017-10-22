@@ -1,6 +1,9 @@
 <div [ngSwitch]="line.commandType">
 
   <span *ngSwitchCase="'engine'" class="text-muted"><samp>{{line.text}}</samp></span>
+  <span *ngSwitchCase="'enginePrompt'" class="text-light"><strong><samp>{{line.text}}</samp></strong></span>
+
+  <if-game-over *ngSwitchCase="'gameOver'" [text]="line.text" [isVictory]="line.data"></if-game-over>
 
   <span *ngSwitchCase="'helpText'" class="text-info">{{line.text}}</span>
 

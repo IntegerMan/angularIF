@@ -29,7 +29,7 @@ export class LookHandler extends VerbHandler {
 
   private static listVerbs(context: CommandContext): CommandResult {
 
-    const handlers: string[] = context.story.verbHandlers.map(vh => vh.name).sort();
+    const handlers: string[] = context.story.verbHandlers.filter(v => !v.isHidden).map(vh => vh.name).sort();
 
     context.outputService.displayList(`The verbs I know how to respond to are:`, handlers);
 

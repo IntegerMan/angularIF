@@ -95,33 +95,30 @@ export abstract class WorldEntity {
 
   autodetectNounsAndAdjectives(): void {
 
-    // Strip the phrase and analyze the nouns present
     const nouns = NaturalLanguageService.instance.getNouns(this.name);
-    for (const noun of nouns) {
-      this.addNounAlias(noun);
-    }
-
-    // Strip the phrase and analyze the adjectives present
     const adjectives = NaturalLanguageService.instance.getAdjectives(this.name);
-    for (const adjective of adjectives) {
-      this.addAdjectiveAlias(adjective);
+
+    // Strip the phrase and analyze the nouns present
+    this.addNounAliases(nouns);
+    this.addAdjectiveAliases(adjectives);
+
+  }
+
+  addNounAliases(nouns: string[]): void {
+
+    for (const noun of nouns) {
+      LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
+      this.nouns.push(noun.toLocaleLowerCase());
     }
 
-    // TODO: For each one of these, we should probably also be registering synonyms.
-
   }
 
-  addNounAlias(noun: string): void {
+  addAdjectiveAliases(adjectives: string[]): void {
 
-    LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
-    this.nouns.push(noun.toLocaleLowerCase());
-
-  }
-
-  addAdjectiveAlias(adjective: string): void {
-
-    LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
-    this.adjectives.push(adjective.toLocaleLowerCase());
+    for (const adjective of adjectives) {
+      LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
+      this.adjectives.push(adjective.toLocaleLowerCase());
+    }
 
   }
 

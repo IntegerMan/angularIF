@@ -8,6 +8,11 @@ import {GetHandler} from './get-handler';
 import {DropHandler} from './drop-handler';
 import {ExamineHandler} from './examine-handler';
 import {RestartHandler} from './restart-handler';
+import {DieHandler} from './die-handler';
+import {WinHandler} from './win-handler';
+import {SaveHandler} from './save-handler';
+import {LoadHandler} from './load-handler';
+import {QuitHandler} from './quit-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -27,6 +32,11 @@ export class CommonVerbService {
     verbs.push(new OpenHandler(['open']));
     verbs.push(new CloseHandler(['close', 'shut']));
     verbs.push(new RestartHandler(['restart', 'reset']));
+    verbs.push(new DieHandler(['die', 'forfeit', 'suicide']));
+    verbs.push(new WinHandler(['win', 'cheat']));
+    verbs.push(new SaveHandler(['save']));
+    verbs.push(new LoadHandler(['load', 'restore']));
+    verbs.push(new QuitHandler(['quit', 'menu']));
 
     return verbs;
 
