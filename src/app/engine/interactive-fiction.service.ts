@@ -31,6 +31,7 @@ export class InteractiveFictionService {
   licenseText: string = 'All rights reserved.';
   movesTaken: number = 0;
   commandId: number = 0;
+  isGameOver: boolean = false;
 
   story: Story;
 
@@ -77,9 +78,10 @@ export class InteractiveFictionService {
 
   private initializeStory(story: Story) {
 
-    // Restart our numbering
+    // Restart
     this.movesTaken = 0;
     this.stateService.clear();
+    this.isGameOver = false;
 
     // Ensure the story has the base dictionary at least
     story.addDictionary(new CommonDictionary(this.lexer));
@@ -272,6 +274,8 @@ export class InteractiveFictionService {
 
   endGame(isVictory: boolean, message: string = null) {
 
+    this.isGameOver = true;
+
     if (!message) {
       if (isVictory) {
         message = 'You have won!!!';
@@ -283,13 +287,6 @@ export class InteractiveFictionService {
     this.outputService.displayBlankLine();
     this.outputService.displayGameOver(message, isVictory);
     this.outputService.displayBlankLine();
-    //
-    // // Tell the user how they did
-    // const summary = `Your score was ${this.currentScore} out of a possible ${this.maxScore} points in ${this.movesTaken} moves.`;
-    // this.outputService.displaySystem(summary);
-    // this.outputService.displaySystem('Would you like to Restart, Restore a previous game, or Quit?');
-
-    // TODO: Start impacting what the user can do
 
   }
 }
