@@ -71,46 +71,46 @@ export class Room extends WorldEntity {
 
   allowCommand(command: Command, context: CommandContext): boolean {
 
-    if (!this.hasLight(context)) {
+    if (this.hasLight(context)) {
+      return true;
+    }
 
-      if (command.verbHandler) {
-        switch (command.verbHandler.verbType) {
+    if (command.verbHandler) {
+      switch (command.verbHandler.verbType) {
 
-          case VerbType.system:
-            // Just because it's dark doesn't mean that the user shouldn't be able to interact with the engine
-            return true;
+        case VerbType.system:
+          // Just because it's dark doesn't mean that the user shouldn't be able to interact with the engine
+          return true;
 
-          case VerbType.social:
-            // This might be tricky since some social interactions might be physical in nature - hugging, giving something, etc.
-            return true;
+        case VerbType.social:
+          // This might be tricky since some social interactions might be physical in nature - hugging, giving something, etc.
+          return true;
 
-          case VerbType.look:
-            context.outputService.displayFailedAction(`It's pitch black; you can't see a thing!`);
-            return false;
+        case VerbType.look:
+          context.outputService.displayStory(`It's pitch black; you can't see a thing!`);
+          return false;
 
-          case VerbType.go:
-            const dir: CommandToken = command.getFirstDirection();
+        case VerbType.go:
+          const dir: CommandToken = command.getFirstDirection();
 
-            if (dir && dir.entity && dir.entity instanceof Room) {
+          if (dir && dir.entity && dir.entity instanceof Room) {
 
-              const targetRoom: Room = dir.entity;
+            const targetRoom: Room = dir.entity;
 
-              // If we're walking towards a room that is lit, it's allowable.
-              if (targetRoom.hasLight(context)) {
-                return true;
-              }
+            // If we're walking towards a room that is lit, it's allowable.
+            if (targetRoom.hasLight(context)) {
+              return true;
             }
+          }
 
-            context.outputService.displayFailedAction(`Blundering around in the dark isn't a good idea!`);
-            return false;
+          context.outputService.displayStory(`Blundering around in the dark isn't a good idea!`);
+          return false;
 
-          case VerbType.manipulate:
-            context.outputService.displayFailedAction(`In the dark? You could easily disturb something!`);
-            return false;
+        case VerbType.manipulate:
+          context.outputService.displayStory(`In the dark? You could easily disturb something!`);
+          return false;
 
-        }
       }
-
     }
 
     return true;

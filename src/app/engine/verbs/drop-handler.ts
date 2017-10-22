@@ -38,7 +38,7 @@ export class DropHandler extends VerbHandler {
 
     // Protect against invalid class since we need a Scenery instance up ahead
     if (!(entity instanceof PortableEntity)) {
-      context.outputService.displayFailedAction(`You can't drop that!`);
+      context.outputService.displayStory(`You can't drop that!`);
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -50,7 +50,7 @@ export class DropHandler extends VerbHandler {
 
     // Don't do any dropping if the player isn't carrying anything
     if (context.player.contents.length <= 0) {
-      context.outputService.displayFailedAction('You aren\'t currently carrying anything.');
+      context.outputService.displayStory('You aren\'t currently carrying anything.');
       return CommandResult.BuildActionFailedResult();
     }
 

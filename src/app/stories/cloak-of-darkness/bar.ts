@@ -15,7 +15,7 @@ export class Bar extends Room {
 
     const wasAllowed: boolean = super.allowCommand(command, context);
     const hasLight: boolean = this.hasLight(context);
-    const isLook: boolean = command.verbHandler && command.verbHandler.verbType !== VerbType.look;
+    const isLook: boolean = command.verbHandler && command.verbHandler.verbType === VerbType.look;
 
     if (wasAllowed) {
       if (isLook && command.objects.filter(o => o.entity && o.entity === this.message).length > 0) {
@@ -32,7 +32,7 @@ export class Bar extends Room {
       }
 
     } else {
-      if (!hasLight && isLook) {
+      if (!hasLight && !isLook) {
 
         // TODO: Having a dedicated increment state command would be nice here
         const prior: number = context.state.getState(this.message.name, 0);

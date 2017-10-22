@@ -27,7 +27,7 @@ export class GetHandler extends VerbHandler {
     for (const entity of entities) {
 
       if (context.player.contents.indexOf(entity) >= 0) {
-        context.outputService.displayFailedAction(`You already have ${entity.article} ${entity.name}!`);
+        context.outputService.displayStory(`You already have ${entity.article} ${entity.name}!`);
       } else {
         if (this.attemptPickup(entity, context).succeeded) {
           anySuccess = true;

@@ -14,7 +14,7 @@ export class BarMessage extends Scenery {
     this.size = EntitySize.backpack;
 
     this.addAdjectiveAliases(['written', 'dusty']);
-    this.addNounAliases(['writing', 'sawdust', 'words', 'word', 'note', 'floor']);
+    this.addNounAliases(['writing', 'sawdust', 'words', 'word', 'note', 'floor', 'ground']);
 
   }
 

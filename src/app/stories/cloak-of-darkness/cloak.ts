@@ -31,7 +31,7 @@ export class Cloak extends PortableEntity {
 
     // Don't allow dropping the cloak anywhere but the cloakroom
     if (context.currentRoom !== this.cloakroom) {
-      context.outputService.displayFailedAction('This isn\'t the best place to leave a smart cloak lying around.');
+      context.outputService.displayStory('This isn\'t the best place to leave a smart cloak lying around.');
       return false;
     }
 

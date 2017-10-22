@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import {LoggingService} from '../utility/logging.service';
 import {TextOutputService} from './text-output.service';
-import {environment} from '../../environments/environment';
 
 @Injectable()
 export class StateService {
 
-  showStateChanges: boolean = !environment.production;
+  showStateChanges: boolean = false;
 
   private state: any;
 

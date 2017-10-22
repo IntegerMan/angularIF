@@ -28,7 +28,7 @@ export class Player extends WorldEntity implements IGettable {
 
   allowPickup(context: CommandContext): boolean {
 
-    context.outputService.displayFailedAction('You try your best best lines, but you are not impressed.');
+    context.outputService.displayStory('You try your best best lines, but you are not impressed.');
 
     return false;
   }
@@ -63,7 +63,7 @@ export class Player extends WorldEntity implements IGettable {
       LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
 
       if (context) {
-        context.outputService.displaySuccessAction(`You drop ${item.article} ${item.name}.`);
+        context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
       }
 
       return true;
