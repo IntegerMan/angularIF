@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
@@ -19,6 +19,7 @@ import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
 import {StateService} from './state.service';
 import {ScoreService} from './score.service';
+import {CommandResult} from './command-result';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -28,11 +29,14 @@ export class InteractiveFictionService {
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
+  movesTaken: number = 0;
+  commandId: number = 0;
 
   story: Story;
 
+  commandEvaluated: EventEmitter<Command>;
+
   private verbHandlers: VerbHandler[];
-  commandId: number;
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
@@ -47,6 +51,7 @@ export class InteractiveFictionService {
 
     // Ensure we start with a unique empty list
     this.verbHandlers = [];
+    this.commandEvaluated = new EventEmitter<Command>();
 
   }
 
@@ -73,13 +78,18 @@ export class InteractiveFictionService {
   private initializeStory(story: Story) {
 
     // Restart our numbering
-    this.commandId = 0;
+    this.movesTaken = 0;
     this.stateService.clear();
 
     // Ensure the story has the base dictionary at least
     story.addDictionary(new CommonDictionary(this.lexer));
 
+    // Boot up the story world
     story.initialize();
+
+    // Set the initial score
+    this.scoreService.currentScore = 0;
+    this.scoreService.maxScore = story.maxScore;
 
     this.beginStory(story);
   }
@@ -155,7 +165,7 @@ export class InteractiveFictionService {
 
   }
 
-  public handleUserCommand(command: Command, context: CommandContext): boolean {
+  public handleUserCommand(command: Command, context: CommandContext): CommandResult {
 
     // Validate input
     if (!command) {
@@ -168,7 +178,16 @@ export class InteractiveFictionService {
     // Find the requisite verb handler for the item in question
     command.verbHandler = this.getVerbHandler(command.verb);
 
-    return command.execute(context);
+    const result: CommandResult = command.execute(context);
+
+    if (result && result.countsAsMove) {
+      this.movesTaken += 1;
+    }
+    command.result = result;
+
+    this.commandEvaluated.emit(command);
+
+    return result;
 
   }
 
@@ -243,5 +262,10 @@ export class InteractiveFictionService {
     this.beginStory(this.story);
 
   }
+
+  get currentScore(): number {
+    return this.scoreService.currentScore;
+  }
+
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {UserInputService} from '../engine/user-input.service';
 import {LoggingService} from '../utility/logging.service';
+import {CommandResult} from '../engine/command-result';
 
 @Injectable()
 export class CommandEntryService {
@@ -11,9 +12,8 @@ export class CommandEntryService {
 
   parseInput(sentence: string) {
 
-    const result: any = this.inputService.handleUserSentence(sentence);
-
-    this.logger.log(`Command execution resulted in a result of ${result}`);
+    const result: CommandResult = this.inputService.handleUserSentence(sentence);
+    this.logger.debug(result);
 
   }
 
