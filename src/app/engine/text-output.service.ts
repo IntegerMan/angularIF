@@ -6,13 +6,23 @@ import {RenderType} from '../text-rendering/render-type.enum';
 @Injectable()
 export class TextOutputService {
 
+  static get instance(): TextOutputService {
+    if (!this._instance) {
+      this._instance = new TextOutputService()
+    }
+    return this._instance;
+  }
+
+  private static _instance: TextOutputService;
+
   lines: TextLine[] = [];
   linesChanged: EventEmitter<TextLine[]>;
   lineAdded: EventEmitter<TextLine>;
 
-  constructor(private logger: LoggingService) {
+  constructor() {
     this.linesChanged = new EventEmitter<TextLine[]>();
     this.lineAdded = new EventEmitter<TextLine>();
+    TextOutputService._instance = this;
   }
 
   displayUserCommand(command: string, sentence: any): void {
@@ -64,7 +74,7 @@ export class TextOutputService {
   }
 
   clear(): void {
-    this.logger.log('Clearing output area');
+    LoggingService.instance.debug('Clearing output area');
     this.lines.length = 0;
 
     this.linesChanged.emit(this.lines);
@@ -74,7 +84,7 @@ export class TextOutputService {
 
     // Send the output to the console for good measure
     if (line && line.text && line.text.length > 0) {
-      this.logger.log(`OUT: ${line.text}`);
+      LoggingService.instance.log(`OUT: ${line.text}`);
     }
 
     // Update the collection. If components displaying this are bound to our lines collection, they'll update

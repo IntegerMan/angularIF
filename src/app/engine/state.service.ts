@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import {LoggingService} from '../utility/logging.service';
+import {TextOutputService} from './text-output.service';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class StateService {
+
+  showStateChanges: boolean = !environment.production;
 
   private state: any;
 
@@ -12,21 +16,29 @@ export class StateService {
 
   public getState(key: any, defaultValue: any = null): any {
     if (this.state[key]) {
-      LoggingService.instance.debug(`Get state ${key} was ${this.state[key]}`);
+      this.log(`Get state ${key} was ${this.state[key]}`);
       return this.state[key];
     }
 
-    LoggingService.instance.debug(`Get state ${key} was not found and is defaulting to ${defaultValue}`);
+   this.log(`Get state ${key} was not found and is defaulting to ${defaultValue}`);
     return defaultValue;
   }
 
   public setState(key: any, value: any): void {
-    LoggingService.instance.debug(`Setting state ${key} to ${value}`);
+    this.log(`Setting state ${key} to ${value}`);
     this.state[key] = value;
   }
 
   public clear(): void {
-    LoggingService.instance.debug(`Clearing state`);
+    this.log('Clearing state');
     this.state = {};
+  }
+
+  private log(message: string) {
+    if (this.showStateChanges) {
+      TextOutputService.instance.displaySystem(message);
+    } else {
+      LoggingService.instance.debug(message);
+    }
   }
 }
