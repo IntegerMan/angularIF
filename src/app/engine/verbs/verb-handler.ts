@@ -2,6 +2,7 @@ import {CommandToken} from '../parser/command-token';
 import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {VerbType} from './verb-type.enum';
+import {CommandResult} from '../command-result';
 
 export abstract class VerbHandler {
 
@@ -22,6 +23,11 @@ export abstract class VerbHandler {
   registeredNormals: string[];
 
   abstract get verbType(): VerbType;
+
+
+  get isHidden(): boolean {
+    return false;
+  }
 
   get name(): string {
 
@@ -48,6 +54,6 @@ export abstract class VerbHandler {
     return false;
   }
 
-  abstract handleCommand(command: Command, context: CommandContext): boolean;
+  abstract handleCommand(command: Command, context: CommandContext): CommandResult;
 
 }

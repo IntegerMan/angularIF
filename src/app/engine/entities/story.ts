@@ -4,12 +4,14 @@ import {LexiconDictionary} from '../parser/lexicon-dictionary';
 import {VerbHandler} from '../verbs/verb-handler';
 import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
+import {TextOutputService} from '../text-output.service';
 
 export abstract class Story {
 
   title: string;
   author: string;
   version: string;
+  description: string = null;
 
   rooms: Room[];
   player: Player;
@@ -18,6 +20,7 @@ export abstract class Story {
 
   private dictionaries: LexiconDictionary[];
   fontAwesomeIcon: string = 'fa-book';
+  maxScore: number = 0;
 
   constructor() {
 
@@ -33,7 +36,7 @@ export abstract class Story {
 
   public initialize(): void {
 
-    this.reset()
+    this.reset();
 
     // Set up story variables
     this.rooms = this.getRooms();
@@ -80,4 +83,8 @@ export abstract class Story {
   }
 
   protected abstract reset();
+
+  displayIntroduction(output: TextOutputService) {
+    output.displayStory('The story begins...');
+  }
 }

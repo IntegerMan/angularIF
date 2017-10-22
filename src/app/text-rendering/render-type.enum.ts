@@ -1,4 +1,5 @@
-export enum CommandType {
+export enum RenderType {
+  gameOver = 'gameOver',
   parserError = 'parserError',
   successAction = 'successAction',
   failureAction = 'failureAction',
@@ -6,9 +7,11 @@ export enum CommandType {
   divider = 'divider',
   header = 'header',
   subtitle = 'subtitle',
+  author = 'author',
   userInput = 'userInput',
   list = 'list',
   engine = 'engine',
+  enginePrompt = 'enginePrompt',
   narrative = 'narrative',
   helpText = 'helpText'
 }

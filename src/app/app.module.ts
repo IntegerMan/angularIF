@@ -20,6 +20,8 @@ import { EntityReferenceComponent } from './text-rendering/entity-reference/enti
 import {GoogleAnalyticsService} from './utility/google-analytics.service';
 import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
+import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
+import { GameOverComponent } from './text-rendering/game-over/game-over.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rol
     TokenComponent,
     UserInputComponent,
     TextListComponent,
-    EntityReferenceComponent
+    EntityReferenceComponent,
+    GameStateHeaderComponent,
+    GameOverComponent
   ],
   imports: [
     BrowserModule,

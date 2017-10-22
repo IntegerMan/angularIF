@@ -12,6 +12,7 @@ import {ArrayHelper} from '../utility/array-helper';
 import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {RoomLink} from './room-link';
+import {CommandResult} from './command-result';
 
 @Injectable()
 export class UserInputService {
@@ -22,7 +23,7 @@ export class UserInputService {
               private ifService: InteractiveFictionService,
               private outputService: TextOutputService) { }
 
-  public handleUserSentence(sentence: string): boolean {
+  public handleUserSentence(sentence: string): CommandResult {
 
     // This is for exception handling testing
     if (sentence === 'throw error') {
@@ -42,7 +43,7 @@ export class UserInputService {
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
     if (unknowns && unknowns.length > 0) {
       this.displayParserError(unknowns, context);
-      return false;
+      return CommandResult.BuildParseFailedResult();
     }
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
@@ -54,7 +55,7 @@ export class UserInputService {
 
     // If the parser wasn't sure what we were referring to with something, then don't send it to a verb handler.
     if (context.wasConfused) {
-      return false;
+      return CommandResult.BuildParseFailedResult();
     }
 
     // Okay, we can send the command off to be interpreted and just return the result

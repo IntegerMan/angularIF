@@ -1,0 +1,6 @@
+<div class="alert" [ngClass]="{'alert-success': isVictory, 'alert-danger': !isVictory}" role="alert">
+  <h4 class="alert-heading">{{text}}</h4>
+  <p>Your score was <strong>{{score}}</strong> out of a possible <strong>{{maxScore}}</strong> points in {{movesText}}.</p>
+  <hr>
+  <p class="mb-0">Would you like to <strong>Restart</strong>, <strong>Restore</strong>, or <strong>Quit?</strong></p>
+</div>

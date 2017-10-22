@@ -3,6 +3,7 @@ import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
 import {VerbType} from './verb-type.enum';
+import {CommandResult} from '../command-result';
 
 export class LookHandler extends VerbHandler {
 
@@ -10,7 +11,7 @@ export class LookHandler extends VerbHandler {
     return VerbType.look;
   }
 
-  private static listPlayerInventory(context: CommandContext): boolean {
+  private static listPlayerInventory(context: CommandContext): CommandResult {
 
     if (!context.player.contents || context.player.contents.length <= 0) {
 
@@ -18,38 +19,36 @@ export class LookHandler extends VerbHandler {
 
     } else {
 
-      // TODO: It might be nice to initial capitalize each one of these items
       const itemNames: string[] = context.player.contents.map(i => i.name).sort();
 
       context.outputService.displayList(`You are currently carrying:`, itemNames);
     }
 
-    // It shouldn't cost you a turn to list the things you already have
-    return false;
+    return CommandResult.BuildFreeActionResult();
   }
 
-  private static listVerbs(context: CommandContext): boolean {
+  private static listVerbs(context: CommandContext): CommandResult {
 
-    const handlers: string[] = context.story.verbHandlers.map(vh => vh.name).sort();
+    const handlers: string[] = context.story.verbHandlers.filter(v => !v.isHidden).map(vh => vh.name).sort();
 
     context.outputService.displayList(`The verbs I know how to respond to are:`, handlers);
 
     // We're going to return false to this since asking for a list of verbs that we can execute shouldn't count as a move
-    return false;
+    return CommandResult.BuildFreeActionResult();
   }
 
-  handleCommand(command: Command, context: CommandContext): boolean {
+  handleCommand(command: Command, context: CommandContext): CommandResult {
     return this.handleLookOrExamine(command, context, false);
   }
 
-  protected handleLookOrExamine(command: Command, context: CommandContext, isScrutinize: boolean): boolean {
+  protected handleLookOrExamine(command: Command, context: CommandContext, isScrutinize: boolean): CommandResult {
 
     // If it's just a plain old look without a target, describe the room
     if (command.objects.length <= 0) {
 
       context.ifService.describeRoom(context.currentRoom, context, isScrutinize);
 
-      return true;
+      return CommandResult.BuildActionSuccessResult();
     }
 
     const token: CommandToken = command.objects[0];
@@ -65,7 +64,7 @@ export class LookHandler extends VerbHandler {
     const entity = token.entity;
     if (!entity) {
       // The context lookup took care of output to the user, so we just need to abort
-      return false;
+      return CommandResult.BuildActionFailedResult();
     }
 
     // Grab the description from the entity
@@ -75,7 +74,8 @@ export class LookHandler extends VerbHandler {
     }
 
     context.outputService.displayStory(description);
-    return true;
+    return CommandResult.BuildActionSuccessResult();
 
   }
+
 }

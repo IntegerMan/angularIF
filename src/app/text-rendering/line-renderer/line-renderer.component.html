@@ -1,6 +1,9 @@
 <div [ngSwitch]="line.commandType">
 
   <span *ngSwitchCase="'engine'" class="text-muted"><samp>{{line.text}}</samp></span>
+  <span *ngSwitchCase="'enginePrompt'" class="text-light"><strong><samp>{{line.text}}</samp></strong></span>
+
+  <if-game-over *ngSwitchCase="'gameOver'" [text]="line.text" [isVictory]="line.data"></if-game-over>
 
   <span *ngSwitchCase="'helpText'" class="text-info">{{line.text}}</span>
 
@@ -12,7 +15,9 @@
 
   <h1 *ngSwitchCase="'header'" class="lead">{{line.text}}<small class="text-muted ml-2" *ngIf="line.data">{{line.data}}</small></h1>
 
-  <span *ngSwitchCase="'subtitle'" class="text-info">{{line.text}}</span>
+  <span *ngSwitchCase="'author'" class="text-info">{{line.text}}</span>
+
+  <span *ngSwitchCase="'subtitle'" class="text-muted">{{line.text}}</span>
 
   <div *ngSwitchCase="'divider'" class="my-3"></div>
 

@@ -6,6 +6,7 @@ import {TokenClassification} from '../parser/token-classification.enum';
 import {Room} from '../entities/room';
 import {RoomLink} from '../room-link';
 import {VerbType} from './verb-type.enum';
+import {CommandResult} from '../command-result';
 
 export class GoHandler extends VerbHandler {
 
@@ -13,13 +14,13 @@ export class GoHandler extends VerbHandler {
     return VerbType.go;
   }
 
-  handleCommand(command: Command, context: CommandContext): boolean {
+  handleCommand(command: Command, context: CommandContext): CommandResult {
 
     const direction: CommandToken = command.getFirstDirection();
 
     if (!direction) {
       context.outputService.displayParserError('In order to go somewhere, you must include a direction. For example: "Go East"');
-      return false;
+      return CommandResult.BuildParseFailedResult();
     }
 
     const room: Room = context.currentRoom;
@@ -28,7 +29,7 @@ export class GoHandler extends VerbHandler {
 
     if (!link) {
       context.outputService.displayStory('You can\'t go that way.');
-      return false;
+      return CommandResult.BuildActionFailedResult();
     }
 
     // Regardless of success or failure, we'll want to go with the customized message
@@ -45,7 +46,7 @@ export class GoHandler extends VerbHandler {
       // Move the player
       context.ifService.setActorRoom(context.player, link.target);
 
-      return true;
+      return CommandResult.BuildActionSuccessResult();
 
     } else {
 
@@ -53,7 +54,7 @@ export class GoHandler extends VerbHandler {
         context.outputService.displayStory('Unseen forces prevent you from going that way.');
       }
 
-      return false;
+      return CommandResult.BuildActionFailedResult();
     }
 
   }

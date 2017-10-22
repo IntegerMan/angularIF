@@ -3,6 +3,7 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {Confirmation} from 'primeng/components/common/confirmation';
 import {VerbType} from './verb-type.enum';
+import {CommandResult} from '../command-result';
 
 export class RestartHandler extends VerbHandler {
 
@@ -10,17 +11,24 @@ export class RestartHandler extends VerbHandler {
     return VerbType.system;
   }
 
-  handleCommand(command: Command, context: CommandContext): boolean {
+  handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    const confirmation: Confirmation = {
-      message: 'Are you sure you want to restart? All current progress will be lost.',
-      accept: () => context.ifService.restartStory(),
-      reject: () => context.outputService.displaySystem('The story must go on...')
-    };
+    if (context.ifService.isGameOver) {
 
-    context.confirmService.confirm(confirmation);
+      context.ifService.restartStory();
 
-    return false;
+    } else {
+
+      const confirmation: Confirmation = {
+        message: 'Are you sure you want to restart? All current progress will be lost.',
+        accept: () => context.ifService.restartStory(),
+        reject: () => context.outputService.displaySystem('The story must go on...')
+      };
+
+      context.confirmService.confirm(confirmation);
+    }
+
+    return CommandResult.BuildFreeActionResult();
   }
 
 }

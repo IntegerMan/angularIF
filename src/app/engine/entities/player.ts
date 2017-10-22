@@ -4,9 +4,8 @@ import {ArrayHelper} from '../../utility/array-helper';
 import {CommandContext} from '../command-context';
 import {EntitySize} from './entity-size.enum';
 import {EntityWeight} from './entity-weight.enum';
-import {IGettable} from './i-gettable';
 
-export class Player extends WorldEntity implements IGettable {
+export class Player extends WorldEntity {
 
   constructor() {
     super('you');
@@ -14,13 +13,7 @@ export class Player extends WorldEntity implements IGettable {
     this.article = '';
 
     // Add some common synonyms for helping the player refer to their character
-    this.addNounAlias('me');
-    this.addNounAlias('self');
-    this.addNounAlias('yourself');
-    this.addNounAlias('myself');
-    this.addNounAlias('character');
-    this.addNounAlias('avatar');
-    this.addNounAlias('player');
+    this.addNounAliases(['me', 'self', 'yourself', 'myself', 'character', 'avatar', 'player']);
 
     // Give default self-descriptions here
     this.description = 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
@@ -34,7 +27,7 @@ export class Player extends WorldEntity implements IGettable {
 
   allowPickup(context: CommandContext): boolean {
 
-    context.outputService.displayFailedAction('You try your best best lines, but you are not impressed.');
+    context.outputService.displayStory('You try your best best lines, but you are not impressed.');
 
     return false;
   }
@@ -69,7 +62,7 @@ export class Player extends WorldEntity implements IGettable {
       LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
 
       if (context) {
-        context.outputService.displaySuccessAction(`You drop ${item.article} ${item.name}.`);
+        context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
       }
 
       return true;

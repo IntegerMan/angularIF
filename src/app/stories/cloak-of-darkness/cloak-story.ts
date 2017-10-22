@@ -7,9 +7,10 @@ import {LoggingService} from '../../utility/logging.service';
 import {Hook} from './hook';
 import {EntityWeight} from '../../engine/entities/entity-weight.enum';
 import {EntitySize} from '../../engine/entities/entity-size.enum';
-import {PortableEntity} from '../../engine/entities/portable-entity';
 import {Bar} from './bar';
 import {Cloak} from './cloak';
+import {TextOutputService} from '../../engine/text-output.service';
+import {BarMessage} from './bar-message';
 
 export class CloakStory extends Story {
 
@@ -33,12 +34,20 @@ export class CloakStory extends Story {
 
     // Basic Metadata
     this.title = 'Cloak of Darkness';
-    this.version = '0.25';
+    this.description = `A short demo based on Roger Firth's specification to compare various Interactive Fiction development languages.`;
+    this.version = '0.6';
     this.fontAwesomeIcon = 'fa-bookmark-o';
+    this.maxScore = 2; // Oh no, whatever will we do with two whole points?
 
     // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
     this.reset();
 
+  }
+
+  displayIntroduction(output: TextOutputService): void {
+    output.displayStory('Hurrying through the rainswept November night, you\'re glad to see the bright\n' +
+      'lights of the Opera House. It\'s surprising that there aren\'t more people about\n' +
+      'but, hey, what do you expect in a cheap demo game...?');
   }
 
   reset(): void {
@@ -66,22 +75,13 @@ export class CloakStory extends Story {
     this.configureBar(this._bar);
   }
 
-  private configureBar(room: Room): void {
+  private configureBar(room: Bar): void {
 
     room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
       'completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.';
 
-    // TODO: Examining the sawdust should end the game in victory or loss
-    const message: Scenery = new Scenery('scrawled message');
-    message.weight = EntityWeight.feather;
-    message.size = EntitySize.backpack;
-    message.addAdjectiveAlias('written');
-    message.addNounAlias('writing');
-    message.addNounAlias('sawdust');
-    message.addNounAlias('words');
-    message.addNounAlias('word');
-    message.addNounAlias('note');
-    message.addNounAlias('floor');
+    const message: BarMessage = new BarMessage();
+    room.message = message;
 
     this.addToRoom(message, room);
 
@@ -95,7 +95,7 @@ export class CloakStory extends Story {
       'The exit is a door to the east.';
 
     const hook: Hook = new Hook('small brass hook');
-    hook.addNounAlias('Peg');
+    hook.addNounAliases(['Peg']);
     this.addToRoom(hook, room);
 
     this.navService.eastTo(room, this._foyer);

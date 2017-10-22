@@ -8,6 +8,7 @@ import {LoggingService} from './utility/logging.service';
 import {TextLine} from './text-rendering/text-line';
 import {TextOutputService} from './engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
+import {GameState} from './engine/game-state.enum';
 
 @Component({
   selector: 'if-root',
@@ -18,23 +19,32 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   lines: TextLine[] = [];
   title: string;
+  stateClass: string = 'bg-warning';
   icon: string = 'fa-book';
 
   @ViewChild('scrollMe') private scrollContainer: ElementRef;
 
+  private gameStateSubscription: Subscription;
   private linesChangedSubscription: Subscription;
   private respondToNextViewChecked: boolean = true;
+  private gameState: GameState = GameState.initializing;
 
   ngOnInit() {
     this.lines = this.outputService.lines;
+    this.gameStateSubscription = this.ifService.gameStateChanged.subscribe((s) => this.onGameStateChanged(s));
     this.linesChangedSubscription = this.outputService.linesChanged.subscribe(() => this.onLinesChanged());
     this.scrollToBottom();
+    this.onGameStateChanged(this.ifService.gameState);
   }
 
   ngOnDestroy(): void {
 
     if (this.linesChangedSubscription) {
       this.linesChangedSubscription.unsubscribe();
+    }
+
+    if (this.gameStateSubscription) {
+      this.gameStateSubscription.unsubscribe();
     }
 
   }
@@ -80,4 +90,30 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   private onLinesChanged(): void {
     this.respondToNextViewChecked = true;
   }
+
+  private onGameStateChanged(state: GameState): void {
+
+    LoggingService.instance.debug(`Game state is now ${state}`);
+
+    this.gameState = state;
+
+    switch (state) {
+      case GameState.underway:
+        this.stateClass = 'bg-primary';
+        break;
+
+      case GameState.won:
+        this.stateClass = 'bg-success';
+        break;
+
+      case GameState.lost:
+        this.stateClass = 'bg-danger';
+        break;
+
+      default:
+        this.stateClass = 'bg-warning';
+        break;
+    }
+  }
+
 }

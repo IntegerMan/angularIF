@@ -6,6 +6,8 @@ import {TextOutputService} from './text-output.service';
 import {UserInputService} from './user-input.service';
 import {VerbsModule} from './verbs/verbs.module';
 import {NavigationService} from './navigation.service';
+import {ScoreService} from './score.service';
+import {StateService} from './state.service';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import {NavigationService} from './navigation.service';
     InteractiveFictionService,
     TextOutputService,
     UserInputService,
-    NavigationService
+    NavigationService,
+    StateService,
+    ScoreService
   ],
   declarations: []
 })
