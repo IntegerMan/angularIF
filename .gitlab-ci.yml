@@ -8,7 +8,7 @@ deploy_production:
   stage: deploy
   environment: Production
   only:
-    - tags
+    - master
   script:
     - rm ./package-lock.json
     - npm install
