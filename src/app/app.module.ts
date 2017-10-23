@@ -22,6 +22,7 @@ import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
 import { GameOverComponent } from './text-rendering/game-over/game-over.component';
+import { KeyValuePairPipe } from './utility/key-value-pair.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { GameOverComponent } from './text-rendering/game-over/game-over.componen
     TextListComponent,
     EntityReferenceComponent,
     GameStateHeaderComponent,
-    GameOverComponent
+    GameOverComponent,
+    KeyValuePairPipe
   ],
   imports: [
     BrowserModule,

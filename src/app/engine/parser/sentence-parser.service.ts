@@ -13,22 +13,26 @@ export class SentenceParserService {
 
   }
 
-  private static isNounLike(t): boolean {
+  private static isNounLike(t: CommandToken): boolean {
     return t.classification === TokenClassification.Noun || t.classification === TokenClassification.Direction;
   }
 
-  private static isVerbLike(t): boolean {
+  private static isVerbLike(t: CommandToken): boolean {
     return t.classification === TokenClassification.Verb;
   }
 
-  private static isVerbModifier(t): boolean {
+  private static isVerbModifier(t: CommandToken): boolean {
     return t.classification === TokenClassification.Adverb;
   }
 
-  private static isNounModifier(t): boolean {
+  private static isNounModifier(t: CommandToken): boolean {
     return t.classification === TokenClassification.Determiner ||
       t.classification === TokenClassification.Adjective ||
       t.classification === TokenClassification.Preposition; // TODO: You could argue that prepositions link prior nouns to future words
+  }
+
+  private static isPreposition(t: CommandToken): boolean {
+    return t.classification === TokenClassification.Preposition;
   }
 
   private static findNextNoun(modifier: CommandToken): CommandToken {
@@ -101,6 +105,7 @@ export class SentenceParserService {
 
     this.identifySentenceVerb(command, tokens);
     this.identifySentenceNouns(command, tokens);
+    this.identifySentencePrepositions(command, tokens);
 
     // At this point we MAY have a subject depending on the verb / noun order, but typically we won't. Assume it is "I" if no subject
     this.inferSubjectIfNeeded(command);
@@ -245,4 +250,15 @@ export class SentenceParserService {
     }
 
   }
+
+  private identifySentencePrepositions(command: Command, tokens: CommandToken[]): void {
+
+    // Grab the first verb and stick that into the sentence as the sentence's main verb
+    const prepositions: CommandToken[] = tokens.filter(t => SentenceParserService.isPreposition(t));
+    for (const prep of prepositions) {
+      command.addPreposition(prep);
+    }
+
+  }
+
 }

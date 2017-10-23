@@ -18,6 +18,7 @@ export class Command {
     // Initialize empty collections
     this.objects = [];
     this.tokens = [];
+    this.prepositions = {};
   }
 
   userInput: string;
@@ -28,6 +29,8 @@ export class Command {
   objects: CommandToken[];
   verbHandler: VerbHandler;
   result: CommandResult;
+  prepositions: any;
+  hasPrepositions: boolean = false;
 
   public execute(context: CommandContext): CommandResult {
 
@@ -81,5 +84,9 @@ export class Command {
     return direction;
   }
 
+  addPreposition(preposition: CommandToken): void {
+    this.prepositions[preposition.name] = preposition;
+    this.hasPrepositions = true;
+  }
 
 }
