@@ -18,6 +18,7 @@ export abstract class WorldEntity {
   nouns: string[];
   adjectives: string[];
   article: string = 'the';
+  isAlive: boolean = false;
 
   constructor(name: string) {
 

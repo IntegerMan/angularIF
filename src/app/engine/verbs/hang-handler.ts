@@ -27,12 +27,23 @@ export class HangHandler extends VerbHandler {
       return CommandResult.BuildParseFailedResult();
     }
 
-    const itemToHangText: string = `${itemToHang.entity.article} ${itemToHang.entity.name}`;
+    const that: string = `${itemToHang.entity.article} ${itemToHang.entity.name}`;
+
+    // If it's alive, shame the player.
+    if (itemToHang.entity.isAlive) {
+      if (itemToHang.entity === context.player) {
+        context.outputService.displayStory(`That's awfully morbid. Killing yourself never solved anything.`);
+      } else {
+        // TODO: If we have hostile entities, this should be tweaked.
+        context.outputService.displayStory(`You think about hanging ${that} but then remember that you're not a sociopath.`);
+      }
+      return CommandResult.BuildActionFailedResult();
+    }
 
     // Ensure we HAVE it first
     // TODO: it'd be nice to auto-pick-up the item.
     if (!context.player.containsEntity(itemToHang.entity, true)) {
-      context.outputService.displayParserError(`You'll have to get ${itemToHangText} before you can hang it.`);
+      context.outputService.displayParserError(`You'll have to get ${that} before you can hang it.`);
       return CommandResult.BuildParseFailedResult();
     }
 
@@ -46,8 +57,8 @@ export class HangHandler extends VerbHandler {
       if (command.getProposition('in')) {
         context.outputService.displayParserError(`You can't hang something inside of something else!`);
       } else {
-        context.outputService.displayParserError(`I don't understand what you're trying to hang ${itemToHangText} on.`,
-          `Try saying 'Hang ${itemToHangText} on [object name]'.`);
+        context.outputService.displayParserError(`I don't understand what you're trying to hang ${that} on.`,
+          `Try saying 'Hang ${that} on [object name]'.`);
       }
 
       return CommandResult.BuildActionFailedResult();

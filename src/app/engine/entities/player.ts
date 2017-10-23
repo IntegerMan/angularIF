@@ -8,12 +8,13 @@ import {EntityWeight} from './entity-weight.enum';
 export class Player extends WorldEntity {
 
   constructor() {
-    super('you');
+    super('yourself');
 
     this.article = '';
+    this.isAlive = true;
 
     // Add some common synonyms for helping the player refer to their character
-    this.addNounAliases(['me', 'self', 'yourself', 'myself', 'character', 'avatar', 'player']);
+    this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player']);
 
     // Give default self-descriptions here
     this.description = 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
