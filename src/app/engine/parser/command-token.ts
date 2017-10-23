@@ -18,6 +18,15 @@ export class CommandToken {
   // TODO: Do I want entity or entities?  How should disambiguation work?
   entity: WorldEntity;
 
+  constructor(term: LanguageTerm) {
+
+    this.term = term;
+    this.name = term.normal;
+    this.classification = TokenClassification.Unknown;
+    this.modifiedBy = [];
+
+  }
+
   /***
    * Gets a value indicating whether or not the term associated with this token was identified as plural
    * @returns {boolean} whether or not the term is plural
@@ -32,15 +41,6 @@ export class CommandToken {
 
   set userInput(value: string) {
     this.term.text = value;
-  }
-
-  constructor(term: LanguageTerm) {
-
-    this.term = term;
-    this.name = term.normal;
-    this.classification = TokenClassification.Unknown;
-    this.modifiedBy = [];
-
   }
 
   setModifiedBy(modifier: CommandToken): void {
