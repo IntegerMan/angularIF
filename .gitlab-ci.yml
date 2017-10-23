@@ -1,4 +1,5 @@
-image: trion/ng-cli-karma
+before_script:
+  - npm i --depth=0
 
 cache:
   paths:
@@ -11,5 +12,7 @@ deploy_production:
     - master
   script:
     - rm ./package-lock.json
-    - npm install
     - ./node_modules/@angular/cli/bin/ng build --progress false --prod
+  cache:
+    paths:
+    - node_modules/
