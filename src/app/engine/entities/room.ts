@@ -22,15 +22,9 @@ export class Room extends WorldEntity {
     this.size = EntitySize.building;
     this.lighting = LightLevel.wellLit;
 
-  }
+    // This lets other scripts safely refer to currentRoom in a more generic way
+    this.currentRoom = this;
 
-  addObject(object: WorldEntity): void {
-    object.currentRoom = this;
-    this.contents.push(object);
-  }
-
-  removeObject(object: WorldEntity): boolean {
-    return ArrayHelper.removeIfPresent(this.contents, object);
   }
 
   findObjectsForToken(token: CommandToken, context: CommandContext): WorldEntity[] {

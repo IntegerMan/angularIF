@@ -63,6 +63,7 @@ export class Player extends WorldEntity {
       LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
 
       if (context) {
+        // TODO: This shouldn't say a drop
         context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
       }
 

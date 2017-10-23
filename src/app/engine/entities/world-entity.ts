@@ -5,6 +5,7 @@ import {NaturalLanguageService} from '../parser/natural-language.service';
 import {CommandToken} from '../parser/command-token';
 import {EntityWeight} from './entity-weight.enum';
 import {EntitySize} from './entity-size.enum';
+import {ArrayHelper} from '../../utility/array-helper';
 
 export abstract class WorldEntity {
 
@@ -203,4 +204,28 @@ export abstract class WorldEntity {
     return false;
   }
 
+  addObject(object: WorldEntity): void {
+    object.currentRoom = this.currentRoom;
+    this.contents.push(object);
+  }
+
+  removeObject(object: WorldEntity): boolean {
+    return ArrayHelper.removeIfPresent(this.contents, object);
+  }
+
+
+  allowItemHanged(context: CommandContext, itemToHang: WorldEntity): boolean {
+
+    context.outputService.displayStory(`You can't hang ${itemToHang.article} ${itemToHang.name} on ${this.article} ${this.name}.`);
+
+    return false;
+  }
+
+  onItemHanged(context: CommandContext, itemToHang: WorldEntity): void {
+    LoggingService.instance.debug(`Hung ${itemToHang.article} ${itemToHang.name} on ${this.article} ${this.name}.`);
+  }
+
+  onHung(context: CommandContext, newContainer: WorldEntity): void {
+    LoggingService.instance.debug(`${this.article} ${this.name} is now hanging from ${newContainer.article} ${newContainer.name}.`);
+  }
 }

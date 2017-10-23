@@ -24,4 +24,5 @@ export class PortableEntity extends Scenery {
   onPickup(context: CommandContext): void {
   }
 
+
 }

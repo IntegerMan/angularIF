@@ -3,6 +3,7 @@ import {Room} from '../../engine/entities/room';
 import {PortableEntity} from '../../engine/entities/portable-entity';
 import {EntitySize} from '../../engine/entities/entity-size.enum';
 import {EntityWeight} from '../../engine/entities/entity-weight.enum';
+import {WorldEntity} from '../../engine/entities/world-entity';
 
 export class Cloak extends PortableEntity {
 
@@ -41,10 +42,20 @@ export class Cloak extends PortableEntity {
   onDropped(context: CommandContext): void {
     super.onDropped(context);
 
+    this.increasePointsFromDiscarding(context);
+  }
+
+  private increasePointsFromDiscarding(context: CommandContext) {
+    
     if (!this.hasCountedForPoints) {
       this.hasCountedForPoints = true;
       context.score.increaseScore(1);
     }
   }
 
+  onHung(context: CommandContext, newContainer: WorldEntity): void {
+    super.onHung(context, newContainer);
+
+    this.increasePointsFromDiscarding(context);
+  }
 }
