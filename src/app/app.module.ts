@@ -23,6 +23,8 @@ import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rol
 import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
 import { GameOverComponent } from './text-rendering/game-over/game-over.component';
 import { KeyValuePairPipe } from './utility/key-value-pair.pipe';
+import { ParserErrorComponent } from './text-rendering/parser-error/parser-error.component';
+import { InlineHelpComponent } from './text-rendering/inline-help/inline-help.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { KeyValuePairPipe } from './utility/key-value-pair.pipe';
     EntityReferenceComponent,
     GameStateHeaderComponent,
     GameOverComponent,
-    KeyValuePairPipe
+    KeyValuePairPipe,
+    ParserErrorComponent,
+    InlineHelpComponent
   ],
   imports: [
     BrowserModule,

@@ -65,8 +65,8 @@ export class TextOutputService {
     this.addLine(new TextLine(text, RenderType.narrative));
   }
 
-  displayParserError(text: string): void {
-    this.addLine(new TextLine(text, RenderType.parserError));
+  displayParserError(text: string, hint: string = null): void {
+    this.addLine(new TextLine(text, RenderType.parserError, hint));
   }
 
   displayFailedAction(text: string): void {

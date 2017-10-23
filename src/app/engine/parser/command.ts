@@ -89,4 +89,25 @@ export class Command {
     this.hasPrepositions = true;
   }
 
+  getProposition(preposition: string): CommandToken {
+    return this.prepositions[preposition];
+  }
+
+  getPrepositionWithFallbacks(prepNames: string[]): CommandToken {
+
+    for (const prep of prepNames) {
+
+      // Try the next preposition in line
+      const prepToken: CommandToken = this.getProposition(prep);
+
+      // If we've found it, return it
+      if (prepToken) {
+        return prepToken;
+      }
+
+    }
+
+    return null;
+  }
+
 }

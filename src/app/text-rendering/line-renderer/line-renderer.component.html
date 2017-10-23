@@ -9,7 +9,7 @@
 
   <if-text-list *ngSwitchCase="'list'" [text]="line.text" [items]="line.data"></if-text-list>
 
-  <span *ngSwitchCase="'parserError'" class="text-warning font-weight-bold"><samp>{{line.text}}</samp></span>
+  <if-parser-error *ngSwitchCase="'parserError'" [text]="line.text" [hint]="line.data"></if-parser-error>
 
   <if-user-input *ngSwitchCase="'userInput'" [text]="line.text" [command]="line.data"></if-user-input>
 
