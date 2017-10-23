@@ -19,6 +19,7 @@ export class DieHandler extends VerbHandler {
 
     const confirmation: Confirmation = {
       message: 'Are you sure you want to just give up?',
+      header: 'Give up?',
       accept: () => context.ifService.endGame(false),
       reject: () => context.outputService.displaySystem('The story must go on...')
     };

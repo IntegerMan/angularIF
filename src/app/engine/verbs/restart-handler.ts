@@ -21,6 +21,7 @@ export class RestartHandler extends VerbHandler {
 
       const confirmation: Confirmation = {
         message: 'Are you sure you want to restart? All current progress will be lost.',
+        header: 'Restart?',
         accept: () => context.ifService.restartStory(),
         reject: () => context.outputService.displaySystem('The story must go on...')
       };
