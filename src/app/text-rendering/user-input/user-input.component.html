@@ -5,6 +5,7 @@
     <kbd>{{text}}</kbd>
 
     <a class="btn btn-sm btn-link small"
+       *ngIf="showDebugAids"
        href="#sentence_debug_{{id}}"
        data-toggle="collapse"
        pTooltip="Show diagnostic information about how this was interpreted">
@@ -12,6 +13,10 @@
     </a>
   </p>
 
-  <if-sentence-debug-card [command]="command" class="collapse" id="sentence_debug_{{id}}"></if-sentence-debug-card>
+  <if-sentence-debug-card [command]="command"
+                          class="collapse"
+                          *ngIf="showDebugAids"
+                          id="sentence_debug_{{id}}">
+  </if-sentence-debug-card>
 
 </div>

@@ -35,7 +35,7 @@ export class CloakStory extends Story {
     // Basic Metadata
     this.title = 'Cloak of Darkness';
     this.description = `A short demo based on Roger Firth's specification to compare various Interactive Fiction development languages.`;
-    this.version = '0.6';
+    this.version = '0.8';
     this.fontAwesomeIcon = 'fa-bookmark-o';
     this.maxScore = 2; // Oh no, whatever will we do with two whole points?
 

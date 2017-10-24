@@ -17,7 +17,7 @@ export class DebugHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    if (environment.showDebugAids) {
+    if (!environment.showDebugAids) {
       context.outputService.displaySystem('Debugging aids are not available.');
       return CommandResult.BuildFreeActionResult();
     }

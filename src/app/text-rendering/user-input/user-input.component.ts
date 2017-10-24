@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Command} from '../../engine/parser/command';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'if-user-input',
@@ -15,9 +16,11 @@ export class UserInputComponent implements OnInit {
   command: Command;
 
   id: number;
+  showDebugAids: boolean;
 
   constructor() {
     this.id = Math.floor(Math.random() * 100000);
+    this.showDebugAids = environment.showDebugAids;
   }
 
   ngOnInit() {
