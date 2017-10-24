@@ -13,6 +13,7 @@ import {WinHandler} from './win-handler';
 import {SaveHandler} from './save-handler';
 import {LoadHandler} from './load-handler';
 import {QuitHandler} from './quit-handler';
+import {HangHandler} from './hang-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -27,7 +28,8 @@ export class CommonVerbService {
     verbs.push(new LookHandler(['look']));
     verbs.push(new ExamineHandler(['examine', 'inspect']));
     verbs.push(new GoHandler(['go', 'walk', 'run', 'travel']));
-    verbs.push(new GetHandler(['get', 'take', 'procure']));
+    verbs.push(new HangHandler(['hang', 'suspend', 'attach', 'affix'])); // TODO: Some of these should go in 'Put'
+    verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));
     verbs.push(new DropHandler(['drop', 'discard']));
     verbs.push(new OpenHandler(['open']));
     verbs.push(new CloseHandler(['close', 'shut']));

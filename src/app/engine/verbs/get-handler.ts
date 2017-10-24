@@ -26,7 +26,7 @@ export class GetHandler extends VerbHandler {
     for (const entity of entities) {
 
       if (context.player.contents.indexOf(entity) >= 0) {
-        context.outputService.displayStory(`You already have ${entity.article} ${entity.name}!`);
+        context.outputService.displayStory(`You already have ${entity.that}!`);
       } else {
         if (this.attemptPickup(entity, context).succeeded) {
           anySuccess = true;
@@ -52,7 +52,7 @@ export class GetHandler extends VerbHandler {
       const result = item.allowPickup(context);
       if (result) {
 
-        context.player.addToInventory(entity, context);
+        context.player.addToInventory(entity);
         item.onPickup(context);
 
         return CommandResult.BuildActionSuccessResult();
@@ -65,7 +65,7 @@ export class GetHandler extends VerbHandler {
 
     }
 
-    context.outputService.displayStory(`You can't pick up ${entity.article} ${entity.name}.`);
+    context.outputService.displayStory(`You can't pick up ${entity.that}.`);
     return CommandResult.BuildActionFailedResult();
 
   }

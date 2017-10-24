@@ -80,7 +80,10 @@ export class DropHandler extends VerbHandler {
       return CommandResult.BuildActionFailedResult();
     }
 
-    if (context.player.removeFromInventory(item, context)) {
+    if (context.player.removeFromInventory(item)) {
+
+      context.logger.debug(`Dropping ${item.that} from ${this.name}'s inventory to the floor of ${context.currentRoom.name}.`);
+
       context.currentRoom.addObject(item);
 
       item.onDropped(context);

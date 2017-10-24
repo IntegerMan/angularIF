@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {TextOutputService} from './text-output.service';
+import {StringHelper} from '../utility/string-helper';
 
 @Injectable()
 export class ScoreService {
@@ -17,7 +18,7 @@ export class ScoreService {
 
     // Tell the user how awesome they're doing
     this.output.displayBlankLine();
-    this.output.displaySuccessAction(`Your score has gone up by ${amount}.`);
+    this.output.displaySuccessAction(`Your score has just gone up by ${StringHelper.pluralize(amount, 'point', 'points')}.`);
 
     return this.currentScore;
 
@@ -29,7 +30,7 @@ export class ScoreService {
 
     // Tell the user how awesome they're doing
     this.output.displayBlankLine();
-    this.output.displayFailedAction(`Your score has gone down by ${amount}.`);
+    this.output.displaySuccessAction(`Your score has just gone down by ${StringHelper.pluralize(amount, 'point', 'points')}.`);
 
     return this.currentScore;
 
