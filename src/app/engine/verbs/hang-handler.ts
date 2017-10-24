@@ -4,10 +4,8 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {CommandResult} from '../command-result';
 import {CommandToken} from '../parser/command-token';
-import {Scenery} from '../entities/scenery';
 import {TokenClassification} from '../parser/token-classification.enum';
 import {WorldEntity} from '../entities/world-entity';
-import {PortableEntity} from '../entities/portable-entity';
 
 export class HangHandler extends VerbHandler {
 
@@ -100,7 +98,7 @@ export class HangHandler extends VerbHandler {
     if (hook.allowItemHanged(context, entityToHang)) {
 
       // TODO: Probably should have a direct reference to the container
-      context.player.removeFromInventory(entityToHang, context);
+      context.player.removeFromInventory(entityToHang);
       hook.addObject(entityToHang);
       hook.onItemHanged(context, entityToHang);
       entityToHang.onHung(context, hook);

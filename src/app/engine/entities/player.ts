@@ -33,7 +33,7 @@ export class Player extends WorldEntity {
     return false;
   }
 
-  addToInventory(item: WorldEntity, context: CommandContext = null): boolean {
+  addToInventory(item: WorldEntity): boolean {
 
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
 
@@ -43,34 +43,15 @@ export class Player extends WorldEntity {
     return true;
   }
 
-  removeFromInventory(item: WorldEntity, context: CommandContext = null): boolean {
+  removeFromInventory(item: WorldEntity): boolean {
 
     // Display a warning if you're trying to do something stupid
     if (this.contents.indexOf(item) < 0) {
-
-      if (context) {
-        context.outputService.displayFailedAction(`You aren't carrying ${item.article} ${item.name}.`);
-      }
-
       return false;
     }
 
-    // TODO: Some items may want checks or separate actions if the player is going to remove them
-
     // Okay, let's remove it!
-    if (ArrayHelper.removeIfPresent(this.contents, item)) {
-
-      LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
-
-      if (context) {
-        // TODO: This shouldn't say a drop
-        context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
-      }
-
-      return true;
-    }
-
-    return false;
+    return ArrayHelper.removeIfPresent(this.contents, item);
 
   }
 

@@ -45,17 +45,17 @@ export class Cloak extends PortableEntity {
     this.increasePointsFromDiscarding(context);
   }
 
+  onHung(context: CommandContext, newContainer: WorldEntity): void {
+    super.onHung(context, newContainer);
+
+    this.increasePointsFromDiscarding(context);
+  }
+
   private increasePointsFromDiscarding(context: CommandContext) {
 
     if (!this.hasCountedForPoints) {
       this.hasCountedForPoints = true;
       context.score.increaseScore(1);
     }
-  }
-
-  onHung(context: CommandContext, newContainer: WorldEntity): void {
-    super.onHung(context, newContainer);
-
-    this.increasePointsFromDiscarding(context);
   }
 }

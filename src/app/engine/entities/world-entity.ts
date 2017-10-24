@@ -9,17 +9,19 @@ import {ArrayHelper} from '../../utility/array-helper';
 
 export abstract class WorldEntity {
 
-  private _weight: EntityWeight;
-  private _size: EntitySize;
-  private _inRoomDescription: string = null;
-  private _name: string;
-
   contents: WorldEntity[];
-
   nouns: string[];
   adjectives: string[];
   article: string = 'the';
   isAlive: boolean = false;
+
+  private _weight: EntityWeight;
+  private _size: EntitySize;
+  private _inRoomDescription: string = null;
+  private _name: string;
+  private _currentRoom: Room;
+  private _description: string = null;
+  private _examineDescription: string = null;
 
   constructor(name: string) {
 
@@ -37,6 +39,10 @@ export abstract class WorldEntity {
     // Auto-detecting here seems like it would make sense, but we don't yet have adequate dictionaries
   }
 
+  get that(): string {
+    return `${this.article} ${this.name}`;
+  }
+
   get currentRoom(): Room {
     return this._currentRoom;
   }
@@ -44,8 +50,6 @@ export abstract class WorldEntity {
   set currentRoom(value: Room) {
     this._currentRoom = value;
   }
-
-  private _currentRoom: Room;
 
   get name(): string {
     return this._name;
@@ -65,9 +69,6 @@ export abstract class WorldEntity {
   set weight(value: EntityWeight) {
     this._weight = value;
   }
-
-  private _description: string = null;
-  private _examineDescription: string = null;
 
   get examineDescription(): string {
     return this._examineDescription;
@@ -213,19 +214,18 @@ export abstract class WorldEntity {
     return ArrayHelper.removeIfPresent(this.contents, object);
   }
 
-
   allowItemHanged(context: CommandContext, itemToHang: WorldEntity): boolean {
 
-    context.outputService.displayStory(`You can't hang ${itemToHang.article} ${itemToHang.name} on ${this.article} ${this.name}.`);
+    context.outputService.displayStory(`You can't hang ${itemToHang.that} on ${this.that}.`);
 
     return false;
   }
 
   onItemHanged(context: CommandContext, itemToHang: WorldEntity): void {
-    LoggingService.instance.debug(`Hung ${itemToHang.article} ${itemToHang.name} on ${this.article} ${this.name}.`);
+    LoggingService.instance.debug(`Hung ${itemToHang.that} on ${this.that}.`);
   }
 
   onHung(context: CommandContext, newContainer: WorldEntity): void {
-    LoggingService.instance.debug(`${this.article} ${this.name} is now hanging from ${newContainer.article} ${newContainer.name}.`);
+    LoggingService.instance.debug(`${this.that} is now hanging from ${newContainer.that}.`);
   }
 }
