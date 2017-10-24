@@ -16,32 +16,37 @@ export class HangHandler extends VerbHandler {
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
     // Figure out what we're talking about.
-    const entityToHang: WorldEntity = this.assertHasObjectWithEntity(command, context);
-    if (!entityToHang) {
+    const subject: WorldEntity = this.assertHasObjectWithEntity(command, context);
+    if (!subject) {
       return CommandResult.BuildParseFailedResult();
     }
 
     // If it's alive, shame the player.
-    if (!this.assertEntityIsNotAlive(entityToHang, context)) {
+    if (!this.assertEntityIsNotAlive(subject, context)) {
       return CommandResult.BuildActionFailedResult();
     }
 
     // Ensure we HAVE it first
-    if (!this.assertHasEntity(context, entityToHang)) {
+    if (!this.assertHasEntity(context, subject)) {
       return CommandResult.BuildParseFailedResult();
     }
 
     // Next, let's see if we can determine what we're trying to hang the item on.
-    const prep: CommandToken = this.getSuspender(command, context, entityToHang);
+    const prep: CommandToken = this.getSuspender(command, context, subject);
     if (!prep) {
       return CommandResult.BuildParseFailedResult();
     }
 
+    return HangHandler.attemptHang(context, subject, prep);
+  }
+
+  static attemptHang(context: CommandContext, subject: WorldEntity, prep: CommandToken): CommandResult {
+
     const suspender = prep.modifies;
 
     if (!suspender || suspender.classification === TokenClassification.Verb) {
-      context.outputService.displayParserError(`I don't understand what you want to hang ${entityToHang.that} ${prep.name}.`,
-        `Try saying 'Hang ${entityToHang.that} on [object name]'.`);
+      context.outputService.displayParserError(`I don't understand what you want to hang ${subject.that} ${prep.name}.`,
+        `Try saying 'Hang ${subject.that} on [object name]'.`);
       return CommandResult.BuildParseFailedResult();
     }
 
@@ -52,9 +57,9 @@ export class HangHandler extends VerbHandler {
       return CommandResult.BuildActionFailedResult();
     }
 
-    if (hook.allowItemHanged(context, entityToHang)) {
+    if (hook.allowItemHanged(context, subject)) {
 
-      this.hangEntityFromSuspender(context, entityToHang, hook);
+      this.hangEntityFromSuspender(context, subject, hook);
       return CommandResult.BuildActionSuccessResult();
 
     } else {
@@ -65,7 +70,7 @@ export class HangHandler extends VerbHandler {
 
   }
 
-  private hangEntityFromSuspender(context: CommandContext, entityToHang: WorldEntity, suspender: WorldEntity): void {
+  private static hangEntityFromSuspender(context: CommandContext, entityToHang: WorldEntity, suspender: WorldEntity): void {
 
     // TODO: Probably should have a direct reference to the container
     context.player.removeFromInventory(entityToHang);
@@ -111,18 +116,6 @@ export class HangHandler extends VerbHandler {
     return false;
   }
 
-  private assertHasEntity(context: CommandContext, entityToHang: WorldEntity): boolean {
-
-    // TODO: it'd be nice to auto-pick-up the item if we don't.
-
-    if (!context.player.containsEntity(entityToHang, true)) {
-      context.outputService.displayStory(`You'll have to get ${entityToHang.that} first.`);
-      return false;
-    }
-
-    return true;
-  }
-
   private assertHasObjectWithEntity(command: Command, context: CommandContext): WorldEntity {
 
     if (command.objects.length < 1) {
@@ -144,5 +137,4 @@ export class HangHandler extends VerbHandler {
 
     return entityToHang;
   }
-
 }

@@ -6,6 +6,8 @@ import {WorldEntity} from '../../engine/entities/world-entity';
 
 export class Hook extends Scenery {
 
+  hungObject: WorldEntity = null;
+
   constructor(name: string) {
     super(name);
 
@@ -13,8 +15,6 @@ export class Hook extends Scenery {
     this.weight = EntityWeight.watch;
 
   }
-
-  hungObject: WorldEntity = null;
 
   getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
     if (this.hungObject) {

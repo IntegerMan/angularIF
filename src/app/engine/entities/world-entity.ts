@@ -221,6 +221,13 @@ export abstract class WorldEntity {
     return false;
   }
 
+  allowItemStored(context: CommandContext, itemToStore: WorldEntity): boolean {
+
+    context.outputService.displayStory(`You can't put ${itemToStore.that} in ${this.that}.`);
+
+    return false;
+  }
+
   onItemHanged(context: CommandContext, itemToHang: WorldEntity): void {
     LoggingService.instance.debug(`Hung ${itemToHang.that} on ${this.that}.`);
   }
@@ -228,4 +235,13 @@ export abstract class WorldEntity {
   onHung(context: CommandContext, newContainer: WorldEntity): void {
     LoggingService.instance.debug(`${this.that} is now hanging from ${newContainer.that}.`);
   }
+
+  onItemStored(context: CommandContext, itemToStore: WorldEntity): void {
+    LoggingService.instance.debug(`Put ${itemToStore.that} in ${this.that}.`);
+  }
+
+  onStored(context: CommandContext, newContainer: WorldEntity): void {
+    LoggingService.instance.debug(`${this.that} is now stored inside of ${newContainer.that}.`);
+  }
+
 }
