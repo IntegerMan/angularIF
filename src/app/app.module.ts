@@ -25,6 +25,8 @@ import { GameOverComponent } from './text-rendering/game-over/game-over.componen
 import { KeyValuePairPipe } from './utility/key-value-pair.pipe';
 import { ParserErrorComponent } from './text-rendering/parser-error/parser-error.component';
 import { InlineHelpComponent } from './text-rendering/inline-help/inline-help.component';
+import { TokenDebugComponent } from './text-rendering/token-debug/token-debug.component';
+import { EntityDebugComponent } from './text-rendering/entity-debug/entity-debug.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { InlineHelpComponent } from './text-rendering/inline-help/inline-help.co
     GameOverComponent,
     KeyValuePairPipe,
     ParserErrorComponent,
-    InlineHelpComponent
+    InlineHelpComponent,
+    TokenDebugComponent,
+    EntityDebugComponent
   ],
   imports: [
     BrowserModule,

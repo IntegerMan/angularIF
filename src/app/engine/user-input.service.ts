@@ -13,6 +13,7 @@ import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {RoomLink} from './room-link';
 import {CommandResult} from './command-result';
+import {DebugHandler} from './verbs/debug-handler';
 
 @Injectable()
 export class UserInputService {
@@ -35,13 +36,16 @@ export class UserInputService {
 
     // Now that we know what the user said, try to figure out what it means
     const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
+
+    const isDebugCommand: boolean = command.verb && command.verb.name === 'debug';
+
     this.outputService.displayUserCommand(sentence, command);
 
     const context: CommandContext = this.ifService.buildCommandContext();
 
     // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
-    if (unknowns && unknowns.length > 0) {
+    if (unknowns && unknowns.length > 0 && !isDebugCommand) {
       this.displayParserError(unknowns, context);
       return CommandResult.BuildParseFailedResult();
     }
@@ -54,7 +58,7 @@ export class UserInputService {
     this.ifService.logUserCommandToAnalytics(context, command);
 
     // If the parser wasn't sure what we were referring to with something, then don't send it to a verb handler.
-    if (context.wasConfused) {
+    if (context.wasConfused && !(isDebugCommand)) {
       return CommandResult.BuildParseFailedResult();
     }
 

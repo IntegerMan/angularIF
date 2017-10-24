@@ -1,0 +1,27 @@
+<div class="card mb-3">
+
+  <div class="card-header text-capitalize">
+    Token: <if-token [token]="token" [includeEntity]="false" [includeModifiers]="false"></if-token>
+  </div>
+
+  <div class="card-body p-0 pt-3">
+    <dl>
+
+      <dt>Classification</dt>
+      <dd>
+        {{token.classification}}
+      </dd>
+
+      <dt>Tags</dt>
+      <dd>
+        <div *ngFor="let tag of token.term.tags">
+          <span class="badge badge-primary" *ngIf="tag === token.term.bestTag">{{tag}}</span>
+          <span class="badge badge-default" *ngIf="tag !== token.term.bestTag">{{tag}}</span>
+        </div>
+        <span *ngIf="token.term.tags.length < 1" class="text-muted small">(None)</span>
+      </dd>
+
+    </dl>
+  </div>
+
+</div>
