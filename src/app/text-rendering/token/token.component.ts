@@ -18,6 +18,9 @@ export class TokenComponent implements OnInit {
   @Input()
   includeEntity: boolean = false;
 
+  @Input()
+  autoSize: boolean = true;
+
   constructor() { }
 
   ngOnInit() {
@@ -69,7 +72,7 @@ export class TokenComponent implements OnInit {
     }
 
     // Modifiers should be rendered at a small level
-    if (this.token.modifies) {
+    if (this.token.modifies && this.autoSize) {
       output += 'small ';
     }
 
@@ -77,6 +80,10 @@ export class TokenComponent implements OnInit {
   }
 
   get tooltip(): string {
+
+    if (!this.token) {
+      return null;
+    }
 
     let tooltip = `${this.token.classification}: ${this.token.term.normal}`;
 

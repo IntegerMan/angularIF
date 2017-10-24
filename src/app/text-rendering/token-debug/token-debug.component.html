@@ -1,7 +1,7 @@
 <div class="card mb-3">
 
   <div class="card-header text-capitalize">
-    Token: <if-token [token]="token" [includeEntity]="false" [includeModifiers]="false"></if-token>
+    Token: <if-token [token]="token" [includeEntity]="false" [includeModifiers]="false" [autoSize]="false"></if-token>
   </div>
 
   <div class="card-body p-0 pt-3">
@@ -12,6 +12,12 @@
         {{token.classification}}
       </dd>
 
+      <dt>Entity</dt>
+      <dd>
+        <if-entity-reference *ngIf="token.entity" [entity]="token.entity"></if-entity-reference>
+        <span *ngIf="!token.entity" class="text-muted small">(None)</span>
+      </dd>
+
       <dt>Tags</dt>
       <dd>
         <div *ngFor="let tag of token.term.tags">
@@ -19,6 +25,20 @@
           <span class="badge badge-default" *ngIf="tag !== token.term.bestTag">{{tag}}</span>
         </div>
         <span *ngIf="token.term.tags.length < 1" class="text-muted small">(None)</span>
+      </dd>
+
+      <dt>Modifies</dt>
+      <dd>
+        <if-token *ngIf="token.modifies" [token]="token.modifies" [includeModifiers]="false" [includeEntity]="true" [autoSize]="false"></if-token>
+        <span *ngIf="!token.modifies" class="text-muted small">(None)</span>
+      </dd>
+
+      <dt>Modified By</dt>
+      <dd>
+        <div *ngFor="let token of token.modifiedBy">
+          <if-token [token]="token" [includeModifiers]="false" [includeEntity]="true" [autoSize]="false"></if-token>
+        </div>
+        <span *ngIf="token.modifiedBy.length < 1" class="text-muted small">(None)</span>
       </dd>
 
     </dl>
