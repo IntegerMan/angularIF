@@ -26,20 +26,18 @@ import {GameState} from './game-state.enum';
 export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
-  engineVersion: string = '0.3';
+  engineVersion: string = '0.4';
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
   movesTaken: number = 0;
   commandId: number = 0;
 
-  private _gameState: GameState = GameState.initializing;
-
   story: Story;
-
   commandEvaluated: EventEmitter<Command>;
   gameStateChanged: EventEmitter<GameState>;
 
+  private _gameState: GameState = GameState.initializing;
   private verbHandlers: VerbHandler[];
 
   constructor(private logger: LoggingService,
