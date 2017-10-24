@@ -60,7 +60,7 @@ export class HangHandler extends VerbHandler {
     } else {
 
       return CommandResult.BuildActionFailedResult();
-      
+
     }
 
   }
