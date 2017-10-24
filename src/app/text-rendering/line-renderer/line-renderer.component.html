@@ -9,9 +9,12 @@
 
   <if-text-list *ngSwitchCase="'list'" [text]="line.text" [items]="line.data"></if-text-list>
 
-  <span *ngSwitchCase="'parserError'" class="text-warning font-weight-bold"><samp>{{line.text}}</samp></span>
+  <if-parser-error *ngSwitchCase="'parserError'" [text]="line.text" [hint]="line.data"></if-parser-error>
 
   <if-user-input *ngSwitchCase="'userInput'" [text]="line.text" [command]="line.data"></if-user-input>
+
+  <if-token-debug *ngSwitchCase="'tokenDebug'" [token]="line.data"></if-token-debug>
+  <if-entity-debug *ngSwitchCase="'entityDebug'" [entity]="line.data"></if-entity-debug>
 
   <h1 *ngSwitchCase="'header'" class="lead">{{line.text}}<small class="text-muted ml-2" *ngIf="line.data">{{line.data}}</small></h1>
 

@@ -1,4 +1,6 @@
 export enum RenderType {
+  tokenDebug = 'tokenDebug',
+  entityDebug = 'entityDebug',
   gameOver = 'gameOver',
   parserError = 'parserError',
   successAction = 'successAction',

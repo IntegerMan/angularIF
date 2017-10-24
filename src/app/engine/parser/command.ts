@@ -10,15 +10,6 @@ import {CommandResult} from '../command-result';
  */
 export class Command {
 
-  constructor(userInput: string) {
-
-    // Farm out parameters
-    this.userInput = userInput;
-
-    // Initialize empty collections
-    this.objects = [];
-    this.tokens = [];
-  }
 
   userInput: string;
   tokens: CommandToken[];
@@ -28,6 +19,19 @@ export class Command {
   objects: CommandToken[];
   verbHandler: VerbHandler;
   result: CommandResult;
+  prepositions: any;
+  hasPrepositions: boolean = false;
+
+  constructor(userInput: string) {
+
+    // Farm out parameters
+    this.userInput = userInput;
+
+    // Initialize empty collections
+    this.objects = [];
+    this.tokens = [];
+    this.prepositions = {};
+  }
 
   public execute(context: CommandContext): CommandResult {
 
@@ -81,5 +85,34 @@ export class Command {
     return direction;
   }
 
+  addPreposition(preposition: CommandToken): void {
+    this.prepositions[preposition.name] = preposition;
+    this.hasPrepositions = true;
+  }
+
+  getProposition(preposition: string): CommandToken {
+    return this.prepositions[preposition];
+  }
+
+  getPrepositionWithFallbacks(prepNames: string[]): CommandToken {
+
+    for (const prep of prepNames) {
+
+      // Try the next preposition in line
+      const prepToken: CommandToken = this.getProposition(prep);
+
+      // If we've found it, return it
+      if (prepToken) {
+        return prepToken;
+      }
+
+    }
+
+    return null;
+  }
+
+  get isTargetingAll(): boolean {
+    return this.tokens.filter(t => t.name === 'all' || t.name === 'everything').length > 0;
+  }
 
 }

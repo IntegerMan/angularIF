@@ -18,7 +18,7 @@ export class WinHandler extends VerbHandler {
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
     // Win is not a valid verb in production
-    if (environment.production) {
+    if (!environment.showDebugAids) {
       context.outputService.displaySystem('Cheaters never prosper.');
 
       return CommandResult.BuildActionSuccessResult();

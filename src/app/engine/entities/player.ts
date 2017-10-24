@@ -8,12 +8,13 @@ import {EntityWeight} from './entity-weight.enum';
 export class Player extends WorldEntity {
 
   constructor() {
-    super('you');
+    super('yourself');
 
     this.article = '';
+    this.isAlive = true;
 
     // Add some common synonyms for helping the player refer to their character
-    this.addNounAliases(['me', 'self', 'yourself', 'myself', 'character', 'avatar', 'player']);
+    this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player']);
 
     // Give default self-descriptions here
     this.description = 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
@@ -32,7 +33,7 @@ export class Player extends WorldEntity {
     return false;
   }
 
-  addToInventory(item: WorldEntity, context: CommandContext = null): boolean {
+  addToInventory(item: WorldEntity): boolean {
 
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
 
@@ -42,33 +43,15 @@ export class Player extends WorldEntity {
     return true;
   }
 
-  removeFromInventory(item: WorldEntity, context: CommandContext = null): boolean {
+  removeFromInventory(item: WorldEntity): boolean {
 
     // Display a warning if you're trying to do something stupid
     if (this.contents.indexOf(item) < 0) {
-
-      if (context) {
-        context.outputService.displayFailedAction(`You aren't carrying ${item.article} ${item.name}.`);
-      }
-
       return false;
     }
 
-    // TODO: Some items may want checks or separate actions if the player is going to remove them
-
     // Okay, let's remove it!
-    if (ArrayHelper.removeIfPresent(this.contents, item)) {
-
-      LoggingService.instance.log(`Dropping ${item.name} from ${this.name}'s inventory to the floor of ${this.currentRoom.name}.`);
-
-      if (context) {
-        context.outputService.displayStory(`You drop ${item.article} ${item.name}.`);
-      }
-
-      return true;
-    }
-
-    return false;
+    return ArrayHelper.removeIfPresent(this.contents, item);
 
   }
 

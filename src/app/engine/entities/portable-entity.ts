@@ -15,6 +15,7 @@ export class PortableEntity extends Scenery {
    * @param {CommandContext} context
    */
   onDropped(context: CommandContext): void {
+    context.outputService.displayStory(`You drop ${this.that}.`);
   }
 
   /**
@@ -23,5 +24,6 @@ export class PortableEntity extends Scenery {
    */
   onPickup(context: CommandContext): void {
   }
+
 
 }

@@ -1,0 +1,27 @@
+<div class="card mb-3">
+
+  <div class="card-header text-capitalize">
+    Entity: {{entity.that}}
+  </div>
+
+  <div class="card-body p-0 pt-3">
+    <dl>
+
+      <dt>Description</dt>
+      <dd>
+        {{entity.description}}
+      </dd>
+
+      <dt>Contents</dt>
+      <dd>
+        <div *ngFor="let child of entity.contents">
+          <if-entity-reference [entity]="child"></if-entity-reference>
+        </div>
+        <span *ngIf="entity.contents.length < 1" class="text-muted small">(None)</span>
+
+      </dd>
+
+    </dl>
+  </div>
+
+</div>

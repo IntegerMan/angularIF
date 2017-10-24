@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import {TokenClassification} from './token-classification.enum';
+import {CommandToken} from './command-token';
 
 @Injectable()
 export class LexiconService {
 
   private static _instance: LexiconService;
+
+  private _fallback: any;
 
   static get instance(): LexiconService {
     if (!this._instance) {
@@ -20,9 +24,9 @@ export class LexiconService {
 
   constructor() {
 
-    // Define it as an empty object. We'll add entries via key-value pairs.
-    this._lexicon = {
-    };
+    // Define empty objects. We'll add entries via key-value pairs.
+    this._lexicon = {};
+    this._fallback = {};
 
     LexiconService._instance = this;
 
@@ -44,4 +48,40 @@ export class LexiconService {
     }
   }
 
+  public attemptToInterpretAsNonVerb(token: CommandToken): boolean {
+
+    // See if we have a fallback entry for it
+    if (this._fallback[token.name] !== undefined) {
+      token.classification = this._fallback[token.name];
+      return true;
+    }
+
+    // Try to automate it
+    for (const tag of token.term.tags) {
+
+      if (tag === 'Verb') {
+        continue;
+      }
+
+      // Attempt to interpret the item as if it was a preposition (for example, the term 'using')
+      if (tag === 'Preposition') {
+        token.classification = TokenClassification.Preposition;
+        return true;
+      }
+
+      // Attempt to interpret the item as if it was an adjective (for example, 'open')
+      if (tag === 'Adjective') {
+        token.classification = TokenClassification.Adjective;
+        return true;
+      }
+
+    }
+
+    return false;
+
+  }
+
+  addFallback(term: string, classification: TokenClassification): void {
+    this._fallback[term.toLowerCase()] = classification;
+  }
 }

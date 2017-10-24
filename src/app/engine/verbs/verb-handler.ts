@@ -3,8 +3,11 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
+import {WorldEntity} from '../entities/world-entity';
 
 export abstract class VerbHandler {
+
+  registeredNormals: string[];
 
   constructor(normals: string[]) {
 
@@ -19,8 +22,6 @@ export abstract class VerbHandler {
     }
 
   }
-
-  registeredNormals: string[];
 
   abstract get verbType(): VerbType;
 
@@ -56,4 +57,15 @@ export abstract class VerbHandler {
 
   abstract handleCommand(command: Command, context: CommandContext): CommandResult;
 
+  protected assertHasEntity(context: CommandContext, entity: WorldEntity): boolean {
+
+    // TODO: it'd be nice to auto-pick-up the item if we don't.
+
+    if (!context.player.containsEntity(entity, true)) {
+      context.outputService.displayStory(`You'll have to get ${entity.that} first.`);
+      return false;
+    }
+
+    return true;
+  }
 }
