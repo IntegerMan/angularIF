@@ -10,16 +10,6 @@ import {CommandResult} from '../command-result';
  */
 export class Command {
 
-  constructor(userInput: string) {
-
-    // Farm out parameters
-    this.userInput = userInput;
-
-    // Initialize empty collections
-    this.objects = [];
-    this.tokens = [];
-    this.prepositions = {};
-  }
 
   userInput: string;
   tokens: CommandToken[];
@@ -31,6 +21,17 @@ export class Command {
   result: CommandResult;
   prepositions: any;
   hasPrepositions: boolean = false;
+
+  constructor(userInput: string) {
+
+    // Farm out parameters
+    this.userInput = userInput;
+
+    // Initialize empty collections
+    this.objects = [];
+    this.tokens = [];
+    this.prepositions = {};
+  }
 
   public execute(context: CommandContext): CommandResult {
 
@@ -108,6 +109,10 @@ export class Command {
     }
 
     return null;
+  }
+
+  get isTargetingAll(): boolean {
+    return this.tokens.filter(t => t.name === 'all' || t.name === 'everything').length > 0;
   }
 
 }
