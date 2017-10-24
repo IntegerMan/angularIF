@@ -2,6 +2,8 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {RenderType} from '../text-rendering/render-type.enum';
+import {CommandToken} from './parser/command-token';
+import {WorldEntity} from './entities/world-entity';
 
 @Injectable()
 export class TextOutputService {
@@ -88,6 +90,18 @@ export class TextOutputService {
     this.linesChanged.emit(this.lines);
   }
 
+  displayGameOver(message: string, isVictory: boolean): void {
+    this.addLine(new TextLine(message, RenderType.gameOver, isVictory));
+  }
+
+  displayTokenDebugInfo(text: string, token: CommandToken): void {
+    this.addLine(new TextLine(text, RenderType.tokenDebug, token));
+  }
+
+  displayEntityDebugInfo(text: string, entity: WorldEntity): void {
+    this.addLine(new TextLine(text, RenderType.entityDebug, entity));
+  }
+
   private addLine(line: TextLine): void {
 
     // Send the output to the console for good measure
@@ -103,9 +117,4 @@ export class TextOutputService {
     this.linesChanged.emit(this.lines);
 
   }
-
-  displayGameOver(message: string, isVictory: boolean): void {
-    this.addLine(new TextLine(message, RenderType.gameOver, isVictory));
-  }
-
 }

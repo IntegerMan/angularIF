@@ -7,6 +7,8 @@ import {WorldEntity} from '../entities/world-entity';
 
 export abstract class VerbHandler {
 
+  registeredNormals: string[];
+
   constructor(normals: string[]) {
 
     if (!normals || normals.length <= 0) {
@@ -20,8 +22,6 @@ export abstract class VerbHandler {
     }
 
   }
-
-  registeredNormals: string[];
 
   abstract get verbType(): VerbType;
 
