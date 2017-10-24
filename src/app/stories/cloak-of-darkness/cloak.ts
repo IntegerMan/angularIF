@@ -46,7 +46,7 @@ export class Cloak extends PortableEntity {
   }
 
   private increasePointsFromDiscarding(context: CommandContext) {
-    
+
     if (!this.hasCountedForPoints) {
       this.hasCountedForPoints = true;
       context.score.increaseScore(1);
