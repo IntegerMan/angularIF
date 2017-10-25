@@ -53,7 +53,9 @@ export class GetHandler extends VerbHandler {
       if (result) {
 
         // Remove the entity from its current parent
-        entity.currentRoom.removeObject(entity);
+        if (entity.parent) {
+          entity.parent.removeObject(entity);
+        }
 
         context.player.addToInventory(entity);
         item.onPickup(context);
