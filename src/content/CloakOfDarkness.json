@@ -2,91 +2,76 @@
 	"name": "Cloak of Darkness",
 	"description": "A short demo based on Roger Firth's specification to compare various Interactive Fiction development languages.",
 	"version": "v0.85",
-	"author":
-	{
+	"author": {
 		"name": "Matt Eland",
 		"contact": "Matt.Eland@GMail.com"
 	},
-	"introText": [
-		"Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera House. It's surprising that there aren't more people about but, hey, what do you expect in a cheap demo game...?"
-	],
+	"introText": ["Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera House. It's surprising that there aren't more people about but, hey, what do you expect in a cheap demo game...?"],
 	"player": {
 		"id": "player",
-		"inventory": [
-			{
-				"id": "cloak",
-				"name": "black velvet cloak",
-				"description": ["The velvet cloak almost seems to have darkness woven into its very fabric. Everything about it is darker than it should be."],
-				"wearable": "true",
-				"isWorn": "true"
-			}
-		]
+		"inventory": [{
+			"id": "cloak",
+			"name": "black velvet cloak",
+			"description": ["The velvet cloak almost seems to have darkness woven into its very fabric. Everything about it is darker than it should be."],
+			"wearable": "true",
+			"isWorn": "true"
+		}]
 	},
-	"rooms": [
-		{
-			"id": "foyer",
-			"name": "Foyer of the Opera House",
-			"description": ["You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers overhead. The entrance from the street is to the north, and there are doorways south and west."],
-			"nav": {
-				"north": {
-					"goMessage": "You've only just arrived, and besides, the weather outside seems to be getting worse."
-				},
-				"west": {
-					"room": "cloakroom"
-				},
-				"south": {
-					"room": "bar"
-				}
+	"rooms": [{
+		"id": "foyer",
+		"name": "Foyer of the Opera House",
+		"description": ["You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers overhead. The entrance from the street is to the north, and there are doorways south and west."],
+		"nav": {
+			"north": {
+				"goMessage": "You've only just arrived, and besides, the weather outside seems to be getting worse."
+			},
+			"west": {
+				"room": "cloakroom"
+			},
+			"south": {
+				"room": "bar"
+			}
+		}
+	},
+	{
+		"id": "cloakroom",
+		"name": "Cloakroom",
+		"description": ["The walls of this small room were clearly once lined with hooks, though now only one remains. The exit is a door to the east."],
+		"nav": {
+			"east": {
+				"room": "foyer"
 			}
 		},
-		{
-			"id": "cloakroom",
-			"name": "Cloakroom",
-			"description": ["The walls of this small room were clearly once lined with hooks, though now only one remains. The exit is a door to the east."],
-			"nav": {
-				"east": {
-					"room": "foyer"
-				}
+		"objects": [{
+			"id": "objHook",
+			"name": "small brass hook",
+			"emptyDescription": ["It's just a small brass hook screwed to the wall."],
+			"description": ["It's just a small brass hook with a {contents} hanging on it."],
+			"allowHang": "true",
+			"maxContents": "1"
+		}]
+	},
+	{
+		"id": "bar",
+		"name": "Foyer Bar",
+		"description": ["The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty. There seems to be some sort of message scrawled in the sawdust on the floor."],
+		"nav": {
+			"north": {
+				"room": "foyer",
+				"allowInDark": "true"
 			},
-			"objects": [
-				{
-					"id": "objHook",
-					"name": "small brass hook",
-					"emptyDescription": ["It's just a small brass hook screwed to the wall."],
-					"description": ["It's just a small brass hook with a {contents} hanging on it."],
-					"allowHang": "true",
-					"maxContents": "1"
-				}
-			]
-		},
-		{
-			"id": "bar",
-			"name": "Foyer Bar",
-			"description": ["The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty. There seems to be some sort of message scrawled in the sawdust on the floor."],
-			"nav": {
-				"north": {
-					"room": "foyer",
-					"allowInDark": "true"
-				},
 			"isDark": "true",
 			"darkName": "Darkness",
 			"darkDescription": ["It is pitch dark, and you can't see a thing."],
-			"TODO": [
-					"Needs to track a blunder in here.",
-					"Is dark needs to change based on the presence or absence of the cloak"
-				],
-			"objects": [
-				{
-					"id": "message",
-					"name": "scrawled message",
-					"TODO": [
-						"Description needs to change based on whether you've blundered >= 2 times in the bar",
-						"Description needs to trigger a game over"
-						],
-					"description": ["The message, neatly marked in the sawdust, reads..."]
-				}
-			]
+			"TODO": ["Needs to track a blunder in here.",
+			"Is dark needs to change based on the presence or absence of the cloak"],
+			"objects": [{
+				"id": "message",
+				"name": "scrawled message",
+				"TODO": ["Description needs to change based on whether you've blundered >= 2 times in the bar",
+				"Description needs to trigger a game over"],
+				"description": ["The message, neatly marked in the sawdust, reads..."]
+			}]
 		}
-	]
-
+	}]
 }
