@@ -1,0 +1,56 @@
+{
+     "name": "Common Dictionary Terms",
+  "purpose": "Shared usage as a base library",
+	"author": {
+		"name": "Matt Eland",
+		"contact": "Matt.Eland@GMail.com"
+	},
+  "terms": {
+    "Adjective": [
+      "My",
+      "Brass",
+      "Bronze",
+      "Decorated",
+      "Glittering",
+      "Scrawled",
+      "Unholy"
+    ],
+    "Direction": [
+      "North",
+      "East",
+      "South",
+      "West",
+      "Up",
+      "Down",
+      "Northeast",
+      "Southeast",
+      "Southwest",
+      "Northwest"
+    ],
+    "Ignorable": [
+      "Please"
+    ],
+    "Noun": [
+      "Hall",
+      "Chandelier",
+      "Chandeliers",
+      "Message",
+      "Note"
+    ],
+    "Verb": [
+      "Open",
+      "Procure",
+      "Restart",
+      "Reset",
+      "Inspect",
+      "Debug",
+      "Throw",
+      "Lurk",
+      "Loiter"
+    ]
+  },
+  "fallback": {
+    "open": "Adjective",
+    "using": "Preposition"
+  }
+}
