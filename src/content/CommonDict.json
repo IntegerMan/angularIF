@@ -38,13 +38,15 @@
       "Note"
     ],
     "Verb": [
-      "Open ",
-      "Procure ",
-      "Restart ",
-      "Reset ",
-      "Inspect ",
-      "Debug ",
-      "Throw "
+      "Open",
+      "Procure",
+      "Restart",
+      "Reset",
+      "Inspect",
+      "Debug",
+      "Throw",
+      "Lurk",
+      "Loiter"
     ]
   },
   "fallback": {
