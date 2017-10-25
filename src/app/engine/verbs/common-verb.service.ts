@@ -30,7 +30,7 @@ export class CommonVerbService {
     // TODO: It'd be real nice to have some automated way of getting synonyms within the engine
     verbs.push(new LookHandler(['look']));
     verbs.push(new ExamineHandler(['examine', 'inspect']));
-    verbs.push(new GoHandler(['go', 'walk', 'run', 'travel']));
+    verbs.push(new GoHandler(['go', 'walk', 'run', 'travel', 'exit', 'saunter', 'stroll', 'sprint']));
     verbs.push(new HangHandler(['hang', 'suspend', 'attach', 'affix'])); // TODO: Some of these should go in 'Put'
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));
     verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));

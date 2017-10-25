@@ -18,7 +18,7 @@ import { UserInputComponent } from './text-rendering/user-input/user-input.compo
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
 import {GoogleAnalyticsService} from './utility/google-analytics.service';
-import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
+import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
 import { GameOverComponent } from './text-rendering/game-over/game-over.component';
@@ -27,6 +27,7 @@ import { ParserErrorComponent } from './text-rendering/parser-error/parser-error
 import { InlineHelpComponent } from './text-rendering/inline-help/inline-help.component';
 import { TokenDebugComponent } from './text-rendering/token-debug/token-debug.component';
 import { EntityDebugComponent } from './text-rendering/entity-debug/entity-debug.component';
+
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { EntityDebugComponent } from './text-rendering/entity-debug/entity-debug
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     TooltipModule,
     InputTextModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TreeModule
   ],
   providers: [
     LoggingService,

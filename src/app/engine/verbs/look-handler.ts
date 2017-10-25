@@ -4,11 +4,56 @@ import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
+import {TokenClassification} from '../parser/token-classification.enum';
+import {RoomLink} from '../room-link';
 
 export class LookHandler extends VerbHandler {
 
   get verbType(): VerbType {
     return VerbType.look;
+  }
+
+  handleCommand(command: Command, context: CommandContext): CommandResult {
+    return this.handleLookOrExamine(command, context, false);
+  }
+
+  protected handleLookOrExamine(command: Command, context: CommandContext, isScrutinize: boolean): CommandResult {
+
+    // If it's just a plain old look without a target, describe the room
+    if (command.objects.length <= 0) {
+
+      context.ifService.describeRoom(context.currentRoom, context, isScrutinize);
+
+      return CommandResult.BuildActionSuccessResult();
+    }
+
+    const token: CommandToken = command.objects[0];
+
+    // Handle special cases
+    if (token.name === 'inventory') {
+      return LookHandler.listPlayerInventory(context);
+    } else if (token.name === 'verbs') {
+      return LookHandler.listVerbs(context);
+    } else if (token.classification === TokenClassification.Direction) {
+      return LookHandler.handleLookInDirection(context, token);
+    }
+
+    // Let the context object take care of disambiguation and lookup
+    const entity = token.entity;
+    if (!entity) {
+      // The context lookup took care of output to the user, so we just need to abort
+      return CommandResult.BuildActionFailedResult();
+    }
+
+    // Grab the description from the entity
+    let description: string = entity.getExamineDescription(context, isScrutinize);
+    if (!description) {
+      description = `You stare at the ${token.name} for awhile, but fail to notice anything you hadn't noticed before.`;
+    }
+
+    context.outputService.displayStory(description);
+    return CommandResult.BuildActionSuccessResult();
+
   }
 
   private static listPlayerInventory(context: CommandContext): CommandResult {
@@ -37,45 +82,25 @@ export class LookHandler extends VerbHandler {
     return CommandResult.BuildFreeActionResult();
   }
 
-  handleCommand(command: Command, context: CommandContext): CommandResult {
-    return this.handleLookOrExamine(command, context, false);
-  }
+  private static handleLookInDirection(context: CommandContext, dir: CommandToken): CommandResult {
 
-  protected handleLookOrExamine(command: Command, context: CommandContext, isScrutinize: boolean): CommandResult {
+    let text: string;
+    const link: RoomLink = context.navService.getLink(context.currentRoom, dir.name);
 
-    // If it's just a plain old look without a target, describe the room
-    if (command.objects.length <= 0) {
-
-      context.ifService.describeRoom(context.currentRoom, context, isScrutinize);
-
-      return CommandResult.BuildActionSuccessResult();
+    if (link) {
+      if (link.lookMessage) {
+        text = link.lookMessage;
+      } else {
+        text = `You look to the ${dir.name} but are unable to tell much from here. You'll have to go there yourself.`;
+      }
+    } else {
+      text = `You can't go any farther to the ${dir.name}.`;
     }
 
-    const token: CommandToken = command.objects[0];
+    context.outputService.displayStory(text);
 
-    // Handle special cases
-    if (token.name === 'inventory') {
-      return LookHandler.listPlayerInventory(context);
-    } else if (token.name === 'verbs') {
-      return LookHandler.listVerbs(context);
-    }
 
-    // Let the context object take care of disambiguation and lookup
-    const entity = token.entity;
-    if (!entity) {
-      // The context lookup took care of output to the user, so we just need to abort
-      return CommandResult.BuildActionFailedResult();
-    }
-
-    // Grab the description from the entity
-    let description: string = entity.getExamineDescription(context, isScrutinize);
-    if (!description) {
-      description = `You stare at the ${token.name} for awhile, but fail to notice anything more noteworthy.`;
-    }
-
-    context.outputService.displayStory(description);
-    return CommandResult.BuildActionSuccessResult();
-
+    return CommandResult.BuildActionFailedResult();
   }
 
 }

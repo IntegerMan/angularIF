@@ -38,6 +38,7 @@ export class Player extends WorldEntity {
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
 
     item.currentRoom = null;
+    item.parent = this;
     this.contents.push(item);
 
     return true;

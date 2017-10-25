@@ -52,6 +52,11 @@ export class GetHandler extends VerbHandler {
       const result = item.allowPickup(context);
       if (result) {
 
+        // Remove the entity from its current parent
+        if (entity.parent) {
+          entity.parent.removeObject(entity);
+        }
+
         context.player.addToInventory(entity);
         item.onPickup(context);
 
