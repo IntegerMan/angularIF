@@ -16,7 +16,7 @@ export class NavigationService {
     }
 
     const link = new RoomLink(origin, direction, target);
-    link.message = message;
+    link.goMessage = message;
 
     origin.roomLink[direction] = link;
 

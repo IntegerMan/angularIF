@@ -6,15 +6,17 @@ import {Room} from './entities/room';
  */
 export class RoomLink {
 
+  origin: Room;
+  direction: string;
+  target: Room;
+  goMessage: string = null;
+  lookMessage: string = null;
+
   constructor(origin: Room, direction: string, target: Room) {
     this.origin = origin;
     this.direction = direction;
     this.target = target;
   }
 
-  origin: Room;
-  direction: string;
-  target: Room;
-  message: string = null;
 
 }

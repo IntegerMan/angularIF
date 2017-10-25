@@ -52,7 +52,7 @@ export class UserInputService {
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
     this.resolveNouns(tokens, context);
-    this.resolveDirections(tokens, context);
+    //this.resolveDirections(tokens, context);
 
     // Create a command context. This will give the command handler more utility information
     this.ifService.logUserCommandToAnalytics(context, command);
