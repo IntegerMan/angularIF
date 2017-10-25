@@ -12,12 +12,14 @@ import {ArrayHelper} from '../utility/array-helper';
 import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {CommandResult} from './command-result';
+import {LexiconService} from './parser/lexicon.service';
 
 @Injectable()
 export class UserInputService {
 
   constructor(private logger: LoggingService,
               private tokenizer: TokenizerService,
+              private lexer: LexiconService,
               private sentenceParser: SentenceParserService,
               private ifService: InteractiveFictionService,
               private outputService: TextOutputService) { }
@@ -77,13 +79,13 @@ export class UserInputService {
     // Log it to console and stick the command into the main window for user reference
     this.logger.log(`Input sentence: '${sentence}'`);
 
-    sentence = this.substituteWordsAsNeeded(sentence);
+    sentence = this.lexer.replaceWords(sentence);
 
     // Break down the input into command tokens
     const tokens: CommandToken[] = this.tokenizer.getTokensForSentence(sentence);
 
     // Some tokens are shortcuts for common actions. These should be replaced as if the user had spoken the full word.
-    this.expandTokensAsNeeded(tokens);
+    this.lexer.replaceTokens(tokens, this.tokenizer);
 
     return tokens;
   }
@@ -109,57 +111,6 @@ export class UserInputService {
 
     }
 
-  }
-
-  private substituteWordsAsNeeded(sentence: string): string {
-
-    // TODO: It'd be nice to make this accessible for extension
-    sentence = StringHelper.replaceAll(sentence, 'pick up', 'get', false);
-    sentence = StringHelper.replaceAll(sentence, 'turn on', 'activate', false);
-    sentence = StringHelper.replaceAll(sentence, 'turn off', 'deactivate', false);
-    sentence = StringHelper.replaceAll(sentence, 'north east', 'northeast', false);
-    sentence = StringHelper.replaceAll(sentence, 'north west', 'northwest', false);
-    sentence = StringHelper.replaceAll(sentence, 'south east', 'southeast', false);
-    sentence = StringHelper.replaceAll(sentence, 'south west', 'southwest', false);
-
-    return sentence;
-  }
-
-  private expandTokensAsNeeded(tokens: CommandToken[]): CommandToken[] {
-
-    // TODO: It'd be nice to make this accessible for extension
-    const replacementValues = {};
-    replacementValues['x'] = 'examine';
-    replacementValues['i'] = 'inventory';
-    replacementValues['l'] = 'look';
-    replacementValues['e'] = 'east';
-    replacementValues['w'] = 'west';
-    replacementValues['s'] = 'south';
-    replacementValues['n'] = 'north';
-    replacementValues['u'] = 'up';
-    replacementValues['d'] = 'down';
-    replacementValues['ne'] = 'northeast';
-    replacementValues['nw'] = 'northwest';
-    replacementValues['sw'] = 'southwest';
-    replacementValues['se'] = 'southeast';
-
-    for (const t of tokens) {
-
-      const replacementValue = replacementValues[t.name];
-
-      if (replacementValue) {
-
-        // Let's build an entirely new token for it
-        const replacementToken: CommandToken = this.tokenizer.getTokenForWord(replacementValue);
-
-        // Preserve the user input for traceability
-        replacementToken.userInput = t.userInput;
-
-        ArrayHelper.replace(tokens, t, replacementToken);
-      }
-    }
-
-    return tokens;
   }
 
 }

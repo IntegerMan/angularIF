@@ -24,6 +24,20 @@ export abstract class DictionaryReader {
       }
     }
 
+    // Register string replacement rules
+    if (source.substitute) {
+      for (const token of Object.getOwnPropertyNames(source.substitute)) {
+        lexer.addReplacementRule(token, source.substitute[token]);
+      }
+    }
+
+    // Register string expansion rules
+    if (source.expand) {
+      for (const token of Object.getOwnPropertyNames(source.expand)) {
+        lexer.addExpansionRule(token, source.expand[token]);
+      }
+    }
+
   }
 
 }
