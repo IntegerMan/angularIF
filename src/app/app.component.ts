@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   private linesChangedSubscription: Subscription;
   private respondToNextViewChecked: boolean = true;
   private gameState: GameState = GameState.initializing;
-  
+
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
               private ifService: InteractiveFictionService,

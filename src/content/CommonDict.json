@@ -46,7 +46,11 @@
       "Debug",
       "Throw",
       "Lurk",
-      "Loiter"
+      "Loiter",
+      "Exit",
+      "Saunter",
+      "Stroll",
+      "Sprint"
     ]
   },
   "fallback": {
