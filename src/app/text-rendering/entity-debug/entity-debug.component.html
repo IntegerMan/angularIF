@@ -9,14 +9,15 @@
 
       <dt>Description</dt>
       <dd>
-        {{entity.description}}
+        <p>{{entity.description}}</p>
       </dd>
 
       <dt>Contents</dt>
       <dd>
-        <div *ngFor="let child of entity.contents">
-          <if-entity-reference [entity]="child"></if-entity-reference>
-        </div>
+        <p-tree *ngIf="entity.contents.length > 0" [value]="contentNodes"></p-tree>
+        <!--<div *ngFor="let child of entity.contents">-->
+          <!--<if-entity-reference [entity]="child"></if-entity-reference>-->
+        <!--</div>-->
         <span *ngIf="entity.contents.length < 1" class="text-muted small">(None)</span>
 
       </dd>
