@@ -8,7 +8,6 @@ import {Command} from './parser/command';
 import {SentenceParserService} from './parser/sentence-parser.service';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {StringHelper} from '../utility/string-helper';
-import {ArrayHelper} from '../utility/array-helper';
 import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {CommandResult} from './command-result';
@@ -51,7 +50,7 @@ export class UserInputService {
     }
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
-    this.resolveNouns(tokens, context);
+    context.resolveNouns(tokens);
 
     // Create a command context. This will give the command handler more utility information
     this.ifService.logUserCommandToAnalytics(context, command);
@@ -65,14 +64,6 @@ export class UserInputService {
     return this.ifService.handleUserCommand(command, context);
   }
 
-  private resolveNouns(tokens: CommandToken[], context: CommandContext) {
-
-    const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
-    for (const noun of nouns) {
-      noun.entity = context.getSingleObjectForToken(noun, context);
-    }
-
-  }
 
   private extractTokensFromInput(sentence: string): CommandToken[] {
 
