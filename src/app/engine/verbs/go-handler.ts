@@ -2,7 +2,6 @@ import {VerbHandler} from './verb-handler';
 import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
-import {TokenClassification} from '../parser/token-classification.enum';
 import {Room} from '../entities/room';
 import {RoomLink} from '../room-link';
 import {VerbType} from './verb-type.enum';
@@ -19,7 +18,8 @@ export class GoHandler extends VerbHandler {
     const direction: CommandToken = command.getFirstDirection();
 
     if (!direction) {
-      context.outputService.displayParserError('In order to go somewhere, you must include a direction. For example: "Go East"');
+      context.outputService.displayParserError('In order to go somewhere, you must include a direction.',
+        'Try saying "Go East" or, simply, "East" or "E" to move in a direction.');
       return CommandResult.BuildParseFailedResult();
     }
 
@@ -33,13 +33,13 @@ export class GoHandler extends VerbHandler {
     }
 
     // Regardless of success or failure, we'll want to go with the customized message
-    if (link.message) {
-      context.outputService.displayStory(link.message);
+    if (link.goMessage) {
+      context.outputService.displayStory(link.goMessage);
     }
 
     if (link.target) {
 
-      if (!link.message) {
+      if (!link.goMessage) {
         context.outputService.displayStory(`You go ${direction.name}.`);
       }
 
@@ -50,7 +50,7 @@ export class GoHandler extends VerbHandler {
 
     } else {
 
-      if (!link.message) {
+      if (!link.goMessage) {
         context.outputService.displayStory('Unseen forces prevent you from going that way.');
       }
 

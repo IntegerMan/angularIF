@@ -1,13 +1,11 @@
 import {CommandToken} from '../parser/command-token';
 import {WorldEntity} from './world-entity';
 import {CommandContext} from '../command-context';
-import {ArrayHelper} from '../../utility/array-helper';
 import {EntityWeight} from './entity-weight.enum';
 import {EntitySize} from './entity-size.enum';
 import {LightLevel} from './light-level.enum';
 import {Command} from '../parser/command';
 import {VerbType} from '../verbs/verb-type.enum';
-import {CommandType} from '../command-type.enum';
 
 export class Room extends WorldEntity {
 
@@ -35,25 +33,6 @@ export class Room extends WorldEntity {
     // Evaluate the room in case you're trying to find the room or the floor or whatever
     if (this.isDescribedByToken(token, context)) {
       results.push(this);
-    }
-
-    return results;
-  }
-
-  private addItemsFromContainer(container: WorldEntity, token: CommandToken, context: CommandContext): WorldEntity[] {
-
-    const results: WorldEntity[] = [];
-
-    for (const entity of container.getContainedEntities(context, false)) {
-
-      if (entity.isDescribedByToken(token, context)) {
-        results.push(entity);
-      }
-
-      const fromContainer = this.addItemsFromContainer(entity, token, context);
-      for (const e of fromContainer) {
-        results.push(e);
-      }
     }
 
     return results;
@@ -96,13 +75,16 @@ export class Room extends WorldEntity {
         case VerbType.go:
           const dir: CommandToken = command.getFirstDirection();
 
-          if (dir && dir.entity && dir.entity instanceof Room) {
+          if (dir) {
 
-            const targetRoom: Room = dir.entity;
+            const link = context.navService.getLink(context.currentRoom, dir.name);
 
-            // If we're walking towards a room that is lit, it's allowable.
-            if (targetRoom.hasLight(context)) {
-              return true;
+            if (link && link.target) {
+
+              // If we're walking towards a room that is lit, it's allowable.
+              if (link.target.hasLight(context)) {
+                return true;
+              }
             }
           }
 
@@ -119,4 +101,22 @@ export class Room extends WorldEntity {
     return true;
   }
 
+  private addItemsFromContainer(container: WorldEntity, token: CommandToken, context: CommandContext): WorldEntity[] {
+
+    const results: WorldEntity[] = [];
+
+    for (const entity of container.getContainedEntities(context, false)) {
+
+      if (entity.isDescribedByToken(token, context)) {
+        results.push(entity);
+      }
+
+      const fromContainer = this.addItemsFromContainer(entity, token, context);
+      for (const e of fromContainer) {
+        results.push(e);
+      }
+    }
+
+    return results;
+  }
 }

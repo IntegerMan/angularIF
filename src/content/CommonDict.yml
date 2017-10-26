@@ -1,0 +1,75 @@
+---
+name: Common Dictionary Terms
+purpose: Shared usage as a base library
+author:
+  name: Matt Eland
+  contact: Matt.Eland@GMail.com
+terms:
+  Adjective:
+  - My
+  - Brass
+  - Bronze
+  - Decorated
+  - Glittering
+  - Scrawled
+  - Unholy
+  Direction:
+  - North
+  - East
+  - South
+  - West
+  - Up
+  - Down
+  - Northeast
+  - Southeast
+  - Southwest
+  - Northwest
+  Ignorable:
+  - Please
+  Noun:
+  - Hall
+  - Chandelier
+  - Chandeliers
+  - Message
+  - Note
+  Verb:
+  - Open
+  - Procure
+  - Restart
+  - Reset
+  - Inspect
+  - Debug
+  - Throw
+  - Lurk
+  - Loiter
+  - Exit
+  - Saunter
+  - Stroll
+  - Sprint
+  - Repeat
+fallback:
+  open: Adjective
+  using: Preposition
+substitute:
+  pick up: get
+  turn on: activate
+  turn off: deactivate
+  north east: northeast
+  north west: northwest
+  south east: southeast
+  south west: southwest
+expand:
+  g: repeat
+  x: examine
+  i: inventory
+  l: look
+  e: east
+  w: west
+  s: south
+  n: north
+  u: up
+  d: down
+  ne: northeast
+  nw: northwest
+  sw: southwest
+  se: southeast

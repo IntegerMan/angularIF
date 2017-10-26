@@ -9,13 +9,21 @@
 
       <dt>Description</dt>
       <dd>
-        {{entity.description}}
+        <blockquote class="blockquote">
+          <p class="mb-0"><small>{{entity.description}}</small></p>
+        </blockquote>
       </dd>
 
-      <dt>Contents</dt>
+      <dt>Parent</dt>
       <dd>
-        <div *ngFor="let child of entity.contents">
-          <if-entity-reference [entity]="child"></if-entity-reference>
+        <if-entity-reference *ngIf="entity.parent" [entity]="entity.parent"></if-entity-reference>
+        <span *ngIf="!entity.parent" class="text-muted small">(None)</span>
+      </dd>
+
+      <dt class="my-2">Contents</dt>
+      <dd class="my-2">
+        <div *ngIf="entity.contents.length > 0">
+          <p-tree [value]="contentNodes"></p-tree>
         </div>
         <span *ngIf="entity.contents.length < 1" class="text-muted small">(None)</span>
 

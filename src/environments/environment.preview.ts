@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  showDebugAids: false,
+  showDebugAids: true,
   environmentName: 'www.MattEland.com'
 };

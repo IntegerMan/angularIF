@@ -5,8 +5,6 @@ export class PortableEntity extends Scenery {
 
   allowPickup(context: CommandContext): boolean {
 
-    context.outputService.displaySuccessAction(`You pick up ${this.article} ${this.name}.`);
-
     return true;
   }
 
@@ -23,6 +21,7 @@ export class PortableEntity extends Scenery {
    * @param {CommandContext} context
    */
   onPickup(context: CommandContext): void {
+    context.outputService.displayStory(`You pick up ${this.article} ${this.name}.`);
   }
 
 
