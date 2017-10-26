@@ -40,3 +40,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+src/content/\.vs/content/v15/\.suo
+
+src/content/\.vs/
