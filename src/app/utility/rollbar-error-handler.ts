@@ -15,6 +15,8 @@ export let rollbarConfig = {
   environment: environment.environmentName
 };
 
+export const RollbarService = new InjectionToken<Rollbar>('rollbar');
+
 @Injectable()
 export class RollbarErrorHandler implements ErrorHandler {
 
@@ -32,5 +34,3 @@ export class RollbarErrorHandler implements ErrorHandler {
 export function rollbarFactory() {
   return new Rollbar(rollbarConfig);
 }
-
-export const RollbarService = new InjectionToken<Rollbar>('rollbar');
