@@ -41,6 +41,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-src/content/\.vs/content/v15/\.suo
+src/app/content/\.vs/content/v15/\.suo
 
-src/content/\.vs/
+src/app/content/\.vs/
+
+src/app/content/cloak-of-darkness/\.vs/

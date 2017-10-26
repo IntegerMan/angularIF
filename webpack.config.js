@@ -378,7 +378,7 @@ module.exports = {
         "context": "src",
         "to": "",
         "from": {
-          "glob": "content/**/*",
+          "glob": "app.content/**/*",
           "dot": true
         }
       }

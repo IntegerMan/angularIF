@@ -40,8 +40,7 @@ export class NaturalLanguageService {
     const matches: string[] = [];
 
     const terms: LanguageTerm[] = this.getTerms(phrase);
-    for (const term of terms.filter(t => t.bestTag === 'Noun'))
-    {
+    for (const term of terms.filter(t => t.bestTag === 'Noun')) {
       matches.push(term.text);
     }
 
@@ -53,8 +52,7 @@ export class NaturalLanguageService {
     const matches: string[] = [];
 
     const terms: LanguageTerm[] = this.getTerms(phrase);
-    for (const term of terms.filter(t => t.bestTag === 'Adjective'))
-    {
+    for (const term of terms.filter(t => t.bestTag === 'Adjective')) {
       matches.push(term.text);
     }
 
