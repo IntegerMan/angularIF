@@ -16,11 +16,12 @@ export abstract class Story {
   rooms: Room[];
   player: Player;
 
+  fontAwesomeIcon: string = 'fa-book';
+  maxScore: number = 0;
+
   verbHandlers: VerbHandler[];
 
   private dictionaries: LexiconDictionary[];
-  fontAwesomeIcon: string = 'fa-book';
-  maxScore: number = 0;
 
   constructor() {
 
@@ -55,6 +56,23 @@ export abstract class Story {
 
   }
 
+  public addDictionary(dictionary: LexiconDictionary): void {
+    this.dictionaries.push(dictionary);
+  }
+
+  restart(): void {
+    LoggingService.instance.log('Restarting story now.');
+    this.initialize();
+  }
+
+  displayIntroduction(output: TextOutputService) {
+    output.displayStory('The story begins...');
+  }
+
+  protected abstract getRooms(): Room[];
+  protected abstract getPlayerActor(): Player;
+  protected abstract reset();
+
   private autodetectNounsAndAdjectives(entity: WorldEntity): void {
 
     // TODO: Is this the best place for this logic?
@@ -67,24 +85,5 @@ export abstract class Story {
       }
     }
 
-  }
-
-  public addDictionary(dictionary: LexiconDictionary): void {
-    this.dictionaries.push(dictionary);
-  }
-
-  protected abstract getRooms(): Room[];
-
-  protected abstract getPlayerActor(): Player;
-
-  restart(): void {
-    LoggingService.instance.log('Restarting story now.');
-    this.initialize();
-  }
-
-  protected abstract reset();
-
-  displayIntroduction(output: TextOutputService) {
-    output.displayStory('The story begins...');
   }
 }

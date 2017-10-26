@@ -15,78 +15,6 @@ export class SentenceParserService {
 
   }
 
-  private static isNounLike(t: CommandToken): boolean {
-    return t.classification === TokenClassification.Noun || t.classification === TokenClassification.Direction;
-  }
-
-  private static isVerbLike(t: CommandToken): boolean {
-    return t.classification === TokenClassification.Verb;
-  }
-
-  private static isVerbModifier(t: CommandToken): boolean {
-    return t.classification === TokenClassification.Adverb;
-  }
-
-  private static isNounModifier(t: CommandToken): boolean {
-    return t.classification === TokenClassification.Determiner ||
-      t.classification === TokenClassification.Adjective ||
-      t.classification === TokenClassification.Preposition; // TODO: You could argue that prepositions link prior nouns to future words
-  }
-
-  private static isPreposition(t: CommandToken): boolean {
-    return t.classification === TokenClassification.Preposition;
-  }
-
-  private static findNextNoun(modifier: CommandToken): CommandToken {
-
-    let next: CommandToken = modifier.nextToken;
-    while (next) {
-      if (SentenceParserService.isNounLike(next)) {
-        return next;
-      }
-
-      next = next.nextToken;
-    }
-
-  }
-
-  private static findNextAdverb(modifier: CommandToken): CommandToken {
-
-    let next: CommandToken = modifier.nextToken;
-    while (next) {
-      if (SentenceParserService.isVerbModifier(next)) {
-        return next;
-      }
-
-      next = next.nextToken;
-    }
-
-  }
-
-  private buildSelfToken(): CommandToken {
-
-    const token = this.tokenizer.getTokenForWord('I ');
-    token.isInferred = true;
-
-    return token;
-  }
-
-  private buildGoToken(): CommandToken {
-
-    const token = this.tokenizer.getTokenForWord('go ');
-    token.isInferred = true;
-
-    return token;
-  }
-
-  private buildLookToken(): CommandToken {
-
-    const token = this.tokenizer.getTokenForWord('look ');
-    token.isInferred = true;
-
-    return token;
-  }
-
   public buildCommandFromSentenceTokens(sentence: string, tokens: CommandToken[]): Command {
 
     // Validate inputs since we're an entry method
@@ -116,7 +44,7 @@ export class SentenceParserService {
     this.inferVerbIfNeeded(command);
 
     // Build a list of raw tokens including inferred verb and subject
-    this.identifyRawTokensIncludingInferred(command, tokens);
+    SentenceParserService.identifyRawTokensIncludingInferred(command, tokens);
 
     // Adverbs go at the sentence level, though perhaps they could be associated with the verb
     this.identifyVerbModifiers(command, tokens);
@@ -147,7 +75,7 @@ export class SentenceParserService {
 
   }
 
-  private identifyRawTokensIncludingInferred(command: Command, tokens: CommandToken[]): void {
+  private static identifyRawTokensIncludingInferred(command: Command, tokens: CommandToken[]): void {
 
     // If we inferred a subject, stick that in the token list as well before the rest of the sentence
     if (command.subject && command.subject.isInferred) {
@@ -267,4 +195,75 @@ export class SentenceParserService {
 
   }
 
+  private static isNounLike(t: CommandToken): boolean {
+    return t.classification === TokenClassification.Noun || t.classification === TokenClassification.Direction;
+  }
+
+  private static isVerbLike(t: CommandToken): boolean {
+    return t.classification === TokenClassification.Verb;
+  }
+
+  private static isVerbModifier(t: CommandToken): boolean {
+    return t.classification === TokenClassification.Adverb;
+  }
+
+  private static isNounModifier(t: CommandToken): boolean {
+    return t.classification === TokenClassification.Determiner ||
+      t.classification === TokenClassification.Adjective ||
+      t.classification === TokenClassification.Preposition; // TODO: You could argue that prepositions link prior nouns to future words
+  }
+
+  private static isPreposition(t: CommandToken): boolean {
+    return t.classification === TokenClassification.Preposition;
+  }
+
+  private static findNextNoun(modifier: CommandToken): CommandToken {
+
+    let next: CommandToken = modifier.nextToken;
+    while (next) {
+      if (SentenceParserService.isNounLike(next)) {
+        return next;
+      }
+
+      next = next.nextToken;
+    }
+
+  }
+
+  private static findNextAdverb(modifier: CommandToken): CommandToken {
+
+    let next: CommandToken = modifier.nextToken;
+    while (next) {
+      if (SentenceParserService.isVerbModifier(next)) {
+        return next;
+      }
+
+      next = next.nextToken;
+    }
+
+  }
+
+  private buildSelfToken(): CommandToken {
+
+    const token = this.tokenizer.getTokenForWord('I ');
+    token.isInferred = true;
+
+    return token;
+  }
+
+  private buildGoToken(): CommandToken {
+
+    const token = this.tokenizer.getTokenForWord('go ');
+    token.isInferred = true;
+
+    return token;
+  }
+
+  private buildLookToken(): CommandToken {
+
+    const token = this.tokenizer.getTokenForWord('look ');
+    token.isInferred = true;
+
+    return token;
+  }
 }

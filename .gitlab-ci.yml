@@ -14,6 +14,7 @@ deploy_production:
     - master
   script:
     - rm ./package-lock.json
+    - npm run-script lint
     - npm run-script build
   cache:
     paths:

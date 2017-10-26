@@ -17,7 +17,8 @@ export let rollbarConfig = {
 
 @Injectable()
 export class RollbarErrorHandler implements ErrorHandler {
-  constructor(private injector: Injector,) {}
+
+  constructor(private injector: Injector) {}
 
   handleError(err: any): void {
 
