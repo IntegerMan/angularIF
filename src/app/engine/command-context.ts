@@ -13,6 +13,7 @@ import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
 import {StateService} from './state.service';
 import {ScoreService} from './score.service';
+import {TokenClassification} from './parser/token-classification.enum';
 
 export class CommandContext {
 
@@ -56,7 +57,7 @@ export class CommandContext {
 
   }
 
-  getSingleObjectForToken(token: CommandToken, context: CommandContext): WorldEntity {
+  getSingleObjectForToken(token: CommandToken): WorldEntity {
 
     // TODO: This shouldn't really live in the context object
 
@@ -71,9 +72,7 @@ export class CommandContext {
         this.analytics.emitEvent(
           'Reference Not Found',
           token.name,
-          `${context.story.title} - ${context.currentRoom.name}`);
-
-        this.outputService.displayParserError(`You don't see ${token.getCannotSeeName()} here.`);
+          `${this.story.title} - ${this.currentRoom.name}`);
         this.wasConfused = true;
       }
       return null;
@@ -96,5 +95,30 @@ export class CommandContext {
     this.logger.log(`Match found for '${token.name}': ${entity.name}`);
 
     return entity;
+  }
+
+  resolveNouns(tokens: CommandToken[]): void {
+
+    let isFirst: boolean = true;
+    const confusedNames: string[] = [];
+
+    const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
+    for (const noun of nouns) {
+      noun.entity = this.getSingleObjectForToken(noun);
+      if (!noun.entity) {
+        if (isFirst) {
+          confusedNames.push(noun.getCannotSeeName());
+          isFirst = false;
+        } else {
+          confusedNames.push(noun.name);
+        }
+      }
+    }
+
+    // Tell the user all of the mistakes they made in one go.
+    if (confusedNames.length > 0) {
+      this.outputService.displayParserError(`You don't see ${StringHelper.toOxfordCommaList(confusedNames, 'or')} here.`);
+    }
+
   }
 }

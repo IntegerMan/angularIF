@@ -57,7 +57,10 @@ export class CommandToken {
 
     if (this.isPlural) {
       return this.name;
-    } else if (StringHelper.startsWithVowel(this.name)) {
+    }
+
+    // TODO: This should actually be phonetic on whether it starts with a consonant sound
+    if (StringHelper.startsWithVowel(this.name)) {
       return `an ${this.name}`;
     } else {
       return `a ${this.name}`;

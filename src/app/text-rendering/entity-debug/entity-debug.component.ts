@@ -26,7 +26,7 @@ export class EntityDebugComponent implements OnInit {
 
   }
 
-  private buildNodeForEntity(entity: WorldEntity, parentNode: TreeNode = undefined) {
+  private buildNodeForEntity(entity: WorldEntity, parentNode: TreeNode): void {
 
     // Build the base node
     const node: TreeNode = {
