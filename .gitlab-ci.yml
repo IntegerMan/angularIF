@@ -14,7 +14,7 @@ deploy_production:
     - master
   script:
     - rm ./package-lock.json
-    - ./node_modules/@angular/cli/bin/ng build --progress false --prod
+    - ./node_modules/@angular/cli/bin/npm build
   cache:
     paths:
     - node_modules/
