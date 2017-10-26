@@ -44,6 +44,7 @@ export class CloakStory extends Story {
     this.fontAwesomeIcon = this.data.icon;
     this.maxScore = this.data['max score'];
     this.description = this.data.description;
+    this.authors = this.data.authors;
 
     // Define the titular cloak
     this._cloak = new Cloak();

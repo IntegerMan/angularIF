@@ -230,9 +230,9 @@ export class InteractiveFictionService {
 
     this.outputService.displayTitle(story.title, `v${story.version}`);
 
-    if (story.author && story.author.indexOf('Unattributed') < 0) {
+    if (story.authors) {
       // TODO: It'd be nice to be able to have this be a hyperlink to open in a new window
-      this.outputService.displayAuthor(`Written by ${story.author}`);
+      this.outputService.displayAuthor(`By ${story.authors}`);
     }
     if (story.description) {
       this.outputService.displaySubtitle(story.description);

@@ -9,7 +9,7 @@ import {TextOutputService} from '../text-output.service';
 export abstract class Story {
 
   title: string;
-  author: string;
+  authors: string;
   version: string;
   description: string = null;
 
@@ -26,7 +26,7 @@ export abstract class Story {
   constructor() {
 
     this.title = 'Untitled';
-    this.author = 'Unattributed';
+    this.authors = 'Unattributed';
     this.version = '1.0';
 
     // Initialize empty lists

@@ -1,19 +1,17 @@
 ---
 name: Cloak of Darkness
 version: 0.9
-authors:
-- name: Matt Eland
-  contact: Matt.Eland@GMail.com
-description: 
+authors: "[Matt Eland](http://www.matteland.com)"
+description:
   |
   A short demo based on [Roger Firth's specification](http://www.firthworks.com/roger/cloak/) to
   compare various Interactive Fiction development languages.
 max score: 2
 icon: fa-bookmark-o
 introText:
-- | 
-  Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera 
-  House. It's surprising that there aren't more people about but, hey, what do you expect in a 
+- |
+  Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera
+  House. It's surprising that there aren't more people about but, hey, what *do* you expect in a
   cheap demo game...?
 # IDs are important here for YAML to have accurate anchors since they must be declared above refs
 ids:
@@ -30,8 +28,8 @@ rooms:
   name: Foyer of the Opera House
   description:
   - |
-    You are standing in a spacious hall, splendidly decorated in red and gold, with glittering 
-    chandeliers overhead. The entrance from the street is to the north, and there are doorways 
+    You are standing in a spacious hall, splendidly decorated in red and gold, with glittering
+    chandeliers overhead. The entrance from the street is to the north, and there are doorways
     south and west.
   nav:
     north:
@@ -43,7 +41,7 @@ rooms:
   name: Cloakroom
   description:
   - |
-    The walls of this small room were clearly once lined with hooks, though now only one remains. 
+    The walls of this small room were clearly once lined with hooks, though now only one remains.
     The exit is a door to the east.
   nav:
     east: *rFoyer
@@ -63,7 +61,7 @@ rooms:
   name: Foyer Bar
   description:
   - |
-    The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is 
+    The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is
     completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.
   nav:
     north: *rFoyer
@@ -105,7 +103,7 @@ actors:
     name: black velvet cloak
     description:
       - |
-        The velvet cloak almost seems to have darkness woven into its very fabric. Everything about 
+        The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
         it is darker than it should be.
     inRoomDescription: A dark black velvet cloak rests in a heap on the floor.
     wearable: true
