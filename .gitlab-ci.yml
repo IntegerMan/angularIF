@@ -1,7 +1,7 @@
 image: node:latest
 
 before_script:
-  - npm i --depth=0
+   - npm i --depth=0
 
 cache:
   paths:
@@ -14,7 +14,7 @@ deploy_production:
     - master
   script:
     - rm ./package-lock.json
-    - ./node_modules/@angular/cli/bin/npm build
+    - npm build
   cache:
     paths:
     - node_modules/
