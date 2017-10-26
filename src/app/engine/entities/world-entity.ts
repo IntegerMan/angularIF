@@ -10,6 +10,7 @@ import {ArrayHelper} from '../../utility/array-helper';
 export abstract class WorldEntity {
 
   contents: WorldEntity[];
+  parent: WorldEntity = null;
   nouns: string[];
   adjectives: string[];
   article: string = 'the';
@@ -207,6 +208,7 @@ export abstract class WorldEntity {
 
   addObject(object: WorldEntity): void {
     object.currentRoom = this.currentRoom;
+    object.parent = this;
     this.contents.push(object);
   }
 

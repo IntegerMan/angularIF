@@ -26,7 +26,7 @@ import {GameState} from './game-state.enum';
 export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
-  engineVersion: string = '0.4';
+  engineVersion: string = '0.41';
   engineAuthor: string = 'Matt Eland';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
@@ -68,78 +68,6 @@ export class InteractiveFictionService {
 
     this.initializeEngine();
     this.initializeStory(story);
-  }
-
-  private initializeEngine() {
-
-    this.outputService.displayTitle(`${this.engineName}`, `v${this.engineVersion}`);
-    this.outputService.displayAuthor(`Developed by ${this.engineAuthor}`);
-    this.outputService.displayBlankLine();
-    this.outputService.displaySystem(this.copyrightText);
-    this.outputService.displaySystem(this.licenseText);
-    this.outputService.displayBlankLine();
-  }
-
-  private initializeStory(story: Story) {
-
-    this.gameState = GameState.initializing;
-
-    // Ensure the story has the base dictionary at least
-    story.addDictionary(new CommonDictionary(this.lexer));
-
-    // Boot up the story world
-    story.initialize();
-
-    this.beginStory(story);
-  }
-
-  private beginStory(story: Story) {
-
-    this.story = story;
-
-    this.movesTaken = 0;
-    this.stateService.clear();
-    this.scoreService.currentScore = 0;
-    this.scoreService.maxScore = story.maxScore;
-
-    // Grab verb handlers from the story.
-    this.verbHandlers.length = 0;
-    for (const verb of story.verbHandlers) {
-      this.logger.log(`Loaded verb handler: ${verb.name}`);
-      this.verbHandlers.push(verb);
-    }
-
-    // Display the story header and introduction
-    this.displayHeadingAndIntro(story);
-
-    // Now that we're ready to begin properly, validate
-    if (!story.player || !story.player.currentRoom) {
-      throw new Error('The player must be initialized and have a starting room when the story begins!');
-    }
-
-    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
-
-    this.gameState = GameState.underway;
-  }
-
-  private displayHeadingAndIntro(story: Story) {
-
-    this.outputService.displayTitle(story.title, `v${story.version}`);
-
-    if (story.author && story.author.indexOf('Unattributed') < 0) {
-      // TODO: It'd be nice to be able to have this be a hyperlink to open in a new window
-      this.outputService.displayAuthor(`Written by ${story.author}`);
-    }
-    if (story.description) {
-      this.outputService.displaySubtitle(story.description);
-    }
-
-    this.outputService.displayBlankLine();
-
-    story.displayIntroduction(this.outputService);
-
-    this.outputService.displayBlankLine();
-
   }
 
   describeRoom(room: Room, context: CommandContext, isScrutinize: boolean = false): void {
@@ -217,27 +145,6 @@ export class InteractiveFictionService {
       this.scoreService);
   }
 
-  private getVerbHandler(verbToken: CommandToken): VerbHandler {
-
-    // It's quite possible to have a sentence without a verb.
-    if (!verbToken) {
-      return null;
-    }
-
-    if (verbToken.classification !== TokenClassification.Verb) {
-      this.logger.error(`Asked to get a verb handler for the non-verb token '${verbToken.name}' (${verbToken.classification})`);
-      return null;
-    }
-
-    for (const handler of this.verbHandlers) {
-      if (handler.canHandleVerb(verbToken)) {
-        return handler;
-      }
-    }
-
-    return null;
-  }
-
   setActorRoom(actor: Player, room: Room, isSilent: Boolean = false): void {
 
     const oldRoom: Room = actor.currentRoom;
@@ -245,6 +152,7 @@ export class InteractiveFictionService {
     // Calling remove and add object methods ensures that token lookup remains accurate
     oldRoom.removeObject(actor);
     room.addObject(actor);
+    actor.parent = room;
 
     // Log it to the console for debug purposes
     this.logger.log(`${actor.name} has been moved to ${room.name}.`);
@@ -316,6 +224,100 @@ export class InteractiveFictionService {
 
   get isGameOver(): boolean {
     return this.gameState !== GameState.underway;
+  }
+
+  private displayHeadingAndIntro(story: Story) {
+
+    this.outputService.displayTitle(story.title, `v${story.version}`);
+
+    if (story.author && story.author.indexOf('Unattributed') < 0) {
+      // TODO: It'd be nice to be able to have this be a hyperlink to open in a new window
+      this.outputService.displayAuthor(`Written by ${story.author}`);
+    }
+    if (story.description) {
+      this.outputService.displaySubtitle(story.description);
+    }
+
+    this.outputService.displayBlankLine();
+
+    story.displayIntroduction(this.outputService);
+
+    this.outputService.displayBlankLine();
+
+  }
+
+  private getVerbHandler(verbToken: CommandToken): VerbHandler {
+
+    // It's quite possible to have a sentence without a verb.
+    if (!verbToken) {
+      return null;
+    }
+
+    if (verbToken.classification !== TokenClassification.Verb) {
+      this.logger.error(`Asked to get a verb handler for the non-verb token '${verbToken.name}' (${verbToken.classification})`);
+      return null;
+    }
+
+    for (const handler of this.verbHandlers) {
+      if (handler.canHandleVerb(verbToken)) {
+        return handler;
+      }
+    }
+
+    return null;
+  }
+
+
+  private initializeEngine() {
+
+    this.outputService.displayTitle(`${this.engineName}`, `v${this.engineVersion}`);
+    this.outputService.displayAuthor(`Developed by ${this.engineAuthor}`);
+    this.outputService.displayBlankLine();
+    this.outputService.displaySystem(this.copyrightText);
+    this.outputService.displaySystem(this.licenseText);
+    this.outputService.displayBlankLine();
+  }
+
+  private initializeStory(story: Story) {
+
+    this.gameState = GameState.initializing;
+
+    // Ensure the story has the base dictionary at least
+    story.addDictionary(new CommonDictionary(this.lexer));
+
+    // Boot up the story world
+    story.initialize();
+
+    this.beginStory(story);
+  }
+
+  private beginStory(story: Story) {
+
+    this.story = story;
+
+    this.movesTaken = 0;
+    this.stateService.clear();
+    this.scoreService.currentScore = 0;
+    this.scoreService.maxScore = story.maxScore;
+
+    // Grab verb handlers from the story.
+    this.verbHandlers.length = 0;
+    for (const verb of story.verbHandlers) {
+      this.logger.log(`Loaded verb handler: ${verb.name}`);
+      this.verbHandlers.push(verb);
+    }
+
+    // Display the story header and introduction
+    this.displayHeadingAndIntro(story);
+
+    // Now that we're ready to begin properly, validate
+    if (!story.player || !story.player.currentRoom) {
+      throw new Error('The player must be initialized and have a starting room when the story begins!');
+    }
+
+    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
+
+    this.gameState = GameState.underway;
   }
 
 }

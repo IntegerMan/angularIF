@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {TokenClassification} from './token-classification.enum';
 import {CommandToken} from './command-token';
+import {StringHelper} from '../../utility/string-helper';
+import {ArrayHelper} from '../../utility/array-helper';
+import {TokenizerService} from './tokenizer.service';
 
 @Injectable()
 export class LexiconService {
@@ -8,6 +11,8 @@ export class LexiconService {
   private static _instance: LexiconService;
 
   private _fallback: any;
+  private _replaceRules: any;
+  private _expandRules: any;
 
   static get instance(): LexiconService {
     if (!this._instance) {
@@ -27,15 +32,11 @@ export class LexiconService {
     // Define empty objects. We'll add entries via key-value pairs.
     this._lexicon = {};
     this._fallback = {};
+    this._replaceRules = {};
+    this._expandRules = {};
 
     LexiconService._instance = this;
 
-  }
-
-  private addCustom(term: string, tag: string): void {
-    if (term && term.length > 0) {
-      this.lexicon[term] = tag;
-    }
   }
 
   public addIgnorable(term: string): void {
@@ -83,5 +84,50 @@ export class LexiconService {
 
   addFallback(term: string, classification: TokenClassification): void {
     this._fallback[term.toLowerCase()] = classification;
+  }
+
+  addReplacementRule(searchTerm: string, replacementRule:  string): void {
+    this._replaceRules[searchTerm] = replacementRule;
+  }
+
+  addExpansionRule(searchTerm: string, replacementRule:  string): void {
+    this._expandRules[searchTerm] = replacementRule;
+  }
+
+  replaceWords(sentence: string): string {
+
+    for (const searchTerm of Object.getOwnPropertyNames(this._replaceRules)) {
+      sentence = StringHelper.replaceAll(sentence, searchTerm, this._replaceRules[searchTerm], false);
+    }
+
+    return sentence;
+
+  }
+
+  replaceTokens(tokens: CommandToken[], tokenizer: TokenizerService): CommandToken[] {
+
+      for (const t of tokens) {
+
+        const replacementValue = this._expandRules[t.name];
+
+        if (replacementValue) {
+
+          // Let's build an entirely new token for it
+          const replacementToken: CommandToken = tokenizer.getTokenForWord(replacementValue);
+
+          // Preserve the user input for traceability
+          replacementToken.userInput = t.userInput;
+
+          ArrayHelper.replace(tokens, t, replacementToken);
+        }
+      }
+
+      return tokens;
+  }
+
+  private addCustom(term: string, tag: string): void {
+    if (term && term.length > 0) {
+      this.lexicon[term] = tag;
+    }
   }
 }

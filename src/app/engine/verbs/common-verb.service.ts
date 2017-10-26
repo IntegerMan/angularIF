@@ -16,6 +16,7 @@ import {QuitHandler} from './quit-handler';
 import {HangHandler} from './hang-handler';
 import {PutHandler} from './put-handler';
 import {DebugHandler} from './debug-handler';
+import {WaitHandler} from './wait-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -29,13 +30,14 @@ export class CommonVerbService {
     // TODO: It'd be real nice to have some automated way of getting synonyms within the engine
     verbs.push(new LookHandler(['look']));
     verbs.push(new ExamineHandler(['examine', 'inspect']));
-    verbs.push(new GoHandler(['go', 'walk', 'run', 'travel']));
+    verbs.push(new GoHandler(['go', 'walk', 'run', 'travel', 'exit', 'saunter', 'stroll', 'sprint']));
     verbs.push(new HangHandler(['hang', 'suspend', 'attach', 'affix'])); // TODO: Some of these should go in 'Put'
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));
     verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));
     verbs.push(new DropHandler(['drop', 'discard']));
     verbs.push(new OpenHandler(['open']));
     verbs.push(new DebugHandler(['debug']));
+    verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));
     verbs.push(new CloseHandler(['close', 'shut']));
     verbs.push(new RestartHandler(['restart', 'reset']));
     verbs.push(new DieHandler(['die', 'forfeit', 'suicide']));

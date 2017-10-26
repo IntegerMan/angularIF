@@ -2,11 +2,7 @@ import {Story} from '../../engine/entities/story';
 import {Room} from '../../engine/entities/room';
 import {Player} from '../../engine/entities/player';
 import {NavigationService} from '../../engine/navigation.service';
-import {Scenery} from '../../engine/entities/scenery';
-import {LoggingService} from '../../utility/logging.service';
 import {Hook} from './hook';
-import {EntityWeight} from '../../engine/entities/entity-weight.enum';
-import {EntitySize} from '../../engine/entities/entity-size.enum';
 import {Bar} from './bar';
 import {Cloak} from './cloak';
 import {TextOutputService} from '../../engine/text-output.service';
@@ -20,22 +16,13 @@ export class CloakStory extends Story {
   private _player: Player;
   private _cloak: Cloak;
 
-  protected getRooms(): Room[] {
-    return [this._foyer, this._cloakroom, this._bar];
-  }
-
-  protected getPlayerActor(): Player {
-    return this._player;
-  }
-
-  constructor(private navService: NavigationService,
-              private logger: LoggingService) {
+  constructor(private navService: NavigationService) {
     super();
 
     // Basic Metadata
     this.title = 'Cloak of Darkness';
     this.description = `A short demo based on Roger Firth's specification to compare various Interactive Fiction development languages.`;
-    this.version = '0.8';
+    this.version = '0.85';
     this.fontAwesomeIcon = 'fa-bookmark-o';
     this.maxScore = 2; // Oh no, whatever will we do with two whole points?
 
@@ -75,6 +62,14 @@ export class CloakStory extends Story {
     this.configureBar(this._bar);
   }
 
+  protected getRooms(): Room[] {
+    return [this._foyer, this._cloakroom, this._bar];
+  }
+
+  protected getPlayerActor(): Player {
+    return this._player;
+  }
+
   private configureBar(room: Bar): void {
 
     room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
@@ -83,7 +78,7 @@ export class CloakStory extends Story {
     const message: BarMessage = new BarMessage();
     room.message = message;
 
-    this.addToRoom(message, room);
+    room.addObject(message);
 
     this.navService.northTo(room, this._foyer);
 
@@ -96,7 +91,7 @@ export class CloakStory extends Story {
 
     const hook: Hook = new Hook('small brass hook');
     hook.addNounAliases(['Peg']);
-    this.addToRoom(hook, room);
+    room.addObject(hook);
 
     this.navService.eastTo(room, this._foyer);
 
@@ -113,20 +108,6 @@ export class CloakStory extends Story {
 
     this.navService.southTo(room, this._bar);
     this.navService.westTo(room, this._cloakroom);
-
-  }
-
-  private addToRoom(scenery: Scenery, room: Room): void {
-
-    // Remove it from whatever it was in before
-    if (scenery.currentRoom) {
-      scenery.currentRoom.removeObject(scenery);
-    }
-    scenery.currentRoom = null;
-
-    // Add it to the new room
-    this.logger.log(`Adding object ${scenery.name} to room ${room.name}`);
-    room.addObject(scenery);
 
   }
 
