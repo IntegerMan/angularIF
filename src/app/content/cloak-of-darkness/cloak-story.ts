@@ -7,6 +7,9 @@ import {Bar} from './bar';
 import {Cloak} from './cloak';
 import {TextOutputService} from '../../engine/text-output.service';
 import {BarMessage} from './bar-message';
+import {DictionaryReader} from '../../engine/parser/dictionary-reader';
+import {LexiconService} from '../../engine/parser/lexicon.service';
+import {LoggingService} from '../../utility/logging.service';
 
 export class CloakStory extends Story {
 
@@ -15,9 +18,14 @@ export class CloakStory extends Story {
   private _bar: Bar;
   private _player: Player;
   private _cloak: Cloak;
+  private lexer: LexiconService;
+
+  private data: any;
 
   constructor(private navService: NavigationService) {
     super();
+
+    this.lexer = LexiconService.instance;
 
     // Basic Metadata
     this.title = 'Cloak of Darkness';
@@ -31,13 +39,12 @@ export class CloakStory extends Story {
 
   }
 
-  displayIntroduction(output: TextOutputService): void {
-    output.displayStory('Hurrying through the rainswept November night, you\'re glad to see the bright\n' +
-      'lights of the Opera House. It\'s surprising that there aren\'t more people about\n' +
-      'but, hey, what do you expect in a cheap demo game...?');
-  }
-
   reset(): void {
+
+    // Grab our YAML resource data and stick it into JSON
+    LoggingService.instance.debug(`Loading story file for ${this.constructor.name}...`);
+    this.data = require('json-loader!yaml-loader!App/Content/Cloak-Of-Darkness/CloakOfDarkness.yml');
+    LoggingService.instance.debug(this.data);
 
     // Define the titular cloak
     this._cloak = new Cloak();
@@ -60,6 +67,12 @@ export class CloakStory extends Story {
     this.configureFoyer(this._foyer);
     this.configureCloakroom(this._cloakroom);
     this.configureBar(this._bar);
+  }
+
+  displayIntroduction(output: TextOutputService): void {
+    output.displayStory('Hurrying through the rainswept November night, you\'re glad to see the bright\n' +
+      'lights of the Opera House. It\'s surprising that there aren\'t more people about\n' +
+      'but, hey, what do you expect in a cheap demo game...?');
   }
 
   protected getRooms(): Room[] {
