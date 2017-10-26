@@ -27,11 +27,11 @@ export class StringHelper {
   }
 
   /**
-   * Replaces every instance of the search string in the input string with the replacement string. This is different than the replace
+   * Replaces every instance of the search string in the input string with the replacement string. This is different than the replaceElement
    * method which only replaces the first instance
-   * @param {string} input The string to search and replace
+   * @param {string} input The string to search and replaceElement
    * @param {string} search The string to search input for.
-   * @param {string} replacement The string to replace all instances of search in input with.
+   * @param {string} replacement The string to replaceElement all instances of search in input with.
    * @param caseSensitive {boolean} Whether casing should be taken into account for the search. By default, this is true.
    * @returns {string} A modified version of input.
    */
@@ -47,7 +47,7 @@ export class StringHelper {
 
     } else {
 
-      // Case insensitive search will replace all instances and sub in the replacement value (including its casing)
+      // Case insensitive search will replaceElement all instances and sub in the replacement value (including its casing)
       let pos = input.toLowerCase().indexOf(search.toLowerCase());
 
       while (pos >= 0) {

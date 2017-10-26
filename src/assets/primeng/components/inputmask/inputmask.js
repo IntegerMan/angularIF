@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /*
     Port of jQuery MaskedInput by DigitalBush as a Native Angular2 Component in Typescript without jQuery
     https://github.com/digitalBush/jquery.maskedinput/
-    
+
     Copyright (c) 2007-2014 Josh Bush (digitalbush.com)
 
     Permission is hereby granted, free of charge, to any person
@@ -392,7 +392,7 @@ var InputMask = (function () {
         }
         else if (lastMatch + 1 < this.partialPosition) {
             if (this.autoClear || this.buffer.join('') === this.defaultBuffer) {
-                // Invalid value. Remove it and replace it with the
+                // Invalid value. Remove it and replaceElement it with the
                 // mask, which is the default behavior.
                 if (this.inputViewChild.nativeElement.value)
                     this.inputViewChild.nativeElement.value = '';

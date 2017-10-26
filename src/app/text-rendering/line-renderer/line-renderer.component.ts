@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TextLine} from '../text-line';
+import {MarkdownService} from '../markdown.service';
 
 @Component({
   selector: 'if-line-renderer',
@@ -11,9 +12,12 @@ export class LineRendererComponent implements OnInit {
   @Input()
   line: TextLine;
 
-  constructor() { }
+  html: string;
+
+  constructor(private markdown: MarkdownService) { }
 
   ngOnInit() {
+    this.html = this.markdown.getHtml(this.line.text);
   }
 
 }

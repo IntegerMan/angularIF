@@ -118,7 +118,7 @@ export class LexiconService {
           // Preserve the user input for traceability
           replacementToken.userInput = t.userInput;
 
-          ArrayHelper.replace(tokens, t, replacementToken);
+          ArrayHelper.replaceElement(tokens, t, replacementToken);
         }
       }
 

@@ -7,7 +7,6 @@ import {Bar} from './bar';
 import {Cloak} from './cloak';
 import {TextOutputService} from '../../engine/text-output.service';
 import {BarMessage} from './bar-message';
-import {DictionaryReader} from '../../engine/parser/dictionary-reader';
 import {LexiconService} from '../../engine/parser/lexicon.service';
 import {LoggingService} from '../../utility/logging.service';
 
@@ -21,22 +20,15 @@ export class CloakStory extends Story {
   private lexer: LexiconService;
 
   private data: any;
+  private output: TextOutputService;
 
   constructor(private navService: NavigationService) {
     super();
 
     this.lexer = LexiconService.instance;
+    this.output = TextOutputService.instance;
 
-    // Basic Metadata
-    this.title = 'Cloak of Darkness';
-    this.description = `A short demo based on Roger Firth's specification to compare various Interactive Fiction development languages.`;
-    this.version = '0.85';
-    this.fontAwesomeIcon = 'fa-bookmark-o';
-    this.maxScore = 2; // Oh no, whatever will we do with two whole points?
-
-    // TODO: It'd be nice to be able to use a RoomBuilder object of some sort with more specialized construction syntax.
     this.reset();
-
   }
 
   reset(): void {
@@ -45,6 +37,13 @@ export class CloakStory extends Story {
     LoggingService.instance.debug(`Loading story file for ${this.constructor.name}...`);
     this.data = require('json-loader!yaml-loader!App/Content/Cloak-Of-Darkness/CloakOfDarkness.yml');
     LoggingService.instance.debug(this.data);
+
+    // Read metadata from the story data file
+    this.title = this.data.name;
+    this.version = this.data.version;
+    this.fontAwesomeIcon = this.data.icon;
+    this.maxScore = this.data['max score'];
+    this.description = this.data.description;
 
     // Define the titular cloak
     this._cloak = new Cloak();
@@ -70,9 +69,7 @@ export class CloakStory extends Story {
   }
 
   displayIntroduction(output: TextOutputService): void {
-    output.displayStory('Hurrying through the rainswept November night, you\'re glad to see the bright\n' +
-      'lights of the Opera House. It\'s surprising that there aren\'t more people about\n' +
-      'but, hey, what do you expect in a cheap demo game...?');
+    this.renderData(this.data.introText);
   }
 
   protected getRooms(): Room[] {
@@ -81,6 +78,25 @@ export class CloakStory extends Story {
 
   protected getPlayerActor(): Player {
     return this._player;
+  }
+
+  private renderData(data: any): void {
+
+    if (!data) {
+      return;
+    }
+
+    // If it's just text, spit it out
+    if (typeof data === 'string') {
+      this.output.displayStory(data);
+      return;
+    }
+
+    // If it's an array, loop through each member and handle that.
+    for (const item of data) {
+      this.renderData(item);
+    }
+
   }
 
   private configureBar(room: Bar): void {

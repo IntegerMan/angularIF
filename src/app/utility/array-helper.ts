@@ -13,7 +13,7 @@ export class ArrayHelper {
 
   }
 
-  static replace(items: any[], search: any, replacement: any): any[] {
+  static replaceElement(items: any[], search: any, replacement: any): any[] {
 
     // Special case early exit if we're not actually changing things
     if (search === replacement) {
@@ -29,7 +29,7 @@ export class ArrayHelper {
     items[index] = replacement;
 
     // Because we could have multiple instances, we'll go recursive
-    return this.replace(items, search, replacement);
+    return this.replaceElement(items, search, replacement);
 
   }
 

@@ -1,13 +1,13 @@
 ---
 name: Cloak of Darkness
-version: v0.85
+version: 0.9
 authors:
 - name: Matt Eland
   contact: Matt.Eland@GMail.com
 description: 
-- |
-  A short demo based on [Roger Firth's specification to compare various Interactive Fiction 
-  development languages](http://www.firthworks.com/roger/cloak/).
+  |
+  A short demo based on [Roger Firth's specification](http://www.firthworks.com/roger/cloak/) to
+  compare various Interactive Fiction development languages.
 max score: 2
 icon: fa-bookmark-o
 introText:
