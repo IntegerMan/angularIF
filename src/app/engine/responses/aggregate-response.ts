@@ -6,6 +6,7 @@ export class AggregateResponse extends StoryResponse {
   private responses: StoryResponse[];
 
   constructor(responses: StoryResponse[] = null) {
+    super();
 
     this.responses = [];
 
