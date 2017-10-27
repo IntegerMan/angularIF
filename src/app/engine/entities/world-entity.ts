@@ -7,6 +7,7 @@ import {EntityWeight} from './entity-weight.enum';
 import {EntitySize} from './entity-size.enum';
 import {ArrayHelper} from '../../utility/array-helper';
 import {StoryResponse} from '../responses/story-response';
+import {StringHelper} from '../../utility/string-helper';
 
 export abstract class WorldEntity {
 
@@ -45,7 +46,7 @@ export abstract class WorldEntity {
   }
 
   get that(): string {
-    return `${this.article} ${this.name}`;
+    return `${this.article} ${this.name}`.trim();
   }
 
   get currentRoom(): Room {
@@ -164,7 +165,7 @@ export abstract class WorldEntity {
     } else if (isScrutinize) {
       context.outputService.displayStory(`You stare at ${this.that} but fail to notice anything you hadn't noticed before.`);
     } else {
-      context.outputService.displayStory(`It is wholly unremarkable.`);
+      context.outputService.displayStory(`${StringHelper.capitalize(this.that)} is wholly unremarkable.`);
     }
 
   }
