@@ -1,21 +1,9 @@
 import {Story} from '../../engine/entities/story';
-import {Actor} from '../../engine/entities/actor';
-import {LexiconService} from '../../engine/parser/lexicon.service';
 import {LoggingService} from '../../utility/logging.service';
 import {StoryData} from '../../engine/story-data/story-data';
 import {StoryLoader} from '../../engine/story-data/story-loader';
 
 export class CloakStory extends Story {
-
-  private lexer: LexiconService;
-
-  constructor() {
-    super();
-
-    this.lexer = LexiconService.instance;
-
-    this.reset();
-  }
 
   reset(): void {
 

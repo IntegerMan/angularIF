@@ -103,7 +103,7 @@ export abstract class Story {
     return null;
   }
 
-  protected abstract reset();
+  protected abstract reset(): void;
 
   private autodetectNounsAndAdjectives(entity: WorldEntity): void {
 
