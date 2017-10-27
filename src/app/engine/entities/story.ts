@@ -5,6 +5,8 @@ import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
 import {TextOutputService} from '../text-output.service';
 import {CommonDictionary} from '../parser/common-dictionary';
+import {StoryResponse} from '../responses/story-response';
+import {CommandContext} from '../command-context';
 
 export abstract class Story {
 
@@ -20,7 +22,7 @@ export abstract class Story {
   maxScore: number = 0;
 
   verbHandlers: VerbHandler[];
-  introText: string | any[]; // TODO: Any[] isn't handled yet
+  introResponse: StoryResponse;
 
   protected output: TextOutputService;
 
@@ -59,12 +61,13 @@ export abstract class Story {
     this.initialize();
   }
 
-  displayIntroduction(output: TextOutputService): void {
-    let introText: string | any[] = this.introText;
-    if (!introText) {
-      introText = 'The story begins...';
+  displayIntroduction(context: CommandContext): void {
+
+    if (this.introResponse) {
+      this.introResponse.invoke(context);
+    } else {
+      context.outputService.displayStory('The story begins...');
     }
-    this.renderData(output, introText);
   }
 
   // protected abstract getRooms(): Room[];
@@ -81,25 +84,6 @@ export abstract class Story {
       for (const child of entity.contents) {
         this.autodetectNounsAndAdjectives(child);
       }
-    }
-
-  }
-
-  private renderData(output: TextOutputService, data: string | any[]): void {
-
-    if (!data) {
-      return;
-    }
-
-    // If it's just text, spit it out
-    if (typeof data === 'string') {
-      output.displayStory(data);
-      return;
-    }
-
-    // If it's an array, loop through each member and handle that.
-    for (const item of data) {
-      this.renderData(output, item);
     }
 
   }

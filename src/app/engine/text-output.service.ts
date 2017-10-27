@@ -102,6 +102,10 @@ export class TextOutputService {
     this.addLine(new TextLine(text, RenderType.entityDebug, entity));
   }
 
+  displayDynamic(text: string, renderType: RenderType, extraData: any): void {
+    this.addLine(new TextLine(text, renderType, extraData));
+  }
+
   private addLine(line: TextLine): void {
 
     // Send the output to the console for good measure

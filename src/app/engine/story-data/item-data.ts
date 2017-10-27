@@ -9,6 +9,10 @@ export class ItemData extends EntityData {
 
   maxContents: number;
 
+  emptyDescription: string | any[];
+  inRoomDescription: string | any[];
+  describeWithRoom: boolean = true;
+
   // Events
   previewDrop: InvokeRequest;
   onDrop: InvokeRequest;

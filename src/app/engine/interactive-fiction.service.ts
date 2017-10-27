@@ -7,7 +7,6 @@ import {Player} from './entities/player';
 import {TokenizerService} from './parser/tokenizer.service';
 import {CommandToken} from './parser/command-token';
 import {TokenClassification} from './parser/token-classification.enum';
-import {CommonDictionary} from './parser/common-dictionary';
 import {LexiconService} from './parser/lexicon.service';
 import {SentenceParserService} from './parser/sentence-parser.service';
 import {Command} from './parser/command';
@@ -79,7 +78,8 @@ export class InteractiveFictionService {
 
     context.outputService.displayRoomName(room.name);
     context.outputService.displayBlankLine();
-    context.outputService.displayStory(room.getExamineDescription(context, isScrutinize));
+
+    room.invokeDescribeResponse(context, isScrutinize);
 
     // Now list all notable items that are present here
     const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));
@@ -226,7 +226,7 @@ export class InteractiveFictionService {
     return this.gameState !== GameState.underway;
   }
 
-  private displayHeadingAndIntro(story: Story) {
+  private displayHeadingAndIntro(story: Story, context: CommandContext) {
 
     this.outputService.displayTitle(story.title, `v${story.version}`);
 
@@ -239,7 +239,7 @@ export class InteractiveFictionService {
 
     this.outputService.displayBlankLine();
 
-    story.displayIntroduction(this.outputService);
+    story.displayIntroduction(context);
 
     this.outputService.displayBlankLine();
 
@@ -304,7 +304,8 @@ export class InteractiveFictionService {
     }
 
     // Display the story header and introduction
-    this.displayHeadingAndIntro(story);
+    const context = this.buildCommandContext();
+    this.displayHeadingAndIntro(story, context);
 
     // Now that we're ready to begin properly, validate
     if (!story.player || !story.player.currentRoom) {

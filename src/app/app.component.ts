@@ -3,7 +3,6 @@ import {InteractiveFictionService} from './engine/interactive-fiction.service';
 import {Story} from './engine/entities/story';
 import {CloakStory} from './content/cloak-of-darkness/cloak-story';
 import {CommonVerbService} from './engine/verbs/common-verb.service';
-import {NavigationService} from './engine/navigation.service';
 import {LoggingService} from './utility/logging.service';
 import {TextLine} from './text-rendering/text-line';
 import {TextOutputService} from './engine/text-output.service';
@@ -32,10 +31,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
               private ifService: InteractiveFictionService,
-              private navService: NavigationService,
               private verbService: CommonVerbService) {
 
-    const story: Story = new CloakStory(navService);
+    const story: Story = new CloakStory();
 
     // Import the common set of verbs
     for (const verb of this.verbService.getCommonVerbs()) {

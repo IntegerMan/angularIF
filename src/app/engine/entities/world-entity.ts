@@ -6,6 +6,7 @@ import {CommandToken} from '../parser/command-token';
 import {EntityWeight} from './entity-weight.enum';
 import {EntitySize} from './entity-size.enum';
 import {ArrayHelper} from '../../utility/array-helper';
+import {StoryResponse} from '../responses/story-response';
 
 export abstract class WorldEntity {
 
@@ -16,14 +17,14 @@ export abstract class WorldEntity {
   article: string = 'the';
   isAlive: boolean = false;
   id: string;
+  describeResponse: StoryResponse;
+  examineResponse: StoryResponse;
 
   private _weight: EntityWeight;
   private _size: EntitySize;
   private _inRoomDescription: string = null;
   private _name: string;
   private _currentRoom: Room;
-  private _description: string = null;
-  private _examineDescription: string = null;
 
   constructor(name: string, id: string) {
 
@@ -71,32 +72,6 @@ export abstract class WorldEntity {
 
   set weight(value: EntityWeight) {
     this._weight = value;
-  }
-
-  get examineDescription(): string {
-    return this._examineDescription;
-  }
-
-  set examineDescription(value: string) {
-    this._examineDescription = value;
-  }
-
-  get description(): string {
-    return this._description;
-  }
-
-  set description(value: string) {
-    this._description = value;
-  }
-
-  getExamineDescription(context: CommandContext, isScrutinize: boolean): string {
-
-    // If we're scrutinizing and an examine description is present, go with that.
-    if (isScrutinize && this.examineDescription) {
-      return this.examineDescription;
-    }
-
-    return this.description;
   }
 
   autodetectNounsAndAdjectives(): void {
@@ -177,6 +152,20 @@ export abstract class WorldEntity {
 
   shouldDescribeWithRoom(context: CommandContext): boolean {
     return false;
+  }
+
+  invokeDescribeResponse(context: CommandContext, isScrutinize: boolean): void {
+
+    if (isScrutinize && this.examineResponse) {
+      this.examineResponse.invoke(context);
+    } else if (this.describeResponse) {
+      this.describeResponse.invoke(context);
+    } else if (isScrutinize) {
+      context.outputService.displayStory(`You stare at ${this.that} but fail to notice anything you hadn't noticed before.`);
+    } else {
+      context.outputService.displayStory(`It is wholly unremarkable.`);
+    }
+
   }
 
   getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[] {

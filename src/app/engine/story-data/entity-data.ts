@@ -9,11 +9,8 @@ export abstract class EntityData {
   aliases: AliasData;
 
   description: string | any[];
-  contents: ItemData[];
+  examineDescription: string | any[];
 
-  // Items below this marker do not make sense to be shared with rooms
-  emptyDescription: string | any[];
-  inRoomDescription: string | any[];
-  describeWithRoom: boolean = true;
+  contents: ItemData[];
 
 }

@@ -1,11 +1,5 @@
 import {Story} from '../../engine/entities/story';
-import {Room} from '../../engine/entities/room';
 import {Player} from '../../engine/entities/player';
-import {NavigationService} from '../../engine/navigation.service';
-import {Hook} from './hook';
-import {Bar} from './bar';
-import {Cloak} from './cloak';
-import {BarMessage} from './bar-message';
 import {LexiconService} from '../../engine/parser/lexicon.service';
 import {LoggingService} from '../../utility/logging.service';
 import {StoryData} from '../../engine/story-data/story-data';
@@ -13,13 +7,9 @@ import {StoryLoader} from '../../engine/story-data/story-loader';
 
 export class CloakStory extends Story {
 
-  private _foyer: Room;
-  private _cloakroom: Room;
-  private _bar: Bar;
-  private _cloak: Cloak;
   private lexer: LexiconService;
 
-  constructor(private navService: NavigationService) {
+  constructor() {
     super();
 
     this.lexer = LexiconService.instance;

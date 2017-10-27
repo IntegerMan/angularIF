@@ -1,8 +1,9 @@
 import {StoryData} from './story-data';
 import {Story} from '../entities/story';
-import {LoggingService} from '../../utility/logging.service';
 import {Room} from '../entities/room';
 import {RoomData} from './room-data';
+import {StoryResponse} from '../responses/story-response';
+import {ResponseGenerator} from '../responses/response-generator';
 
 export class StoryLoader {
 
@@ -21,24 +22,28 @@ export class StoryLoader {
     story.maxScore = this.data.maxScore;
     story.description = this.data.description;
     story.authors = this.data.authors;
-    story.introText = this.data.introText;
+    story.introResponse = this.buildResponse(this.data.introText);
 
     story.rooms.length = 0;
     story.rooms.length = 0;
     for (const roomData of this.data.rooms) {
-      story.rooms.push(this.generateRoom(roomData, this.data));
+      story.rooms.push(this.buildRoom(roomData, this.data));
     }
 
   }
 
 
-  private generateRoom(roomData: RoomData, storyData: StoryData): Room {
+  private buildRoom(roomData: RoomData, storyData: StoryData): Room {
 
     const room = new Room(roomData.name, roomData.id);
-    room.description = <string>roomData.description; // TODO: Needs to be more flexible
+    room.describeResponse = this.buildResponse(roomData.description);
+    room.examineResponse = this.buildResponse(roomData.examineDescription);
 
     return room;
 
   }
 
+  private buildResponse(input: string | any[]): StoryResponse {
+    return ResponseGenerator.buildResponse(input);
+  }
 }

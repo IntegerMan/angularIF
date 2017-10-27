@@ -45,13 +45,9 @@ export class LookHandler extends VerbHandler {
       return CommandResult.BuildActionFailedResult();
     }
 
-    // Grab the description from the entity
-    let description: string = entity.getExamineDescription(context, isScrutinize);
-    if (!description) {
-      description = `You stare at the ${token.name} for awhile, but fail to notice anything you hadn't noticed before.`;
-    }
+    // Invoke the appropriate response
+    entity.invokeDescribeResponse(context, isScrutinize);
 
-    context.outputService.displayStory(description);
     return CommandResult.BuildActionSuccessResult();
 
   }

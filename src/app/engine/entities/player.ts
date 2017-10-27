@@ -16,11 +16,6 @@ export class Player extends WorldEntity {
     // Add some common synonyms for helping the player refer to their character
     this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player']);
 
-    // Give default self-descriptions here
-    this.description = 'You look yourself over and seem to be in roughly the same shape you were in the last time you checked.';
-    this.examineDescription = 'Taking some time, you look yourself over, finding the same old scars and blemishes you\'ve accrued ' +
-      'over the years. You don\'t love everything about your body, but it\'s yours and you\'re used to it.';
-
     this.weight = EntityWeight.person;
     this.size = EntitySize.person;
 
