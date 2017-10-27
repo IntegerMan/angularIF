@@ -8,7 +8,7 @@ export class BarMessage extends Scenery {
   private hasExamined: boolean = false;
 
   constructor() {
-    super('scrawled message');
+    super('scrawled message', 'message');
 
     this.weight = EntityWeight.feather;
     this.size = EntitySize.backpack;

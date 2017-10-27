@@ -8,7 +8,7 @@ import {EntityWeight} from './entity-weight.enum';
 export class Player extends WorldEntity {
 
   constructor() {
-    super('yourself');
+    super('yourself', 'you');
 
     this.article = '';
     this.isAlive = true;

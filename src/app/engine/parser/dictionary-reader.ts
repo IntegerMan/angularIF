@@ -4,9 +4,11 @@ import {StringHelper} from '../../utility/string-helper';
 
 export abstract class DictionaryReader {
 
-  public static readDictionary(source: any, lexer: LexiconService): void {
+  public static readDictionary(source: any): void {
 
     LoggingService.instance.debug(`Reading dictionary ${source.name} by ${source.author.name}.`);
+
+    const lexer:  LexiconService = LexiconService.instance;
 
     // For each tag listed in terms, we're going to create a mapped entry for it and that tag
     if (source.terms) {

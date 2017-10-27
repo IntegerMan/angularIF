@@ -13,8 +13,8 @@ export class Room extends WorldEntity {
 
   contents: WorldEntity[];
 
-  constructor(name: string) {
-    super(name);
+  constructor(name: string, id: string) {
+    super(name, id);
 
     this.weight = EntityWeight.building;
     this.size = EntitySize.building;

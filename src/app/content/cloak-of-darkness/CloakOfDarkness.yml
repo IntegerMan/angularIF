@@ -6,7 +6,7 @@ description:
   |
   A short demo based on [Roger Firth's specification](http://www.firthworks.com/roger/cloak/) to
   compare various Interactive Fiction development languages.
-max score: 2
+maxScore: 2
 icon: fa-bookmark-o
 introText:
 - |
@@ -45,7 +45,7 @@ rooms:
     The exit is a door to the east.
   nav:
     east: *rFoyer
-  objects:
+  contents:
   # The hook for hanging the cloak
   - id: *oHook
     name: small brass hook
@@ -65,38 +65,43 @@ rooms:
     completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.
   nav:
     north: *rFoyer
-    isDark: true # This is updated onBarEnter based on presence / absence of the cloak
-    onEnter:
-    - invoke: onBarEnter # Update whether or not we're dark
-    darkName: Darkness
-    darkDescription: It is pitch dark, and you can't see a thing.
-    onAction:
-    - invoke: onBarAction # Track blunders
-    contents:
-    # Scrawled Message
-    - id: *oMessage
-      name: scrawled message
-      describeWithRoom: false
-      aliases:
-        nouns:
-        - Writing
-        - Sawdust
-        - Words
-        - Word
-        - Note
-        - Floor
-        - Ground
-        adjectives:
-        - Written
-        - Dusty
-      description:
-      - invoke: onReadMessage # This will trigger the game end.
+  isDark: true # This is updated onBarEnter based on presence / absence of the cloak
+  onEnter:
+  - invoke: onBarEnter # Update whether or not we're dark
+  darkName: Darkness
+  darkDescription: It is pitch dark, and you can't see a thing.
+  onAction:
+  - invoke: onBarAction # Track blunders
+  contents:
+  # Scrawled Message
+  - id: *oMessage
+    name: scrawled message
+    describeWithRoom: false
+    aliases:
+      nouns:
+      - Writing
+      - Sawdust
+      - Words
+      - Word
+      - Note
+      - Floor
+      - Ground
+      adjectives:
+      - Written
+      - Dusty
+    description:
+    - invoke: onReadMessage # This will trigger the game end.
 actors:
 # The player
 - id: *aPlayer
   name: yourself
   startRoom: *rFoyer
   isPlayer: true
+  description: You look yourself over and seem to be in roughly the same shape you were in the last time you checked.
+  examineDescription:
+    - |
+      Taking some time, you look yourself over, finding the same old scars and blemishes you've accrued
+      over the years. You don't love everything about your body, but it's yours and you're used to it.
   contents:
   # The Titular Cloak of Darkness
   - id: *iCloak
@@ -106,7 +111,7 @@ actors:
         The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
         it is darker than it should be.
     inRoomDescription: A dark black velvet cloak rests in a heap on the floor.
-    wearable: true
+    isWearable: true
     isWorn: true
     previewDrop: # Don't allow the user to drop the cloak if they're not in the cloakroom
     - invoke: previewCloakDrop

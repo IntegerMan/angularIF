@@ -9,7 +9,7 @@ export class Hook extends Scenery {
   hungObject: WorldEntity = null;
 
   constructor(name: string) {
-    super(name);
+    super(name, 'hook');
 
     this.size = EntitySize.cup;
     this.weight = EntityWeight.watch;

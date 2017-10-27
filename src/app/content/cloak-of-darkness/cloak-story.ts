@@ -5,28 +5,24 @@ import {NavigationService} from '../../engine/navigation.service';
 import {Hook} from './hook';
 import {Bar} from './bar';
 import {Cloak} from './cloak';
-import {TextOutputService} from '../../engine/text-output.service';
 import {BarMessage} from './bar-message';
 import {LexiconService} from '../../engine/parser/lexicon.service';
 import {LoggingService} from '../../utility/logging.service';
+import {StoryData} from '../../engine/story-data/story-data';
+import {StoryLoader} from '../../engine/story-data/story-loader';
 
 export class CloakStory extends Story {
 
   private _foyer: Room;
   private _cloakroom: Room;
   private _bar: Bar;
-  private _player: Player;
   private _cloak: Cloak;
   private lexer: LexiconService;
-
-  private data: any;
-  private output: TextOutputService;
 
   constructor(private navService: NavigationService) {
     super();
 
     this.lexer = LexiconService.instance;
-    this.output = TextOutputService.instance;
 
     this.reset();
   }
@@ -35,17 +31,13 @@ export class CloakStory extends Story {
 
     // Grab our YAML resource data and stick it into JSON
     LoggingService.instance.debug(`Loading story file for ${this.constructor.name}...`);
-    this.data = require('json-loader!yaml-loader!App/Content/Cloak-Of-Darkness/CloakOfDarkness.yml');
-    LoggingService.instance.debug(this.data);
+    const data: StoryData = <StoryData> require('json-loader!yaml-loader!App/Content/Cloak-Of-Darkness/CloakOfDarkness.yml');
+    const loader = new StoryLoader(data);
 
     // Read metadata from the story data file
-    this.title = this.data.name;
-    this.version = this.data.version;
-    this.fontAwesomeIcon = this.data.icon;
-    this.maxScore = this.data['max score'];
-    this.description = this.data.description;
-    this.authors = this.data.authors;
+    loader.loadIntoStory(this);
 
+    /*
     // Define the titular cloak
     this._cloak = new Cloak();
 
@@ -57,49 +49,21 @@ export class CloakStory extends Story {
 
     this._bar = new Bar('Foyer Bar');
     this._bar.cloak = this._cloak;
+    */
 
     // Set up the player
-    this._player = new Player();
-    this._foyer.addObject(this._player);
-    this._player.addToInventory(this._cloak);
+    this.player = new Player();
+    this.rooms[0].addObject(this.player);
+    // this._player.addToInventory(this._cloak);
 
+/*
     // Build out our rooms
     this.configureFoyer(this._foyer);
     this.configureCloakroom(this._cloakroom);
-    this.configureBar(this._bar);
+    this.configureBar(this._bar); */
   }
 
-  displayIntroduction(output: TextOutputService): void {
-    this.renderData(this.data.introText);
-  }
-
-  protected getRooms(): Room[] {
-    return [this._foyer, this._cloakroom, this._bar];
-  }
-
-  protected getPlayerActor(): Player {
-    return this._player;
-  }
-
-  private renderData(data: any): void {
-
-    if (!data) {
-      return;
-    }
-
-    // If it's just text, spit it out
-    if (typeof data === 'string') {
-      this.output.displayStory(data);
-      return;
-    }
-
-    // If it's an array, loop through each member and handle that.
-    for (const item of data) {
-      this.renderData(item);
-    }
-
-  }
-
+  /*
   private configureBar(room: Bar): void {
 
     room.description = 'The bar, much rougher than you\'d have guessed after the opulence of the foyer to the north, is ' +
@@ -140,5 +104,6 @@ export class CloakStory extends Story {
     this.navService.westTo(room, this._cloakroom);
 
   }
+  */
 
 }

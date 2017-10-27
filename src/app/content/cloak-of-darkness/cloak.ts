@@ -12,7 +12,7 @@ export class Cloak extends PortableEntity {
   private hasCountedForPoints: boolean = false;
 
   constructor() {
-    super('black velvet cloak');
+    super('black velvet cloak', 'cloak');
 
     this.weight = EntityWeight.textbook;
     this.size = EntitySize.person;

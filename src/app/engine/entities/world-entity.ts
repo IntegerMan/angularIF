@@ -15,6 +15,7 @@ export abstract class WorldEntity {
   adjectives: string[];
   article: string = 'the';
   isAlive: boolean = false;
+  id: string;
 
   private _weight: EntityWeight;
   private _size: EntitySize;
@@ -24,9 +25,10 @@ export abstract class WorldEntity {
   private _description: string = null;
   private _examineDescription: string = null;
 
-  constructor(name: string) {
+  constructor(name: string, id: string) {
 
     this._name = name;
+    this.id = id;
 
     // Initialize collections
     this.nouns = [];

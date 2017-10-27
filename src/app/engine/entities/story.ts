@@ -1,10 +1,10 @@
 import {Room} from './room';
 import {Player} from './player';
-import {LexiconDictionary} from '../parser/lexicon-dictionary';
 import {VerbHandler} from '../verbs/verb-handler';
 import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
 import {TextOutputService} from '../text-output.service';
+import {CommonDictionary} from '../parser/common-dictionary';
 
 export abstract class Story {
 
@@ -20,8 +20,9 @@ export abstract class Story {
   maxScore: number = 0;
 
   verbHandlers: VerbHandler[];
+  introText: string | any[]; // TODO: Any[] isn't handled yet
 
-  private dictionaries: LexiconDictionary[];
+  protected output: TextOutputService;
 
   constructor() {
 
@@ -30,23 +31,20 @@ export abstract class Story {
     this.version = '1.0';
 
     // Initialize empty lists
-    this.dictionaries = [];
     this.verbHandlers = [];
+    this.rooms = [];
+
+    this.output = TextOutputService.instance;
+
+    // TODO: This should probably go elsewhere
+    const dict = new CommonDictionary();
+    dict.addTerms();
 
   }
 
   public initialize(): void {
 
     this.reset();
-
-    // Set up story variables
-    this.rooms = this.getRooms();
-    this.player = this.getPlayerActor();
-
-    // Add our terms to the lexer
-    for (const dictionary of this.dictionaries) {
-      dictionary.addTerms();
-    }
 
     // Now that we have both rooms and adequate dictionaries, loop through and auto-parse all entities
     this.autodetectNounsAndAdjectives(this.player);
@@ -56,21 +54,21 @@ export abstract class Story {
 
   }
 
-  public addDictionary(dictionary: LexiconDictionary): void {
-    this.dictionaries.push(dictionary);
-  }
-
   restart(): void {
     LoggingService.instance.log('Restarting story now.');
     this.initialize();
   }
 
-  displayIntroduction(output: TextOutputService) {
-    output.displayStory('The story begins...');
+  displayIntroduction(output: TextOutputService): void {
+    let introText: string | any[] = this.introText;
+    if (!introText) {
+      introText = 'The story begins...';
+    }
+    this.renderData(output, introText);
   }
 
-  protected abstract getRooms(): Room[];
-  protected abstract getPlayerActor(): Player;
+  // protected abstract getRooms(): Room[];
+  // protected abstract getPlayerActor(): Player;
   protected abstract reset();
 
   private autodetectNounsAndAdjectives(entity: WorldEntity): void {
@@ -86,4 +84,24 @@ export abstract class Story {
     }
 
   }
+
+  private renderData(output: TextOutputService, data: string | any[]): void {
+
+    if (!data) {
+      return;
+    }
+
+    // If it's just text, spit it out
+    if (typeof data === 'string') {
+      output.displayStory(data);
+      return;
+    }
+
+    // If it's an array, loop through each member and handle that.
+    for (const item of data) {
+      this.renderData(output, item);
+    }
+
+  }
+
 }

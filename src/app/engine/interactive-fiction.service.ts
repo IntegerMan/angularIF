@@ -281,9 +281,6 @@ export class InteractiveFictionService {
 
     this.gameState = GameState.initializing;
 
-    // Ensure the story has the base dictionary at least
-    story.addDictionary(new CommonDictionary(this.lexer));
-
     // Boot up the story world
     story.initialize();
 
