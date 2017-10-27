@@ -9,7 +9,7 @@ export class NavigationService {
 
   }
 
-  public navTo(origin: any, direction: string, target: Room = null, message: string = null): RoomLink {
+  public navTo(origin: Room, direction: string, target: Room = null, message: string = null): RoomLink {
 
     if (!origin.roomLink) {
       origin.roomLink = {};
@@ -23,7 +23,7 @@ export class NavigationService {
     return link;
   }
 
-  public getLink(origin: any, direction: string): RoomLink {
+  public getLink(origin: Room, direction: string): RoomLink {
 
     if (!origin || !direction || !origin.roomLink) {
       return null;

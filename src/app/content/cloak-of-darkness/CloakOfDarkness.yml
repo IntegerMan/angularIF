@@ -64,7 +64,8 @@ rooms:
     The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is
     completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.
   nav:
-    north: *rFoyer
+    north:
+      room: *rFoyer
   isDark: true # This is updated onBarEnter based on presence / absence of the cloak
   onEnter:
   - invoke: onBarEnter # Update whether or not we're dark

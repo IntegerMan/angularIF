@@ -12,6 +12,7 @@ export class Room extends WorldEntity {
   lighting: LightLevel;
 
   contents: WorldEntity[];
+  roomLink: {};
 
   constructor(name: string, key: string) {
     super(name, key);
@@ -19,6 +20,7 @@ export class Room extends WorldEntity {
     this.weight = EntityWeight.building;
     this.size = EntitySize.building;
     this.lighting = LightLevel.wellLit;
+    this.roomLink = null;
 
     // This lets other scripts safely refer to currentRoom in a more generic way
     this.currentRoom = this;
