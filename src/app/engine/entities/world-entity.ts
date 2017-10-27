@@ -16,7 +16,8 @@ export abstract class WorldEntity {
   adjectives: string[];
   article: string = 'the';
   isAlive: boolean = false;
-  id: string;
+  key: string;
+
   describeResponse: StoryResponse;
   examineResponse: StoryResponse;
 
@@ -26,10 +27,10 @@ export abstract class WorldEntity {
   private _name: string;
   private _currentRoom: Room;
 
-  constructor(name: string, id: string) {
+  constructor(name: string, key: string) {
 
     this._name = name;
-    this.id = id;
+    this.key = key;
 
     // Initialize collections
     this.nouns = [];

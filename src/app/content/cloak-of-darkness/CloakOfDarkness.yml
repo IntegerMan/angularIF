@@ -24,7 +24,7 @@ ids:
 - &oHook hook
 rooms:
 # Foyer
-- id: *rFoyer
+- key: *rFoyer
   name: Foyer of the Opera House
   description:
   - |
@@ -37,7 +37,7 @@ rooms:
     west: *rCloakroom
     south: *rBar
 # Cloakroom
-- id: *rCloakroom
+- key: *rCloakroom
   name: Cloakroom
   description:
   - |
@@ -47,7 +47,7 @@ rooms:
     east: *rFoyer
   contents:
   # The hook for hanging the cloak
-  - id: *oHook
+  - key: *oHook
     name: small brass hook
     aliases:
       nouns:
@@ -57,7 +57,7 @@ rooms:
     allowHang: true
     maxContents: 1
 # Bar
-- id: *rBar
+- key: *rBar
   name: Foyer Bar
   description:
   - |
@@ -74,7 +74,7 @@ rooms:
   - invoke: onBarAction # Track blunders
   contents:
   # Scrawled Message
-  - id: *oMessage
+  - key: *oMessage
     name: scrawled message
     describeWithRoom: false
     aliases:
@@ -93,7 +93,7 @@ rooms:
     - invoke: onReadMessage # This will trigger the game end.
 actors:
 # The player
-- id: *aPlayer
+- key: *aPlayer
   name: yourself
   startRoom: *rFoyer
   isPlayer: true
@@ -104,7 +104,7 @@ actors:
       over the years. You don't love everything about your body, but it's yours and you're used to it.
   contents:
   # The Titular Cloak of Darkness
-  - id: *iCloak
+  - key: *iCloak
     name: black velvet cloak
     description:
       - |

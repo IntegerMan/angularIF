@@ -1,5 +1,5 @@
 import {Story} from '../../engine/entities/story';
-import {Player} from '../../engine/entities/player';
+import {Actor} from '../../engine/entities/actor';
 import {LexiconService} from '../../engine/parser/lexicon.service';
 import {LoggingService} from '../../utility/logging.service';
 import {StoryData} from '../../engine/story-data/story-data';
@@ -41,9 +41,6 @@ export class CloakStory extends Story {
     this._bar.cloak = this._cloak;
     */
 
-    // Set up the player
-    this.player = new Player();
-    this.rooms[0].addObject(this.player);
     // this._player.addToInventory(this._cloak);
 
 /*

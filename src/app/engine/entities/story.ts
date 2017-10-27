@@ -1,5 +1,5 @@
 import {Room} from './room';
-import {Player} from './player';
+import {Actor} from './actor';
 import {VerbHandler} from '../verbs/verb-handler';
 import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
@@ -10,13 +10,15 @@ import {CommandContext} from '../command-context';
 
 export abstract class Story {
 
-  title: string;
+  name: string;
   authors: string;
   version: string;
   description: string = null;
 
   rooms: Room[];
-  player: Player;
+
+  player: Actor;
+  actors: Actor[];
 
   fontAwesomeIcon: string = 'fa-book';
   maxScore: number = 0;
@@ -28,13 +30,14 @@ export abstract class Story {
 
   constructor() {
 
-    this.title = 'Untitled';
+    this.name = 'Untitled';
     this.authors = 'Unattributed';
     this.version = '1.0';
 
     // Initialize empty lists
     this.verbHandlers = [];
     this.rooms = [];
+    this.actors = [];
 
     this.output = TextOutputService.instance;
 
@@ -70,8 +73,36 @@ export abstract class Story {
     }
   }
 
-  // protected abstract getRooms(): Room[];
-  // protected abstract getPlayerActor(): Player;
+  findRoomByKey(key: string): Room {
+
+    if (!key) {
+      return null;
+    }
+
+    for (const room of this.rooms) {
+      if (room.key === key) {
+        return room;
+      }
+    }
+
+    return null;
+  }
+
+  findActorByKey(key: string): Actor {
+
+    if (!key) {
+      return null;
+    }
+
+    for (const actor of this.actors) {
+      if (actor.key === key) {
+        return actor;
+      }
+    }
+
+    return null;
+  }
+
   protected abstract reset();
 
   private autodetectNounsAndAdjectives(entity: WorldEntity): void {

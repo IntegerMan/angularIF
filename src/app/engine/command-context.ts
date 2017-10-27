@@ -4,7 +4,7 @@ import {Story} from './entities/story';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {Room} from './entities/room';
 import {NavigationService} from './navigation.service';
-import {Player} from './entities/player';
+import {Actor} from './entities/actor';
 import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './parser/command-token';
@@ -17,7 +17,7 @@ import {TokenClassification} from './parser/token-classification.enum';
 
 export class CommandContext {
 
-  get player(): Player {
+  get player(): Actor {
     return this.story.player;
   }
 
@@ -72,7 +72,7 @@ export class CommandContext {
         this.analytics.emitEvent(
           'Reference Not Found',
           token.name,
-          `${this.story.title} - ${this.currentRoom.name}`);
+          `${this.story.name} - ${this.currentRoom.name}`);
         this.wasConfused = true;
       }
       return null;

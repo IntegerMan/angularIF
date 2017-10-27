@@ -98,7 +98,7 @@ export class UserInputService {
       GoogleAnalyticsService.instance.emitEvent(
         'Unknown Token',
         token.name,
-        `${context.story.title} - ${context.currentRoom.name}`);
+        `${context.story.name} - ${context.currentRoom.name}`);
 
     }
 

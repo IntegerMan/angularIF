@@ -3,7 +3,7 @@ import {AliasData} from './alias-data';
 
 export abstract class EntityData {
 
-  id: string;
+  key: string;
   name: string;
 
   aliases: AliasData;

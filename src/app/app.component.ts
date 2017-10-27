@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     ifService.initialize(story);
 
-    this.title = story.title;
+    this.title = story.name;
     this.icon = story.fontAwesomeIcon;
   }
 

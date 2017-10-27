@@ -5,10 +5,12 @@ import {CommandContext} from '../command-context';
 import {EntitySize} from './entity-size.enum';
 import {EntityWeight} from './entity-weight.enum';
 
-export class Player extends WorldEntity {
+export class Actor extends WorldEntity {
 
-  constructor() {
-    super('yourself', 'you');
+  isPlayer: boolean;
+
+  constructor(name: string = 'yourself', key: string = 'you') {
+    super(name, key);
 
     this.article = '';
     this.isAlive = true;

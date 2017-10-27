@@ -45,7 +45,7 @@ export class Command {
       context.analytics.emitEvent(
         'No Verb',
         this.userInput,
-        `${context.story.title} - ${context.currentRoom.name}`,
+        `${context.story.name} - ${context.currentRoom.name}`,
         context.ifService.commandId);
 
       context.outputService.displayParserError('I couldn\'t figure out what you want to do. Try starting with a verb.');
@@ -58,7 +58,7 @@ export class Command {
       context.analytics.emitEvent(
         'Unknown Verb',
         this.verb.name,
-        `${context.story.title} - ${context.currentRoom.name}`,
+        `${context.story.name} - ${context.currentRoom.name}`,
         context.ifService.commandId);
 
       context.outputService.displayParserError(`I don't know how to respond to the verb '${this.verb.name}' yet.`);

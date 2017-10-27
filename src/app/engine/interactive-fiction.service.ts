@@ -3,7 +3,7 @@ import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
 import {Room} from './entities/room';
-import {Player} from './entities/player';
+import {Actor} from './entities/actor';
 import {TokenizerService} from './parser/tokenizer.service';
 import {CommandToken} from './parser/command-token';
 import {TokenClassification} from './parser/token-classification.enum';
@@ -130,7 +130,7 @@ export class InteractiveFictionService {
     this.analytics.emitEvent(
       'User Command',
       command.userInput,
-      `${context.story.title} - ${context.currentRoom.name}`,
+      `${context.story.name} - ${context.currentRoom.name}`,
       this.commandId);
 
   }
@@ -145,7 +145,7 @@ export class InteractiveFictionService {
       this.scoreService);
   }
 
-  setActorRoom(actor: Player, room: Room, isSilent: Boolean = false): void {
+  setActorRoom(actor: Actor, room: Room, isSilent: Boolean = false): void {
 
     const oldRoom: Room = actor.currentRoom;
 
@@ -208,7 +208,7 @@ export class InteractiveFictionService {
     this.analytics.emitEvent(
       'Game Over',
       message,
-      `${this.story.title} - ${this.story.player.currentRoom.name}`,
+      `${this.story.name} - ${this.story.player.currentRoom.name}`,
       this.scoreService.currentScore);
 
   }
@@ -228,7 +228,7 @@ export class InteractiveFictionService {
 
   private displayHeadingAndIntro(story: Story, context: CommandContext) {
 
-    this.outputService.displayTitle(story.title, `v${story.version}`);
+    this.outputService.displayTitle(story.name, `v${story.version}`);
 
     if (story.authors) {
       this.outputService.displayAuthor(story.authors);
