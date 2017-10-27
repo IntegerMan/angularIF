@@ -3,7 +3,6 @@ import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {Room} from './entities/room';
-import {NavigationService} from './navigation.service';
 import {Actor} from './entities/actor';
 import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
@@ -29,7 +28,6 @@ export class CommandContext {
   analytics: GoogleAnalyticsService;
   outputService: TextOutputService;
   ifService: InteractiveFictionService;
-  navService: NavigationService;
   confirmService: ConfirmationService;
   state: StateService;
   score: ScoreService;
@@ -38,7 +36,6 @@ export class CommandContext {
 
   constructor(ifService: InteractiveFictionService,
               outputService: TextOutputService,
-              navService: NavigationService,
               confirmService: ConfirmationService,
               stateService: StateService,
               scoreService: ScoreService) {
@@ -46,7 +43,6 @@ export class CommandContext {
     this.ifService = ifService;
     this.story = ifService.story;
     this.outputService = outputService;
-    this.navService = navService;
     this.confirmService = confirmService;
     this.state = stateService;
     this.score = scoreService;

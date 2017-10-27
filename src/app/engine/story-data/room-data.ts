@@ -1,4 +1,3 @@
-import {NavData} from './nav-data';
 import {InvokeRequest} from './invoke-request';
 import {EntityData} from './entity-data';
 
@@ -8,7 +7,8 @@ export class RoomData extends EntityData {
   darkName: string;
   darkDescription: string;
 
-  nav: NavData;
+  // This is effectively a dictionary of direction names
+  nav: {};
 
   // Events
   previewAction: InvokeRequest;

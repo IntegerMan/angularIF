@@ -25,7 +25,7 @@ export class GoHandler extends VerbHandler {
 
     const room: Room = context.currentRoom;
 
-    const link: RoomLink = context.navService.getLink(room, direction.name);
+    const link: RoomLink = room.roomLink[direction.name];
 
     if (!link) {
       context.outputService.displayStory('You can\'t go that way.');
@@ -33,24 +33,25 @@ export class GoHandler extends VerbHandler {
     }
 
     // Regardless of success or failure, we'll want to go with the customized message
-    if (link.goMessage) {
-      context.outputService.displayStory(link.goMessage);
+    if (link.goResponse) {
+      link.goResponse.invoke(context);
     }
 
     if (link.target) {
 
-      if (!link.goMessage) {
+      if (!link.goResponse) {
         context.outputService.displayStory(`You go ${direction.name}.`);
       }
 
       // Move the player
+      // TODO: It might be interesting to just make the response responsible for both moving the player (or not) and displaying the text.
       context.ifService.setActorRoom(context.player, link.target);
 
       return CommandResult.BuildActionSuccessResult();
 
     } else {
 
-      if (!link.goMessage) {
+      if (!link.goResponse) {
         context.outputService.displayStory('Unseen forces prevent you from going that way.');
       }
 

@@ -12,7 +12,6 @@ import {SentenceParserService} from './parser/sentence-parser.service';
 import {Command} from './parser/command';
 import {VerbHandler} from './verbs/verb-handler';
 import {CommandContext} from './command-context';
-import {NavigationService} from './navigation.service';
 import {WorldEntity} from './entities/world-entity';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
@@ -43,7 +42,6 @@ export class InteractiveFictionService {
               private tokenizer: TokenizerService,
               private sentenceParser: SentenceParserService,
               private outputService: TextOutputService,
-              private navService: NavigationService,
               private lexer: LexiconService,
               private confirmService: ConfirmationService,
               private analytics: GoogleAnalyticsService,
@@ -139,7 +137,6 @@ export class InteractiveFictionService {
     return new CommandContext(
       this,
       this.outputService,
-      this.navService,
       this.confirmService,
       this.stateService,
       this.scoreService);

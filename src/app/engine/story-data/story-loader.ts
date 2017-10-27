@@ -109,8 +109,8 @@ export class StoryLoader {
           }
 
           let target: Room = null;
-          let goMessage: StoryResponse = null;
-          let lookMessage: StoryResponse = null;
+          let goResponse: StoryResponse = null;
+          let lookResponse: StoryResponse = null;
 
           if (typeof(value) === 'string') {
             target = story.findRoomByKey(value as string);
@@ -119,14 +119,14 @@ export class StoryLoader {
             if (dirData.room) {
               target = story.findRoomByKey(dirData.room);
             }
-            goMessage = this.buildResponse(dirData.goMessage);
-            lookMessage = this.buildResponse(dirData.lookMessage);
+            goResponse = this.buildResponse(dirData.goMessage);
+            lookResponse = this.buildResponse(dirData.lookMessage);
           }
 
           // Build out the link
           const link = new RoomLink(room, direction, target);
-          // link.goMessage = goMessage;
-          // link.lookMessage = lookMessage;
+          link.goResponse = goResponse;
+          link.lookResponse = lookResponse;
 
           // Register the link now
           room.roomLink[direction] = link;

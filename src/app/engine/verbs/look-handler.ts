@@ -80,21 +80,21 @@ export class LookHandler extends VerbHandler {
 
   private static handleLookInDirection(context: CommandContext, dir: CommandToken): CommandResult {
 
-    let text: string;
-    const link: RoomLink = context.navService.getLink(context.currentRoom, dir.name);
+    const link: RoomLink = context.currentRoom.roomLink[dir.name];
 
     if (link) {
-      if (link.lookMessage) {
-        text = link.lookMessage;
+      if (link.lookResponse) {
+        link.lookResponse.invoke(context);
       } else {
-        text = `You look to the ${dir.name} but are unable to tell much from here. You'll have to go there yourself.`;
+        // TODO: Doesn't sound right for up / down
+        const text = `You look to the ${dir.name} but are unable to tell much from here. You'll have to go there yourself.`;
+        context.outputService.displayStory(text);
       }
     } else {
-      text = `You can't go any farther to the ${dir.name}.`;
+      // TODO: Doesn't sound right for up / down
+      const text = `You can't go any farther to the ${dir.name}.`;
+      context.outputService.displayStory(text);
     }
-
-    context.outputService.displayStory(text);
-
 
     return CommandResult.BuildActionFailedResult();
   }

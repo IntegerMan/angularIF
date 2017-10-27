@@ -5,7 +5,6 @@ import {TokenizerModule} from './parser/tokenizer.module';
 import {TextOutputService} from './text-output.service';
 import {UserInputService} from './user-input.service';
 import {VerbsModule} from './verbs/verbs.module';
-import {NavigationService} from './navigation.service';
 import {ScoreService} from './score.service';
 import {StateService} from './state.service';
 
@@ -19,7 +18,6 @@ import {StateService} from './state.service';
     InteractiveFictionService,
     TextOutputService,
     UserInputService,
-    NavigationService,
     StateService,
     ScoreService
   ],

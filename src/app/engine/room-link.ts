@@ -1,4 +1,5 @@
 import {Room} from './entities/room';
+import {StoryResponse} from './responses/story-response';
 
 /**
  * Represents a unidirectional link from one room to a direction from that room, possibly resulting in navigation into another room. This
@@ -9,8 +10,9 @@ export class RoomLink {
   origin: Room;
   direction: string;
   target: Room;
-  goMessage: string = null;
-  lookMessage: string = null;
+
+  goResponse: StoryResponse = null;
+  lookResponse: StoryResponse = null;
 
   constructor(origin: Room, direction: string, target: Room) {
     this.origin = origin;
