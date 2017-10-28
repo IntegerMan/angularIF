@@ -9,7 +9,8 @@ export abstract class EntityData {
   aliases: AliasData;
 
   verbs: {};
-
+  attributes: {};
+  
   contents: ItemData[];
 
 }

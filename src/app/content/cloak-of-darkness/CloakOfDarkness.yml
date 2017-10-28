@@ -11,7 +11,7 @@ icon: fa-bookmark-o
 introText:
 - |
   Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera
-  House. It's surprising that there aren't more people about but, hey, what *do* you expect in a
+  House. It's surprising that there aren't more people about but, hey, what **do** you expect in a
   cheap demo game...?
 # IDs are important here for YAML to have accurate anchors since they must be declared above refs
 ids:
@@ -58,8 +58,9 @@ rooms:
       look: It's just a small brass hook with a {{contents}} hanging on it.
       # TODO: I really don't know how to do this here. Seems like this is a case for inline scripting logic.
       lookEmpty: It's just a small brass hook screwed to the wall.
-    allowHang: true
-    maxContents: 1
+    attributes:
+      allowHang: true
+      maxContents: 1
 # Bar
 - key: *rBar
   name: Foyer Bar
@@ -71,18 +72,21 @@ rooms:
   nav:
     north:
       room: *rFoyer
-  isDark: true # This is updated onBarEnter based on presence / absence of the cloak
-  onEnter:
-  - invoke: onBarEnter # Update whether or not we're dark
-  darkName: Darkness
-  darkDescription: It is pitch dark, and you can't see a thing.
-  onAction:
-  - invoke: onBarAction # Track blunders
+  attributes:
+    isDark: true # This is updated onBarEnter based on presence / absence of the cloak
+    darkName: Darkness
+    darkDescription: It is pitch dark, and you can't see a thing.
+  events:
+    onAction:
+    - invoke: onBarAction # Track blunders
+    onEnter:
+    - invoke: onBarEnter # Update whether or not we're dark
   contents:
   # Scrawled Message
   - key: *oMessage
     name: scrawled message
-    describeWithRoom: false
+    attributes:
+      describeWithRoom: false
     aliases:
       nouns:
       - Writing
@@ -95,8 +99,9 @@ rooms:
       adjectives:
       - Written
       - Dusty
-    description:
-    - invoke: onReadMessage # This will trigger the game end.
+    verbs:
+      look:
+      - invoke: onReadMessage # This will trigger the game end.
 actors:
 # The player
 - key: *aPlayer
@@ -121,10 +126,12 @@ actors:
         - The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
           it is darker than it should be.
     inRoomDescription: A dark black velvet cloak rests in a heap on the floor.
-    isWearable: true
-    isWorn: true
-    previewDrop: # Don't allow the user to drop the cloak if they're not in the cloakroom
-    - invoke: previewCloakDrop
+    attributes:
+      isWearable: true
+      isWorn: true
+    events:
+      previewDrop: # Don't allow the user to drop the cloak if they're not in the cloakroom
+      - invoke: previewCloakDrop
 # Resource Strings used by different operations
 strings:
 - barBlunder: Blundering around in the dark isn't a good idea!

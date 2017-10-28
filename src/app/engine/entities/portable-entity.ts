@@ -1,7 +1,10 @@
-import {CommandContext} from '../command-context';
+import { CommandContext } from '../command-context';
 import { WorldEntity } from './world-entity';
 
 export class PortableEntity extends WorldEntity {
+
+  isWearable: boolean;
+  isWorn: boolean;
 
   shouldDescribeWithRoom(context: CommandContext): boolean {
     return true;
@@ -17,7 +20,6 @@ export class PortableEntity extends WorldEntity {
   }
 
   allowPickup(context: CommandContext): boolean {
-
     return true;
   }
 

@@ -1,17 +1,21 @@
 <div class="card mb-3">
 
   <div class="card-header text-capitalize">
-    Entity: {{entity.that}}
+    Entity: {{entity.key}}
   </div>
 
   <div class="card-body p-0 pt-3">
+
+    <div *ngIf="entity.contents.length > 0" class="float-right" style="width: 300px;">
+      <span class="text-right" style="width: 100px;"><strong>Contents:</strong></span>
+      <p-tree [value]="contentNodes"></p-tree>
+    </div>
+
     <dl>
 
-      <dt>Description</dt>
+      <dt>Name</dt>
       <dd>
-        <blockquote class="blockquote">
-          <p class="mb-0"><small>{{entity.description}}</small></p>
-        </blockquote>
+        {{entity.name}}
       </dd>
 
       <dt>Parent</dt>
@@ -20,16 +24,26 @@
         <span *ngIf="!entity.parent" class="text-muted small">(None)</span>
       </dd>
 
-      <dt class="my-2">Contents</dt>
-      <dd class="my-2">
-        <div *ngIf="entity.contents.length > 0">
-          <p-tree [value]="contentNodes"></p-tree>
+      <dt>Verbs</dt>
+      <dd>
+        <div *ngIf="entity.verbs" style="vertical-align: middle;">
+          <span *ngFor="let atr of entity.verbs | kvp" class="badge badge-danger mr-1">
+            {{atr.key}}
+          </span>
         </div>
-        <span *ngIf="entity.contents.length < 1" class="text-muted small">(None)</span>
-
       </dd>
 
+      <dt>Attributes</dt>
+      <dd>
+        <div *ngIf="entity.attributes" style="vertical-align: middle;">
+          <span *ngFor="let atr of entity.attributes | kvp" class="badge badge-info mr-1">
+            <span>{{atr.key}}:</span>
+            <span>{{atr.value}}</span>
+          </span>
+        </div>
+      </dd>
     </dl>
+
   </div>
 
 </div>

@@ -76,9 +76,7 @@ export class StoryLoader {
       }
     }
 
-    this.buildVerbHandlers(actor, actorData.verbs);
-
-    // TODO: Build Aliases too
+    this.populateCommonFields(actor, actorData);
 
     // Set the actor's start room
     const room: Room = story.findRoomByKey(actorData.startRoom);
@@ -94,9 +92,7 @@ export class StoryLoader {
 
     const item: WorldEntity = new PortableEntity(itemData.name, itemData.key);
 
-    this.buildVerbHandlers(item, itemData.verbs);
-
-    // TODO: Aliases
+    this.populateCommonFields(item, itemData);
 
     return item;
   }
@@ -105,10 +101,7 @@ export class StoryLoader {
 
     const room: Room = new Room(roomData.name, roomData.key);
 
-    // Copy over all verbs
-    this.buildVerbHandlers(room, roomData.verbs);
-
-    // TODO: Aliases
+    this.populateCommonFields(room, roomData);
 
     // Populate all registered items
     if (roomData.contents) {
@@ -121,9 +114,28 @@ export class StoryLoader {
     return room;
   }
 
-  private buildVerbHandlers(entity: WorldEntity, verbData: {}) {
-    for (const verb in verbData) {
-      if (verbData.hasOwnProperty(verb)) {
+  private populateCommonFields(entity: WorldEntity, entityData: EntityData): void {
+
+    this.buildAttributes(entity, entityData);
+
+    // Copy over all verbs
+    this.buildVerbHandlers(entity, entityData.verbs);
+
+    // TODO: Aliases
+
+  }
+
+  private buildAttributes(entity: WorldEntity, entityData: EntityData): void {
+    if (entityData.attributes) {
+      for (const attribute of Object.getOwnPropertyNames(entityData.attributes)) {
+        entity.attributes[attribute] = entityData.attributes[attribute];
+      }
+    }
+  }
+
+  private buildVerbHandlers(entity: WorldEntity, verbData: {}): void {
+    if (verbData) {
+      for (const verb of Object.getOwnPropertyNames(verbData)) {
         entity.verbs[verb] = this.buildResponse(verbData[verb]);
       }
     }

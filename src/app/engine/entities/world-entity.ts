@@ -16,7 +16,9 @@ export abstract class WorldEntity {
   article: string = 'the';
   isAlive: boolean = false;
   key: string;
-  verbs: {};
+
+  verbs: any;
+  attributes: any;
 
   private _inRoomDescription: string = null;
   private _name: string;
@@ -31,7 +33,8 @@ export abstract class WorldEntity {
     this.nouns = [];
     this.adjectives = [];
     this.contents = [];
-    this.verbs = [];
+    this.attributes = {};
+    this.verbs = {};
 
     // Auto-detecting here seems like it would make sense, but we don't yet have adequate dictionaries
   }
@@ -129,7 +132,7 @@ export abstract class WorldEntity {
   }
 
   shouldDescribeWithRoom(context: CommandContext): boolean {
-    return false;
+    return this.attributes && this.attributes.describeWithRoom;
   }
 
   invokeVerbResponse(context: CommandContext, verbName: string): boolean {
@@ -143,23 +146,6 @@ export abstract class WorldEntity {
 
     return false;
   }
-
-
-  /*
-  invokeDescribeResponse(context: CommandContext, isScrutinize: boolean): void {
-
-    if (isScrutinize && this.examineResponse) {
-      this.examineResponse.invoke(context);
-    } else if (this.describeResponse) {
-      this.describeResponse.invoke(context);
-    } else if (isScrutinize) {
-      context.outputService.displayStory(`You stare at ${this.that} but fail to notice anything you hadn't noticed before.`);
-    } else {
-      context.outputService.displayStory(`${StringHelper.capitalize(this.that)} is wholly unremarkable.`);
-    }
-
-  }
-  */
 
   getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[] {
 
