@@ -115,8 +115,10 @@ actors:
     name: black velvet cloak
     verbs:
       look:
-        - |
-          The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
+        - A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops.
+          Its blackness is so deep that it almost seems to suck light from the room.
+      examine:
+        - The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
           it is darker than it should be.
     inRoomDescription: A dark black velvet cloak rests in a heap on the floor.
     isWearable: true

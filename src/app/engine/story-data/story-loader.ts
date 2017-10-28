@@ -7,7 +7,6 @@ import { ResponseGenerator } from '../responses/response-generator';
 import { Room } from '../entities/room';
 import { RoomData } from './room-data';
 import { RoomLink } from '../room-link';
-import { Scenery } from '../entities/scenery';
 import { Story } from '../entities/story';
 import { StoryData } from './story-data';
 import { StoryResponse } from '../responses/story-response';
@@ -69,17 +68,17 @@ export class StoryLoader {
       story.player = actor;
     }
 
+    // Set up their inventory
     if (actorData.contents) {
       for (const itemData of actorData.contents) {
-        const item: PortableEntity = new PortableEntity(itemData.name, itemData.key);
-
-        this.buildVerbHandlers(item, itemData.verbs);
-
-        // TODO: Aliases
-
+        const item = this.buildItem(itemData, story);
         actor.addToInventory(item);
       }
     }
+
+    this.buildVerbHandlers(actor, actorData.verbs);
+
+    // TODO: Build Aliases too
 
     // Set the actor's start room
     const room: Room = story.findRoomByKey(actorData.startRoom);
@@ -91,6 +90,17 @@ export class StoryLoader {
     return actor;
   }
 
+  private buildItem(itemData: EntityData, story: Story): WorldEntity {
+
+    const item: WorldEntity = new PortableEntity(itemData.name, itemData.key);
+
+    this.buildVerbHandlers(item, itemData.verbs);
+
+    // TODO: Aliases
+
+    return item;
+  }
+
   private buildRoom(roomData: RoomData, story: Story): Room {
 
     const room: Room = new Room(roomData.name, roomData.key);
@@ -98,10 +108,17 @@ export class StoryLoader {
     // Copy over all verbs
     this.buildVerbHandlers(room, roomData.verbs);
 
-    // TODO: Hook up objects
+    // TODO: Aliases
+
+    // Populate all registered items
+    if (roomData.contents) {
+      for (const itemData of roomData.contents) {
+        const item: WorldEntity = this.buildItem(itemData, story);
+        room.addObject(item);
+      }
+    }
 
     return room;
-
   }
 
   private buildVerbHandlers(entity: WorldEntity, verbData: {}) {
