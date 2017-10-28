@@ -55,7 +55,7 @@ rooms:
       nouns:
       - Peg
     verbs:
-      look: It's just a small brass hook with a {{contents}} hanging on it.
+      look: It's just a small brass hook with {{contents}} hanging on it.
       # TODO: I really don't know how to do this here. Seems like this is a case for inline scripting logic.
       lookEmpty: It's just a small brass hook screwed to the wall.
     attributes:
