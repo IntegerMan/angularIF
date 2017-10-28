@@ -65,11 +65,14 @@ export class StoryLoader {
       story.player = actor;
     }
 
-    // Set the stage for the actor
+    // TODO: Set the actor's inventory
+
+    // Set the actor's start room
     const room: Room = story.findRoomByKey(actorData.startRoom);
     if (!room) {
       throw new Error(`${story.name} has an actor with key of ${actor.key} that does not map to a starting room.`);
     }
+
     room.addObject(actor);
     return actor;
   }
@@ -79,6 +82,8 @@ export class StoryLoader {
     const room: Room = new Room(roomData.name, roomData.key);
     room.describeResponse = this.buildResponse(roomData.description);
     room.examineResponse = this.buildResponse(roomData.examineDescription);
+
+    // TODO: Hook up objects
 
     return room;
 
