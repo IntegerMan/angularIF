@@ -11,7 +11,7 @@ icon: fa-bookmark-o
 introText:
 - |
   Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera
-  House. It's surprising that there aren't more people about but, hey, what **do** you expect in a
+  House. It's surprising that there aren't more people about but, hey, what *do* you expect in a
   cheap demo game...?
 # IDs are important here for YAML to have accurate anchors since they must be declared above refs
 ids:
@@ -59,6 +59,7 @@ rooms:
       # TODO: I really don't know how to do this here. Seems like this is a case for inline scripting logic.
       lookEmpty: It's just a small brass hook screwed to the wall.
     attributes:
+      describeWithRoom: false
       allowHang: true
       maxContents: 1
 # Bar
