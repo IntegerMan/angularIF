@@ -26,11 +26,12 @@ rooms:
 # Foyer
 - key: *rFoyer
   name: Foyer of the Opera House
-  description:
-  - |
-    You are standing in a spacious hall, splendidly decorated in red and gold, with glittering
-    chandeliers overhead. The entrance from the street is to the north, and there are doorways
-    south and west.
+  verbs:
+    look:
+    - |
+      You are standing in a spacious hall, splendidly decorated in red and gold, with glittering
+      chandeliers overhead. The entrance from the street is to the north, and there are doorways
+      south and west.
   nav:
     north:
       goMessage: You've only just arrived, and besides, the weather outside seems to be getting worse.
@@ -39,10 +40,11 @@ rooms:
 # Cloakroom
 - key: *rCloakroom
   name: Cloakroom
-  description:
-  - |
-    The walls of this small room were clearly once lined with hooks, though now only one remains.
-    The exit is a door to the east.
+  verbs:
+    look:
+    - |
+      The walls of this small room were clearly once lined with hooks, though now only one remains.
+      The exit is a door to the east.
   nav:
     east: *rFoyer
   contents:
@@ -52,17 +54,20 @@ rooms:
     aliases:
       nouns:
       - Peg
-    emptyDescription: It's just a small brass hook screwed to the wall.
-    description: It's just a small brass hook with a {contents} hanging on it.
+    verbs:
+      look: It's just a small brass hook with a {{contents}} hanging on it.
+      # TODO: I really don't know how to do this here. Seems like this is a case for inline scripting logic.
+      lookEmpty: It's just a small brass hook screwed to the wall.
     allowHang: true
     maxContents: 1
 # Bar
 - key: *rBar
   name: Foyer Bar
-  description:
-  - |
-    The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is
-    completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.
+  verbs:
+    look:
+    - |
+      The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is
+      completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.
   nav:
     north:
       room: *rFoyer
@@ -98,19 +103,21 @@ actors:
   name: yourself
   startRoom: *rFoyer
   isPlayer: true
-  description: You look yourself over and seem to be in roughly the same shape you were in the last time you checked.
-  examineDescription:
-    - |
-      Taking some time, you look yourself over, finding the same old scars and blemishes you've accrued
-      over the years. You don't love everything about your body, but it's yours and you're used to it.
+  verbs:
+    look: You look yourself over and seem to be in roughly the same shape you were in the last time you checked.
+    examine:
+      - |
+        Taking some time, you look yourself over, finding the same old scars and blemishes you've accrued
+        over the years. You don't love everything about your body, but it's yours and you're used to it.
   contents:
   # The Titular Cloak of Darkness
   - key: *iCloak
     name: black velvet cloak
-    description:
-      - |
-        The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
-        it is darker than it should be.
+    verbs:
+      look:
+        - |
+          The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
+          it is darker than it should be.
     inRoomDescription: A dark black velvet cloak rests in a heap on the floor.
     isWearable: true
     isWorn: true

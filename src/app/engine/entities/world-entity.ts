@@ -3,11 +3,9 @@ import {Room} from './room';
 import {LoggingService} from '../../utility/logging.service';
 import {NaturalLanguageService} from '../parser/natural-language.service';
 import {CommandToken} from '../parser/command-token';
-import {EntityWeight} from './entity-weight.enum';
-import {EntitySize} from './entity-size.enum';
 import {ArrayHelper} from '../../utility/array-helper';
-import {StoryResponse} from '../responses/story-response';
 import {StringHelper} from '../../utility/string-helper';
+import {StoryResponse} from '../responses/story-response';
 
 export abstract class WorldEntity {
 
@@ -18,12 +16,8 @@ export abstract class WorldEntity {
   article: string = 'the';
   isAlive: boolean = false;
   key: string;
+  verbs: {};
 
-  describeResponse: StoryResponse;
-  examineResponse: StoryResponse;
-
-  private _weight: EntityWeight;
-  private _size: EntitySize;
   private _inRoomDescription: string = null;
   private _name: string;
   private _currentRoom: Room;
@@ -37,10 +31,7 @@ export abstract class WorldEntity {
     this.nouns = [];
     this.adjectives = [];
     this.contents = [];
-
-    // Set some default sizes for things
-    this._weight = EntityWeight.textbook;
-    this._size = EntitySize.person;
+    this.verbs = [];
 
     // Auto-detecting here seems like it would make sense, but we don't yet have adequate dictionaries
   }
@@ -59,21 +50,6 @@ export abstract class WorldEntity {
 
   get name(): string {
     return this._name;
-  }
-
-  get size(): EntitySize {
-    return this._size;
-  }
-
-  set size(value: EntitySize) {
-    this._size = value;
-  }
-  get weight(): EntityWeight {
-    return this._weight;
-  }
-
-  set weight(value: EntityWeight) {
-    this._weight = value;
   }
 
   autodetectNounsAndAdjectives(): void {
@@ -156,6 +132,20 @@ export abstract class WorldEntity {
     return false;
   }
 
+  invokeVerbResponse(context: CommandContext, verbName: string): boolean {
+
+    if (this.verbs[verbName]) {
+      const response: StoryResponse = this.verbs[verbName];
+      response.invoke(context);
+
+      return true;
+    }
+
+    return false;
+  }
+
+
+  /*
   invokeDescribeResponse(context: CommandContext, isScrutinize: boolean): void {
 
     if (isScrutinize && this.examineResponse) {
@@ -169,6 +159,7 @@ export abstract class WorldEntity {
     }
 
   }
+  */
 
   getContainedEntities(context: CommandContext, includeHidden: boolean): WorldEntity[] {
 

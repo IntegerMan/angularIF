@@ -1,16 +1,11 @@
 import {CommandToken} from '../parser/command-token';
 import {WorldEntity} from './world-entity';
 import {CommandContext} from '../command-context';
-import {EntityWeight} from './entity-weight.enum';
-import {EntitySize} from './entity-size.enum';
-import {LightLevel} from './light-level.enum';
 import {Command} from '../parser/command';
 import {VerbType} from '../verbs/verb-type.enum';
 import {RoomLink} from '../room-link';
 
 export class Room extends WorldEntity {
-
-  lighting: LightLevel;
 
   contents: WorldEntity[];
   roomLink: {};
@@ -18,9 +13,6 @@ export class Room extends WorldEntity {
   constructor(name: string, key: string) {
     super(name, key);
 
-    this.weight = EntityWeight.building;
-    this.size = EntitySize.building;
-    this.lighting = LightLevel.wellLit;
     this.roomLink = {};
 
     // This lets other scripts safely refer to currentRoom in a more generic way
@@ -42,8 +34,7 @@ export class Room extends WorldEntity {
   }
 
   hasLight(context: CommandContext): boolean {
-    // By default, we'll just examine the lighting enum
-    return this.lighting > LightLevel.dim;
+    return true;
   }
 
   allowCommand(command: Command, context: CommandContext): boolean {

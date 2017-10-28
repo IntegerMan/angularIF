@@ -6,6 +6,7 @@ import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
 import {TokenClassification} from '../parser/token-classification.enum';
 import {RoomLink} from '../room-link';
+import { StringHelper } from '../../utility/string-helper';
 
 export class LookHandler extends VerbHandler {
 
@@ -46,9 +47,16 @@ export class LookHandler extends VerbHandler {
     }
 
     // Invoke the appropriate response
-    entity.invokeDescribeResponse(context, isScrutinize);
-
-    return CommandResult.BuildActionSuccessResult();
+    // TODO: The isScrutinize bits can likely be farmed out to the individual verb handler
+    if (isScrutinize && entity.invokeVerbResponse(context, 'examine')) {
+      return CommandResult.BuildActionSuccessResult();
+    } else if (entity.invokeVerbResponse(context, 'look')) {
+      return CommandResult.BuildActionSuccessResult();
+    } else if (isScrutinize) {
+      context.outputService.displayStory(`You stare at ${entity.that} but fail to notice anything you hadn't noticed before.`);
+    } else {
+      context.outputService.displayStory(`${StringHelper.capitalize(entity.that)} is wholly unremarkable.`);
+    }
 
   }
 

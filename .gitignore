@@ -48,3 +48,5 @@ src/app/content/\.vs/
 src/app/content/cloak-of-darkness/\.vs/
 
 *.sqlite
+
+\.vs/

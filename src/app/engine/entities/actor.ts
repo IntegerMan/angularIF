@@ -2,8 +2,6 @@ import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
 import {ArrayHelper} from '../../utility/array-helper';
 import {CommandContext} from '../command-context';
-import {EntitySize} from './entity-size.enum';
-import {EntityWeight} from './entity-weight.enum';
 
 export class Actor extends WorldEntity {
 
@@ -17,9 +15,6 @@ export class Actor extends WorldEntity {
 
     // Add some common synonyms for helping the player refer to their character
     this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player']);
-
-    this.weight = EntityWeight.person;
-    this.size = EntitySize.person;
 
   }
 

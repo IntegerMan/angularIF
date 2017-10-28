@@ -1,13 +1,17 @@
-import {StoryData} from './story-data';
-import {Story} from '../entities/story';
-import {Room} from '../entities/room';
-import {RoomData} from './room-data';
-import {StoryResponse} from '../responses/story-response';
-import {ResponseGenerator} from '../responses/response-generator';
-import {Actor} from '../entities/actor';
-import {ActorData} from './actor-data';
-import {RoomLink} from '../room-link';
-import {DirectionData} from './direction-data';
+import { Actor } from '../entities/actor';
+import { ActorData } from './actor-data';
+import { DirectionData } from './direction-data';
+import { EntityData } from './entity-data';
+import { PortableEntity } from '../entities/portable-entity';
+import { ResponseGenerator } from '../responses/response-generator';
+import { Room } from '../entities/room';
+import { RoomData } from './room-data';
+import { RoomLink } from '../room-link';
+import { Scenery } from '../entities/scenery';
+import { Story } from '../entities/story';
+import { StoryData } from './story-data';
+import { StoryResponse } from '../responses/story-response';
+import { WorldEntity } from '../entities/world-entity';
 
 export class StoryLoader {
 
@@ -65,7 +69,17 @@ export class StoryLoader {
       story.player = actor;
     }
 
-    // TODO: Set the actor's inventory
+    if (actorData.contents) {
+      for (const itemData of actorData.contents) {
+        const item: PortableEntity = new PortableEntity(itemData.name, itemData.key);
+
+        this.buildVerbHandlers(item, itemData.verbs);
+
+        // TODO: Aliases
+
+        actor.addToInventory(item);
+      }
+    }
 
     // Set the actor's start room
     const room: Room = story.findRoomByKey(actorData.startRoom);
@@ -80,13 +94,22 @@ export class StoryLoader {
   private buildRoom(roomData: RoomData, story: Story): Room {
 
     const room: Room = new Room(roomData.name, roomData.key);
-    room.describeResponse = this.buildResponse(roomData.description);
-    room.examineResponse = this.buildResponse(roomData.examineDescription);
+
+    // Copy over all verbs
+    this.buildVerbHandlers(room, roomData.verbs);
 
     // TODO: Hook up objects
 
     return room;
 
+  }
+
+  private buildVerbHandlers(entity: WorldEntity, verbData: {}) {
+    for (const verb in verbData) {
+      if (verbData.hasOwnProperty(verb)) {
+        entity.verbs[verb] = this.buildResponse(verbData[verb]);
+      }
+    }
   }
 
   private buildResponse(input: string | any[]): StoryResponse {
@@ -117,7 +140,7 @@ export class StoryLoader {
           let goResponse: StoryResponse = null;
           let lookResponse: StoryResponse = null;
 
-          if (typeof(value) === 'string') {
+          if (typeof (value) === 'string') {
             target = story.findRoomByKey(value as string);
           } else {
             const dirData: DirectionData = value as DirectionData;
@@ -129,6 +152,7 @@ export class StoryLoader {
           }
 
           // Build out the link
+          // TODO: Should probably follow the verb model as well
           const link = new RoomLink(room, direction, target);
           link.goResponse = goResponse;
           link.lookResponse = lookResponse;

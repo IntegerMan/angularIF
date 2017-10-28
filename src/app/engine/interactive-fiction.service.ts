@@ -77,7 +77,7 @@ export class InteractiveFictionService {
     context.outputService.displayRoomName(room.name);
     context.outputService.displayBlankLine();
 
-    room.invokeDescribeResponse(context, isScrutinize);
+    room.invokeVerbResponse(context, 'look');
 
     // Now list all notable items that are present here
     const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));

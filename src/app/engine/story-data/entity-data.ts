@@ -8,8 +8,7 @@ export abstract class EntityData {
 
   aliases: AliasData;
 
-  description: string | any[];
-  examineDescription: string | any[];
+  verbs: {};
 
   contents: ItemData[];
 
