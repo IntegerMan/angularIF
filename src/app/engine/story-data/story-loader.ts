@@ -62,10 +62,17 @@ export class StoryLoader {
     // If this is the player, we'll need to let the story know. Also validate for > 1 player.
     actor.isPlayer = actorData.isPlayer;
     if (actor.isPlayer) {
+
+      // Validate that we don't already have a player
       if (story.player) {
         throw new Error(`${story.name} tried to set ${actor.key} as the player but ${story.player.key} is already the player.`);
       }
+
+      // Set the story's player instance
       story.player = actor;
+
+      // Just a precautionary thing, but let's set the actor's attributes
+      actor.attributes.describeWithRoom = false;
     }
 
     // Set up their inventory

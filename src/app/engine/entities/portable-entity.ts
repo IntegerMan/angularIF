@@ -6,10 +6,6 @@ export class PortableEntity extends WorldEntity {
   isWearable: boolean;
   isWorn: boolean;
 
-  shouldDescribeWithRoom(context: CommandContext): boolean {
-    return true;
-  }
-
   /**
    * Some items don't allow a drop. Let them speak their mind.
    * @param {CommandContext} context The command context
