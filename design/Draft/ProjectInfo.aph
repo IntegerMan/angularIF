@@ -1,0 +1,19 @@
+<ProjectInfo Version="1">
+  <Signature>443C8CA50948CD91D1447C4E25D738AF2477BF76021EA5C1DAEB0E5E257DA289</Signature>
+  <Content>
+    <Project Guid="ec5d6725-30e4-407f-b175-05ff3abf4830">
+      <DisplayName Value="Angular IF"/>
+      <DetailName Value=""/>
+      <MainProjectGuid Value="9e433c3f-3fdf-4379-bc3c-e309988ef7ff"/>
+      <IconType Value="0"/>
+      <IdProjectIcon Value="00000000-0000-0000-0000-000000000000"/>
+      <ScmProviderGuid Value="0745c2ee-abe3-451b-934e-7f597f56c0d7"/>
+      <ScmConfiguration Value=""/>
+      <CreationTimeStamp Value="636448400461625621"/>
+      <PartitionHash Value="1793DCD15F47C0E853E6A083CB8A5D3EF8B16616BCA72131D1E916629D1EA1C6"/>
+      <SaveFileVersion Value="55"/>
+      <ProjectType Value="0"/>
+      <IsOnlineProject Value="False"/>
+    </Project>
+  </Content>
+</ProjectInfo>
