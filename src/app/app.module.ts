@@ -28,6 +28,7 @@ import { InlineHelpComponent } from './text-rendering/inline-help/inline-help.co
 import { TokenDebugComponent } from './text-rendering/token-debug/token-debug.component';
 import { EntityDebugComponent } from './text-rendering/entity-debug/entity-debug.component';
 import {MarkdownService} from './text-rendering/markdown.service';
+import {TemplatingService} from './engine/parser/templating.service';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import {MarkdownService} from './text-rendering/markdown.service';
     CommandEntryService,
     GoogleAnalyticsService,
     MarkdownService,
+    TemplatingService,
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     ConfirmationService,
     { provide: ErrorHandler, useClass: RollbarErrorHandler },

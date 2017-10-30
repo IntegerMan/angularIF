@@ -55,9 +55,13 @@ rooms:
       nouns:
       - Peg
     verbs:
-      look: It's just a small brass hook with {{contents}} hanging on it.
-      # TODO: I really don't know how to do this here. Seems like this is a case for inline scripting logic.
-      lookEmpty: It's just a small brass hook screwed to the wall.
+      look: |
+        {{#hasContents}}
+        It's just a small brass hook with {{contentsText}} hanging on it.
+        {{/hasContents}}
+        {{^hasContents}}
+        It's just a small brass hook screwed to the wall.
+        {{/hasContents}}
     attributes:
       describeWithRoom: false
       allowHang: true
@@ -107,7 +111,7 @@ actors:
 # The player
 - key: *aPlayer
   name: yourself
-  startRoom: *rFoyer
+  startRoom: *rCloakroom
   isPlayer: true
   verbs:
     look: You look yourself over and seem to be in roughly the same shape you were in the last time you checked.

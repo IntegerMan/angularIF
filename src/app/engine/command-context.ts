@@ -13,6 +13,7 @@ import {ConfirmationService} from 'primeng/primeng';
 import {StateService} from './state.service';
 import {ScoreService} from './score.service';
 import {TokenClassification} from './parser/token-classification.enum';
+import {TemplatingService} from './parser/templating.service';
 
 export class CommandContext {
 
@@ -25,6 +26,7 @@ export class CommandContext {
   }
 
   logger: LoggingService;
+  templater: TemplatingService;
   analytics: GoogleAnalyticsService;
   outputService: TextOutputService;
   ifService: InteractiveFictionService;
@@ -37,6 +39,7 @@ export class CommandContext {
   constructor(ifService: InteractiveFictionService,
               outputService: TextOutputService,
               confirmService: ConfirmationService,
+              templatingService: TemplatingService,
               stateService: StateService,
               scoreService: ScoreService) {
 
@@ -44,6 +47,7 @@ export class CommandContext {
     this.story = ifService.story;
     this.outputService = outputService;
     this.confirmService = confirmService;
+    this.templater = templatingService;
     this.state = stateService;
     this.score = scoreService;
 

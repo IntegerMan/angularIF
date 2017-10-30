@@ -19,6 +19,7 @@ import {StateService} from './state.service';
 import {ScoreService} from './score.service';
 import {CommandResult} from './command-result';
 import {GameState} from './game-state.enum';
+import {TemplatingService} from './parser/templating.service';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -44,6 +45,7 @@ export class InteractiveFictionService {
               private outputService: TextOutputService,
               private lexer: LexiconService,
               private confirmService: ConfirmationService,
+              private templatingService: TemplatingService,
               private analytics: GoogleAnalyticsService,
               private stateService: StateService,
               private scoreService: ScoreService) {
@@ -138,6 +140,7 @@ export class InteractiveFictionService {
       this,
       this.outputService,
       this.confirmService,
+      this.templatingService,
       this.stateService,
       this.scoreService);
   }

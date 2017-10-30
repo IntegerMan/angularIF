@@ -225,4 +225,12 @@ export abstract class WorldEntity {
     LoggingService.instance.debug(`${this.that} is now stored inside of ${newContainer.that}.`);
   }
 
+  get hasContents(): boolean {
+    return this.contents && this.contents.length > 0;
+  }
+
+  get contentsText(): string {
+    return StringHelper.toOxfordCommaList(this.contents.map(c => c.name));
+  }
+
 }

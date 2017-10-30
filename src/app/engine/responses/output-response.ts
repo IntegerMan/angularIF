@@ -17,6 +17,14 @@ export class OutputResponse extends StoryResponse {
   }
 
   invoke(context: CommandContext): void {
+
+    // TODO: We'll probably want a better context than this, but eh.
+    if (!this.data) {
+      this.data = context;
+    }
+
+    this.text = context.templater.applyTemplate(this.text, this.data);
+
     context.outputService.displayDynamic(this.text, this.renderType, this.data);
   }
 

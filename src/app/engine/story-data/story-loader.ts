@@ -29,7 +29,7 @@ export class StoryLoader {
     story.maxScore = this.data.maxScore;
     story.description = this.data.description;
     story.authors = this.data.authors;
-    story.introResponse = this.buildResponse(this.data.introText);
+    story.introResponse = this.buildResponse(this.data.introText, story);
 
     // Initialize the rooms
     story.rooms.length = 0;
@@ -143,13 +143,13 @@ export class StoryLoader {
   private buildVerbHandlers(entity: WorldEntity, verbData: {}): void {
     if (verbData) {
       for (const verb of Object.getOwnPropertyNames(verbData)) {
-        entity.verbs[verb] = this.buildResponse(verbData[verb]);
+        entity.verbs[verb] = this.buildResponse(verbData[verb], entity);
       }
     }
   }
 
-  private buildResponse(input: string | any[]): StoryResponse {
-    return ResponseGenerator.buildResponse(input);
+  private buildResponse(input: string | any[], context: any): StoryResponse {
+    return ResponseGenerator.buildResponse(input, context);
   }
 
   private initializeNavigationMesh(story: Story): void {
@@ -172,6 +172,8 @@ export class StoryLoader {
             continue;
           }
 
+          const dirData: DirectionData = value as DirectionData;
+
           let target: Room = null;
           let goResponse: StoryResponse = null;
           let lookResponse: StoryResponse = null;
@@ -179,19 +181,23 @@ export class StoryLoader {
           if (typeof (value) === 'string') {
             target = story.findRoomByKey(value as string);
           } else {
-            const dirData: DirectionData = value as DirectionData;
             if (dirData.room) {
               target = story.findRoomByKey(dirData.room);
             }
-            goResponse = this.buildResponse(dirData.goMessage);
-            lookResponse = this.buildResponse(dirData.lookMessage);
           }
 
           // Build out the link
-          // TODO: Should probably follow the verb model as well
           const link = new RoomLink(room, direction, target);
-          link.goResponse = goResponse;
-          link.lookResponse = lookResponse;
+
+          if (typeof (value) !== 'string') {
+
+            goResponse = this.buildResponse(dirData.goMessage, link);
+            link.goResponse = goResponse;
+
+            lookResponse = this.buildResponse(dirData.lookMessage, link);
+            link.lookResponse = lookResponse;
+
+          }
 
           // Register the link now
           room.roomLink[direction] = link;
