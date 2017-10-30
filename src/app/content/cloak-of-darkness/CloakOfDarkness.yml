@@ -111,7 +111,7 @@ actors:
 # The player
 - key: *aPlayer
   name: yourself
-  startRoom: *rCloakroom
+  startRoom: *rFoyer
   isPlayer: true
   verbs:
     look: You look yourself over and seem to be in roughly the same shape you were in the last time you checked.

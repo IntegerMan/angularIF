@@ -92,8 +92,11 @@ export class HangHandler extends VerbHandler {
       if (command.getProposition('in')) {
         context.outputService.displayStory(`You can't hang something inside of something else!`);
       } else {
-        context.outputService.displayParserError(`I don't understand what you're trying to hang ${entityToHang.that} on.`,
+
+        // TODO: This might benefit from disambiguation or prompting
+        context.outputService.displayParserError(`What are you trying to hang ${entityToHang.that} on?`,
           `Try saying 'Hang ${entityToHang.that} on [object name]'.`);
+
       }
 
       return null;

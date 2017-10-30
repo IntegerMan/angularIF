@@ -197,7 +197,11 @@ export abstract class WorldEntity {
 
   allowItemHanged(context: CommandContext, itemToHang: WorldEntity): boolean {
 
-    context.outputService.displayStory(`You can't hang ${itemToHang.that} on ${this.that}.`);
+    if (this.hasAttribute('allowHang')) {
+      return true;
+    }
+
+    context.outputService.displayStory(`You can't hang ${itemToHang.that} or anything else on ${this.that}.`);
 
     return false;
   }
@@ -210,7 +214,10 @@ export abstract class WorldEntity {
   }
 
   onItemHanged(context: CommandContext, itemToHang: WorldEntity): void {
+
     LoggingService.instance.debug(`Hung ${itemToHang.that} on ${this.that}.`);
+    context.outputService.displayStory(`You hang ${itemToHang.that} on ${this.that}.`);
+
   }
 
   onHung(context: CommandContext, newContainer: WorldEntity): void {
@@ -231,6 +238,10 @@ export abstract class WorldEntity {
 
   get contentsText(): string {
     return StringHelper.toOxfordCommaList(this.contents.map(c => c.name));
+  }
+
+  hasAttribute(attributeName: string): boolean {
+    return this.attributes && this.attributes.hasOwnProperty(attributeName);
   }
 
 }
