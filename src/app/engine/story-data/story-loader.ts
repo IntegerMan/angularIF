@@ -11,6 +11,7 @@ import { Story } from '../entities/story';
 import { StoryData } from './story-data';
 import { StoryResponse } from '../responses/story-response';
 import { WorldEntity } from '../entities/world-entity';
+import {AliasData} from './alias-data';
 
 export class StoryLoader {
 
@@ -128,7 +129,7 @@ export class StoryLoader {
     // Copy over all verbs
     this.buildVerbHandlers(entity, entityData.verbs);
 
-    // TODO: Aliases
+    this.buildAliases(entity, entityData.aliases);
 
   }
 
@@ -209,4 +210,14 @@ export class StoryLoader {
     }
   }
 
+  private buildAliases(entity: WorldEntity, alias: AliasData) {
+
+    if (!alias) {
+      return;
+    }
+
+    entity.addNounAliases(alias.nouns);
+    entity.addAdjectiveAliases(alias.adjectives);
+
+  }
 }

@@ -37,17 +37,17 @@
 			<dock index="0" id="1" port="n" />
 			<dock index="1" id="8" port="s" />
 		</line>
-		<line id="11" name="" description="" door="yes" lockable="yes" openable="yes" locked="yes" open="no">
-			<dock index="0" id="9" port="n" />
-			<dock index="1" id="3" port="s" />
+		<line id="11" name="" description="" door="yes" lockable="yes" openable="yes" locked="yes" open="no" style="dashed" flow="oneWay" midText="Only during intro">
+			<dock index="0" id="3" port="s" />
+			<dock index="1" id="9" port="n" />
 		</line>
-		<room id="12" name="Side Yard" subtitle="" x="544" y="-256" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#80FFFF" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
-		<line id="13" name="" description="">
+		<room id="12" name="Side Yard" subtitle="" x="544" y="-224" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#80FFFF" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
+		<line id="13" name="" description="" flow="oneWay">
 			<dock index="0" id="9" port="ne" />
-			<dock index="1" id="12" port="sw" />
+			<dock index="1" id="12" port="s" />
 		</line>
-		<line id="14" name="" description="">
-			<dock index="0" id="12" port="nw" />
+		<line id="14" name="" description="" flow="oneWay">
+			<dock index="0" id="12" port="n" />
 			<dock index="1" id="8" port="se" />
 		</line>
 		<room id="15" name="Street Corner" subtitle="Whately and Providence" x="736" y="-448" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#8080C0" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
@@ -80,7 +80,7 @@
 		<room id="29" name="Lebling Drive (near pool)" subtitle="" x="-224" y="352" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#8080C0" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>[s] Pond|[s] Parked Car</objects>
 		</room>
-		<room id="31" name="Street Corner near Woods" subtitle="Moriarty and Whately" x="-704" y="-448" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#8080C0" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+		<room id="31" name="Street Corner" subtitle="Moriarty and Whately" x="-704" y="-448" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#8080C0" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>[s] Downed Tree</objects>
 		</room>
 		<line id="32" name="" description="">
@@ -154,7 +154,7 @@
 			<dock index="0" id="43" port="n" />
 			<dock index="1" id="51" port="s" />
 		</line>
-		<room id="53" name="The Woods" subtitle="" x="-1408" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+		<room id="53" name="The Woods" subtitle="" x="-1376" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>[p] Bull Moose</objects>
 		</room>
 		<line id="54" name="" description="" style="dashed">
@@ -184,7 +184,9 @@
 			<dock index="0" id="63" port="n" />
 			<dock index="1" id="57" port="s" />
 		</line>
-		<room id="63" name="Outside the Community Center" subtitle="" x="-448" y="128" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#8080C0" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
+		<room id="63" name="Outside the Community Center" subtitle="" x="-448" y="128" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#8080C0" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects> Neighborhood Watch Flyer</objects>
+		</room>
 		<line id="64" name="" description="">
 			<dock index="0" id="29" port="n" />
 			<dock index="1" id="60" port="s" />
@@ -193,14 +195,14 @@
 			<dock index="0" id="63" port="e" />
 			<dock index="1" id="60" port="w" />
 		</line>
-		<room id="66" name="Wooded Trail" subtitle="" x="-896" y="-640" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+		<room id="66" name="Wooded Trail" subtitle="" x="-448" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>[s] Glowing Eyes|[s] Creaking Branches|[s] Strange Noises</objects>
 		</room>
 		<line id="67" name="" description="">
-			<dock index="0" id="31" port="n" />
+			<dock index="0" id="17" port="n" />
 			<dock index="1" id="66" port="e" />
 		</line>
-		<room id="68" name="Small Clearing" subtitle="" x="-1152" y="-672" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="yes" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+		<room id="68" name="Small Clearing" subtitle="" x="-928" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="yes" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>[s] Sorch Marks|[s] Stream|[f] Injured Wife</objects>
 		</room>
 		<line id="69" name="" description="" style="dashed" flow="oneWay">

@@ -68,18 +68,22 @@ export abstract class WorldEntity {
 
   addNounAliases(nouns: string[]): void {
 
-    for (const noun of nouns) {
-      LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
-      this.nouns.push(noun.toLocaleLowerCase());
+    if (nouns) {
+      for (const noun of nouns) {
+        LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
+        this.nouns.push(noun.toLocaleLowerCase());
+      }
     }
 
   }
 
   addAdjectiveAliases(adjectives: string[]): void {
 
-    for (const adjective of adjectives) {
-      LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
-      this.adjectives.push(adjective.toLocaleLowerCase());
+    if (adjectives) {
+      for (const adjective of adjectives) {
+        LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
+        this.adjectives.push(adjective.toLocaleLowerCase());
+      }
     }
 
   }
