@@ -248,4 +248,13 @@ export abstract class WorldEntity {
     return this.attributes && this.attributes.hasOwnProperty(attributeName);
   }
 
+  getAttribute(attributeName: string): any {
+
+    if (!this.hasAttribute(attributeName)) {
+      return undefined;
+    }
+
+    return this.attributes[attributeName];
+  }
+
 }

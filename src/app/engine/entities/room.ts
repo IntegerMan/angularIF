@@ -34,7 +34,18 @@ export class Room extends WorldEntity {
   }
 
   hasLight(context: CommandContext): boolean {
-    return true;
+
+    const atr = this.getAttribute('isDark');
+
+    if (!atr) {
+      return true;
+    }
+
+    if (atr === true || atr === false) {
+      return !(atr as boolean);
+    }
+
+    return atr.toLowerCase() === 'false';
   }
 
   allowCommand(command: Command, context: CommandContext): boolean {
