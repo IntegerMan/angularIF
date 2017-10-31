@@ -1,5 +1,6 @@
 import { CommandContext } from '../command-context';
 import { WorldEntity } from './world-entity';
+import {CommandResult} from '../command-result';
 
 export class PortableEntity extends WorldEntity {
 
@@ -25,6 +26,9 @@ export class PortableEntity extends WorldEntity {
    */
   onDropped(context: CommandContext): void {
     context.outputService.displayStory(`You drop ${this.that}.`);
+
+    this.sendEvent(context, 'drop', this);
+
   }
 
   /**

@@ -23,10 +23,17 @@ export class AggregateResponse extends StoryResponse {
     }
   }
 
-  invoke(context: CommandContext): void {
+  invoke(context: CommandContext): boolean {
+
+    let output: boolean = true;
+
     for (const response of this.responses) {
-      response.invoke(context);
+      if (!response.invoke(context)) {
+        output = false;
+      }
     }
+
+    return output;
   }
 
 }

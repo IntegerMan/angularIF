@@ -23,8 +23,8 @@ export class ResponseGenerator {
     for (const item of data) {
       aggregate.add(this.buildResponse(item, context));
     }
-    return aggregate;
 
+    return aggregate;
   }
 
 }

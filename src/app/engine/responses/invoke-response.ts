@@ -3,8 +3,9 @@ import {CommandContext} from '../command-context';
 
 export class InvokeResponse extends StoryResponse {
 
-  public invoke(context: CommandContext): void {
+  public invoke(context: CommandContext): boolean {
     // TODO: Does nothing at the moment...
+    return true;
   }
 
 }

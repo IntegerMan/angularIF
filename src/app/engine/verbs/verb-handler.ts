@@ -25,7 +25,6 @@ export abstract class VerbHandler {
 
   abstract get verbType(): VerbType;
 
-
   get isHidden(): boolean {
     return false;
   }

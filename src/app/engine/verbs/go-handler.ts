@@ -27,6 +27,10 @@ export class GoHandler extends VerbHandler {
 
     const link: RoomLink = room.roomLink[direction.name];
 
+    if (!room.sendPreviewEvent(context, this.name, {room, direction, link})) {
+      return CommandResult.BuildActionFailedResult();
+    }
+
     if (!link) {
       context.outputService.displayStory('You can\'t go that way.');
       return CommandResult.BuildActionFailedResult();
@@ -43,9 +47,12 @@ export class GoHandler extends VerbHandler {
         context.outputService.displayStory(`You go ${direction.name}.`);
       }
 
+
       // Move the player
       // TODO: It might be interesting to just make the response responsible for both moving the player (or not) and displaying the text.
       context.ifService.setActorRoom(context.player, link.target);
+
+      room.sendEvent(context, this.name, {room, direction, link});
 
       return CommandResult.BuildActionSuccessResult();
 

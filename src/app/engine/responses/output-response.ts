@@ -16,7 +16,7 @@ export class OutputResponse extends StoryResponse {
     this.data = data;
   }
 
-  invoke(context: CommandContext): void {
+  invoke(context: CommandContext): boolean {
 
     // TODO: We'll probably want a better context than this, but eh.
     if (!this.data) {
@@ -26,6 +26,8 @@ export class OutputResponse extends StoryResponse {
     this.text = context.templater.applyTemplate(this.text, this.data);
 
     context.outputService.displayDynamic(this.text, this.renderType, this.data);
+
+    return true;
   }
 
 }

@@ -76,6 +76,10 @@ export class DropHandler extends VerbHandler {
 
   dropItem(item: PortableEntity, context: CommandContext): CommandResult {
 
+    if (!item.sendPreviewEvent(context, this.name, item)) {
+      return CommandResult.BuildActionFailedResult();
+    }
+
     if (!item.allowDrop(context)) {
       return CommandResult.BuildActionFailedResult();
     }

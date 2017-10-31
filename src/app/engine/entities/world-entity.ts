@@ -259,4 +259,40 @@ export abstract class WorldEntity {
     return this.attributes[attributeName];
   }
 
+  sendPreviewEvent(context: CommandContext, eventName: string, data: any): boolean {
+
+    eventName = `preview${StringHelper.capitalize(eventName)}`;
+
+    context.logger.debug(`Event ${eventName} occurring for ${this.that}.`);
+
+    if (!this.events.hasOwnProperty(eventName)) {
+      return true;
+    }
+
+    const handler: StoryResponse = this.events[eventName];
+    if (!handler) {
+      return true;
+    }
+
+    context.logger.debug(`Sending ${eventName} to event handler.`);
+    context.logger.debug(handler);
+    return handler.invoke(context);
+  }
+
+  sendEvent(context: CommandContext, eventName: string, data: any): void {
+
+    context.logger.debug(`Event ${eventName} occurred for ${this.that}.`);
+
+    if (!this.events.hasOwnProperty(eventName)) {
+      return;
+    }
+
+    const handler: StoryResponse = this.events[eventName];
+    if (handler) {
+      context.logger.debug(`Sending ${eventName} to event handler.`);
+      context.logger.debug(handler);
+      handler.invoke(context);
+    }
+
+  }
 }

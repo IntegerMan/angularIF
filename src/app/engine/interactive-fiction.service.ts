@@ -92,10 +92,10 @@ export class InteractiveFictionService {
 
   describeDarkRoom(context: CommandContext): void {
 
-    // TODO: Authors may need to be able to customize these at some point, but for now, this is fine.
-    context.outputService.displayRoomName(`Darkness`);
+    // TODO: Read this from YAML
+    context.outputService.displayRoomName(`DARK TODO`);
     context.outputService.displayBlankLine();
-    context.outputService.displayStory(`It is pitch dark, and you can't see a thing.`);
+    context.outputService.displayStory(`TODO: DESCRIBE DARKNESS`);
 
   }
 
