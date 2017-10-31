@@ -12,6 +12,7 @@ import { StoryData } from './story-data';
 import { StoryResponse } from '../responses/story-response';
 import { WorldEntity } from '../entities/world-entity';
 import {AliasData} from './alias-data';
+import {ItemData} from './item-data';
 
 export class StoryLoader {
 
@@ -96,13 +97,23 @@ export class StoryLoader {
     return actor;
   }
 
-  private buildItem(itemData: EntityData, story: Story): WorldEntity {
+  private buildItem(itemData: ItemData, story: Story): WorldEntity {
 
     const item: WorldEntity = new PortableEntity(itemData.name, itemData.key);
 
     this.populateCommonFields(item, itemData);
 
+    this.populateEvents(item, itemData.events);
+
     return item;
+  }
+
+  private populateEvents(entity: WorldEntity, events: any) {
+    if (events) {
+      for (const key of Object.getOwnPropertyNames(events)) {
+        entity.events[key] = this.buildResponse(events[key], entity);
+      }
+    }
   }
 
   private buildRoom(roomData: RoomData, story: Story): Room {
@@ -110,6 +121,8 @@ export class StoryLoader {
     const room: Room = new Room(roomData.name, roomData.key);
 
     this.populateCommonFields(room, roomData);
+
+    this.populateEvents(room, roomData.events);
 
     // Populate all registered items
     if (roomData.contents) {
@@ -150,6 +163,11 @@ export class StoryLoader {
   }
 
   private buildResponse(input: string | any[], context: any): StoryResponse {
+
+    if (input === undefined)  {
+      return undefined;
+    }
+
     return ResponseGenerator.buildResponse(input, context);
   }
 

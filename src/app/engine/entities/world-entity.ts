@@ -19,6 +19,7 @@ export abstract class WorldEntity {
 
   verbs: any;
   attributes: any;
+  events: any;
 
   private _inRoomDescription: string = null;
   private _name: string;
@@ -35,6 +36,7 @@ export abstract class WorldEntity {
     this.contents = [];
     this.attributes = {};
     this.verbs = {};
+    this.events = {};
 
     // Auto-detecting here seems like it would make sense, but we don't yet have adequate dictionaries
   }

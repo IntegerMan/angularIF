@@ -1,5 +1,5 @@
-import {InvokeRequest} from './invoke-request';
 import {EntityData} from './entity-data';
+import {ItemEvents} from './item-events';
 
 export class ItemData extends EntityData {
 
@@ -13,10 +13,6 @@ export class ItemData extends EntityData {
   inRoomDescription: string | any[];
   describeWithRoom: boolean = true;
 
-  // Events
-  previewDrop: InvokeRequest;
-  onDrop: InvokeRequest;
-  previewGet: InvokeRequest;
-  onGet: InvokeRequest;
+  events: ItemEvents;
 
 }

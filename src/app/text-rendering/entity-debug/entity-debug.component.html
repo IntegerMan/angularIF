@@ -42,6 +42,15 @@
           </span>
         </div>
       </dd>
+
+      <dt>Events</dt>
+      <dd>
+        <div *ngIf="entity.events" style="vertical-align: middle;">
+          <span *ngFor="let e of entity.events | kvp" class="badge badge-warning mr-1">
+            {{e.key}}
+          </span>
+        </div>
+      </dd>
     </dl>
 
   </div>
