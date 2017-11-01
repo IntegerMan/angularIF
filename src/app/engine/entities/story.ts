@@ -16,9 +16,9 @@ export abstract class Story {
   description: string = null;
 
   rooms: Room[];
-
   player: Actor;
   actors: Actor[];
+  strings: {};
 
   fontAwesomeIcon: string = 'fa-book';
   maxScore: number = 0;
@@ -38,6 +38,7 @@ export abstract class Story {
     this.verbHandlers = [];
     this.rooms = [];
     this.actors = [];
+    this.strings = {};
 
     this.output = TextOutputService.instance;
 

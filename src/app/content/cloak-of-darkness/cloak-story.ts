@@ -2,8 +2,12 @@ import {Story} from '../../engine/entities/story';
 import {LoggingService} from '../../utility/logging.service';
 import {StoryData} from '../../engine/story-data/story-data';
 import {StoryLoader} from '../../engine/story-data/story-loader';
+import {CommandContext} from '../../engine/command-context';
+import {Room} from '../../engine/entities/room';
 
 export class CloakStory extends Story {
+
+  private cloakroom: Room;
 
   reset(): void {
 
@@ -15,27 +19,17 @@ export class CloakStory extends Story {
     // Read metadata from the story data file
     loader.loadIntoStory(this);
 
-    /*
-    // Define the titular cloak
-    this._cloak = new Cloak();
+    this.cloakroom = this.findRoomByKey('cloakroom');
+  }
 
-    // Define the rooms
-    this._foyer = new Room('Foyer of the Opera House');
+  public previewCloakDrop(context: CommandContext): boolean {
 
-    this._cloakroom = new Room('Cloakroom');
-    this._cloak.cloakroom = this._cloakroom;
+    if (context.currentRoom === this.cloakroom) {
+      return true;
+    }
 
-    this._bar = new Bar('Foyer Bar');
-    this._bar.cloak = this._cloak;
-    */
-
-    // this._player.addToInventory(this._cloak);
-
-/*
-    // Build out our rooms
-    this.configureFoyer(this._foyer);
-    this.configureCloakroom(this._cloakroom);
-    this.configureBar(this._bar); */
+    context.outputService.displayStory(context.getString('cloakDropFail'));
+    return false;
   }
 
   /*

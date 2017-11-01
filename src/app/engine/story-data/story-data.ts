@@ -23,6 +23,6 @@ export class StoryData {
   rooms: RoomData[];
   actors: ActorData[];
 
-  strings: {};
+  strings: any[];
 
 }

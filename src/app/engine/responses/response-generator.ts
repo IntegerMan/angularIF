@@ -2,10 +2,12 @@ import {StoryResponse} from './story-response';
 import {OutputResponse} from './output-response';
 import {AggregateResponse} from './aggregate-response';
 import {RenderType} from '../../text-rendering/render-type.enum';
+import {LoggingService} from '../../utility/logging.service';
+import {InvokeResponse} from './invoke-response';
 
 export class ResponseGenerator {
 
-  public static buildResponse(data: string | any[], context: any): StoryResponse {
+  public static buildResponse(data: any, context: any): StoryResponse {
 
     if (!data) {
       return null;
@@ -16,15 +18,25 @@ export class ResponseGenerator {
       return new OutputResponse(data, RenderType.narrative, context);
     }
 
-    // TODO: Will need to handle invoke responses as well
-
     // If it's an array, loop through each member and handle that.
-    const aggregate: AggregateResponse = new AggregateResponse();
-    for (const item of data) {
-      aggregate.add(this.buildResponse(item, context));
+    if (data instanceof Array) {
+      const aggregate: AggregateResponse = new AggregateResponse();
+      for (const item of data) {
+        aggregate.add(this.buildResponse(item, context));
+      }
+
+      return aggregate;
     }
 
-    return aggregate;
+    if (data.invoke) {
+      return new InvokeResponse(data.invoke, context);
+    }
+
+    // Log it and return
+    LoggingService.instance.warning('Unknown custom response object. This element will be ignored.');
+    LoggingService.instance.debug(data);
+
+    return null;
   }
 
 }

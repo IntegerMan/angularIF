@@ -121,4 +121,9 @@ export class CommandContext {
     }
 
   }
+
+  getString(key: string): string {
+    return this.story.strings[key];
+  }
+
 }
