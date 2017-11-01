@@ -250,10 +250,10 @@ export abstract class WorldEntity {
     return this.attributes && this.attributes.hasOwnProperty(attributeName);
   }
 
-  getAttribute(attributeName: string): any {
+  getAttribute(attributeName: string, defaultValue: string): any {
 
     if (!this.hasAttribute(attributeName)) {
-      return undefined;
+      return defaultValue;
     }
 
     return this.attributes[attributeName];

@@ -29,7 +29,7 @@
 			<dock index="0" id="3" port="e" />
 			<dock index="1" id="4" port="w" />
 		</line>
-		<room id="8" name="Whately Drive (Outside House)" subtitle="" x="320" y="-448" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#80FFFF" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+		<room id="8" name="Your Front Yard" subtitle="Whateley Drive" x="320" y="-448" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#80FFFF" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>Newspaper</objects>
 		</room>
 		<room id="9" name="Back Yard" subtitle="" x="320" y="0" w="96" h="64" region="Neighborhood" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#80FFFF" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
@@ -195,14 +195,14 @@
 			<dock index="0" id="63" port="e" />
 			<dock index="1" id="60" port="w" />
 		</line>
-		<room id="66" name="Wooded Trail" subtitle="" x="-448" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+		<room id="66" name="Wooded Trail" subtitle="" x="-896" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>[s] Glowing Eyes|[s] Creaking Branches|[s] Strange Noises</objects>
 		</room>
 		<line id="67" name="" description="">
-			<dock index="0" id="17" port="n" />
+			<dock index="0" id="31" port="n" />
 			<dock index="1" id="66" port="e" />
 		</line>
-		<room id="68" name="Small Clearing" subtitle="" x="-928" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="yes" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+		<room id="68" name="Small Clearing" subtitle="" x="-1152" y="-704" w="96" h="64" region="Field" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="yes" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="#008080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>[s] Sorch Marks|[s] Stream|[f] Injured Wife</objects>
 		</room>
 		<line id="69" name="" description="" style="dashed" flow="oneWay">
@@ -221,7 +221,7 @@
 		<room id="73" name="Monitoring Room" subtitle="" x="1312" y="-448" w="96" h="64" region="Science Building" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="yes" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="#FF8080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
 			<objects>Controls|Readouts</objects>
 		</room>
-		<room id="74" name="Wife's Old Office" subtitle="" x="1312" y="-96" w="96" h="64" region="Science Building" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="#FF8080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
+		<room id="74" name="Old Office" subtitle="" x="1312" y="-96" w="96" h="64" region="Science Building" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="#FF8080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
 		<room id="76" name="Bottom of Stairs" subtitle="" x="1312" y="192" w="96" h="64" region="Science Building" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="#FF8080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
 		<line id="77" name="" description="">
 			<dock index="0" id="55" port="e" />
@@ -231,7 +231,7 @@
 			<dock index="0" id="76" port="n" />
 			<dock index="1" id="71" port="s" />
 		</line>
-		<room id="79" name="Administrative Area" subtitle="" x="1088" y="-96" w="96" h="64" region="Science Building" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="#FF8080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
+		<room id="79" name="Administrative Offices" subtitle="" x="1088" y="-96" w="96" h="64" region="Science Building" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="#FF8080" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="" />
 		<line id="80" name="" description="" door="yes" lockable="no" openable="yes" locked="no" open="yes">
 			<dock index="0" id="55" port="n" />
 			<dock index="1" id="79" port="s" />

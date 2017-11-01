@@ -92,10 +92,12 @@ export class InteractiveFictionService {
 
   describeDarkRoom(context: CommandContext): void {
 
-    // TODO: Read this from YAML
-    context.outputService.displayRoomName(`DARK TODO`);
+    const darkName = context.currentRoom.getAttribute('darkName', 'The Dark');
+    const darkDesc = context.currentRoom.getAttribute('darkDescription', 'It is pitch black, and you can\'t see a thing.');
+
+    context.outputService.displayRoomName(darkName);
     context.outputService.displayBlankLine();
-    context.outputService.displayStory(`TODO: DESCRIBE DARKNESS`);
+    context.outputService.displayStory(darkDesc);
 
   }
 
