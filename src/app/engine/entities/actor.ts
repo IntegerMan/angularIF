@@ -29,7 +29,7 @@ export class Actor extends WorldEntity {
 
     LoggingService.instance.log(`Adding ${item.name} to ${this.name}'s inventory`);
 
-    item.currentRoom = null;
+    item.currentRoom = this.currentRoom;
     item.parent = this;
     this.contents.push(item);
 

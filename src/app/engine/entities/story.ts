@@ -74,6 +74,31 @@ export abstract class Story {
     }
   }
 
+  findEntityByKey(key: string): WorldEntity {
+
+    if (!key) {
+      return null;
+    }
+
+    let entity: WorldEntity;
+
+    for (const room of this.rooms) {
+      entity = room.findEntityByKey(key);
+      if (entity) {
+        return entity;
+      }
+    }
+
+    for (const actor of this.actors) {
+      entity = actor.findEntityByKey(key);
+      if (entity) {
+        return entity;
+      }
+    }
+
+    return null;
+  }
+
   findRoomByKey(key: string): Room {
 
     if (!key) {

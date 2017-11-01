@@ -51,6 +51,11 @@ export abstract class WorldEntity {
 
   set currentRoom(value: Room) {
     this._currentRoom = value;
+
+    for (const child of this.contents) {
+      child.currentRoom = value;
+    }
+
   }
 
   get name(): string {
@@ -295,4 +300,31 @@ export abstract class WorldEntity {
     }
 
   }
+
+  findEntityByKey(key: string): WorldEntity {
+
+    if (this.key === key) {
+      return this;
+    }
+
+    let entity: WorldEntity;
+
+    for (const item of this.contents) {
+      entity = item.findEntityByKey(key);
+      if (entity) {
+        return entity;
+      }
+    }
+
+    return undefined;
+
+  }
+
+  setAttribute(name: string, value: any): void {
+
+    LoggingService.instance.debug(`Setting ${this.key}.${name} to ${value}`);
+
+    this.attributes[name] = value;
+  }
+
 }

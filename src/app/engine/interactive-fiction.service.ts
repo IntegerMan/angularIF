@@ -114,10 +114,22 @@ export class InteractiveFictionService {
     // Find the requisite verb handler for the item in question
     command.verbHandler = this.getVerbHandler(command.verb);
 
+    const initialRoom: Room = context.player.currentRoom;
+
     const result: CommandResult = command.execute(context);
 
-    if (result && result.countsAsMove && !this.isGameOver) {
-      this.movesTaken += 1;
+    if (!this.isGameOver) {
+
+      // If we changed rooms, describe the new room now
+      if (initialRoom !== context.player.currentRoom) {
+        this.describeRoom(context.player.currentRoom, context);
+      }
+
+      // Increment our counter
+      if (result && result.countsAsMove) {
+        this.movesTaken += 1;
+      }
+
     }
     command.result = result;
 
@@ -147,23 +159,22 @@ export class InteractiveFictionService {
       this.scoreService);
   }
 
-  setActorRoom(actor: Actor, room: Room, isSilent: Boolean = false): void {
+  setActorRoom(actor: Actor, room: Room): void {
 
     const oldRoom: Room = actor.currentRoom;
 
     // Calling remove and add object methods ensures that token lookup remains accurate
-    oldRoom.removeObject(actor);
-    room.addObject(actor);
+    if (oldRoom) {
+      oldRoom.removeObject(actor);
+    }
+    if (room) {
+      room.addObject(actor);
+    }
     actor.parent = room;
 
     // Log it to the console for debug purposes
     this.logger.log(`${actor.name} has been moved to ${room.name}.`);
     this.logger.log(room);
-
-    // If it's the player and they changed rooms, describe their new location
-    if (actor === this.story.player && room !== oldRoom && !isSilent) {
-      this.describeRoom(room, this.buildCommandContext());
-    }
 
   }
 

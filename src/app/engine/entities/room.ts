@@ -35,7 +35,7 @@ export class Room extends WorldEntity {
 
   hasLight(context: CommandContext): boolean {
 
-    const atr = this.getAttribute('isDark');
+    const atr = this.getAttribute('isDark', undefined);
 
     if (!atr) {
       return true;
@@ -124,6 +124,5 @@ export class Room extends WorldEntity {
 
     return results;
   }
-
 
 }

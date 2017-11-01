@@ -38,4 +38,9 @@ export class LoggingService {
     this.log(input);
   }
 
+  public table(...data: any[]) {
+    if (console) {
+      console.table(data);
+    }
+  }
 }
