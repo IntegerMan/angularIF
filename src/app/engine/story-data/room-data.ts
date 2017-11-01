@@ -1,4 +1,3 @@
-import {InvokeRequest} from './invoke-request';
 import {EntityData} from './entity-data';
 import {RoomEvents} from './room-events';
 

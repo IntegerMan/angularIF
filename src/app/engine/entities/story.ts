@@ -68,7 +68,7 @@ export abstract class Story {
   displayIntroduction(context: CommandContext): void {
 
     if (this.introResponse) {
-      this.introResponse.invoke(context);
+      this.introResponse.invoke(context, this);
     } else {
       context.outputService.displayStory('The story begins...');
     }

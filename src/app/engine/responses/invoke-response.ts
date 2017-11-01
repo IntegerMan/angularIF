@@ -13,11 +13,11 @@ export class InvokeResponse extends StoryResponse {
 
   }
 
-  public invoke(context: CommandContext): boolean {
+  public invoke(context: CommandContext, data: any): boolean {
 
     const target = context.story;
     if (target[this.methodName]) {
-      return target[this.methodName](context);
+      return target[this.methodName](context, data);
     }
 
     LoggingService.instance.error(`Could not invoke non-existent method ${this.methodName} on story object.`);

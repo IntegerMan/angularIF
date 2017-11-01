@@ -155,11 +155,11 @@ export abstract class WorldEntity {
     return this.attributes.describeWithRoom;
   }
 
-  invokeVerbResponse(context: CommandContext, verbName: string): boolean {
+  invokeVerbResponse(context: CommandContext, verbName: string, data: any): boolean {
 
     if (this.verbs[verbName]) {
       const response: StoryResponse = this.verbs[verbName];
-      response.invoke(context);
+      response.invoke(context, data);
 
       return true;
     }
@@ -255,7 +255,7 @@ export abstract class WorldEntity {
     return this.attributes && this.attributes.hasOwnProperty(attributeName);
   }
 
-  getAttribute(attributeName: string, defaultValue: string): any {
+  getAttribute(attributeName: string, defaultValue: any): any {
 
     if (!this.hasAttribute(attributeName)) {
       return defaultValue;
@@ -281,7 +281,7 @@ export abstract class WorldEntity {
 
     context.logger.debug(`Sending ${eventName} to event handler.`);
     context.logger.debug(handler);
-    return handler.invoke(context);
+    return handler.invoke(context, data);
   }
 
   sendEvent(context: CommandContext, eventName: string, data: any): void {
@@ -296,7 +296,7 @@ export abstract class WorldEntity {
     if (handler) {
       context.logger.debug(`Sending ${eventName} to event handler.`);
       context.logger.debug(handler);
-      handler.invoke(context);
+      handler.invoke(context, data);
     }
 
   }

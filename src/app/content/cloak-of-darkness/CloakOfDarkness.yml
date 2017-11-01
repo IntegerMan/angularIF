@@ -82,8 +82,8 @@ rooms:
     darkName: Darkness
     darkDescription: It is pitch dark, and you can't see a thing.
   events:
-    onAction:
-    - invoke: onBarAction # Track blunders
+    previewAction:
+    - invoke: previewBarAction # Track blunders
     onEnter:
     - invoke: onBarEnter # Update whether or not we're dark
   contents:
@@ -140,6 +140,8 @@ actors:
 # Resource Strings used by different operations
 strings:
 - barBlunder: Blundering around in the dark isn't a good idea!
+- barCantSee: It's pitch black; you can't see a thing!
+- barCantManipulate: In the dark? You could easily disturb something!
 - cloakDropFail: This isn't the best place to leave a smart cloak lying around.
 - messageWin: The message, neatly marked in the sawdust, reads...
 - messageLose: The message has been carelessly trampled, making it difficult to read. You can just distinguish the words...

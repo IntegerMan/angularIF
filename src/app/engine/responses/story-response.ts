@@ -5,6 +5,6 @@ import {CommandContext} from '../command-context';
 
 export abstract class StoryResponse {
 
-  public abstract invoke(context: CommandContext): boolean;
+  public abstract invoke(context: CommandContext, data: any): boolean;
 
 }

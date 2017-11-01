@@ -48,64 +48,6 @@ export class Room extends WorldEntity {
     return atr.toLowerCase() === 'false';
   }
 
-  allowCommand(command: Command, context: CommandContext): boolean {
-
-    if (context.ifService.isGameOver && (!command.verbHandler || command.verbHandler.verbType !== VerbType.system)) {
-
-      context.outputService.displayParserError(`It's too late for that - the game is already over!`);
-      context.outputService.displayPrompt('Would you like to Restart, Restore, or Quit?');
-
-      return false;
-    }
-
-    if (this.hasLight(context)) {
-      return true;
-    }
-
-    if (command.verbHandler) {
-      switch (command.verbHandler.verbType) {
-
-        case VerbType.system:
-          // Just because it's dark doesn't mean that the user shouldn't be able to interact with the engine
-          return true;
-
-        case VerbType.social:
-          // This might be tricky since some social interactions might be physical in nature - hugging, giving something, etc.
-          return true;
-
-        case VerbType.look:
-          context.outputService.displayStory(`It's pitch black; you can't see a thing!`);
-          return false;
-
-        case VerbType.go:
-          const dir: CommandToken = command.getFirstDirection();
-
-          if (dir) {
-
-            const link: RoomLink = context.currentRoom.roomLink[dir.name];
-
-            if (link && link.target) {
-
-              // If we're walking towards a room that is lit, it's allowable.
-              if (link.target.hasLight(context)) {
-                return true;
-              }
-            }
-          }
-
-          context.outputService.displayStory(`Blundering around in the dark isn't a good idea!`);
-          return false;
-
-        case VerbType.manipulate:
-          context.outputService.displayStory(`In the dark? You could easily disturb something!`);
-          return false;
-
-      }
-    }
-
-    return true;
-  }
-
   private addItemsFromContainer(container: WorldEntity, token: CommandToken, context: CommandContext): WorldEntity[] {
 
     const results: WorldEntity[] = [];

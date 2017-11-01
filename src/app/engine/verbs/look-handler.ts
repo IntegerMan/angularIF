@@ -48,9 +48,9 @@ export class LookHandler extends VerbHandler {
 
     // Invoke the appropriate response
     // TODO: The isScrutinize bits can likely be farmed out to the individual verb handler
-    if (isScrutinize && entity.invokeVerbResponse(context, 'examine')) {
+    if (isScrutinize && entity.invokeVerbResponse(context, 'examine', entity)) {
       return CommandResult.BuildActionSuccessResult();
-    } else if (entity.invokeVerbResponse(context, 'look')) {
+    } else if (entity.invokeVerbResponse(context, 'look', entity)) {
       return CommandResult.BuildActionSuccessResult();
     } else if (isScrutinize) {
       context.outputService.displayStory(`You stare at ${entity.that} but fail to notice anything you hadn't noticed before.`);
@@ -92,7 +92,7 @@ export class LookHandler extends VerbHandler {
 
     if (link) {
       if (link.lookResponse) {
-        link.lookResponse.invoke(context);
+        link.lookResponse.invoke(context, link);
       } else {
         // TODO: Doesn't sound right for up / down
         const text = `You look to the ${dir.name} but are unable to tell much from here. You'll have to go there yourself.`;

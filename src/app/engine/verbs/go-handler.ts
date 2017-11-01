@@ -53,7 +53,7 @@ export class GoHandler extends VerbHandler {
 
     // Regardless of success or failure, we'll want to go with the customized message
     if (link.goResponse) {
-      link.goResponse.invoke(context);
+      link.goResponse.invoke(context, link);
     }
 
     // Verify we're going somewhere. Some links are just for failure messages

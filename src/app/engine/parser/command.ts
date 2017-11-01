@@ -3,6 +3,7 @@ import {VerbHandler} from '../verbs/verb-handler';
 import {CommandContext} from '../command-context';
 import {TokenClassification} from './token-classification.enum';
 import {CommandResult} from '../command-result';
+import {VerbType} from '../verbs/verb-type.enum';
 
 /**
  * Represents an arrangement of tokens into a sentence structure that can be handed off to a verb interpreter. At present, sentences are
@@ -65,9 +66,21 @@ export class Command {
       return CommandResult.BuildParseFailedResult();
     }
 
+    // Make sure the game hasn't already ended
+    if (context.ifService.isGameOver && (!this.verbHandler || this.verbHandler.verbType !== VerbType.system)) {
+
+      context.outputService.displayParserError(`It's too late for that - the game is already over!`);
+      context.outputService.displayPrompt('Would you like to Restart, Restore, or Quit?');
+
+      return CommandResult.BuildFreeActionResult();
+    }
+
     // Give the room a chance to veto any command
-    if (!context.currentRoom.allowCommand(this, context)) {
+    if (!context.currentRoom.sendPreviewEvent(context, this.verbHandler.name, this) ||
+        !context.currentRoom.sendPreviewEvent(context, 'action', this)) {
+
       return CommandResult.BuildActionFailedResult();
+
     }
 
     return this.verbHandler.handleCommand(this, context);

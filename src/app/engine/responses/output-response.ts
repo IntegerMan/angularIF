@@ -16,7 +16,7 @@ export class OutputResponse extends StoryResponse {
     this.data = data;
   }
 
-  invoke(context: CommandContext): boolean {
+  invoke(context: CommandContext, data: any): boolean {
 
     // TODO: We'll probably want a better context than this, but eh.
     if (!this.data) {
