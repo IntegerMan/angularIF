@@ -1,20 +1,20 @@
 <div class="card small hoverable sticky-action white-text blue-grey darken-2">
   <div class="card-content">
-          <span class="card-title activator">
-            {{story.name}}
-            <i class="material-icons right" pTooltip="Show more information">more_vert</i>
-          </span>
+    <span class="card-title activator">
+      {{story.name}}
+      <i class="material-icons right" pTooltip="Show more information">more_vert</i>
+    </span>
     <if-md [text]="story.authors"></if-md>
     <br />
-    <if-md [text]="story.description"></if-md>
+    <p class="truncate"><if-md [text]="story.description"></if-md></p>
   </div>
   <div class="card-action blue-grey darken-4">
     <a [routerLink]="['/stories', story.key]" pTooltip="Play this story now">Play</a>
   </div>
   <div class="card-reveal blue-grey darken-3 grey-text">
-          <span class="card-title text-darken-4">{{story.name}}
-            <i class="material-icons right" pTooltip="Return to main view">close</i>
-          </span>
+    <span class="card-title text-darken-4">{{story.name}}
+      <i class="material-icons right" pTooltip="Return to main view">close</i>
+    </span>
     <if-md [text]="story.description"></if-md>
   </div>
 </div>
