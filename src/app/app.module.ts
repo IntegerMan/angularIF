@@ -34,6 +34,7 @@ import { StoryContentComponent } from './story-content/story-content.component';
 import {RouterModule, Routes} from '@angular/router';
 import {environment} from '../environments/environment';
 import { MarkdownPresenterComponent } from './utility/markdown-presenter/markdown-presenter.component';
+import { StoryCardComponent } from './story-card/story-card.component';
 
 const appRoutes: Routes = [
 
@@ -74,7 +75,8 @@ const appRoutes: Routes = [
     EntityDebugComponent,
     StorySelectionComponent,
     StoryContentComponent,
-    MarkdownPresenterComponent
+    MarkdownPresenterComponent,
+    StoryCardComponent
   ],
   imports: [
     RouterModule.forRoot(
