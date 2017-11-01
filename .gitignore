@@ -48,3 +48,5 @@ src/content/\.vs/
 src/app/content/\.vs/
 
 src/app/content/cloak-of-darkness/\.vs/
+
+\.vs/
