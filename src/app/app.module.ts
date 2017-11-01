@@ -35,6 +35,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {environment} from '../environments/environment';
 import { MarkdownPresenterComponent } from './utility/markdown-presenter/markdown-presenter.component';
 import { StoryCardComponent } from './story-card/story-card.component';
+import {StoryService} from './engine/story.service';
 
 const appRoutes: Routes = [
 
@@ -100,6 +101,7 @@ const appRoutes: Routes = [
     GoogleAnalyticsService,
     MarkdownService,
     TemplatingService,
+    StoryService,
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     ConfirmationService,
     { provide: ErrorHandler, useClass: RollbarErrorHandler },
