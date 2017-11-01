@@ -93,19 +93,19 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
 
     switch (state) {
       case GameState.underway:
-        this.stateClass = 'bg-primary';
+        this.stateClass = 'blue darken-4';
         break;
 
       case GameState.won:
-        this.stateClass = 'bg-success';
+        this.stateClass = 'green accent-3';
         break;
 
       case GameState.lost:
-        this.stateClass = 'bg-danger';
+        this.stateClass = 'red darken-3';
         break;
 
       default:
-        this.stateClass = 'bg-warning';
+        this.stateClass = 'grey';
         break;
     }
   }

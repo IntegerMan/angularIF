@@ -5,20 +5,19 @@
 <br />
 
 <div class="full-height">
+
+  <mat-card>
+    <h1>
+      <span class="fa fa-fw {{icon}} d-none d-md-inline-block mr-2"></span>
+      {{title}}
+    </h1>
+  </mat-card>
+
+  <mat-toolbar [ngClass]="stateClass">
+    <if-game-state-header></if-game-state-header>
+  </mat-toolbar>
+
   <mat-card class="full-height">
-    <mat-card-header>
-      <mat-card-title>
-        <h1>
-          <span class="fa fa-fw {{icon}} d-none d-md-inline-block mr-2"></span>
-          {{title}}
-        </h1>
-      </mat-card-title>
-      <mat-card-subtitle>
-        <div class="container p-0 d-none d-md-block" [ngClass]="stateClass">
-          <if-game-state-header></if-game-state-header>
-        </div>
-      </mat-card-subtitle>
-    </mat-card-header>
     <mat-card-content>
       <div class="card-body" #scrollMe style="overflow-y: auto;">
         <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>

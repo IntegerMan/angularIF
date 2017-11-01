@@ -39,7 +39,7 @@ import { MarkdownPresenterComponent } from './utility/markdown-presenter/markdow
 import { StoryCardComponent } from './story-card/story-card.component';
 import {StoryService} from './engine/story.service';
 import { StoryHostComponent } from './story-host/story-host.component';
-import {MatCardModule, MatExpansionModule} from '@angular/material';
+import {MatCardModule, MatExpansionModule, MatToolbarModule} from '@angular/material';
 
 const appRoutes: Routes = [
 
@@ -85,6 +85,7 @@ const appRoutes: Routes = [
     // TODO: It'd be nice to have a separate module just for managing Angular Material modules
     MatCardModule,
     MatExpansionModule,
+    MatToolbarModule,
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     TooltipModule,
     InputTextModule,
