@@ -39,9 +39,9 @@ import {StoryService} from './engine/story.service';
 
 const appRoutes: Routes = [
 
+  { path: 'story/:id',      component: StoryContentComponent },
   /*
   { path: 'crisis-center', component: CrisisListComponent },
-  { path: 'hero/:id',      component: HeroDetailComponent },
   {
     path: 'heroes',
     component: HeroListComponent,

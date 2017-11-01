@@ -11,6 +11,7 @@ import {CommandContext} from '../command-context';
 export abstract class Story {
 
   name: string;
+  key: string;
   authors: string;
   version: string;
   description: string = null;
@@ -28,11 +29,12 @@ export abstract class Story {
 
   protected output: TextOutputService;
 
-  constructor() {
+  constructor(key: string) {
 
     this.name = 'Untitled';
     this.authors = 'Unattributed';
     this.version = '1.0';
+    this.key = key;
 
     // Initialize empty lists
     this.verbHandlers = [];

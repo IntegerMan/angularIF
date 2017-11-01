@@ -17,6 +17,11 @@ export class CloakStory extends Story {
   private blundersRemaining: number = 2;
   private hasDroppedCloak: boolean = false;
 
+
+  constructor() {
+    super('Cloak');
+  }
+
   reset(): void {
 
     // Grab our YAML resource data and stick it into JSON

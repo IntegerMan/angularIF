@@ -6,25 +6,34 @@ import {CloakStory} from '../content/cloak-of-darkness/cloak-story';
 @Injectable()
 export class StoryService {
 
+  private stories: Story[] = [];
+
   constructor() {
 
-  }
-
-  public getStories(): Story[] {
-
-    const stories: Story[] = [];
-
     // TODO: A dynamic load would be nice as well
-    stories.push(new FogTerrierStory());
-    stories.push(new CloakStory());
+    this.stories.push(new FogTerrierStory());
+    this.stories.push(new CloakStory());
 
     // Ensure we have workable data
-    for (const story of stories) {
+    for (const story of this.stories) {
       story.initialize();
     }
 
-    return stories;
+  }
 
+  public getStory(key: string): Story {
+
+    for (const story of this.stories) {
+      if (story.key === key) {
+        return story;
+      }
+    }
+
+    return null;
+  }
+
+  public getStories(): Story[] {
+    return this.stories;
   }
 
 }

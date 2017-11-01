@@ -5,6 +5,10 @@ import {StoryLoader} from '../../engine/story-data/story-loader';
 
 export class FogTerrierStory extends Story {
 
+  constructor() {
+    super('Fog');
+  }
+
   reset(): void {
 
     // Grab our YAML resource data and stick it into JSON
