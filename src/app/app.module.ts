@@ -72,13 +72,16 @@ const appRoutes: Routes = [
     StoryHostComponent
   ],
   imports: [
+    // Base Angular Imports
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: !environment.production }
     ),
     BrowserModule,
     BrowserAnimationsModule,
+    // Custom imports can now come in
     EngineModule,
+    // TODO: It'd be nice to have a separate module just for managing Angular Material modules
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     TooltipModule,
     InputTextModule,
