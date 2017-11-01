@@ -1,0 +1,25 @@
+<div class="container full-height my-1">
+
+  <!-- TODO: This sucks, but use it for now -->
+  <h1 class="my-3">AngularIF</h1>
+  <h2 class="my-3">Select a Story</h2>
+
+  <div *ngIf="stories && stories.length > 0">
+    <p-carousel [value]="stories">
+      <ng-template let-story pTemplate="story">
+
+        <div class="card card-inverse full-height">
+          <div class="card-block">
+            <h4 class="card-title"><if-md [text]="story.name"></if-md></h4>
+            <h6 class="card-subtitle mb-2 text-muted"><if-md [text]="story.authors"></if-md></h6>
+            <p class="card-text"><if-md [text]="story.description"></if-md></p>
+
+            <button class="btn btn-primary" pTooltip="Play this story now.">Play</button>
+          </div>
+        </div>
+
+      </ng-template>
+    </p-carousel>
+  </div>
+
+</div>

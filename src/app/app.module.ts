@@ -18,7 +18,7 @@ import { UserInputComponent } from './text-rendering/user-input/user-input.compo
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
 import {GoogleAnalyticsService} from './utility/google-analytics.service';
-import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule} from 'primeng/primeng';
+import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule, CarouselModule} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
 import { GameOverComponent } from './text-rendering/game-over/game-over.component';
@@ -29,6 +29,29 @@ import { TokenDebugComponent } from './text-rendering/token-debug/token-debug.co
 import { EntityDebugComponent } from './text-rendering/entity-debug/entity-debug.component';
 import {MarkdownService} from './text-rendering/markdown.service';
 import {TemplatingService} from './engine/parser/templating.service';
+import { StorySelectionComponent } from './story-selection/story-selection.component';
+import { StoryContentComponent } from './story-content/story-content.component';
+import {RouterModule, Routes} from '@angular/router';
+import {environment} from '../environments/environment';
+import { MarkdownPresenterComponent } from './utility/markdown-presenter/markdown-presenter.component';
+
+const appRoutes: Routes = [
+
+  /*
+  { path: 'crisis-center', component: CrisisListComponent },
+  { path: 'hero/:id',      component: HeroDetailComponent },
+  {
+    path: 'heroes',
+    component: HeroListComponent,
+    data: { title: 'Heroes List' }
+  },
+  { path: '',
+    redirectTo: '/heroes',
+    pathMatch: 'full'
+  },
+  */
+  { path: '**', component: StorySelectionComponent }
+];
 
 @NgModule({
   declarations: [
@@ -48,9 +71,16 @@ import {TemplatingService} from './engine/parser/templating.service';
     ParserErrorComponent,
     InlineHelpComponent,
     TokenDebugComponent,
-    EntityDebugComponent
+    EntityDebugComponent,
+    StorySelectionComponent,
+    StoryContentComponent,
+    MarkdownPresenterComponent
   ],
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: !environment.production }
+    ),
     BrowserModule,
     BrowserAnimationsModule,
     EngineModule,
@@ -58,7 +88,8 @@ import {TemplatingService} from './engine/parser/templating.service';
     TooltipModule,
     InputTextModule,
     ConfirmDialogModule,
-    TreeModule
+    TreeModule,
+    CarouselModule
   ],
   providers: [
     LoggingService,
