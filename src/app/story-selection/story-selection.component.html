@@ -1,39 +1,40 @@
 <div class="container full-height">
 
+  <!-- TODO: Better spacing here -->
   <br />
 
-  <div class="card-panel">
-    <h1 class="my-3">Angular IF</h1>
-    <p class="flow-text">
-      Welcome to the Angular Interactive Fiction (AngularIF) engine. This project aims at using modern web technologies and natural
-      language processing libraries to offer a slick and responsive take on old-school Interactive Fiction games.
-    </p>
-    <!-- 
-    <p>
-      These games, also referred to as text adventures or parser adventures, are referred to as "post-commercial" as the medium
-      moved out of style in the mid-90's, but there's still a loyal fanbase to this day for Infocom's original games and
-      the multitude developed by fans of the medium.
-    </p>
-    <p>
-      This engine can host a number of different stories, but is not compatible with the Z-Machine format invented by Infocom and
-      used by many interpreters, due in part, to the desire to do new and innovative things with the way the story is presented
-      to the user and the way the user interacts back with the story.
-    </p>
-  -->
-  </div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>AngularIF</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="flow-text">
+        Welcome to the Angular Interactive Fiction engine. This project aims at using modern web technologies and natural language
+        processing libraries to offer a slick and responsive take on old-school Interactive Fiction games.
+      </p>
+    </mat-card-content>
+  </mat-card>
 
-  <div class="card-panel">
-    <h2>Select a Story</h2>
-    <p>
-      At the moment, the engine consists of a small technology demo and a larger game that is very much still in progress and will
-      be fleshed out over the rest of the year and potentially even beyond that point.
-    </p>
+  <!-- TODO: Better spacing here -->
+  <br />
 
-    <div class="row">
-      <div class="col s12 m6" *ngFor="let story of stories">
-        <if-story-card [story]="story"></if-story-card>
+  <mat-card>
+    <mat-card-header>
+      <h2>Select a Story</h2>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        At the moment, the engine consists of a tech demo and a larger game that is still in development until early 2018.
+      </p>
+      <div class="row">
+        <div class="col s12 m6" *ngFor="let story of stories">
+          <if-story-card [story]="story"></if-story-card>
+        </div>
       </div>
-    </div>
-  </div>
+
+    </mat-card-content>
+  </mat-card>
 
 </div>
