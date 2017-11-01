@@ -1,29 +1,32 @@
-<div class="container full-height">
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425" class="bg-dark">
+</p-confirmDialog>
 
-  <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425" class="bg-dark">
-  </p-confirmDialog>
+<!-- TODO: Don't do this for alignment! -->
+<br />
 
-  <div class="full-height py-4">
-    <div class="card card-outline-secondary full-height" >
-      <div class="card-header d-none d-md-block">
-        <p class="h4">
+<div class="full-height">
+  <mat-card class="full-height">
+    <mat-card-header>
+      <mat-card-title>
+        <h1>
           <span class="fa fa-fw {{icon}} d-none d-md-inline-block mr-2"></span>
           {{title}}
-        </p>
-      </div>
-
-      <div class="container p-0 d-none d-md-block" [ngClass]="stateClass">
-        <if-game-state-header></if-game-state-header>
-      </div>
-
-      <div class="card-body bg-dark text-white" #scrollMe style="overflow-y: auto;">
+        </h1>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <div class="container p-0 d-none d-md-block" [ngClass]="stateClass">
+          <if-game-state-header></if-game-state-header>
+        </div>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="card-body" #scrollMe style="overflow-y: auto;">
         <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
       </div>
-
-      <div class="card-footer">
-        <if-command-area></if-command-area>
-      </div>
-    </div>
-  </div>
-
+    </mat-card-content>
+    <mat-card-actions>
+      <if-command-area></if-command-area>
+    </mat-card-actions>
+  </mat-card>
 </div>
+
