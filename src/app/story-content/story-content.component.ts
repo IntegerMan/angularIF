@@ -1,8 +1,6 @@
-import {AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {InteractiveFictionService} from '../engine/interactive-fiction.service';
 import {Story} from '../engine/entities/story';
-import {CloakStory} from '../content/cloak-of-darkness/cloak-story';
-import {CommonVerbService} from '../engine/verbs/common-verb.service';
 import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {TextOutputService} from '../engine/text-output.service';
@@ -15,6 +13,9 @@ import {GameState} from '../engine/game-state.enum';
   styleUrls: ['./story-content.component.css']
 })
 export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecked {
+
+  @Input()
+  story: Story;
 
   lines: TextLine[] = [];
   title: string;
@@ -30,26 +31,21 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
-              private ifService: InteractiveFictionService,
-              private verbService: CommonVerbService) {
+              private ifService: InteractiveFictionService) {
 
-    const story: Story = new CloakStory();
-
-    // Import the common set of verbs
-    for (const verb of this.verbService.getCommonVerbs()) {
-      story.verbHandlers.push(verb);
-    }
-
-    ifService.initialize(story);
-
-    this.title = story.name;
-    this.icon = story.fontAwesomeIcon;
   }
 
   ngOnInit() {
+
+    this.ifService.initialize(this.story);
+
+    this.title = this.story.name;
+    this.icon = this.story.fontAwesomeIcon;
+
     this.lines = this.outputService.lines;
     this.gameStateSubscription = this.ifService.gameStateChanged.subscribe((s) => this.onGameStateChanged(s));
     this.linesChangedSubscription = this.outputService.linesChanged.subscribe(() => this.onLinesChanged());
+
     this.scrollToBottom();
     this.onGameStateChanged(this.ifService.gameState);
   }

@@ -18,7 +18,9 @@ import { UserInputComponent } from './text-rendering/user-input/user-input.compo
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
 import {GoogleAnalyticsService} from './utility/google-analytics.service';
-import {TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule, CarouselModule} from 'primeng/primeng';
+import {
+  TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule, CarouselModule
+} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
 import { GameOverComponent } from './text-rendering/game-over/game-over.component';
@@ -36,22 +38,11 @@ import {environment} from '../environments/environment';
 import { MarkdownPresenterComponent } from './utility/markdown-presenter/markdown-presenter.component';
 import { StoryCardComponent } from './story-card/story-card.component';
 import {StoryService} from './engine/story.service';
+import { StoryHostComponent } from './story-host/story-host.component';
 
 const appRoutes: Routes = [
 
-  { path: 'story/:id',      component: StoryContentComponent },
-  /*
-  { path: 'crisis-center', component: CrisisListComponent },
-  {
-    path: 'heroes',
-    component: HeroListComponent,
-    data: { title: 'Heroes List' }
-  },
-  { path: '',
-    redirectTo: '/heroes',
-    pathMatch: 'full'
-  },
-  */
+  { path: 'stories/:key', component: StoryHostComponent },
   { path: '**', component: StorySelectionComponent }
 ];
 
@@ -77,7 +68,8 @@ const appRoutes: Routes = [
     StorySelectionComponent,
     StoryContentComponent,
     MarkdownPresenterComponent,
-    StoryCardComponent
+    StoryCardComponent,
+    StoryHostComponent
   ],
   imports: [
     RouterModule.forRoot(

@@ -23,6 +23,10 @@ export class StoryService {
 
   public getStory(key: string): Story {
 
+    if (!key) {
+      return null;
+    }
+
     for (const story of this.stories) {
       if (story.key === key) {
         return story;
