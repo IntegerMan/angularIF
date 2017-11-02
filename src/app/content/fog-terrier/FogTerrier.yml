@@ -40,9 +40,14 @@ ids:
 - &rStream stream
 - &rNeighborhoodEntrance hoodentrance
 - &rParkingLot parking
+- &rWoodedTrail trail
 # Inventory Items
 # Scenery
 rooms:
+- key: *rDream
+  name: Recurring Dream 
+  # No navigation here
+  # Listen for 'awake' / 'wake up' / 'awaken' / 'look at clock' / disbelieve
 - key: *rOffice
   name: Home Office
   nav:
@@ -104,6 +109,73 @@ rooms:
   nav:
     northeast: *rProvidence
     west: *rNearFountain
+- key: *rNearPool
+  name: Lebling Drive (Near Pool)
+  nav:
+    north: *rPool
+    east: *rNearFountain
+    west: *rCornerLM
+- key: *rCornerLM
+  name: Corner of Lebling and Moriarty
+  nav:
+    north: *rMoriarty
+    east: *rNearPool
+    south: *rNeighborhoodEntrance
+- key: *rNeighborhoodEntrance
+  name: Entrance to Neighborhood
+  nav:
+    north: *rCornerLM
+    south:
+      goMessage:
+       - | 
+         It's so foggy out there that you probably shouldn't be walking around on such a large road. Besides; 
+         there are things here needing your attention.
+- key: *rMoriarty
+  name: Moriarty Lane
+  nav:
+    north: *rCornerWM
+    northeast: *rPlayground
+    west: *rStream
+    south: *rCornerLM
+- key: *rCornerWM
+  name: Corner of Whateley and Moriarty
+  nav:
+    north: *rWoodedTrail
+    east: *rNearPlayground
+    south: *rMoriarty
+- key: *rNearPlayground
+  name: Whateley Drive (Near Playground)
+  nav:
+    west: *rCornerWM
+    east: *rFrontyard
+    southwest: *rPlayground
+- key: *rPlayground
+  name: Playground
+  nav:
+    southwest: *rMoriarty
+    northeast: *rNearPlayground
+    south: *rCommunity
+- key: *rCommunity
+  name: Outside the Community Center
+  nav:
+    north: *rPlayground
+    east: *rPool
+    southwest: *rCornerLM
+    north:
+      goMessage:
+       - | 
+         The door is locked and chained shut and the lights are off inside. Besides, they cleaned out 
+         everything of interest inside when the building closed down a few years ago.
+- key: *rPool
+  name: Outside the Community Center
+  nav:
+    west: *rCommunity
+    south: *rNearPool
+    in:
+      goMessage:
+       - | 
+         The tarp is still on the pool, but even if it wasn't the pool was drained long ago. Besides, you have better things 
+         to do than getting hypothermia.
 actors:
 # The player
 - key: *aPlayer
