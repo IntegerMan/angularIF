@@ -4,19 +4,27 @@
 
     <kbd>{{text}}</kbd>
 
-    <a class="btn btn-sm btn-link small tooltipped"
+    <!-- <a class="btn btn-sm btn-link small tooltipped collapsible"
        *ngIf="showDebugAids"
        href="#sentence_debug_{{id}}"
        data-toggle="collapse"
        data-tooltip="Show diagnostic information about how this was interpreted">
       Details
-    </a>
+    </a> -->
   </p>
 
-  <if-sentence-debug-card [command]="command"
-                          class="collapse"
-                          *ngIf="showDebugAids"
-                          id="sentence_debug_{{id}}">
-  </if-sentence-debug-card>
+  <mat-expansion-panel *ngIf="showDebugAids">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Details
+      </mat-panel-title>
+      <mat-panel-description>
+        <span>Show diagnostic information about how this was interpreted</span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    
+    <if-sentence-debug-card [command]="command"></if-sentence-debug-card>
+
+  </mat-expansion-panel>
 
 </div>
