@@ -15,6 +15,9 @@ ids:
 # Actors
 - &aPlayer yourself
 - &aTerrier Jester
+- &aMoose Bull Moose
+- &aWife your wife
+- &aBurglar shady individual
 # Rooms
 - &rDream dream
 - &rOffice office # The one in your house, not the old office in the science building
@@ -193,6 +196,57 @@ rooms:
        - | 
          The tarp is still on the pool, but even if it wasn't the pool was drained long ago. Besides, you have better things 
          to do than getting hypothermia.
+- key: *rStream
+  name: Stream
+  nav:
+    west: *rFieldEdge
+    east: *rMoriarty
+- key: *rFieldEdge
+  name: Edge of the Field
+  nav:
+    west: *rNoisyField
+    northwest: *rEerieField
+    north: *rBriarField
+    east: *rStream
+- key: *rNoisyField
+  name: Noisy Field
+  nav:
+    northeast: *rBriarField
+    north: *rEerieField
+    east: *rFieldEdge
+- key: *rBriarField
+  name: Briar Thicket
+  nav:
+    west: *rEerieField
+    south: *rFieldEdge
+    southwest: *rNoisyField
+- key: *rEerieField
+  name: Eerie Field
+  nav:
+    north: *rTreeLine
+    south: *rNoisyField
+    southeast: *rFieldEdge
+    east: *rBriarField
+- key: *rTreeLine
+  name: Tree Line
+  nav:
+    north: *rWoods
+    south: *rEerieField
+- key: *rWoods
+  name: The Woods
+  nav:
+    west: *rTreeLine
+    east: *rClearing
+- key: *rClearing
+  name: Small Clearing
+  nav:
+    west: *rWoods
+    east: *rWoodedTrail
+- key: *rWoodedTrail
+  name: Wooded Trail
+  nav:
+    west: *rClearing
+    east: *rCornerWM
 - key: *rParkingLot
   name: Parking Lot
   nav:
