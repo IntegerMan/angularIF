@@ -37,11 +37,12 @@ import { StoryCardComponent } from './story-card/story-card.component';
 import {StoryService} from './engine/story.service';
 import { StoryHostComponent } from './story-host/story-host.component';
 
-import {MatCardModule, MatExpansionModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {MatCardModule, MatExpansionModule, MatToolbarModule, MatTooltipModule, MatProgressBarModule} from '@angular/material';
 
 import {
   TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule, CarouselModule
 } from 'primeng/primeng';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
 const appRoutes: Routes = [
 
@@ -72,7 +73,8 @@ const appRoutes: Routes = [
     StoryContentComponent,
     MarkdownPresenterComponent,
     StoryCardComponent,
-    StoryHostComponent
+    StoryHostComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     // Base Angular Imports
@@ -89,6 +91,7 @@ const appRoutes: Routes = [
     MatExpansionModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatProgressBarModule,
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     TooltipModule,
     InputTextModule,
