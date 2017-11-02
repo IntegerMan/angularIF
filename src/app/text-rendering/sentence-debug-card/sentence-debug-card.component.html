@@ -1,8 +1,8 @@
-<div class="card mb-3">
+<div class="card accent-bg white-text">
 
-  <div class="card-header">Sentence Structure</div>
 
-  <div class="card-body p-0 pt-3">
+  <div class="card-content">
+    <span class="card-title">Sentence Structure</span>
     <dl>
 
       <dt>Subject</dt>
@@ -38,8 +38,13 @@
     </dl>
   </div>
 
-  <div class="card-footer">
-    All Tokens: <if-token *ngFor="let t of command.tokens" [token]="t"></if-token>
+  <div class="card-actions theme-bg valign-wrapper" style="min-height: 42px;">
+    <dl>
+        <dt>All Tokens:</dt>
+        <dd>
+          <if-token *ngFor="let t of command.tokens" [token]="t"></if-token>
+        </dd>
+    </dl>     
   </div>
 
 </div>
