@@ -16,7 +16,7 @@
     <div class="card-content full-height" #scrollMe style="overflow-y: auto;">
       <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
     </div>
-    <div class="card-footer theme-bg" style="padding-left: 8px; padding-right: 8px; padding-top: 8px;">
+    <div class="card-footer theme-bg z-depth-1 hoverable" style="padding-left: 8px; padding-right: 8px; padding-top: 8px;">
       <if-command-area></if-command-area>
     </div>
   </div>
