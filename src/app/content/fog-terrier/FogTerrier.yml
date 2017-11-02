@@ -12,103 +12,103 @@ introText:
   And so it begins...
 # IDs are important here for YAML to have accurate anchors since they must be declared above refs
 ids:
+# Actors
 - &aPlayer yourself
-- &rFoyer foyer
-- &rBar bar
-- &rCloakroom cloakroom
-- &iCloak cloak
-- &oMessage message
-- &oHook hook
+- &aTerrier Jester
+# Rooms
+- &rDream dream
+- &rOffice office # The one in your house, not the old office in the science building
+- &rHall hall
+- &rKitchen kitchen
+- &rLivingRoom livingroom
+- &rBackyard backyard
+- &rSideyard sideyard
+- &rFrontyard frontyard
+- &rCornerWP cornerwp
+- &rNearPlayground nearplayground
+- &rCornerWM cornerwm
+- &rPlayground playground
+- &rMoriarty moriarty
+- &rCornerLM cornerlm
+- &rCommunity community
+- &rPool pool
+- &rNearPool nearpool
+- &rNearFountain nearfountain
+- &rCornerLP cornerlp
+- &rProvidence providence
+- &rFountain fountain
+- &rStream stream
+- &rNeighborhoodEntrance hoodentrance
+- &rParkingLot parking
+# Inventory Items
+# Scenery
 rooms:
-# Foyer
-- key: *rFoyer
-  name: Foyer of the Opera House
-  verbs:
-    look:
-    - |
-      You are standing in a spacious hall, splendidly decorated in red and gold, with glittering
-      chandeliers overhead. The entrance from the street is to the north, and there are doorways
-      south and west.
+- key: *rOffice
+  name: Home Office
   nav:
-    north:
-      goMessage: You've only just arrived, and besides, the weather outside seems to be getting worse.
-    west: *rCloakroom
-    south: *rBar
-# Cloakroom
-- key: *rCloakroom
-  name: Cloakroom
-  verbs:
-    look:
-    - |
-      The walls of this small room were clearly once lined with hooks, though now only one remains.
-      The exit is a door to the east.
+    east: *rHall # TODO: Cover this with a door
+- key: *rHall
+  name: Front Hall
   nav:
-    east: *rFoyer
-  contents:
-  # The hook for hanging the cloak
-  - key: *oHook
-    name: small brass hook
-    aliases:
-      nouns:
-      - Peg
-    verbs:
-      look: |
-        {{#hasContents}}
-        It's just a small brass hook with {{contentsText}} hanging on it.
-        {{/hasContents}}
-        {{^hasContents}}
-        It's just a small brass hook screwed to the wall.
-        {{/hasContents}}
-    attributes:
-      describeWithRoom: false
-      allowHang: true
-      maxContents: 1
-# Bar
-- key: *rBar
-  name: Foyer Bar
-  verbs:
-    look:
-    - |
-      The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is
-      completely empty. There seems to be some sort of message scrawled in the sawdust on the floor.
+    west: *rOffice # TODO: Cover this with a door
+    south: *rKitchen
+    north: *rFrontyard # TODO: Cover this with a lockable door
+- key: *rKitchen
+  name: Kitchen
   nav:
-    north:
-      room: *rFoyer
-  attributes:
-    isDark: true # This is updated onBarEnter based on presence / absence of the cloak
-    darkName: Darkness
-    darkDescription: It is pitch dark, and you can't see a thing.
-  events:
-    previewAction:
-    - invoke: previewBarAction # Track blunders
-    onEnter:
-    - invoke: onBarEnter # Update whether or not we're dark
-  contents:
-  # Scrawled Message
-  - key: *oMessage
-    name: scrawled message
-    attributes:
-      describeWithRoom: false
-    aliases:
-      nouns:
-      - Writing
-      - Sawdust
-      - Words
-      - Word
-      - Note
-      - Floor
-      - Ground
-      adjectives:
-      - Written
-      - Dusty
-    verbs:
-      look:
-      - invoke: onReadMessage # This will trigger the game end.
+    north: *rHall
+    east: *rLivingRoom
+    south: *rBackyard # TODO: Cover this with a lockable sliding door
+- key: *rBackyard
+  name: Back Yard
+  nav:
+    north: *rKitchen # TODO: Cover this with a lockable sliding door
+    northeast: *rSideyard
+- key: *rSideyard
+  name: Side Yard
+  nav:
+    north: *rFrontyard
+    south: *rBackyard
+- key: *rFrontyard
+  name: Your Front Yard
+  nav:
+    west: *rNearPlayground
+    east: *rCornerWP
+    south: *rHall # TODO: Cover this with a lockable door
+    southeast: *rSideyard
+- key: *rCornerWP
+  name: Corner of Whateley and Providence
+  nav:
+    west: *rFrontyard
+    south: *rProvidence
+- key: *rProvidence
+  name: Providence Drive
+  nav:
+    north: *rCornerWP
+    southwest: *rFountain
+    south: *rCornerLP
+- key: *rCornerLP
+  name: Corner of Lebling and Providence
+  nav:
+    north: *rProvidence
+    west: *rNearFountain
+    east: *rParkingLot
+- key: *rNearFountain
+  name: Lebling Drive (Near Fountain)
+  nav:
+    northeast: *rFountain
+    east: *rCornerLP
+    west: *rNearPool
+- key: *rFountain
+  name: Fountain
+  nav:
+    northeast: *rProvidence
+    west: *rNearFountain
 actors:
 # The player
 - key: *aPlayer
   name: yourself
-  startRoom: *rFoyer
+  startRoom: *rOffice
   isPlayer: true
   verbs:
     look: You look yourself over and seem to be in roughly the same shape you were in the last time you checked.
@@ -116,29 +116,3 @@ actors:
       - |
         Taking some time, you look yourself over, finding the same old scars and blemishes you've accrued
         over the years. You don't love everything about your body, but it's yours and you're used to it.
-  contents:
-  # The Titular Cloak of Darkness
-  - key: *iCloak
-    name: black velvet cloak
-    verbs:
-      look:
-        - A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops.
-          Its blackness is so deep that it almost seems to suck light from the room.
-      examine:
-        - The velvet cloak almost seems to have darkness woven into its very fabric. Everything about
-          it is darker than it should be.
-    inRoomDescription: A dark black velvet cloak rests in a heap on the floor.
-    attributes:
-      isWearable: true
-      isWorn: true
-    events:
-      previewDrop: # Don't allow the user to drop the cloak if they're not in the cloakroom
-      - invoke: previewCloakDrop
-# Resource Strings used by different operations
-strings:
-- barBlunder: Blundering around in the dark isn't a good idea!
-- barCantSee: It's pitch black; you can't see a thing!
-- barCantManipulate: In the dark? You could easily disturb something!
-- cloakDropFail: This isn't the best place to leave a smart cloak lying around.
-- messageWin: The message, neatly marked in the sawdust, reads...
-- messageLose: The message has been carelessly trampled, making it difficult to read. You can just distinguish the words...

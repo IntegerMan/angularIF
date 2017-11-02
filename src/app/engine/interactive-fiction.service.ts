@@ -79,7 +79,9 @@ export class InteractiveFictionService {
     context.outputService.displayRoomName(room.name);
     context.outputService.displayBlankLine();
 
-    room.invokeVerbResponse(context, 'look',  room);
+    if (!room.invokeVerbResponse(context, 'look',  room)) {
+      context.outputService.displayStory(`This area is wholely unremarkable.`);
+    }
 
     // Now list all notable items that are present here
     const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));

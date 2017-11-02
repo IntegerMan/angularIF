@@ -34,9 +34,11 @@ export class StoryLoader {
     story.introResponse = this.buildResponse(this.data.introText, story);
 
     // Copy over string resources
-    for (const kvp of this.data.strings) {
-      for (const prop of Object.getOwnPropertyNames(kvp)) {
-        story.strings[prop] = kvp[prop];
+    if (this.data.strings) {
+      for (const kvp of this.data.strings) {
+        for (const prop of Object.getOwnPropertyNames(kvp)) {
+          story.strings[prop] = kvp[prop];
+        }
       }
     }
 
