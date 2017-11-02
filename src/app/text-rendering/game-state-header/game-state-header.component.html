@@ -1,14 +1,13 @@
-<div class="row my-2 mx-2">
-  <div class="col text-nowrap">
+<nav>
+  <div class="nav-wrapper {{headerClass}}">
     {{mainText}}
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li>
+        {{movesText}}
+      </li>
+      <li>
+        Score: {{score}} / {{maxScore}}
+      </li>
+    </ul>
   </div>
-  <div class="text-right col d-none d-sm-inline-block">
-    <span class="ml-3">
-      {{movesText}}
-    </span>
-    <span class="ml-3">
-      Score: {{score}} / {{maxScore}}
-    </span>
-  </div>
-</div>
-
+</nav>

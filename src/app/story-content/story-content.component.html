@@ -6,16 +6,14 @@
 
 <div class="full-height">
 
-  <mat-card>
+  <mat-card class="blue-grey darken-3">
     <h1>
       <span class="fa fa-fw {{icon}} d-none d-md-inline-block mr-2"></span>
       {{title}}
     </h1>
   </mat-card>
 
-  <mat-toolbar [ngClass]="stateClass">
-    <if-game-state-header></if-game-state-header>
-  </mat-toolbar>
+  <if-game-state-header [headerClass]="stateClass"></if-game-state-header>
 
   <mat-card class="full-height">
     <mat-card-content>

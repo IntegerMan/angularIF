@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, Input} from '@angular/core';
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {TextOutputService} from '../../engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
@@ -13,6 +13,9 @@ import {ScoreService} from '../../engine/score.service';
   styleUrls: ['./game-state-header.component.css']
 })
 export class GameStateHeaderComponent implements OnInit, OnDestroy {
+
+  @Input()
+  headerClass: string;
 
   mainText: string = 'Loading...';
   movesText: string = '';
