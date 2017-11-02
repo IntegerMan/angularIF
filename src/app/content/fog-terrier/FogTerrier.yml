@@ -64,6 +64,16 @@ ids:
 # Inventory Items
 # Scenery
 rooms:
+- key: *rPool
+  name: Outside the Community Center
+  nav:
+    west: *rCommunity
+    south: *rNearPool
+    in:
+      goMessage:
+       - | 
+         The tarp is still on the pool, but even if it wasn't the pool was drained long ago. Besides, you have better things 
+         to do than getting hypothermia.
 - key: *rDream
   name: Recurring Dream 
   # No navigation here
@@ -178,24 +188,13 @@ rooms:
 - key: *rCommunity
   name: Outside the Community Center
   nav:
-    north: *rPlayground
+    west: *rPlayground
+    north:
+      goMessage: |
+        The door is locked and chained shut and the lights are off inside. Besides, they cleaned out everything of 
+        interest inside when the building closed down a few years ago.
     east: *rPool
     southwest: *rCornerLM
-    north:
-      goMessage:
-       - | 
-         The door is locked and chained shut and the lights are off inside. Besides, they cleaned out 
-         everything of interest inside when the building closed down a few years ago.
-- key: *rPool
-  name: Outside the Community Center
-  nav:
-    west: *rCommunity
-    south: *rNearPool
-    in:
-      goMessage:
-       - | 
-         The tarp is still on the pool, but even if it wasn't the pool was drained long ago. Besides, you have better things 
-         to do than getting hypothermia.
 - key: *rStream
   name: Stream
   nav:
