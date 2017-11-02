@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { CommandAreaComponent } from './command-area/command-area.component';
 
-import { TagCommandAreaComponent } from './command-area/tag-command-area/tag-command-area.component';
 import { ParserCommandAreaComponent } from './command-area/parser-command-area/parser-command-area.component';
 import { LoggingService } from './utility/logging.service';
 import {TextOutputService} from './engine/text-output.service';
@@ -25,6 +24,7 @@ import { KeyValuePairPipe } from './utility/key-value-pair.pipe';
 import { ParserErrorComponent } from './text-rendering/parser-error/parser-error.component';
 import { InlineHelpComponent } from './text-rendering/inline-help/inline-help.component';
 import { TokenDebugComponent } from './text-rendering/token-debug/token-debug.component';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { EntityDebugComponent } from './text-rendering/entity-debug/entity-debug.component';
 import {MarkdownService} from './text-rendering/markdown.service';
 import {TemplatingService} from './engine/parser/templating.service';
@@ -37,12 +37,12 @@ import { StoryCardComponent } from './story-card/story-card.component';
 import {StoryService} from './engine/story.service';
 import { StoryHostComponent } from './story-host/story-host.component';
 
-import {MatCardModule, MatExpansionModule, MatToolbarModule, MatTooltipModule, MatProgressBarModule} from '@angular/material';
+import {MatCardModule, MatExpansionModule, MatToolbarModule, MatTooltipModule, MatProgressBarModule,
+  MatInputModule} from '@angular/material';
 
 import {
-  TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule, CarouselModule
+  ConfirmDialogModule, ConfirmationService, TreeModule
 } from 'primeng/primeng';
-import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
 const appRoutes: Routes = [
 
@@ -54,7 +54,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CommandAreaComponent,
-    TagCommandAreaComponent,
     ParserCommandAreaComponent,
     SentenceDebugCardComponent,
     LineRendererComponent,
@@ -92,12 +91,10 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatInputModule,
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
-    TooltipModule,
-    InputTextModule,
     ConfirmDialogModule,
-    TreeModule,
-    CarouselModule
+    TreeModule
   ],
   providers: [
     LoggingService,

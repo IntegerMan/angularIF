@@ -1,7 +1,8 @@
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+/*@import './assets/material.css';*/
 
 /* You can add global styles to this file, and also import other style files */
-html, body {
+html, body, head {
   height: 100%;
 }
 
@@ -12,11 +13,6 @@ html, body {
 
 .wide-load {
   width: 100%;
-}
-
-.ui-tooltip {
-  max-width: 100%;
-  white-space:pre-wrap;
 }
 
 /* Definition lists should render in a more horizontal mode */
@@ -52,4 +48,32 @@ h1 {
 
 h2 {
   font-size: 2em;
+}
+
+.theme-text {
+  color: #37474f;
+}
+
+.accent-text {
+  color: #708090;
+}
+
+.warn-text {
+  color: #f44336;
+}
+
+.theme-bg {
+  background: #37474f;
+}
+
+.accent-bg {
+  background: #708090;
+}
+
+.warn-bg {
+  background: #f44336;
+}
+
+.content-bg {
+  background: #424242;
 }

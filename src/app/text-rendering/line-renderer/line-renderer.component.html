@@ -16,7 +16,7 @@
   <if-token-debug *ngSwitchCase="'tokenDebug'" [token]="line.data"></if-token-debug>
   <if-entity-debug *ngSwitchCase="'entityDebug'" [entity]="line.data"></if-entity-debug>
 
-  <h1 *ngSwitchCase="'header'" class="lead">{{line.text}}<small class="text-muted ml-2" *ngIf="line.data">{{line.data}}</small></h1>
+  <h2 *ngSwitchCase="'header'">{{line.text}}<small class="text-muted ml-2" *ngIf="line.data">{{line.data}}</small></h2>
 
   <span *ngSwitchCase="'author'" class="text-info" [innerHtml]="html"></span>
 

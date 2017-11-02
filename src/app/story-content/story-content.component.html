@@ -3,24 +3,23 @@
 
 <div class="full-height">
 
-  <mat-card class="blue-grey darken-3">
-    <h1>
-      <span class="fa fa-fw {{icon}} d-none d-md-inline-block mr-2"></span>
-      {{title}}
-    </h1>
-  </mat-card>
-
-  <if-game-state-header [headerClass]="stateClass"></if-game-state-header>
-
-  <mat-card class="full-height">
-    <mat-card-content>
-      <div class="card-body" #scrollMe style="overflow-y: auto;">
-        <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
+  <div class="card content-bg white-text">
+    <div class="card-header theme-bg">
+      <div class="valign-wrapper" style="margin-left: 8px;">
+        <h1>
+          <span class="fa fa-fw {{icon}} d-none d-md-inline-block mr-2"></span>
+          {{title}}
+        </h1>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
+      <if-game-state-header [headerClass]="stateClass"></if-game-state-header>
+    </div>
+    <div class="card-content full-height" #scrollMe style="overflow-y: auto;">
+      <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
+    </div>
+    <div class="card-footer theme-bg" style="padding-left: 8px; padding-right: 8px; padding-top: 8px;">
       <if-command-area></if-command-area>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+  </div>
+
 </div>
 

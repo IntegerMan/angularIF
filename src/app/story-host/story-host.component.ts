@@ -15,9 +15,9 @@ import {StoryService} from '../engine/story.service';
 })
 export class StoryHostComponent implements OnInit, OnDestroy {
 
-  private routerSubscription: Subscription;
   public story: Story;
   public loading: boolean = true;
+  private routerSubscription: Subscription;
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
