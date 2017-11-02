@@ -5,10 +5,10 @@
          id="parserInput"
          type="text"
          pInputText
-         pTooltip="Type a command (e.g. 'Go West' or 'Look at squirrel') and hit enter."
-         tooltipPosition="top"
-         showDelay="750"
-         class="wide-load"
+         data-tooltip="Type a command (e.g. 'Go West' or 'Look at squirrel') and hit enter."
+         data-position="top"
+         data-delay="750"
+         class="wide-load tooltipped"
          (keyup.enter)="parseInput(parserInput.value); parserInput.value = '';">
 
     <label for="parserInput" class="text-info">What do you want to do?</label>

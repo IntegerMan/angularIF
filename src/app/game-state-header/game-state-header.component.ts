@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit, Input} from '@angular/core';
-import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
-import {TextOutputService} from '../../engine/text-output.service';
+import {InteractiveFictionService} from '../engine/interactive-fiction.service';
+import {TextOutputService} from '../engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
-import {TextLine} from '../text-line';
-import {RenderType} from '../render-type.enum';
-import {Command} from '../../engine/parser/command';
-import {ScoreService} from '../../engine/score.service';
+import {ScoreService} from '../engine/score.service';
+import {TextLine} from '../text-rendering/text-line';
+import {RenderType} from '../text-rendering/render-type.enum';
 
 @Component({
   selector: 'if-game-state-header',

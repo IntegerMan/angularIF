@@ -18,11 +18,8 @@ import { UserInputComponent } from './text-rendering/user-input/user-input.compo
 import { TextListComponent } from './text-rendering/text-list/text-list.component';
 import { EntityReferenceComponent } from './text-rendering/entity-reference/entity-reference.component';
 import {GoogleAnalyticsService} from './utility/google-analytics.service';
-import {
-  TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule, CarouselModule
-} from 'primeng/primeng';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
-import { GameStateHeaderComponent } from './text-rendering/game-state-header/game-state-header.component';
+import { GameStateHeaderComponent } from './game-state-header/game-state-header.component';
 import { GameOverComponent } from './text-rendering/game-over/game-over.component';
 import { KeyValuePairPipe } from './utility/key-value-pair.pipe';
 import { ParserErrorComponent } from './text-rendering/parser-error/parser-error.component';
@@ -39,7 +36,12 @@ import { MarkdownPresenterComponent } from './utility/markdown-presenter/markdow
 import { StoryCardComponent } from './story-card/story-card.component';
 import {StoryService} from './engine/story.service';
 import { StoryHostComponent } from './story-host/story-host.component';
-import {MatCardModule, MatExpansionModule, MatToolbarModule} from '@angular/material';
+
+import {MatCardModule, MatExpansionModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+
+import {
+  TooltipModule, InputTextModule, ConfirmDialogModule, ConfirmationService, TreeModule, CarouselModule
+} from 'primeng/primeng';
 
 const appRoutes: Routes = [
 
@@ -86,6 +88,7 @@ const appRoutes: Routes = [
     MatCardModule,
     MatExpansionModule,
     MatToolbarModule,
+    MatTooltipModule,
     // TODO: It'd be nice to have a separate module just for managing PrimeNG modules
     TooltipModule,
     InputTextModule,

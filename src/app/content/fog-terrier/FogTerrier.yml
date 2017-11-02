@@ -1,17 +1,15 @@
 ---
-name: Fog Terrier
+name: November Project
 version: 0.01
 authors: "By [Matt Eland](http://www.matteland.com)"
 description:
   |
-  Description coming soon...
-maxScore: 2
-icon: fa-bookmark-o
+  A medium-length mystery / horror / sci-fi story about the goings on late one fall evening in a failed subdivision.
+maxScore: 100
+icon: fa-cloud
 introText:
 - |
-  Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera
-  House. It's surprising that there aren't more people about but, hey, what *do* you expect in a
-  cheap demo game...?
+  And so it begins...
 # IDs are important here for YAML to have accurate anchors since they must be declared above refs
 ids:
 - &aPlayer yourself

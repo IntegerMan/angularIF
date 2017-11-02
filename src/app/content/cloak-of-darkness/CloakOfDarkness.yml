@@ -1,13 +1,13 @@
 ---
 name: Cloak of Darkness
-version: 0.9
+version: 1.0
 authors: "Adapted by [Matt Eland](http://www.matteland.com), Original story by [Roger Firth](http://www.firthworks.com/roger/)."
 description:
   |
   A short demo based on [Roger Firth's specification](http://www.firthworks.com/roger/cloak/) to
   compare various Interactive Fiction development languages.
 maxScore: 2
-icon: fa-bookmark-o
+icon: fa-moon-o
 introText:
 - |
   Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera
