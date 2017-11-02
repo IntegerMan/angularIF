@@ -1,36 +1,23 @@
-<div [ngSwitch]="line.commandType">
+<div [ngSwitch]="line.commandType" style="margin-bottom: 1rem;">
 
-  <span *ngSwitchCase="'engine'" class="text-muted"><samp>{{line.text}}</samp></span>
-  <span *ngSwitchCase="'enginePrompt'" class="text-light"><strong><samp>{{line.text}}</samp></strong></span>
+  <h2 *ngSwitchCase="'header'">{{line.text}}<small style="margin-left: 8px;" *ngIf="line.data">{{line.data}}</small></h2>
+  <div *ngSwitchCase="'divider'" class="margin-top: 6px; margin-bottom: 6px;"></div>
+  <p *ngSwitchCase="'failureAction'" class="red-text">{{line.text}}</p>
+  <p *ngSwitchCase="'successAction'" class="green-text">{{line.text}}</p>
+  <p *ngSwitchCase="'narrative'" [innerHtml]="html"></p>
+  <p *ngSwitchCase="'roomName'" style="margin-top: 12px; margin-bottom: 12px;"><strong>{{line.text}}</strong></p>
+  <span *ngSwitchCase="'engine'" class="grey-text text-lighten-1"><samp>{{line.text}}</samp></span>
+  <span *ngSwitchCase="'enginePrompt'" class="grey-text text-lighten-3"><strong><samp>{{line.text}}</samp></strong></span>
+  <span *ngSwitchCase="'helpText'" class="blue-text">{{line.text}}</span>
+  <span *ngSwitchCase="'author'" class="light-blue-text text-lighten-2" [innerHtml]="html"></span>
+  <span *ngSwitchCase="'subtitle'" class="grey-text" [innerHtml]="html"></span>
+  <span *ngSwitchDefault><span class="red-text">{{line.commandType}}</span>{{line.text}}</span>
 
   <if-game-over *ngSwitchCase="'gameOver'" [text]="line.text" [isVictory]="line.data"></if-game-over>
-
-  <span *ngSwitchCase="'helpText'" class="text-info">{{line.text}}</span>
-
   <if-text-list *ngSwitchCase="'list'" [text]="line.text" [items]="line.data"></if-text-list>
-
   <if-parser-error *ngSwitchCase="'parserError'" [text]="line.text" [hint]="line.data"></if-parser-error>
-
   <if-user-input *ngSwitchCase="'userInput'" [text]="line.text" [command]="line.data"></if-user-input>
-
   <if-token-debug *ngSwitchCase="'tokenDebug'" [token]="line.data"></if-token-debug>
   <if-entity-debug *ngSwitchCase="'entityDebug'" [entity]="line.data"></if-entity-debug>
-
-  <h2 *ngSwitchCase="'header'">{{line.text}}<small class="text-muted ml-2" *ngIf="line.data">{{line.data}}</small></h2>
-
-  <span *ngSwitchCase="'author'" class="text-info" [innerHtml]="html"></span>
-
-  <span *ngSwitchCase="'subtitle'" class="text-muted" [innerHtml]="html"></span>
-
-  <div *ngSwitchCase="'divider'" class="my-3"></div>
-
-  <p *ngSwitchCase="'failureAction'" class="text-danger">{{line.text}}</p>
-
-  <p *ngSwitchCase="'successAction'" class="text-success">{{line.text}}</p>
-
-  <p *ngSwitchCase="'narrative'" [innerHtml]="html"></p>
-  <p *ngSwitchCase="'roomName'"  class="text my-4"><strong>{{line.text}}</strong></p>
-
-  <span *ngSwitchDefault><span class="badge badge-danger">{{line.commandType}}</span>{{line.text}}</span>
 
 </div>
