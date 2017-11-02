@@ -41,6 +41,23 @@ ids:
 - &rNeighborhoodEntrance hoodentrance
 - &rParkingLot parking
 - &rWoodedTrail trail
+- &rFieldEdge edgeoffield
+- &rNoisyField noisyfield
+- &rEerieField eeriefield
+- &rBriarField briarfield
+- &rTreeLine treeline
+- &rWoods thewoods
+- &rClearing smallclearing
+- &rSciLobby lobby
+- &rSciStairsUp stairsup
+- &rSciStairsDown stairsdown
+- &rSciStorage storage
+- &rSciAdmin adminarea
+- &rSciOffice oldoffice
+- &rSciHardware prototyping
+- &rSciMonitoring monitoring
+- &rSciSupport support
+- &rSciExperiment experiment
 # Inventory Items
 # Scenery
 rooms:
@@ -176,6 +193,65 @@ rooms:
        - | 
          The tarp is still on the pool, but even if it wasn't the pool was drained long ago. Besides, you have better things 
          to do than getting hypothermia.
+- key: *rParkingLot
+  name: Parking Lot
+  nav:
+    north: *rSciLobby
+    west: *rCornerLP
+- key: *rSciLobby
+  name: Science Building Lobby
+  nav:
+    north: *rSciAdmin
+    south: *rParkingLot
+    east: *rSciStairsUp
+- key: *rSciStairsUp
+  name: Bottom of Stairs
+  nav:
+    north: *rSciStorage
+    west: *rSciLobby
+    up: *rSciStairsDown
+- key: *rSciStairsDown
+  name: Top of Stairs
+  nav:
+    west: *rSciHardware
+    down: *rSciStairsUp
+- key: *rSciStorage
+  name: Storage Area
+  nav:
+    south: *rSciStairsUp
+    out: *rSciStairsUp
+- key: *rSciAdmin
+  name: Administrative Offices
+  nav:
+    east: *rSciOffice
+    south: *rSciLobby
+- key: *rSciOffice
+  name: Old Office
+  nav:
+    west: *rSciAdmin
+    out: *rSciAdmin
+- key: *rSciHardware
+  name: Hardware Prototyping
+  nav:
+    east: *rSciStairsDown
+    north: *rSciSupport
+    northeast: *rSciMonitoring
+- key: *rSciMonitoring
+  name: Monitoring Room
+  nav:
+    southwest: *rSciHardware
+    out: *rSciHardware
+- key: *rSciSupport
+  name: Experiment Support
+  nav:
+    east: *rSciExperiment
+    south: *rSciHardware
+    out: *rSciHardware
+- key: *rSciExperiment
+  name: Experiment Site
+  nav:
+    west: *rSciSupport
+    # TODO: In should go into the field
 actors:
 # The player
 - key: *aPlayer
