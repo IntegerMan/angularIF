@@ -28,41 +28,41 @@ export class TokenComponent implements OnInit {
 
   get cssClasses(): string {
 
-    let output: string = `badge token-${this.token.classification.toString().toLowerCase()} `;
+    let output: string = `chip white-text token-${this.token.classification.toString().toLowerCase()} z-depth-1 `;
 
     switch (this.token.classification) {
       case TokenClassification.Verb:
-        output += 'badge-danger ';
+        output += 'red ';
         break;
 
       case TokenClassification.Direction:
-        output += 'badge-success ';
+        output += 'green ';
         break;
 
       case TokenClassification.Noun:
-        output += 'badge-primary ';
+        output += 'blue ';
         break;
 
       case TokenClassification.Adverb:
-        output += 'badge-info ';
+        output += 'light-blue ';
         break;
 
       case TokenClassification.Adjective:
-        output += 'badge-info ';
+        output += 'light-blue ';
         break;
 
       case TokenClassification.Ignorable:
       case TokenClassification.Determiner:
-        output += 'badge-default ';
+        output += 'blue-grey ';
         break;
 
       case TokenClassification.Conjunction:
       case TokenClassification.Preposition:
-        output += 'badge-secondary ';
+        output += 'grey ';
         break;
 
       default:
-        output += 'badge-warning '; // badge-dark works too
+        output += 'warn-bg ';
         break;
     }
 

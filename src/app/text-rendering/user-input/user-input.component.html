@@ -1,22 +1,12 @@
 <div>
-  <p class="my-2 text-secondary font-weight-bold">
-    &gt;&nbsp;
-
-    <kbd>{{text}}</kbd>
-
-    <!-- <a class="btn btn-sm btn-link small tooltipped collapsible"
-       *ngIf="showDebugAids"
-       href="#sentence_debug_{{id}}"
-       data-toggle="collapse"
-       data-tooltip="Show diagnostic information about how this was interpreted">
-      Details
-    </a> -->
+  <p style="margin-bottom: 1rem;">
+    <span class="chip grey darken-4 white-text z-depth-1"><kbd>&gt;&nbsp;{{text}}</kbd></span>
   </p>
 
-  <mat-expansion-panel *ngIf="showDebugAids">
+  <mat-expansion-panel *ngIf="showDebugAids" class="hoverable">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Details
+        Sentence Structure
       </mat-panel-title>
       <mat-panel-description>
         <span>Show diagnostic information about how this was interpreted</span>

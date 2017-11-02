@@ -85,3 +85,7 @@ h2 {
 .panel-bg {
   background: #424242;
 }
+
+.small {
+  font-size: 75%;
+}

@@ -26,7 +26,7 @@ export class InteractiveFictionService {
 
   engineName: string = 'Angular Interactive Fiction Engine';
   engineVersion: string = '0.41';
-  engineAuthor: string = 'Matt Eland';
+  engineAuthor: string = '[Matt Eland](http://www.matteland.com/)';
   copyrightText: string = 'Copyright © 2017 Matt Eland';
   licenseText: string = 'All rights reserved.';
   movesTaken: number = 0;
