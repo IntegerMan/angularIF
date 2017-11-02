@@ -79,5 +79,9 @@ h2 {
 }
 
 .content-bg {
+  background: #343a40;
+}
+
+.panel-bg {
   background: #424242;
 }
