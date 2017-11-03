@@ -67,23 +67,23 @@ h2 {
 }
 
 .theme-bg {
-  background: #37474f;
+  background-color: #37474f;
 }
 
 .accent-bg {
-  background: #708090;
+  background-color: #708090;
 }
 
 .warn-bg {
-  background: #f44336;
+  background-color: #f44336;
 }
 
 .content-bg {
-  background: #343a40;
+  background-color: #343a40;
 }
 
 .panel-bg {
-  background: #424242;
+  background-color: #424242;
 }
 
 .small-text {

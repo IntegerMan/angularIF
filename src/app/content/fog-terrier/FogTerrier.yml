@@ -69,7 +69,7 @@ rooms:
   nav:
     west: *rCommunity
     south: *rNearPool
-    in:
+    inside:
       goMessage:
        - | 
          The tarp is still on the pool, but even if it wasn't the pool was drained long ago. Besides, you have better things 
@@ -96,9 +96,29 @@ rooms:
     south: *rBackyard # TODO: Cover this with a lockable sliding door
 - key: *rBackyard
   name: Back Yard
+  verbs:
+    look:
+    - |
+      A thick layer of heavy fog has transformed your backyard from an utterly mundane and ordinary place to an eery and almost magical one.
+    - |
+      Amber light from distant streetlights reflects off of the fog to give you more than adequate
+      lighting despite the late hour although the dense fog prevents you from seeing more than a house or two away.  You can barely make out Providence
+      Drive to the east, past a few fenced in yards.
+    - |
+      The safety and warmth of your kitchen is inside to the north while the yard joins small side yards to the northeast and northwest.
   nav:
     north: *rKitchen # TODO: Cover this with a lockable sliding door
+    inside: *rKitchen # TODO: Cover this with a lockable sliding door
     northeast: *rSideyard
+    northwest:
+      goMessage: |
+        You'd really rather not go to the west side yard. The neighbor's dog tends to poop there no matter how much you complain, and the
+        area is effectively a minefield. The northeast side yard is much better.
+    east:
+      goMessage: |
+        Several fenced-in yards block you from cutting through to Providence Drive. You're probably better served following the street.
+    south:
+      goMessage: That's the neighbor's yard!
 - key: *rSideyard
   name: Side Yard
   nav:
@@ -309,7 +329,7 @@ actors:
 # The player
 - key: *aPlayer
   name: yourself
-  startRoom: *rOffice
+  startRoom: *rBackyard
   isPlayer: true
   verbs:
     look: You look yourself over and seem to be in roughly the same shape you were in the last time you checked.

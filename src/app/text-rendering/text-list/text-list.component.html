@@ -1,8 +1,9 @@
-<div class="card card-outline-info" *ngIf="(items && items.length > 0) || text">
-  <div class="card-header bg-info" *ngIf="text">{{text}}</div>
-  <div class="card-block">
-    <ul *ngIf="items && items.length > 0">
-      <li *ngFor="let item of items">{{getItemText(item)}}</li>
-    </ul>
-  </div>
-</div>
+<p *ngIf="text" style="margin-bottom: 1rem;">{{text}}</p>
+
+<p *ngIf="items && items.length > 0" class="center-align">
+  <span class="chip red lighten-1 white-text" *ngFor="let item of items">{{getItemText(item)}}</span>
+</p>
+
+<!--<ul *ngIf="items && items.length > 0 || text" class="collection black-text">-->
+  <!--<li *ngFor="let item of items" class="collection-item">{{getItemText(item)}}</li>-->
+<!--</ul>-->
