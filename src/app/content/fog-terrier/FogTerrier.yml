@@ -63,6 +63,9 @@ ids:
 - &rSciExperiment experiment
 # Inventory Items
 # Scenery
+strings:
+  msgNeighborsYard: &msgNeighborsYard That's the neighbor's yard!
+### ROOMS ###
 rooms:
 - key: *rPool
   name: Outside the Community Center
@@ -99,7 +102,7 @@ rooms:
   verbs:
     look:
     - |
-      A thick layer of heavy fog has transformed your backyard from an utterly mundane and ordinary place to an eery and almost magical one.
+      A thick layer of heavy fog has transformed your backyard from an utterly mundane and ordinary place to an eerie and almost magical one.
     - |
       Amber light from distant streetlights reflects off of the fog to give you more than adequate
       lighting despite the late hour although the dense fog prevents you from seeing more than a house or two away.  You can barely make out Providence
@@ -118,14 +121,48 @@ rooms:
       goMessage: |
         Several fenced-in yards block you from cutting through to Providence Drive. You're probably better served following the street.
     south:
-      goMessage: That's the neighbor's yard!
+      goMessage: *msgNeighborsYard
 - key: *rSideyard
   name: Side Yard
+  verbs:
+    look: 
+    - |
+      Your side yard, like almost any other, is an entirely unremarkable stretch of land bridging your front
+      yard to the north and your back yard to the south. Tall grass rests against the edge of the house, despite your best 
+      attempts at keeping it at bay with the weed whacker and the only remarkable features of the area at
+      all are a pair of window wells and a worn patch of grass from frequent late night walks around the 
+      house with your dog.
   nav:
     north: *rFrontyard
+    northwest: *rFrontyard
     south: *rBackyard
+    southwest: *rBackyard
+    east:
+      goMessage: *msgNeighborsYard
+    southeast:
+      goMessage: *msgNeighborsYard
+    northeast:
+      goMessage: *msgNeighborsYard
+    west:
+      goMessage: Your house is in the way and there's no door on this side of it.
+    down:
+      goMessage: You don't need to go into the window wells.
+    inside:
+      goMessage: You don't need to go into the window wells and there's no door to the house here.
 - key: *rFrontyard
   name: Your Front Yard
+  verbs:
+    look:
+    - |
+      The familiar front yard now seems utterly alien in the thick blanket of fog surrounding the area. 
+      At least the darkness and fog conceals most of the blemishes in the paint and siding, though the 
+      tall weed-infested grass is still able to mock your lackluster lawn care in recent years.
+    - |
+      The streetlights hit the fog and illuminate Whateley Drive in an amber glow as it stretches out 
+      to the east and west, though fog obscures visibility to the point that you can barely see a few 
+      houses down at a time.
+    - |
+      To the south, a familiar wooden blue door leads inside to your front hall.
   nav:
     west: *rNearPlayground
     east: *rCornerWP
@@ -133,6 +170,19 @@ rooms:
     southeast: *rSideyard
 - key: *rCornerWP
   name: Corner of Whateley and Providence
+  verbs:
+    look:
+    - |
+      The intersection of Whately and Providence is punctuated by an unfinished section of street 
+      leading off to the north. When they built the neighborhood, they clearly intended to expand 
+      it further to the north and even cleared off the land, but the small section of road has now 
+      sat for years without expansion as the nearby college shut its doors, residential demand 
+      plummeted, and people moved on.
+    - |
+      The street corner remains and links Providence Lane to the south to your street, Whateley Drive, 
+      to the west.
+    - |
+      Further to the south, you can barely make out the Anderson Science Building through the fog. _Strange, its lights are on._      
   nav:
     west: *rFrontyard
     south: *rProvidence
@@ -144,6 +194,10 @@ rooms:
     south: *rCornerLP
 - key: *rCornerLP
   name: Corner of Lebling and Providence
+  verbs:
+    look:
+    - | 
+      TODO
   nav:
     north: *rProvidence
     west: *rNearFountain
@@ -195,6 +249,16 @@ rooms:
     south: *rMoriarty
 - key: *rNearPlayground
   name: Whateley Drive (Near Playground)
+  verbs:
+    look:
+    - |
+      Just a little down the street to the west of your house, this portion of the street features a number of foreclosed or otherwise vacant homes 
+      from those who were fortunate enough to have left this dying town and moved elsewhere. A few homes still have occupants, though most of these 
+      have For Sale signs in their yards. Fog obscures much, but it seems like even the vacant homes are in better shape than yours.
+    - |
+      A poorly maintained walking path juts off from the sidewalk and continues to the south towards the playground and the old community center.
+    - |
+      Whateley Drive continues west to the corner and towards your house to the east.
   nav:
     west: *rCornerWM
     east: *rFrontyard
