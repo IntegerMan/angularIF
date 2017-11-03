@@ -52,3 +52,5 @@ src/app/content/cloak-of-darkness/\.vs/
 \.vs/
 
 design/Fog Terrier/~\$Status\.xlsx
+
+*.~vsdx
