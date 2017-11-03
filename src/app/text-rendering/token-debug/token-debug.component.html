@@ -21,7 +21,7 @@
         <dt>Entity</dt>
         <dd>
           <if-entity-reference *ngIf="token.entity" [entity]="token.entity"></if-entity-reference>
-          <span *ngIf="!token.entity" class="grey-text small">(None)</span>
+          <span *ngIf="!token.entity" class="grey-text small-text">(None)</span>
         </dd>
 
         <dt>Tags</dt>
@@ -30,13 +30,13 @@
             <span class="chip accent-bg white-text z-depth-1" *ngIf="tag === token.term.bestTag">{{tag}}</span>
             <span class="chip theme-bg white-text z-depth-1" *ngIf="tag !== token.term.bestTag">{{tag}}</span>
           </div>
-          <span *ngIf="token.term.tags.length < 1" class="grey-text small">(None)</span>
+          <span *ngIf="token.term.tags.length < 1" class="grey-text small-text">(None)</span>
         </dd>
 
         <dt>Modifies</dt>
         <dd>
           <if-token *ngIf="token.modifies" [token]="token.modifies" [includeModifiers]="false" [includeEntity]="true" [autoSize]="false"></if-token>
-          <span *ngIf="!token.modifies" class="grey-text small">(None)</span>
+          <span *ngIf="!token.modifies" class="grey-text small-text">(None)</span>
         </dd>
 
         <dt>Modified By</dt>
@@ -44,7 +44,7 @@
           <div *ngFor="let token of token.modifiedBy">
             <if-token [token]="token" [includeModifiers]="false" [includeEntity]="true" [autoSize]="false"></if-token>
           </div>
-          <span *ngIf="token.modifiedBy.length < 1" class="grey-text small">(None)</span>
+          <span *ngIf="token.modifiedBy.length < 1" class="grey-text small-text">(None)</span>
         </dd>
 
       </dl>

@@ -6,13 +6,13 @@
       <dt>Subject</dt>
       <dd>
         <if-token *ngIf="command.subject" [token]="command.subject" [includeModifiers]="true" [includeEntity]="true"></if-token>
-        <span *ngIf="!command.subject" class="text-muted small">(None)</span>
+        <span *ngIf="!command.subject" class="grey-text small-text">(None)</span>
       </dd>
 
       <dt>Verb</dt>
       <dd>
         <if-token *ngIf="command.verb" [token]="command.verb" [includeModifiers]="true" [includeEntity]="true"></if-token>
-        <span *ngIf="!command.verb" class="text-muted small">(None)</span>
+        <span *ngIf="!command.verb" class="grey-text small-text">(None)</span>
       </dd>
 
       <dt>Objects</dt>
@@ -20,7 +20,7 @@
         <div *ngFor="let obj of command.objects">
           <if-token [token]="obj" [includeModifiers]="true" [includeEntity]="true"></if-token>
         </div>
-        <span *ngIf="command.objects.length < 1" class="text-muted small">(None)</span>
+        <span *ngIf="command.objects.length < 1" class="grey-text small-text">(None)</span>
       </dd>
 
       <dt>Prepositions</dt>
@@ -28,9 +28,9 @@
         <div *ngFor="let prepKvp of command.prepositions | kvp" class="mb-1">
           <if-token [token]="prepKvp.value" [includeModifiers]="true" [includeEntity]="true"></if-token>
           <if-token *ngIf="prepKvp.value.modifies" [token]="prepKvp.value.modifies" [includeModifiers]="false" [includeEntity]="true"></if-token>
-          <span *ngIf="!prepKvp.value.modifies" class="text-muted small">(None)</span>
+          <span *ngIf="!prepKvp.value.modifies" class="grey-text small-text">(None)</span>
         </div>
-        <span *ngIf="!command.hasPrepositions" class="text-muted small">(None)</span>
+        <span *ngIf="!command.hasPrepositions" class="grey-text small-text">(None)</span>
       </dd>
 
     </dl>

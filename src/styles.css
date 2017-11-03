@@ -86,11 +86,11 @@ h2 {
   background: #424242;
 }
 
-.small {
+.small-text {
   font-size: 75%;
 }
 
-.chip.small {
+.chip.small-text {
   height: 20px;
   line-height: 20px;
 }

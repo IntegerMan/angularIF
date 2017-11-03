@@ -22,13 +22,13 @@
         <dt>Parent</dt>
         <dd>
           <if-entity-reference *ngIf="entity.parent" [entity]="entity.parent"></if-entity-reference>
-          <span *ngIf="!entity.parent" class="grey-text small">(None)</span>
+          <span *ngIf="!entity.parent" class="grey-text small-text">(None)</span>
         </dd>
 
         <dt>Verbs</dt>
         <dd>
           <div *ngIf="entity.verbs" class="valign-wrapper">
-            <span *ngFor="let atr of entity.verbs | kvp" class="chip small red white-text z-depth-1">
+            <span *ngFor="let atr of entity.verbs | kvp" class="chip small-text red white-text z-depth-1">
               {{atr.key}}
             </span>
           </div>
@@ -37,7 +37,7 @@
         <dt>Attributes</dt>
         <dd>
           <div *ngIf="entity.attributes" class="valign-wrapper">
-            <span *ngFor="let atr of entity.attributes | kvp" class="chip small cyan white-text z-depth-1">
+            <span *ngFor="let atr of entity.attributes | kvp" class="chip small-text cyan white-text z-depth-1">
               <span>{{atr.key}}:</span>
               <span>{{atr.value}}</span>
             </span>
@@ -47,7 +47,7 @@
         <dt>Events</dt>
         <dd>
           <div *ngIf="entity.events" class="valign-wrapper">
-            <span *ngFor="let e of entity.events | kvp" class="chip small amber white-text z-depth-1">
+            <span *ngFor="let e of entity.events | kvp" class="chip small-text amber white-text z-depth-1">
               {{e.key}}
             </span>
           </div>

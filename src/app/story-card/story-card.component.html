@@ -1,21 +1,22 @@
-<div class="card small hoverable sticky-action white-text blue-grey darken-2">
+<div class="card small hoverable white-text blue-grey darken-2">
   <div class="card-content">
     <span class="card-title activator">
       <span class="fa fa-fw {{story.fontAwesomeIcon}}"></span>
       {{story.name}}
-      <i class="material-icons right tooltipped" data-tooltip="Show more information">more_vert</i>
     </span>
+    <a class="btn-floating halfway-fab waves-effect waves-light"
+       style="margin-bottom: 4.5rem;"
+       [routerLink]="['/Stories', story.key]">
+      <i class="material-icons">play_arrow</i>
+    </a>
     <if-md [text]="story.authors"></if-md>
     <br />
     <if-md [text]="story.description"></if-md>
   </div>
   <div class="card-action blue-grey darken-4">
-    <a [routerLink]="['/Stories', story.key]" pTooltip="Play this story now">Play</a>
-  </div>
-  <div class="card-reveal blue-grey darken-3 grey-text">
-    <span class="card-title text-darken-4">{{story.name}}
-      <i class="material-icons right tooltipped" data-tooltip="Return to main view">close</i>
-    </span>
-    <if-md [text]="story.description"></if-md>
+    <a [routerLink]="['/Stories', story.key]"
+       class="waves-effect waves-light btn">
+      Play
+    </a>
   </div>
 </div>

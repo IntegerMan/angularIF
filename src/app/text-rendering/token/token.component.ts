@@ -73,7 +73,7 @@ export class TokenComponent implements OnInit {
 
     // Modifiers should be rendered at a small level
     if (this.token.modifies && this.autoSize) {
-      output += 'small ';
+      output += 'small-text ';
     }
 
     return output;

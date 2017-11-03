@@ -1,6 +1,6 @@
 <div [ngSwitch]="line.commandType" style="margin-bottom: 1rem;">
 
-  <h2 *ngSwitchCase="'header'">{{line.text}}<small style="margin-left: 8px;" *ngIf="line.data">{{line.data}}</small></h2>
+  <h2 *ngSwitchCase="'header'">{{line.text}}<small style="margin-left: 1rem;" *ngIf="line.data">{{line.data}}</small></h2>
   <div *ngSwitchCase="'divider'" class="margin-top: 6px; margin-bottom: 6px;"></div>
   <p *ngSwitchCase="'failureAction'" class="red-text">{{line.text}}</p>
   <p *ngSwitchCase="'successAction'" class="green-text">{{line.text}}</p>
