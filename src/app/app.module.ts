@@ -46,7 +46,10 @@ import {
 
 const appRoutes: Routes = [
 
+  { path: 'Stories/:key', component: StoryHostComponent },
   { path: 'stories/:key', component: StoryHostComponent },
+  { path: 'Stories', component: StorySelectionComponent },
+  { path: 'stories', component: StorySelectionComponent },
   { path: '**', component: StorySelectionComponent }
 ];
 

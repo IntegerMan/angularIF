@@ -7,11 +7,23 @@
     <div class="card-header theme-bg">
       <div class="valign-wrapper" style="margin-left: 8px;">
         <h1>
-          <span class="fa fa-fw {{icon}} d-none d-md-inline-block mr-2"></span>
+          <span class="fa fa-fw {{icon}}"></span>
           {{title}}
         </h1>
       </div>
       <if-game-state-header [headerClass]="stateClass"></if-game-state-header>
+      <div class="fixed-action-btn toolbar">
+        <a class="btn-floating btn-large accent-bg tooltipped" data-tooltip="Show application options"  data-position="left">
+          <i class="material-icons">menu</i>
+        </a>
+        <ul>
+          <li>
+            <a class="btn-floating warn-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
+              <i class="material-icons">arrow_back</i>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="card-content full-height" #scrollMe style="overflow-y: auto;">
       <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
