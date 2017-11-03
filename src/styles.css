@@ -89,3 +89,8 @@ h2 {
 .small {
   font-size: 75%;
 }
+
+.chip.small {
+  height: 20px;
+  line-height: 20px;
+}
