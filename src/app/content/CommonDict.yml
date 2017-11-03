@@ -61,7 +61,6 @@ substitute:
 expand:
   g: repeat
   x: examine
-  i: inventory
   l: look
   e: east
   w: west

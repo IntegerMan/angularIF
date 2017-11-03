@@ -1,58 +1,61 @@
-<div class="card mb-3">
+<mat-expansion-panel class="hoverable">
+  <mat-expansion-panel-header >
+    <mat-panel-title>
+      <div class="valign-wrapper">
+        <span style="margin-right: 1rem;">Entity:</span>
+        <if-entity-reference [entity]="entity"></if-entity-reference>
+      </div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
-  <div class="card-header text-capitalize">
-    Entity: {{entity.key}}
-  </div>
+  <div class="card blue-grey darken-2 white-text">
 
-  <div class="card-body p-0 pt-3">
+    <div class="card-content">
 
-    <div *ngIf="entity.contents.length > 0" class="float-right" style="width: 300px;">
-      <span class="text-right" style="width: 100px;"><strong>Contents:</strong></span>
-      <p-tree [value]="contentNodes"></p-tree>
+      <div *ngIf="entity.contents.length > 0" class="right" style="width: 300px;">
+        <span class="right-align" style="width: 100px;"><strong>Contents:</strong></span>
+        <p-tree [value]="contentNodes"></p-tree>
+      </div>
+
+      <dl>
+
+        <dt>Parent</dt>
+        <dd>
+          <if-entity-reference *ngIf="entity.parent" [entity]="entity.parent"></if-entity-reference>
+          <span *ngIf="!entity.parent" class="grey-text small">(None)</span>
+        </dd>
+
+        <dt>Verbs</dt>
+        <dd>
+          <div *ngIf="entity.verbs" class="valign-wrapper">
+            <span *ngFor="let atr of entity.verbs | kvp" class="chip small red white-text z-depth-1">
+              {{atr.key}}
+            </span>
+          </div>
+        </dd>
+
+        <dt>Attributes</dt>
+        <dd>
+          <div *ngIf="entity.attributes" class="valign-wrapper">
+            <span *ngFor="let atr of entity.attributes | kvp" class="chip small cyan white-text z-depth-1">
+              <span>{{atr.key}}:</span>
+              <span>{{atr.value}}</span>
+            </span>
+          </div>
+        </dd>
+
+        <dt>Events</dt>
+        <dd>
+          <div *ngIf="entity.events" class="valign-wrapper">
+            <span *ngFor="let e of entity.events | kvp" class="chip small amber white-text z-depth-1">
+              {{e.key}}
+            </span>
+          </div>
+        </dd>
+      </dl>
+
     </div>
 
-    <dl>
-
-      <dt>Name</dt>
-      <dd>
-        {{entity.name}}
-      </dd>
-
-      <dt>Parent</dt>
-      <dd>
-        <if-entity-reference *ngIf="entity.parent" [entity]="entity.parent"></if-entity-reference>
-        <span *ngIf="!entity.parent" class="text-muted small">(None)</span>
-      </dd>
-
-      <dt>Verbs</dt>
-      <dd>
-        <div *ngIf="entity.verbs" style="vertical-align: middle;">
-          <span *ngFor="let atr of entity.verbs | kvp" class="badge badge-danger mr-1">
-            {{atr.key}}
-          </span>
-        </div>
-      </dd>
-
-      <dt>Attributes</dt>
-      <dd>
-        <div *ngIf="entity.attributes" style="vertical-align: middle;">
-          <span *ngFor="let atr of entity.attributes | kvp" class="badge badge-info mr-1">
-            <span>{{atr.key}}:</span>
-            <span>{{atr.value}}</span>
-          </span>
-        </div>
-      </dd>
-
-      <dt>Events</dt>
-      <dd>
-        <div *ngIf="entity.events" style="vertical-align: middle;">
-          <span *ngFor="let e of entity.events | kvp" class="badge badge-warning mr-1">
-            {{e.key}}
-          </span>
-        </div>
-      </dd>
-    </dl>
-
   </div>
 
-</div>
+</mat-expansion-panel>

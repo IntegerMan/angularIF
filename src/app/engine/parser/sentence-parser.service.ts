@@ -5,6 +5,8 @@ import {LoggingService} from '../../utility/logging.service';
 import {TokenClassification} from './token-classification.enum';
 import {TokenizerService} from './tokenizer.service';
 import {LexiconService} from './lexicon.service';
+import {WorldEntity} from '../entities/world-entity';
+import {CommandContext} from '../command-context';
 
 @Injectable()
 export class SentenceParserService {
@@ -15,7 +17,7 @@ export class SentenceParserService {
 
   }
 
-  public buildCommandFromSentenceTokens(sentence: string, tokens: CommandToken[]): Command {
+  public buildCommandFromSentenceTokens(sentence: string, tokens: CommandToken[], context: CommandContext): Command {
 
     // Validate inputs since we're an entry method
     if (!sentence || sentence.length <= 0) {
@@ -38,7 +40,7 @@ export class SentenceParserService {
     this.identifySentencePrepositions(command, tokens);
 
     // At this point we MAY have a subject depending on the verb / noun order, but typically we won't. Assume it is "I" if no subject
-    this.inferSubjectIfNeeded(command);
+    this.inferSubjectIfNeeded(command, context);
 
     // For some specialized commands such as "Inventory", there may not be a verb. Handle those as needed.
     this.inferVerbIfNeeded(command);
@@ -56,11 +58,11 @@ export class SentenceParserService {
 
   }
 
-  private inferSubjectIfNeeded(command: Command) {
+  private inferSubjectIfNeeded(command: Command, context: CommandContext) {
 
     // If we didn't have a noun that qualified as a subject, go ahead and add an implicit self token to the beginning of the sentence
     if (!command.subject) {
-      command.subject = this.buildSelfToken();
+      command.subject = this.buildSelfToken(context);
     }
 
   }
@@ -243,10 +245,11 @@ export class SentenceParserService {
 
   }
 
-  private buildSelfToken(): CommandToken {
+  private buildSelfToken(context: CommandContext): CommandToken {
 
     const token = this.tokenizer.getTokenForWord('I ');
     token.isInferred = true;
+    token.entity = context.player;
 
     return token;
   }

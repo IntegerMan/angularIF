@@ -32,7 +32,7 @@ export class TokenComponent implements OnInit {
 
     switch (this.token.classification) {
       case TokenClassification.Verb:
-        output += 'red ';
+        output += 'red lighten-1 ';
         break;
 
       case TokenClassification.Direction:

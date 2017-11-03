@@ -14,7 +14,7 @@ export class Actor extends WorldEntity {
     this.isAlive = true;
 
     // Add some common synonyms for helping the player refer to their character
-    this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player']);
+    this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player', 'i']);
 
   }
 

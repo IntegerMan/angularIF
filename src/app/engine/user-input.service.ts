@@ -30,17 +30,17 @@ export class UserInputService {
       throw new Error('By your command.');
     }
 
+    const context: CommandContext = this.ifService.buildCommandContext();
+
     // Break the user's input down to tokens with parts of speech defined. This will also perform smart-replacement.
     const tokens = this.extractTokensFromInput(sentence);
 
     // Now that we know what the user said, try to figure out what it means
-    const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens);
+    const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens, context);
 
     const isDebugCommand: boolean = command.verb && command.verb.name === 'debug';
 
     this.outputService.displayUserCommand(sentence, command);
-
-    const context: CommandContext = this.ifService.buildCommandContext();
 
     // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
