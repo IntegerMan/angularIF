@@ -68,7 +68,21 @@ strings:
 ### ROOMS ###
 rooms:
 - key: *rPool
-  name: Outside the Community Center
+  name: Pool
+  verbs:
+    look:
+    - |
+      A vast billowing tarp covers the outdoor pool behind the community center, keeping external debris mostly out and protecting 
+      the empty pool in case times change and people suddenly want to live in this area again. More likely, the tarp protects 
+      various people from potential legal issues should anyone somehow manage to fall into the pool and hurt themselves. From the 
+      rancid smells of mildew coming from the pool, you suspect the tarp is not entirely successful in keeping out rain water.
+    - |
+      Empty pool chairs and side tables line the sides of the pool and a small box for towels rests near the entrance to the pool.
+    - |
+      The tarp flaps in the breeze, making sounds almost like those of sails on a boat as it flutters. You’d never noticed before, 
+      but between the flapping tarp and the pervasive mist, the pool is a _very_ creepy place to hang around at night.
+    - |
+      A sidewalk leads south to Lebling Drive and a path goes west to the community center.
   nav:
     west: *rCommunity
     south: *rNearPool
@@ -289,12 +303,46 @@ rooms:
     southwest: *rPlayground
 - key: *rPlayground
   name: Playground
+  verbs:
+    look:
+    - |
+      What was once a modest neighborhood playground by any standards has now fallen horribly into disrepair. A carousel sits here, its 
+      center clearly bent and twisted so that any potential rider would have a horribly lopsided experience. Several teeter-totters are 
+      also here, though their wooden beams appear to be mostly rotted and certainly wouldn’t hold you safely. Where there once was a 
+      two-person swing set, there’s now only a mound of wood chips after the swing set was finally torn down when one of the support 
+      beams collapsed in a particularly heavy storm a year ago.
+    - |
+      The smell of mold and mildew permeates the air, punctuated by the moist air from the foggy weather.
+    - |
+      The carousel groans and creaks in the wind.
+    - |
+      Paths lead out from the playground to Whateley Drive to the northeast and Moriarty Lane to the southwest. A different path runs south 
+      to the community center.
   nav:
     southwest: *rMoriarty
     northeast: *rNearPlayground
     south: *rCommunity
 - key: *rCommunity
   name: Outside the Community Center
+  verbs:
+    look:
+    - |
+      The neighborhood’s community center once served as a sales and management office while the neighborhood still had plans of building 
+      apartments and condominiums alongside the freestanding homes like your own. Once residential demand plummeted and plans for the 
+      condos were scrapped, the management office shut down and they took the towels, exercise equipment and the rest of the community 
+      center and pursued less hopeless opportunities elsewhere.
+    - |
+      What remains is an attractive hollow shell of a white building. Although the paint is chipped in some areas, the building still 
+      manages to be appealing, even despite the boarded-up windows and doors.
+    - |
+      Your wife would have hated to have seen it like this. She used to love to come and exercise inside in the mornings while listening 
+      to audio books.
+    - |
+      A notice board stands in front of the boarded-up doors. Most of the notices are faded and torn, but a few seem to have been added 
+      only recently.
+    - |
+      A walkway stretches from the playground to the north and continues to the southwest to the street corner. A small path leads east 
+      to the pool behind the community center.
   nav:
     west: *rPlayground
     north:
