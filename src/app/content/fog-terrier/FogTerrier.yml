@@ -243,6 +243,19 @@ rooms:
     south: *rCornerLM
 - key: *rCornerWM
   name: Corner of Whateley and Moriarty
+  verbs:
+    look:
+    - |
+      This corner where your street meets the main neighborhood access road is typically fairly quiet but tonight 
+      it has almost has a life of its own.
+    - |
+      Strange chirping and rustling noises emanate from the densely wooded area on the north side of the road, 
+      in flagrant disregard to the five-year-old notice that these woods are slated to be demolished in order to 
+      make room for more suburban homes. Apparently, when plans changed, the contractors didn't bother to collect 
+      the sign.
+    - |
+      Moriarty Lane extends to the south while Whateley Drive and your house are to the east and dark, twisty, 
+      overgrown trail leads north into the woods and away from the street.
   nav:
     north: *rWoodedTrail
     east: *rNearPlayground

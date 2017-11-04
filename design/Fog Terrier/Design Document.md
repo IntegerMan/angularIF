@@ -66,6 +66,7 @@ The wife gives the player some background and a final objective.
 #### Living Room
 
 #### Back Yard
+
 A thick layer of heavy fog has transformed your backyard from an utterly mundane and ordinary place to an eerie and almost magical one.
 
 Amber light from distant streetlights reflects off of the fog to give you more than adequate lighting despite the late hour although the dense fog prevents you from seeing more than a house or two away.  You can barely make out Providence Drive to the east, past a few fenced in yards.
@@ -73,10 +74,12 @@ Amber light from distant streetlights reflects off of the fog to give you more t
 The safety and warmth of your kitchen is inside to the north while the yard joins small side yards to the northeast and northwest.
 
 #### Side Yard
+
 Your side yard, like almost any other, is an entirely unremarkable stretch of land bridging your front yard to the north and your back yard to the south. Tall grass rests against the edge of the house, despite your best attempts at keeping it at bay with the weed whacker and the only remarkable features of the area at
 all are a pair of window wells and a worn patch of grass from frequent late night walks around the house with your dog.
 
 #### Front Yard
+
 The familiar front yard now seems utterly alien in the thick blanket of fog surrounding the area. At least the darkness and fog conceals most of the blemishes in the paint and siding, though the tall weed-infested
 grass is still able to mock your lackluster lawn care in recent years.
 
@@ -85,8 +88,17 @@ The streetlights hit the fog and illuminate Whateley Drive in an amber glow as i
 To the south, a familiar wooden blue door leads inside to your front hall.
 
 ### Neighborhood
+
 #### Whateley and Moriarty
+
+Here your street meets Moriarty Lane, the main inlet to the neighborhood. The neighborhood was originally intended to span further to the north, but the economy changed and there wasn't enough demand to justify knocking down the wooded area to the north to clear the way for the expansion of Suburbia.
+
+A dark overgrown trail leads north into the woods and away from the street.
+
+Moriarty Lane extends to the south while Whateley Drive and your house are to the east.
+
 #### Whateley Drive (Near Playground)
+
 Just a little down the street to the west of your house, this portion of the street features a number of foreclosed or otherwise vacant homes from those who were fortunate enough to have left this dying town and moved elsewhere. A few homes still have occupants, though most of these have For Sale signs in their yards. Fog obscures much, but it seems like even the vacant homes are in better shape than yours.
 
 A poorly maintained walking path juts off from the sidewalk and continues to the south towards the playground and the old community center.
@@ -94,6 +106,7 @@ A poorly maintained walking path juts off from the sidewalk and continues to the
 Whateley Drive continues west to the corner and towards your house to the east.
 
 #### Whateley and Providence
+
 The intersection of Whately and Providence is punctuated by an unfinished section of street leading off to the north. When they built the neighborhood, they clearly intended to expand it further to the north and even cleared off the land, but the small section of road has now sat for years without expansion as the nearby college shut its doors, residential demand plummeted, and people moved on.
 
 The street corner remains and links Providence Lane to the south to your street, Whateley Drive, to the west.
