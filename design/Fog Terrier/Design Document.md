@@ -91,11 +91,11 @@ To the south, a familiar wooden blue door leads inside to your front hall.
 
 #### Whateley and Moriarty
 
-Here your street meets Moriarty Lane, the main inlet to the neighborhood. The neighborhood was originally intended to span further to the north, but the economy changed and there wasn't enough demand to justify knocking down the wooded area to the north to clear the way for the expansion of Suburbia.
+This corner where your street meets the main neighborhood access road is typically fairly quiet but tonight it has almost has life of its own.
 
-A dark overgrown trail leads north into the woods and away from the street.
+Strange chirping and rustling noises emanate from the densely wooded area on the north side of the road, in flagrant disregard to the five-year-old notice that these woods are slated to be demolished to make room for more suburban homes. Apparently, when plans changed, the contractors didn't bother to collect the sign.
 
-Moriarty Lane extends to the south while Whateley Drive and your house are to the east.
+Moriarty Lane extends to the south while Whateley Drive and your house are to the east and dark, twisty, overgrown trail leads north into the woods and away from the street.
 
 #### Whateley Drive (Near Playground)
 
@@ -107,7 +107,7 @@ Whateley Drive continues west to the corner and towards your house to the east.
 
 #### Whateley and Providence
 
-The intersection of Whately and Providence is punctuated by an unfinished section of street leading off to the north. When they built the neighborhood, they clearly intended to expand it further to the north and even cleared off the land, but the small section of road has now sat for years without expansion as the nearby college shut its doors, residential demand plummeted, and people moved on.
+The intersection of Whateley and Providence is punctuated by an unfinished section of street leading off to the north. When they built the neighborhood, they clearly intended to expand it further to the north and even cleared off the land, but the small section of road has now sat for years without expansion as the nearby college shut its doors, residential demand plummeted, and people moved on.
 
 The street corner remains and links Providence Lane to the south to your street, Whateley Drive, to the west.
 

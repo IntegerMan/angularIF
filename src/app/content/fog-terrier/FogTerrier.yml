@@ -173,7 +173,7 @@ rooms:
   verbs:
     look:
     - |
-      The intersection of Whately and Providence is punctuated by an unfinished section of street 
+      The intersection of Whateley and Providence is punctuated by an unfinished section of street 
       leading off to the north. When they built the neighborhood, they clearly intended to expand 
       it further to the north and even cleared off the land, but the small section of road has now 
       sat for years without expansion as the nearby college shut its doors, residential demand 
@@ -236,6 +236,17 @@ rooms:
          there are things here needing your attention.
 - key: *rMoriarty
   name: Moriarty Lane
+  verbs:
+    look:
+    - |
+      The fog is particularly thick here and seems to be emanating from a small creek behind the homes on the 
+      west side of the street.
+    - |
+      You can hear sounds of trickling water from the west and the occasional whines and groans of metal 
+      moving in the wind to the northeast, though you see no way of going that way directly.
+    - |
+      The street continues north and south while a break in the fog to the west reveals a small path to 
+      the edge of the creek. 
   nav:
     north: *rCornerWM
     northeast: *rPlayground
@@ -250,7 +261,7 @@ rooms:
       it has almost has a life of its own.
     - |
       Strange chirping and rustling noises emanate from the densely wooded area on the north side of the road, 
-      in flagrant disregard to the five-year-old notice that these woods are slated to be demolished in order to 
+      in flagrant disregard to the five-year-old notice that these woods are slated to be demolished to 
       make room for more suburban homes. Apparently, when plans changed, the contractors didn't bother to collect 
       the sign.
     - |
