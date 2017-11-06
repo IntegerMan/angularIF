@@ -590,21 +590,79 @@ rooms:
     south: *rEerieField
 - key: *rWoods
   name: The Woods
+  verbs:
+    look:
+    - |
+      The woods are deeper here and the fog has picked up again now that you’ve left the safety of the tree 
+      line. The dense fog obscures everything beyond a few meters of your current position and you can’t 
+      see much of the trail behind you to the southwest.
+    - |
+      There’s a deep musty odor to this place.
+    - |
+      The trees creak and groan in the wind and you hear the sounds of trees, or perhaps something else, 
+      hitting other trees. The sound of the wind is deep and rhythmic here, almost like breathing.
+    - |
+      You know from the walks you used to do with your wife that there’s a clearing ahead to the east, but 
+      you can scarcely see where you are going.
+    - |
+      Something feels wrong here. It feels like you are no longer alone.
   nav:
     west: *rTreeLine
     east: *rClearing
 - key: *rClearing
   name: Small Clearing
+  verbs:
+    look:
+    - |
+      You’ve reached a small clearing in the woods. Several layers of dried leaves line the 
+      ground and separate an oak tree and a large flat rock in the center of the clearing from the edges.
+    - |
+      The fog from the rest of the woods thins drastically in the clearing, leaving only a thin 
+      ankle-high mist, though the fog sticks to the edges of the woods.
+    - |
+      A trail leads west towards large creatures who could fracture your ribcage without realizing it 
+      or to the east towards the relative safety of the neighborhood.
   nav:
     west: *rWoods
     east: *rWoodedTrail
 - key: *rWoodedTrail
   name: Wooded Trail
+  verbs:
+    look:
+    - |
+      You recognize this trail. You and your wife used to take long walks in the woods after you first moved in 
+      to the neighborhood, particularly in the early fall as the leaves changed colors. Although you hadn’t been 
+      back in many years, the trail is still surprisingly fresh in your mind.
+    - |
+      Like everything else in the neighborhood, time has taken its toll and the once pleasant path has become 
+      overgrown due to lack of maintenance. The denser, closer foliage and the late hour combine to tear the 
+      pleasantness and joy you remember from this path and replace it with a foreboding sense of danger.
+    - |
+      Every so often you hear noises of animals moving in the woods or through the trees nearby, though 
+      you rarely see anything, aside from momentary reflections of animal eyes that are then obscured by 
+      trees and branches until they re-emerge closer.
+    - |
+      You do not feel safe here.
+    - |
+      You can just make out the lights of the neighborhood to the south at the exit of the trail.
   nav:
     west: *rClearing
     east: *rCornerWM
 - key: *rParkingLot
   name: Parking Lot
+  verbs:
+    look:
+    - |
+      You are in the now-empty parking lot of the Anderson Science Center just west of your neighborhood.
+    - |
+      The once impressive two-story building lays before you to the north, a reminder of more promising times. 
+      Here you saw the brightest days of your career and happiest years of your life. Here you and others were 
+      tackling the most thought-provoking and challenging problems of the day. Here’s where it all fell apart as well.
+    - |
+      The building’s windows are boarded up and the masonry remains cracked from vandalism. Graffiti adorns the 
+      stone pillars and large front wall to the building, whether from ex-employees or from an angry community, it’s hard to say.
+    - |
+      The door to the building and its horrible and wonderful memories is to the north. A small path leads west to your neighborhood.
   nav:
     north: *rSciLobby
     west: *rCornerLP
