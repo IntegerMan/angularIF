@@ -531,7 +531,20 @@ rooms:
     north: *rEerieField
     east: *rFieldEdge
 - key: *rBriarField
-  name: Briar Thicket
+  name: Field (Near Brambles)
+  verbs:
+    look:
+    - |
+      The tall grassy field mixes with a thorny patch of brambles at the northeast edge of the open field. 
+      Long strands of thorny brambles threaten to tear up the limbs of any careless intruder and the poor 
+      lighting makes identifying them that much harder.
+    - |
+      Even being near these makes you shudder involuntarily in memory of a time at camp as a teen when you 
+      accidentally rolled down a hill and into a clump of brambles you hadn’t noticed before.
+    - |
+      Some of the brambles appear to have torn fur and what might be dried blood on them.
+    - |
+      The open field extends under a cloud of light fog to the west, southwest, and south.
   nav:
     west: *rEerieField
     south: *rFieldEdge
@@ -560,6 +573,18 @@ rooms:
     east: *rBriarField
 - key: *rTreeLine
   name: Tree Line
+  verbs:
+    look:
+    - |
+      You are at the north edge of the grassy field. A long, straight line of pine trees stand watch ominously 
+      over the entrance to a dark trail twisting its way into the woods to the north.
+    - |
+      The dirt here has strange disturbances in it, as if something large had been here recently and thrashed about.
+    - |
+      At least the fog has thinned considerably here, though it feels much darker in this area without the light 
+      reflecting off of the fog.
+    - |
+      The great grassy field lies to the south, away from the dark trail to the north.
   nav:
     north: *rWoods
     south: *rEerieField
