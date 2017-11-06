@@ -538,6 +538,21 @@ rooms:
     southwest: *rNoisyField
 - key: *rEerieField
   name: Eerie Field
+  verbs:
+    look:
+    - |
+      The north edge of the field is almost uncannily silent and still. Here, the long reeds of grass sway less in 
+      the breeze and the insects are either silent or have relocated elsewhere, likely to the south where you 
+      hear a loud buzzing.
+    - |
+      A large black circle the length of a car is burned into the ground here – an area where the tall grass was 
+      apparently cleared or burned away, apparently recently.
+    - |
+      The air here is thick and strange and has that odd scent of ozone to it, like it’s about to storm. Even the 
+      dust particles seem to be floating in midair in the low fog without paying as much attention to gravity or 
+      the wind, but perhaps that’s just your overactive imagination playing tricks on you.
+    - |
+      The field extends to the east, southeast, and south while a treeline is a short distance to the north.
   nav:
     north: *rTreeLine
     south: *rNoisyField
