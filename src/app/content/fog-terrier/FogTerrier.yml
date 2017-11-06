@@ -9,7 +9,18 @@ maxScore: 100
 icon: fa-cloud
 introText:
 - |
-  And so it begins...
+  You’re back here again. You stand before the readouts and switches yet again. You don’t remember falling asleep, 
+  but nonetheless, you’ve arrived inexplicably and inevitably in the hell of your own past.
+- |
+  You recognize this place as the monitoring room of the Anderson Science Center - or at least your memory of it. 
+  You know the real one shut down years ago, but that has never stopped you from reliving your final experiment 
+  there before.
+- |
+  Red lights illuminate the room. They said it was to help you focus on the various dials in the low lighting 
+  conditions required for the experiment in the adjoining room, but the lighting apparently wasn’t enough the 
+  last time to stop things.
+- |
+  You bet it won’t be enough this time either.
 # IDs are important here for YAML to have accurate anchors since they must be declared above refs
 ids:
 # Actors
@@ -94,19 +105,60 @@ rooms:
 - key: *rDream
   name: Recurring Dream 
   # No navigation here
+  verbs:
+    look:
+    - |
+      You are seated at a complex workstation in front of a wide variety of gauges and readouts - the kind of station that 
+      would feel right at home at a power plant’s control room.
+    - |
+      A mug of coffee and an operations manual are the only items on the workstation that aren’t built into the workstation itself.
+    - |
+      A double-paned reinforced window separates the monitoring room with the experiment chamber to the north and a security 
+      door leads out to the southwest.
   # Listen for 'awake' / 'wake up' / 'awaken' / 'look at clock' / disbelieve
 - key: *rOffice
   name: Home Office
+  verbs:
+    look:
+    - |
+      Your home office was never clean by any stretch of the imagination, but it’s been worse since the accident. You tell 
+      yourself that there’s a method to the madness and you know where to find anything of importance, but even you have to 
+      admit that when you need to keep the dog out of a room for fear of him ripping up bank paperwork that you have issues. 
+    - |
+      Your desktop computer is here on the desk. It looks to be busy installing important system updates at the moment.
+    - |
+      A set of glass double doors leads east to your hallway.
   nav:
     east: *rHall # TODO: Cover this with a door
 - key: *rHall
   name: Front Hall
+  verbs:
+    look:
+    - |
+      The front hall area is a narrow entry area without much adornment. Several old family pictures and plaques 
+      decorate the walls.
+    - |
+      Aside from the pictures, the only decoration here is a coat rack on the north wall near the front door. Glass double 
+      doors, currently {{doorState}}, lead west to your home office and a narrow staircase goes upstairs.
+    - |
+      The hall continues south to the kitchen and living room.
   nav:
     west: *rOffice # TODO: Cover this with a door
     south: *rKitchen
     north: *rFrontyard # TODO: Cover this with a lockable door
 - key: *rKitchen
   name: Kitchen
+  verbs:
+    look:
+    - |
+      Your kitchen. Gone are the days of clean counters and tabletops, or even, to be frank, eating at the table instead of 
+      in the living room. The counters and sink are filled to capacity with empty cups and plates caked with dried fried rice.
+    - |
+      From the smell, you forgot to take the garbage out this week.
+    - |
+      Your living room is to the east and the front hall lies to the north.
+    - |
+      A sliding door leads outside to your backyard, normally quite dark at this hour, now appears to be blanketed in a dense fog.
   nav:
     north: *rHall
     east: *rLivingRoom
@@ -202,6 +254,19 @@ rooms:
     south: *rProvidence
 - key: *rProvidence
   name: Providence Drive
+  verbs:
+    look:
+    - |
+      On a normal day, Providence Lane would be an ordinary connecting street if it wasn’t for the large 
+      form of the two-story Anderson Science Center on the east side of the road.
+    - |
+      Tonight, however, the dense fog gives the street a certain mysterious and otherworldly quality as 
+      much of the details of the surrounding world are drowned out by the dense low-hanging fog.
+    - |
+      The fog grows thicker to the south towards the pond and the entrance to the Science Center, but 
+      remains somewhat thick even to the north near your house.
+    - |
+      A white utility van is parked on the side of the street.
   nav:
     north: *rCornerWP
     southwest: *rFountain
