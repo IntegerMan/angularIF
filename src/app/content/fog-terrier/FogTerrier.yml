@@ -484,11 +484,32 @@ rooms:
     southwest: *rCornerLM
 - key: *rStream
   name: Stream
+  verbs:
+    look:
+    - |
+      The shallow stream is producing a disproportionate amount of fog given its size. The small stream, ordinarily so picturesque 
+      and tranquil, still retains an aspect of beauty in the moonlit fog.
+    - |
+      The muddy creekbed looks like it’d be easily crossable if it wasn’t for the chain link fence blocking your way.
+    - |
+      You can barely make out an open field to the west and the fog-filled street back to the east.
   nav:
     west: *rFieldEdge
     east: *rMoriarty
 - key: *rFieldEdge
   name: Edge of the Field
+  verbs:
+    look:
+    - |
+      You are at the east end of the tall grassy field west of the neighborhood.
+    - |
+      The fog is much less dense here, though it picks up to the east as the field meets the creek.
+    - |
+      The field extends to the west, northwest, and north while the creek to the east leads back to the neighborhood.
+    - |
+      The tall grass sways in the breeze.
+    - |
+      You hear high-pitched chirping to the west.
   nav:
     west: *rNoisyField
     northwest: *rEerieField
@@ -496,6 +517,15 @@ rooms:
     east: *rStream
 - key: *rNoisyField
   name: Noisy Field
+  verbs:
+    look:
+    - |
+      You are deep in the grassy field.
+    - |
+      The deafening sound of crickets or some other type of insect sounds from all around you.
+    - |
+      The grass is getting so thick you can barely continue further in this direction, though it 
+      grows thinner to the north, northeast, and east.
   nav:
     northeast: *rBriarField
     north: *rEerieField
