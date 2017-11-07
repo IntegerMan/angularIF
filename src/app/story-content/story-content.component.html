@@ -1,37 +1,36 @@
+<!-- Confirm Dialog -->
 <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425" class="bg-dark">
 </p-confirmDialog>
 
-<div class="full-height">
-
-  <div class="card content-bg white-text">
-    <div class="card-header theme-bg">
-      <div class="valign-wrapper" style="margin-left: 8px;">
-        <h1>
-          <span class="fa fa-fw {{icon}}"></span>
-          {{title}}
-        </h1>
-      </div>
-      <if-game-state-header [headerClass]="stateClass"></if-game-state-header>
-      <div class="fixed-action-btn toolbar">
-        <a class="btn-floating btn-large tooltipped" data-tooltip="Show application options"  data-position="left">
-          <i class="material-icons">menu</i>
-        </a>
-        <ul>
-          <li>
-            <a class="btn-floating warn-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
-              <i class="material-icons">arrow_back</i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="card-content full-height" #scrollMe style="overflow-y: auto;">
-      <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
-    </div>
-    <div class="card-footer theme-bg z-depth-1 hoverable" style="padding-left: 8px; padding-right: 8px; padding-top: 8px;">
-      <if-command-area></if-command-area>
-    </div>
-  </div>
-
+<!-- Toolbar -->
+<div class="fixed-action-btn toolbar">
+  <a class="btn-floating btn-large tooltipped" data-tooltip="Show application options"  data-position="left">
+    <i class="material-icons">menu</i>
+  </a>
+  <ul>
+    <li>
+      <a class="btn-floating warn-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
+        <i class="material-icons">arrow_back</i>
+      </a>
+    </li>
+  </ul>
 </div>
 
+<!-- Main UI -->
+<div #StoryCard class="card white-text" (window:resize)="onResize()" [style.height.px]="storyCardHeight">
+  <div class="card-header theme-bg">
+    <div class="valign-wrapper" style="margin-left: 8px;">
+      <h1>
+        <span class="fa fa-fw {{icon}}"></span>
+        {{title}}
+      </h1>
+    </div>
+    <if-game-state-header [headerClass]="stateClass"></if-game-state-header>
+  </div>
+  <div class="card-content full-height content-bg" #scrollMe style="overflow-y: auto;">
+    <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
+  </div>
+  <div class="card-footer theme-bg z-depth-1 hoverable" style="padding-left: 8px; padding-right: 8px; padding-top: 8px;">
+    <if-command-area></if-command-area>
+  </div>
+</div>

@@ -21,7 +21,9 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
   title: string;
   stateClass: string = 'bg-warning';
   icon: string = 'fa-book';
+  storyCardHeight: number;
 
+  @ViewChild('StoryCard') private storyCard: ElementRef;
   @ViewChild('scrollMe') private scrollContainer: ElementRef;
 
   private gameStateSubscription: Subscription;
@@ -32,6 +34,8 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
               private ifService: InteractiveFictionService) {
+
+    this.onResize();
 
   }
 
@@ -79,6 +83,10 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
     } catch (err) {
       LoggingService.instance.error(err);
     }
+  }
+
+  onResize(): void {
+    this.storyCardHeight = window.innerHeight - 250;
   }
 
   private onLinesChanged(): void {
