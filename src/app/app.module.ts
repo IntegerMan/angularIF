@@ -43,9 +43,9 @@ import {MatCardModule, MatExpansionModule, MatToolbarModule, MatTooltipModule, M
 import {
   ConfirmDialogModule, ConfirmationService, TreeModule
 } from 'primeng/primeng';
+import {EditorModule} from './editor/editor.module';
 
 const appRoutes: Routes = [
-
   { path: 'Stories/:key', component: StoryHostComponent },
   { path: 'stories/:key', component: StoryHostComponent },
   { path: 'Stories', component: StorySelectionComponent },
@@ -80,13 +80,14 @@ const appRoutes: Routes = [
   ],
   imports: [
     // Base Angular Imports
+    BrowserModule,
+    BrowserAnimationsModule,
+    // Custom imports can now come in
+    EditorModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: !environment.production }
     ),
-    BrowserModule,
-    BrowserAnimationsModule,
-    // Custom imports can now come in
     EngineModule,
     // TODO: It'd be nice to have a separate module just for managing Angular Material modules
     MatCardModule,

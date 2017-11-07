@@ -1,38 +1,31 @@
-<div class="container full-height">
-
-  <!-- TODO: Better spacing here -->
-  <br />
-
-  <div class="card theme-bg small white-text">
-    <div class="card-content">
-      <h1>Angular IF</h1>
-      <p class="flow-text" style="margin-top: 2rem;">
-        The Angular Interactive Fiction project aims at using modern web technologies and natural language
-        processing libraries to offer a slick and responsive take on old-school Interactive Fiction games.
-      </p>
-    </div>
+<div class="card theme-bg small white-text">
+  <div class="card-content">
+    <h1>Angular IF</h1>
+    <p class="flow-text" style="margin-top: 2rem;">
+      The Angular Interactive Fiction project aims at using modern web technologies and natural language
+      processing libraries to offer a slick and responsive take on old-school Interactive Fiction games.
+    </p>
   </div>
-
-  <!-- TODO: Better spacing here -->
-  <br />
-
-  <mat-card>
-    <mat-card-title-group>
-      <mat-card-title>
-        <h2>Select a Story</h2>
-      </mat-card-title>
-    </mat-card-title-group>
-    <mat-card-content>
-      <p>
-        At the moment, the engine consists of a tech demo and a larger game that is still in development until early 2018.
-      </p>
-      <div class="row">
-        <div class="col s12 m6" *ngFor="let story of stories">
-          <if-story-card [story]="story"></if-story-card>
-        </div>
-      </div>
-
-    </mat-card-content>
-  </mat-card>
-
 </div>
+
+<!-- TODO: Better spacing here -->
+<br />
+
+<mat-card>
+  <mat-card-title-group>
+    <mat-card-title>
+      <h2>Select a Story</h2>
+    </mat-card-title>
+  </mat-card-title-group>
+  <mat-card-content>
+    <p>
+      At the moment, the engine consists of a tech demo and a larger game that is still in development until early 2018.
+    </p>
+    <div class="row">
+      <div class="col s12 m6" *ngFor="let story of stories">
+        <if-story-card [story]="story"></if-story-card>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>
