@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {LoggingService} from '../../utility/logging.service';
 import {TreeNode} from 'primeng/primeng';
@@ -8,6 +8,7 @@ import {CommonVerbService} from '../../engine/verbs/common-verb.service';
 import {TextOutputService} from '../../engine/text-output.service';
 import {StoryService} from '../../engine/story.service';
 import {Subscription} from 'rxjs/Subscription';
+import {EditorTreeComponent} from '../editor-tree/editor-tree.component';
 
 @Component({
   selector: 'if-editor-host',
@@ -19,7 +20,10 @@ export class EditorHostComponent implements OnInit, OnDestroy {
 
   public story: Story;
   public loading: boolean = true;
+  public selectedNode: TreeNode;
   private routerSubscription: Subscription;
+
+  @ViewChild('editTree') private treeControl: EditorTreeComponent;
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
@@ -40,6 +44,12 @@ export class EditorHostComponent implements OnInit, OnDestroy {
       this.routerSubscription.unsubscribe();
     }
 
+  }
+
+  onNodeSelected(node: TreeNode) {
+    this.logger.debug(`Node Selected`);
+    this.logger.debug(node);
+    this.selectedNode = node;
   }
 
   private loadFromParameters(p: Params | undefined) {
@@ -77,6 +87,9 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     }
 
     this.loading = false;
+    if (this.treeControl) {
+      this.selectedNode = this.treeControl.selectedNode;
+    }
   }
 
 }
