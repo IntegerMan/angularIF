@@ -29,9 +29,7 @@ export class StoryHostComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.routerSubscription = this.route.params.subscribe(p => this.loadFromParameters(p));
-
   }
 
   ngOnDestroy(): void {

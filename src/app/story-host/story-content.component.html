@@ -3,13 +3,18 @@
 </p-confirmDialog>
 
 <!-- Toolbar -->
-<div class="fixed-action-btn toolbar">
+<div class="fixed-action-btn">
   <a class="btn-floating btn-large tooltipped" data-tooltip="Show application options"  data-position="left">
     <i class="material-icons">menu</i>
   </a>
   <ul>
     <li>
-      <a class="btn-floating warn-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
+      <a class="btn-floating accent-bg tooltipped" [routerLink]="['/Stories', story.key, 'Edit']" data-tooltip="Edit this story" data-position="left">
+        <i class="material-icons">edit</i>
+      </a>
+    </li>
+    <li>
+      <a class="btn-floating theme-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
         <i class="material-icons">arrow_back</i>
       </a>
     </li>

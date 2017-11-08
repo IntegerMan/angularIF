@@ -1,0 +1,9 @@
+<div class="card panel-bg white-text">
+  <div class="card-content"  style="padding: 1rem; min-width: 300px;">
+    <div class="card-title">Components</div>
+    <p-tree [value]="nodes"
+            [(selection)]="selectedNode"
+            (onNodeSelect)="onNodeSelected($event)"
+            selectionMode="single"></p-tree>
+  </div>
+</div>

@@ -40,4 +40,7 @@ export class StoryService {
     return this.stories;
   }
 
+  buildEmptyStory(): Story {
+    return new Story('blank_story');
+  }
 }

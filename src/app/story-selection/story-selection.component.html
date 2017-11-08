@@ -8,16 +8,11 @@
   </div>
 </div>
 
-<!-- TODO: Better spacing here -->
-<br />
-
-<mat-card>
-  <mat-card-title-group>
-    <mat-card-title>
+<div class="card panel-bg white-text" style="margin-top: 2rem;">
+  <div class="card-content">
+    <div class="card-title">
       <h2>Select a Story</h2>
-    </mat-card-title>
-  </mat-card-title-group>
-  <mat-card-content>
+    </div>
     <p>
       At the moment, the engine consists of a tech demo and a larger game that is still in development until early 2018.
     </p>
@@ -26,6 +21,11 @@
         <if-story-card [story]="story"></if-story-card>
       </div>
     </div>
-
-  </mat-card-content>
-</mat-card>
+  </div>
+  <div class="card-action grey darken-2">
+    <a [routerLink]="['/Editor']"
+    class="waves-effect waves-light btn">
+      Create a New Story
+    </a>
+  </div>
+</div>

@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditorHostComponent } from './editor-host/editor-host.component';
-import {RouterModule, Routes} from '@angular/router';
+import {CommonUIModule} from '../common-ui/common-ui.module';
+import {EditorHostComponent} from './editor-host/editor-host.component';
+import { EditorTreeComponent } from './editor-tree/editor-tree.component';
 
-const editRoutes: Routes = [
-  { path: 'Editor', component: EditorHostComponent },
-  { path: 'Stories/:key/Edit', component: EditorHostComponent },
-  { path: 'stories/:key/edit', component: EditorHostComponent },
-];
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(editRoutes)
+    CommonUIModule
   ],
-  declarations: [EditorHostComponent]
+  declarations: [
+    EditorHostComponent,
+    EditorTreeComponent
+  ]
 })
 export class EditorModule {
 
