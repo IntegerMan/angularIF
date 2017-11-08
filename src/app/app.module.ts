@@ -11,34 +11,48 @@ import {GoogleAnalyticsService} from './utility/google-analytics.service';
 import {RollbarErrorHandler, rollbarFactory, RollbarService} from './utility/rollbar-error-handler';
 import {MarkdownService} from './text-rendering/markdown.service';
 import {TemplatingService} from './engine/parser/templating.service';
-import { StorySelectionComponent } from './story-selection/story-selection.component';
 import {RouterModule, Routes} from '@angular/router';
 import {environment} from '../environments/environment';
 import {StoryService} from './engine/story.service';
 import {EditorModule} from './editor/editor.module';
 import {StoryHostModule} from './story-host/story-host.module';
+import {StorySelectionComponent} from './story-selection/story-selection.component';
+import {StoryHostComponent} from './story-host/story-host.component';
+import {EditorHostComponent} from './editor/editor-host/editor-host.component';
+import {StorySelectionModule} from './story-selection/story-selection.module';
+import {CommonUIModule} from './common-ui/common-ui.module';
 
 const appRoutes: Routes = [
-  { path: '**', component: StorySelectionComponent }
+  { path: 'Stories', component: StorySelectionComponent },
+  { path: 'stories', component: StorySelectionComponent },
+  { path: 'Stories/:key', component: StoryHostComponent },
+  { path: 'stories/:key', component: StoryHostComponent },
+  { path: 'Editor', component: EditorHostComponent },
+  { path: 'editor', component: EditorHostComponent },
+  { path: 'Stories/:key/Edit', component: EditorHostComponent },
+  { path: 'stories/:key/edit', component: EditorHostComponent },
+  { path: '**',  redirectTo: 'Stories' }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    StorySelectionComponent,
+    AppComponent
   ],
   imports: [
     // Base Angular Imports
     BrowserModule,
     BrowserAnimationsModule,
     // Custom imports can now come in
+    CommonUIModule,
     EditorModule,
+    StoryHostModule,
+    StorySelectionModule,
+    EngineModule,
+    // Routing!!!
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: !environment.production }
     ),
-    EngineModule,
-    StoryHostModule
   ],
   providers: [
     LoggingService,

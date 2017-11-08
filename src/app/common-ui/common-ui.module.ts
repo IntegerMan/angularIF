@@ -8,6 +8,8 @@ import {
 import {
   ConfirmDialogModule, ConfirmationService, TreeModule
 } from 'primeng/primeng';
+import {RouterModule} from '@angular/router';
+import {MarkdownPresenterComponent} from '../utility/markdown-presenter/markdown-presenter.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import {
     MatProgressBarModule,
     MatInputModule,
     ConfirmDialogModule,
-    TreeModule
+    TreeModule,
+    RouterModule
   ],
   exports: [
     MatCardModule,
@@ -30,13 +33,16 @@ import {
     MatInputModule,
     LoadingIndicatorComponent,
     ConfirmDialogModule,
-    TreeModule
+    TreeModule,
+    RouterModule,
+    MarkdownPresenterComponent
   ],
   providers: [
     ConfirmationService
   ],
   declarations: [
     LoadingIndicatorComponent,
+    MarkdownPresenterComponent
   ]
 })
 export class CommonUIModule { }
