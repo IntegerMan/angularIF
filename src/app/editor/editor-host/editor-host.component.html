@@ -1,7 +1,9 @@
-<div>
+<if-loading *ngIf="loading"></if-loading>
+
+<div *ngIf="story">
   <div class="card white-text content-bg">
     <div class="card-content">
-      Hello world.
+      <p-tree [value]="storyData"></p-tree>
     </div>
   </div>
 </div>
