@@ -8,7 +8,7 @@ import {CommonDictionary} from '../parser/common-dictionary';
 import {StoryResponse} from '../responses/story-response';
 import {CommandContext} from '../command-context';
 
-export abstract class Story {
+export class Story {
 
   name: string;
   key: string;
@@ -131,7 +131,9 @@ export abstract class Story {
     return null;
   }
 
-  protected abstract reset(): void;
+  protected reset(): void {
+
+  }
 
   private autodetectNounsAndAdjectives(entity: WorldEntity): void {
 

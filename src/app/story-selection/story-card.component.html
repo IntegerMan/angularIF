@@ -15,8 +15,12 @@
   </div>
   <div class="card-action blue-grey darken-4">
     <a [routerLink]="['/Stories', story.key]"
-       class="waves-effect waves-light btn">
+       class="waves-effect waves-light">
       Play
+    </a>
+    <a [routerLink]="['/Stories', story.key, 'Edit']"
+       class="waves-effect waves-light">
+      Edit
     </a>
   </div>
 </div>
