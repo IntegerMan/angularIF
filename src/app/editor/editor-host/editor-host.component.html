@@ -3,10 +3,10 @@
 <div *ngIf="story">
 
   <div class="row">
-    <div class="col m4">
+    <div class="col m3">
       <if-editor-tree #editTree [story]="story" (nodeSelected)="onNodeSelected($event)"></if-editor-tree>
     </div>
-    <div class="col m8">
+    <div class="col m9">
       <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode"></if-editor-renderer>
     </div>
   </div>
