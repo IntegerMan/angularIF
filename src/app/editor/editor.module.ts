@@ -13,6 +13,7 @@ import { ContentsListComponent } from './contents-list/contents-list.component';
 import { VerbsListComponent } from './verbs-list/verbs-list.component';
 import { AttributesListComponent } from './attributes-list/attributes-list.component';
 import { NavigationListComponent } from './navigation-list/navigation-list.component';
+import { EventsListComponent } from './events-list/events-list.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { NavigationListComponent } from './navigation-list/navigation-list.compo
     ContentsListComponent,
     VerbsListComponent,
     AttributesListComponent,
-    NavigationListComponent
+    NavigationListComponent,
+    EventsListComponent
   ]
 })
 export class EditorModule {

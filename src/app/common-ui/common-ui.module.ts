@@ -6,12 +6,11 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import {
-  ConfirmDialogModule, ConfirmationService, TreeModule
+  ConfirmDialogModule, ConfirmationService, TreeModule, DataTableModule, SharedModule
 } from 'primeng/primeng';
 import {RouterModule} from '@angular/router';
 import {MarkdownPresenterComponent} from '../utility/markdown-presenter/markdown-presenter.component';
 import {FormsModule} from '@angular/forms';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +23,9 @@ import {FormsModule} from '@angular/forms';
     MatInputModule,
     ConfirmDialogModule,
     TreeModule,
-    RouterModule
+    RouterModule,
+    DataTableModule,
+    SharedModule
   ],
   exports: [
     MatCardModule,
@@ -38,7 +39,9 @@ import {FormsModule} from '@angular/forms';
     TreeModule,
     RouterModule,
     MarkdownPresenterComponent,
-    FormsModule
+    FormsModule,
+    DataTableModule,
+    SharedModule
   ],
   providers: [
     ConfirmationService

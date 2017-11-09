@@ -16,6 +16,8 @@ export class RoomEditorComponent implements OnInit {
   @Input()
   story: StoryData;
 
+  selectedTab: number = 0;
+
   constructor() { }
 
   ngOnInit() {
@@ -25,4 +27,7 @@ export class RoomEditorComponent implements OnInit {
     // TODO: Duh
   }
 
+  selectTab(number: number) {
+    this.selectedTab = number;
+  }
 }

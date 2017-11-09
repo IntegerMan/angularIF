@@ -1,3 +1,6 @@
-<p>
-  navigation-list works!
-</p>
+<p-dataTable [value]="directions" [editable]="true">
+  <p-column field="key" header="Direction" [editable]="false"></p-column>
+  <p-column field="room" header="Room" [editable]="true"></p-column>
+  <p-column field="goMessage" header="Go" [editable]="true"></p-column>
+  <p-column field="lookMessage" header="Look" [editable]="true"></p-column>
+</p-dataTable>
