@@ -1,0 +1,23 @@
+<div class="card white-text blue-grey darken-2 hoverable">
+  <div class="card-content">
+    <div class="card-title">
+      <h2>Rooms</h2>
+    </div>
+
+    <ul *ngIf="story.rooms && story.rooms.length > 0" class="collection">
+      <div *ngFor="let room of story.rooms">
+        <li class="collection-item black-text">{{room.name}}</li>
+      </div>
+    </ul>
+
+    <span *ngIf="!story.rooms || story.rooms.length <= 0">
+      This story does not contain any rooms.
+    </span>
+
+  </div>
+  <div class="card-action blue-grey darken-4">
+    <a class="waves-effect waves-light btn" (click)="addRoom()">
+      Create a New Room
+    </a>
+  </div>
+</div>
