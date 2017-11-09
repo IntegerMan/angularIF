@@ -54,9 +54,17 @@ export class StoryService {
 
   buildEmptyStoryData(): StoryData {
     const data = new StoryData();
+
+    // Start with decent defaults
     data.name = 'Untitled';
     data.authors = 'Unattributed';
     data.version = '0.1';
+    data.maxScore = 100;
+
+    // Initialize collections to empty
+    data.actors = [];
+    data.rooms = [];
+    data.strings = [];
 
     return data;
   }
