@@ -1,3 +1,4 @@
-<p>
-  verbs-list works!
-</p>
+<div *ngFor="let verb of verbs">
+  <h4>{{verb.key}}</h4>
+  <if-md [text]="verb.value"></if-md>
+</div>
