@@ -29,6 +29,7 @@ const appRoutes: Routes = [
   { path: 'stories/:key', component: StoryHostComponent },
   { path: 'Editor', component: EditorHostComponent },
   { path: 'editor', component: EditorHostComponent },
+  { path: 'Editor/Import', component: EditorHostComponent },
   { path: 'Stories/:key/Source', component: EditorHostComponent },
   { path: 'stories/:key/source', component: EditorHostComponent },
   { path: '**',  redirectTo: 'Stories' }

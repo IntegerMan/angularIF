@@ -2,13 +2,12 @@ import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angul
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {LoggingService} from '../../utility/logging.service';
 import {TreeNode} from 'primeng/primeng';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router, UrlSegment} from '@angular/router';
 import {TextOutputService} from '../../engine/text-output.service';
 import {StoryService} from '../../services/story.service';
 import {Subscription} from 'rxjs/Subscription';
 import {EditorTreeComponent} from '../editor-tree/editor-tree.component';
 import {StoryData} from '../../engine/story-data/story-data';
-import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'if-editor-host',
@@ -20,8 +19,10 @@ export class EditorHostComponent implements OnInit, OnDestroy {
 
   public story: StoryData;
   public loading: boolean = true;
+  public isImporting: boolean = false;
   public selectedNode: TreeNode;
   private routerSubscription: Subscription;
+  private routerParamSubscription: Subscription;
   private fileSaver: any;
 
   @ViewChild('editTree') private treeControl: EditorTreeComponent;
@@ -34,8 +35,9 @@ export class EditorHostComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
-    this.routerSubscription = this.route.params.subscribe(p => this.loadFromParameters(p));
+  ngOnInit(): void {
+    this.routerSubscription = this.route.url.subscribe(u => this.onUrlEvent(u));
+    this.routerParamSubscription = this.route.params.subscribe(p => this.loadFromParameters(p));
   }
 
   ngOnDestroy(): void {
@@ -43,16 +45,19 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
+    if (this.routerParamSubscription) {
+      this.routerParamSubscription.unsubscribe();
+    }
 
   }
 
-  onNodeSelected(node: TreeNode) {
+  onNodeSelected(node: TreeNode): void {
     this.logger.debug(`Node Selected`);
     this.logger.debug(node);
     this.selectedNode = node;
   }
 
-  onSaveClick() {
+  onSaveClick(): void {
     LoggingService.instance.log('Generating JSON data for story');
 
     if (!this.fileSaver) {
@@ -62,12 +67,23 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     const data: string = JSON.stringify(this.story);
     const blob: Blob = new Blob([data], {type: 'text/plain;charset=utf-8'});
     this.fileSaver.saveAs(blob, `${this.story.name}.json`);
-    //
-    // // Generate a download
-    // const blob = new Blob([data], { type: 'text/csv' });
-    // const url = window.URL.createObjectURL(blob);
-    // window.open(url);
 
+  }
+
+  onLoadClick(): void {
+    LoggingService.instance.log('Requested to import JSON');
+
+    this.isImporting = true;
+
+  }
+
+  onImported(data: StoryData): void {
+    this.story = data;
+    this.isImporting = false;
+  }
+
+  onImportCancelled(): void {
+    this.isImporting = false;
   }
 
   private loadFromParameters(p: Params | undefined) {
@@ -105,4 +121,9 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     }
   }
 
+  private onUrlEvent(u: UrlSegment[] | undefined) {
+    if (u && u.filter(s => s.path === 'Import').length > 0) {
+      this.isImporting = true;
+    }
+  }
 }

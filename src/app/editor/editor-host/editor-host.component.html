@@ -3,13 +3,18 @@
 <div *ngIf="story">
 
   <!-- Main UI -->
-  <div class="row">
+  <div class="row" *ngIf="!isImporting">
     <div class="col m3">
       <if-editor-tree #editTree [story]="story" (nodeSelected)="onNodeSelected($event)"></if-editor-tree>
     </div>
     <div class="col m9">
       <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode"></if-editor-renderer>
     </div>
+  </div>
+
+  <!-- Import UI -->
+  <div class="row" *ngIf="isImporting">
+    <if-editor-import (imported)="onImported($event)" (cancelled)="onImportCancelled()"></if-editor-import>
   </div>
 
   <!-- Toolbar -->
@@ -19,12 +24,17 @@
     </a>
     <ul>
       <li>
-        <a class="btn-floating accent-bg tooltipped" (click)="onSaveClick()" data-tooltip="Generate JSON based on this story." data-position="left">
-          <i class="material-icons">save</i>
+        <a class="btn-floating accent-bg tooltipped" (click)="onLoadClick()" data-tooltip="Import a story JSON file and discard the current story." data-position="left">
+          <i class="material-icons">file_upload</i>
         </a>
       </li>
       <li>
-        <a class="btn-floating theme-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
+        <a class="btn-floating theme-bg tooltipped" (click)="onSaveClick()" data-tooltip="Download a JSON file representing this story." data-position="left">
+          <i class="material-icons">file_download</i>
+        </a>
+      </li>
+      <li>
+        <a class="btn-floating warn-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
           <i class="material-icons">arrow_back</i>
         </a>
       </li>

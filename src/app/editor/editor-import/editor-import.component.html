@@ -1,0 +1,19 @@
+<div class="card hoverable blue-grey darken-2 white-text">
+  <div class="card-content">
+    <div class="card-title">
+      <h2>Import Story</h2>
+      <p>Please copy and paste the story JSON here and click Import to import the data. This will override the currently loaded story file.</p>
+    </div>
+
+    <div class="input-field">
+        <textarea id="jsonData" [(ngModel)]="data" type="text" class="validate materialize-textarea" required>
+        </textarea>
+      <label for="jsonData">JSON Data</label>
+    </div>
+
+  </div>
+  <div class="card-action blue-grey darken-4">
+    <button class="btn wave-light wave-ripple green" (click)="onImport()">Import</button>
+    <button class="btn wave-light wave-ripple warn-bg" style="margin-left: 1rem;" (click)="onCancel()">Cancel</button>
+  </div>
+</div>
