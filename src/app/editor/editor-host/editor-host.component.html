@@ -8,7 +8,7 @@
       <if-editor-tree #editTree [story]="story" (nodeSelected)="onNodeSelected($event)"></if-editor-tree>
     </div>
     <div class="col m9">
-      <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode"></if-editor-renderer>
+      <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode" [story]="story"></if-editor-renderer>
     </div>
   </div>
 

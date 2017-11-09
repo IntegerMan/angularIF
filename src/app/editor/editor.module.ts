@@ -7,6 +7,7 @@ import { EditorRendererComponent } from './editor-renderer/editor-renderer.compo
 import { StoryInfoEditorComponent } from './story-info-editor/story-info-editor.component';
 import { EditorImportComponent } from './editor-import/editor-import.component';
 import { RoomListEditorComponent } from './room-list-editor/room-list-editor.component';
+import { RoomEditorComponent } from './room-editor/room-editor.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { RoomListEditorComponent } from './room-list-editor/room-list-editor.com
     EditorRendererComponent,
     StoryInfoEditorComponent,
     EditorImportComponent,
-    RoomListEditorComponent
+    RoomListEditorComponent,
+    RoomEditorComponent
   ]
 })
 export class EditorModule {
