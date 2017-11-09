@@ -54,36 +54,43 @@ h2 {
   margin-bottom: 12px;
 }
 
+// Colors
+$themeColor: #37474f;
+$accentColor: #708090;
+$warnColor: #f44336;
+$darkColor: #343a40;
+$greyColor: #424242;
+
 .theme-text {
-  color: #37474f;
+  color: $themeColor;
 }
 
 .accent-text {
-  color: #708090;
+  color: $accentColor;
 }
 
 .warn-text {
-  color: #f44336;
+  color: $warnColor;
 }
 
 .theme-bg {
-  background-color: #37474f;
+  background-color: $themeColor;
 }
 
 .accent-bg {
-  background-color: #708090;
+  background-color: $accentColor;
 }
 
 .warn-bg {
-  background-color: #f44336;
+  background-color: $warnColor;
 }
 
 .content-bg {
-  background-color: #343a40;
+  background-color: $darkColor;
 }
 
 .panel-bg {
-  background-color: #424242;
+  background-color: $greyColor;
 }
 
 .small-text {
