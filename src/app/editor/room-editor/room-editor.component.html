@@ -1,8 +1,45 @@
 <div class="card white-text blue-grey darken-2 hoverable">
   <div class="card-content">
-    <div class="card-title">
+    <div class="card-title" style="margin-bottom: 3rem;">
       <h2>{{room.name}}</h2>
     </div>
+
+    <!-- Basic Information -->
+    <div class="row">
+      <div class="input-field col s3">
+        <input id="key" [(ngModel)]="room.key" type="text" required class="validate" data-length="64">
+        <label for="key" class="active">Key</label>
+      </div>
+      <div class="input-field col s9">
+        <input id="name" [(ngModel)]="room.name" type="text" required class="validate" data-length="128">
+        <label for="name" class="active">Room Name</label>
+      </div>
+      <div class="col s3" style="vertical-align: bottom;">
+        <div class="switch valign-wrapper">
+          <label>
+            Well-lit
+            <input type="checkbox" [checked]="room.isDark">
+            <span class="lever"></span>
+            Dark
+          </label>
+        </div>
+      </div>
+      <div class="input-field col s9">
+        <input id="darkName" [(ngModel)]="room.darkName" type="text" class="validate" data-length="128">
+        <label for="darkName" class="active">Dark Name</label>
+      </div>
+      <div class="input-field col s12">
+        <textarea id="darkDesc" [(ngModel)]="room.darkDescription" type="text" class="validate materialize-textarea"></textarea>
+        <label for="darkDesc" class="active">Dark Description</label>
+      </div>
+    </div>
+
+    <!-- Collections go here -->
+    <if-aliases-list [entity]="room"></if-aliases-list>
+    <if-navigation-list [room]="room"></if-navigation-list>
+    <if-contents-list [entity]="room"></if-contents-list>
+    <if-verbs-list [entity]="room"></if-verbs-list>
+    <if-attributes-list [entity]="room"></if-attributes-list>
 
   </div>
   <div class="card-action blue-grey darken-4">
