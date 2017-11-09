@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {Story} from '../../engine/entities/story';
 import {TreeNode} from '../../../assets/primeng/components/common/treenode';
 import {LoggingService} from '../../utility/logging.service';
+import {StoryData} from '../../engine/story-data/story-data';
 
 @Component({
   selector: 'if-editor-tree',
@@ -12,7 +12,7 @@ import {LoggingService} from '../../utility/logging.service';
 export class EditorTreeComponent implements OnInit {
 
   @Input()
-  story: Story;
+  story: StoryData;
 
   @Output()
   nodeSelected: EventEmitter<TreeNode>;
@@ -55,7 +55,8 @@ export class EditorTreeComponent implements OnInit {
     this.infoNode = {
       selectable: true,
       label: 'Story Info',
-      type: 'StoryRoot',
+      type: 'storyInfo',
+      data: this.story,
       droppable: false,
       draggable: false
     };
@@ -68,7 +69,7 @@ export class EditorTreeComponent implements OnInit {
     this.roomsNode = {
       selectable: true,
       label: 'Rooms',
-      type: 'RoomsRoot',
+      type: 'roomsRoot',
       droppable: false,
       draggable: false,
       children: [],
@@ -78,9 +79,9 @@ export class EditorTreeComponent implements OnInit {
     for (const room of this.story.rooms) {
 
       const childNode: TreeNode = {
-        label: room.name,
+        label: room.key, // Or room.name, but this is maybe more concise
         leaf: true,
-        type: 'Room',
+        type: 'room',
         data: room,
         droppable: false,
         draggable: false
@@ -98,7 +99,7 @@ export class EditorTreeComponent implements OnInit {
     this.actorsNode = {
       selectable: true,
       label: 'Actors',
-      type: 'ActorsRoot',
+      type: 'actorsRoot',
       droppable: false,
       draggable: false,
       children: [],
@@ -108,9 +109,9 @@ export class EditorTreeComponent implements OnInit {
     for (const act of this.story.actors) {
 
       const childNode: TreeNode = {
-        label: act.name,
+        label: act.key, // Or act.name, but this is maybe more concise
         leaf: true,
-        type: 'Actor',
+        type: 'actor',
         data: act,
         droppable: false,
         draggable: false

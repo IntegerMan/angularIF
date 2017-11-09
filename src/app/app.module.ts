@@ -13,7 +13,7 @@ import {MarkdownService} from './text-rendering/markdown.service';
 import {TemplatingService} from './engine/parser/templating.service';
 import {RouterModule, Routes} from '@angular/router';
 import {environment} from '../environments/environment';
-import {StoryService} from './engine/story.service';
+import {StoryService} from './services/story.service';
 import {EditorModule} from './editor/editor.module';
 import {StoryHostModule} from './story-host/story-host.module';
 import {StorySelectionComponent} from './story-selection/story-selection.component';
@@ -29,8 +29,8 @@ const appRoutes: Routes = [
   { path: 'stories/:key', component: StoryHostComponent },
   { path: 'Editor', component: EditorHostComponent },
   { path: 'editor', component: EditorHostComponent },
-  { path: 'Stories/:key/Edit', component: EditorHostComponent },
-  { path: 'stories/:key/edit', component: EditorHostComponent },
+  { path: 'Stories/:key/Source', component: EditorHostComponent },
+  { path: 'stories/:key/source', component: EditorHostComponent },
   { path: '**',  redirectTo: 'Stories' }
 ];
 

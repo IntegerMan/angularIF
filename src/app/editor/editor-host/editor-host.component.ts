@@ -2,13 +2,12 @@ import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angul
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {LoggingService} from '../../utility/logging.service';
 import {TreeNode} from 'primeng/primeng';
-import {Story} from '../../engine/entities/story';
 import {ActivatedRoute, Params} from '@angular/router';
-import {CommonVerbService} from '../../engine/verbs/common-verb.service';
 import {TextOutputService} from '../../engine/text-output.service';
-import {StoryService} from '../../engine/story.service';
+import {StoryService} from '../../services/story.service';
 import {Subscription} from 'rxjs/Subscription';
 import {EditorTreeComponent} from '../editor-tree/editor-tree.component';
+import {StoryData} from '../../engine/story-data/story-data';
 
 @Component({
   selector: 'if-editor-host',
@@ -18,7 +17,7 @@ import {EditorTreeComponent} from '../editor-tree/editor-tree.component';
 })
 export class EditorHostComponent implements OnInit, OnDestroy {
 
-  public story: Story;
+  public story: StoryData;
   public loading: boolean = true;
   public selectedNode: TreeNode;
   private routerSubscription: Subscription;
@@ -29,8 +28,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
               private logger: LoggingService,
               private route: ActivatedRoute,
               private ifService: InteractiveFictionService,
-              private storyService: StoryService,
-              private verbService: CommonVerbService) {
+              private storyService: StoryService) {
 
   }
 
@@ -67,10 +65,10 @@ export class EditorHostComponent implements OnInit, OnDestroy {
 
     if (storyKey === undefined) {
       LoggingService.instance.debug(`Starting from blank story`);
-      this.story = this.storyService.buildEmptyStory();
+      this.story = this.storyService.buildEmptyStoryData();
     } else {
       LoggingService.instance.debug(`Loading story with key ${storyKey}`);
-      this.story = this.storyService.getStory(storyKey);
+      this.story = this.storyService.getStoryData(storyKey);
     }
 
     if (!this.story) {
@@ -80,11 +78,6 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     }
 
     LoggingService.instance.debug(`Loaded story ${this.story.name}`);
-
-    // Import the common set of verbs
-    for (const verb of this.verbService.getCommonVerbs()) {
-      this.story.verbHandlers.push(verb);
-    }
 
     this.loading = false;
     if (this.treeControl) {

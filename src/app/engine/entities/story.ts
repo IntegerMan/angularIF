@@ -7,6 +7,7 @@ import {TextOutputService} from '../text-output.service';
 import {CommonDictionary} from '../parser/common-dictionary';
 import {StoryResponse} from '../responses/story-response';
 import {CommandContext} from '../command-context';
+import {StoryData} from '../story-data/story-data';
 
 export class Story {
 
@@ -15,6 +16,7 @@ export class Story {
   authors: string;
   version: string;
   description: string = null;
+  storyData: StoryData = null;
 
   rooms: Room[];
   player: Actor;

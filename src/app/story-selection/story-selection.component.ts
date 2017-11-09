@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Story} from '../engine/entities/story';
-import {StoryService} from '../engine/story.service';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'if-story-selection',

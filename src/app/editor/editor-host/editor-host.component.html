@@ -7,14 +7,7 @@
       <if-editor-tree #editTree [story]="story" (nodeSelected)="onNodeSelected($event)"></if-editor-tree>
     </div>
     <div class="col m8">
-      <div class="card white-text content-bg" *ngIf="selectedNode">
-        <div class="card-content">
-          <div class="card-title">
-            <h2>{{selectedNode.label}}</h2>
-          </div>
-          TODO: Content needs to go here
-        </div>
-      </div>
+      <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode"></if-editor-renderer>
     </div>
   </div>
 

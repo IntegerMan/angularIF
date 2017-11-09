@@ -12,9 +12,14 @@ export class FogTerrierStory extends Story {
   reset(): void {
 
     // Grab our YAML resource data and stick it into JSON
-    LoggingService.instance.debug(`Loading story file for ${this.constructor.name}...`);
-    const data: StoryData = <StoryData> require('json-loader!yaml-loader!App/Content/Fog-Terrier/FogTerrier.yml');
-    const loader = new StoryLoader(data);
+    if (this.storyData === null || !this.storyData) {
+
+      LoggingService.instance.debug(`Loading story file for ${this.constructor.name}...`);
+      this.storyData = <StoryData> require('json-loader!yaml-loader!App/Content/Fog-Terrier/FogTerrier.yml');
+
+    }
+
+    const loader = new StoryLoader(this.storyData);
 
     // Read metadata from the story data file
     loader.loadIntoStory(this);

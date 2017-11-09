@@ -10,10 +10,12 @@ import {
 } from 'primeng/primeng';
 import {RouterModule} from '@angular/router';
 import {MarkdownPresenterComponent} from '../utility/markdown-presenter/markdown-presenter.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     MatCardModule,
     MatExpansionModule,
     MatToolbarModule,
@@ -35,7 +37,8 @@ import {MarkdownPresenterComponent} from '../utility/markdown-presenter/markdown
     ConfirmDialogModule,
     TreeModule,
     RouterModule,
-    MarkdownPresenterComponent
+    MarkdownPresenterComponent,
+    FormsModule
   ],
   providers: [
     ConfirmationService

@@ -6,7 +6,7 @@ import {LoggingService} from '../utility/logging.service';
 import {TextOutputService} from '../engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Params} from '@angular/router';
-import {StoryService} from '../engine/story.service';
+import {StoryService} from '../services/story.service';
 
 @Component({
   selector: 'if-story-host',

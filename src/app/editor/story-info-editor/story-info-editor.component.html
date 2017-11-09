@@ -1,0 +1,43 @@
+<div class="card white-text content-bg">
+  <div class="card-content">
+    <div class="card-title">
+      <h2>Story Information</h2>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="name" [(ngModel)]="story.name" type="text" required class="validate" data-length="128">
+        <label for="name" class="active">Story Name</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="version" [(ngModel)]="story.version" type="text" required class="validate">
+        <label for="version">Story Version</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="authors" [(ngModel)]="story.authors" type="text" required class="validate" data-length="255"
+               data-success="Markdown is supported but will not render in the editor.">
+        <label for="authors">Authors</label>
+      </div>
+      <div class="input-field col s12">
+        <textarea id="description" [(ngModel)]="story.description" type="text" class="validate materialize-textarea"
+                  data-length="512">
+        </textarea>
+        <label for="description">Description</label>
+      </div>
+      <div class="input-field col s12">
+        <textarea id="introText" [(ngModel)]="story.introText" type="text" class="validate materialize-textarea">
+        </textarea>
+        <label for="introText">Introduction</label>
+      </div>
+      <div class="input-field col s3">
+        <input id="maxScore" [(ngModel)]="story.maxScore" type="number" required class="validate" min="0" max="10000">
+        <label for="maxScore">Maximum Score</label>
+      </div>
+      <div class="input-field col s9">
+        <input id="icon" [(ngModel)]="story.icon" type="text" class="validate">
+        <label for="icon">Font Awesome Icon</label>
+      </div>
+    </div>
+
+  </div>
+</div>

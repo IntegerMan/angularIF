@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {CommonUIModule} from '../common-ui/common-ui.module';
 import {EditorHostComponent} from './editor-host/editor-host.component';
 import { EditorTreeComponent } from './editor-tree/editor-tree.component';
+import { EditorRendererComponent } from './editor-renderer/editor-renderer.component';
+import { StoryInfoEditorComponent } from './story-info-editor/story-info-editor.component';
 
 @NgModule({
   imports: [
@@ -11,7 +13,9 @@ import { EditorTreeComponent } from './editor-tree/editor-tree.component';
   ],
   declarations: [
     EditorHostComponent,
-    EditorTreeComponent
+    EditorTreeComponent,
+    EditorRendererComponent,
+    StoryInfoEditorComponent
   ]
 })
 export class EditorModule {
