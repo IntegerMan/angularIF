@@ -21,6 +21,7 @@ export class RoomEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $('ul.tabs').tabs();
   }
 
   addObject(): void {
