@@ -28,7 +28,7 @@ export class CloakStory extends Story {
     if (this.storyData === null || !this.storyData) {
 
       LoggingService.instance.debug(`Loading story file for ${this.constructor.name}...`);
-      this.storyData = <StoryData> require('json-loader!yaml-loader!App/Content/Fog-Terrier/FogTerrier.yml');
+      this.storyData = <StoryData> require('json-loader!yaml-loader!App/Content/Cloak-of-Darkness/CloakOfDarkness.yml');
 
     }
 

@@ -8,6 +8,7 @@ import {StoryService} from '../../services/story.service';
 import {Subscription} from 'rxjs/Subscription';
 import {EditorTreeComponent} from '../editor-tree/editor-tree.component';
 import {StoryData} from '../../engine/story-data/story-data';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'if-editor-host',
@@ -21,6 +22,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
   public loading: boolean = true;
   public selectedNode: TreeNode;
   private routerSubscription: Subscription;
+  private fileSaver: any;
 
   @ViewChild('editTree') private treeControl: EditorTreeComponent;
 
@@ -48,6 +50,24 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     this.logger.debug(`Node Selected`);
     this.logger.debug(node);
     this.selectedNode = node;
+  }
+
+  onSaveClick() {
+    LoggingService.instance.log('Generating JSON data for story');
+
+    if (!this.fileSaver) {
+      this.fileSaver = require('file-saver');
+    }
+
+    const data: string = JSON.stringify(this.story);
+    const blob: Blob = new Blob([data], {type: 'text/plain;charset=utf-8'});
+    this.fileSaver.saveAs(blob, `${this.story.name}.json`);
+    //
+    // // Generate a download
+    // const blob = new Blob([data], { type: 'text/csv' });
+    // const url = window.URL.createObjectURL(blob);
+    // window.open(url);
+
   }
 
   private loadFromParameters(p: Params | undefined) {

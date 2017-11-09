@@ -2,6 +2,7 @@
 
 <div *ngIf="story">
 
+  <!-- Main UI -->
   <div class="row">
     <div class="col m3">
       <if-editor-tree #editTree [story]="story" (nodeSelected)="onNodeSelected($event)"></if-editor-tree>
@@ -9,6 +10,25 @@
     <div class="col m9">
       <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode"></if-editor-renderer>
     </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large tooltipped" data-tooltip="Show application options"  data-position="left">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul>
+      <li>
+        <a class="btn-floating accent-bg tooltipped" (click)="onSaveClick()" data-tooltip="Generate JSON based on this story." data-position="left">
+          <i class="material-icons">save</i>
+        </a>
+      </li>
+      <li>
+        <a class="btn-floating theme-bg tooltipped" [routerLink]="['/Stories']" data-tooltip="Back to the list of stories." data-position="left">
+          <i class="material-icons">arrow_back</i>
+        </a>
+      </li>
+    </ul>
   </div>
 
 </div>
