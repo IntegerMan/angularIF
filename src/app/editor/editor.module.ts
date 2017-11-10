@@ -5,7 +5,6 @@ import {EditorHostComponent} from './editor-host/editor-host.component';
 import { EditorRendererComponent } from './editor-renderer/editor-renderer.component';
 import { StoryInfoEditorComponent } from './story-info-editor/story-info-editor.component';
 import { EditorImportComponent } from './editor-import/editor-import.component';
-import { RoomListEditorComponent } from './room-list-editor/room-list-editor.component';
 import { RoomEditorComponent } from './room-editor/room-editor.component';
 import { AliasesListComponent } from './aliases-list/aliases-list.component';
 import { ContentsListComponent } from './contents-list/contents-list.component';
@@ -15,20 +14,23 @@ import { NavigationListComponent } from './navigation-list/navigation-list.compo
 import { EventsListComponent } from './events-list/events-list.component';
 import { VerbCardComponent } from './verb-card/verb-card.component';
 import { ActorEditorComponent } from './actor-editor/actor-editor.component';
-import { ActorListEditorComponent } from './actor-list-editor/actor-list-editor.component';
 import { EditorSidebarComponent } from './editor-sidebar/editor-sidebar.component';
+import { EditorService } from './editor.service';
+import { EntityEditorComponent } from './entity-editor/entity-editor.component';
 
 @NgModule({
   imports: [
     CommonModule,
     CommonUIModule
   ],
+  providers: [
+    EditorService
+  ],
   declarations: [
     EditorHostComponent,
     EditorRendererComponent,
     StoryInfoEditorComponent,
     EditorImportComponent,
-    RoomListEditorComponent,
     RoomEditorComponent,
     AliasesListComponent,
     ContentsListComponent,
@@ -38,8 +40,8 @@ import { EditorSidebarComponent } from './editor-sidebar/editor-sidebar.componen
     EventsListComponent,
     VerbCardComponent,
     ActorEditorComponent,
-    ActorListEditorComponent,
-    EditorSidebarComponent
+    EditorSidebarComponent,
+    EntityEditorComponent
   ]
 })
 export class EditorModule {

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {LoggingService} from '../../utility/logging.service';
 import {ActivatedRoute, Params, UrlSegment} from '@angular/router';
@@ -6,7 +6,7 @@ import {TextOutputService} from '../../engine/text-output.service';
 import {StoryService} from '../../services/story.service';
 import {Subscription} from 'rxjs/Subscription';
 import {StoryData} from '../../engine/story-data/story-data';
-import {EditorSidebarComponent} from '../editor-sidebar/editor-sidebar.component';
+import {EditorService} from '../editor.service';
 
 @Component({
   selector: 'if-editor-host',
@@ -22,14 +22,14 @@ export class EditorHostComponent implements OnInit, OnDestroy {
   public selectedNode: any;
   private routerSubscription: Subscription;
   private routerParamSubscription: Subscription;
+  private nodeSubscription: Subscription;
   private fileSaver: any;
-
-  @ViewChild('sidebar') private sidebar: EditorSidebarComponent;
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
               private route: ActivatedRoute,
               private ifService: InteractiveFictionService,
+              private editorService: EditorService,
               private storyService: StoryService) {
 
   }
@@ -37,6 +37,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routerSubscription = this.route.url.subscribe(u => this.onUrlEvent(u));
     this.routerParamSubscription = this.route.params.subscribe(p => this.loadFromParameters(p));
+    this.nodeSubscription = this.editorService.nodeSelected.subscribe(n => this.onNodeSelected(n));
   }
 
   ngOnDestroy(): void {
@@ -46,6 +47,9 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     }
     if (this.routerParamSubscription) {
       this.routerParamSubscription.unsubscribe();
+    }
+    if (this.nodeSubscription) {
+      this.nodeSubscription.unsubscribe();
     }
 
   }
@@ -115,9 +119,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     LoggingService.instance.debug(`Loaded story ${this.story.name}`);
 
     this.loading = false;
-    if (this.sidebar) {
-      this.selectedNode = this.sidebar.selectedNode;
-    }
+    this.selectedNode = this.editorService.selectedNode;
   }
 
   private onUrlEvent(u: UrlSegment[] | undefined) {

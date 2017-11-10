@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {StoryData} from '../../engine/story-data/story-data';
+import {EditorService} from '../editor.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'if-editor-sidebar',
@@ -7,17 +9,17 @@ import {StoryData} from '../../engine/story-data/story-data';
   styleUrls: ['./editor-sidebar.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class EditorSidebarComponent implements OnInit {
+export class EditorSidebarComponent implements OnInit, OnDestroy {
 
   @Input()
   story: StoryData;
 
-  @Output()
-  nodeSelected: EventEmitter<any>;
   selectedNode: any;
 
-  constructor() {
-    this.nodeSelected = new EventEmitter<any>();
+  private nodeSubscription: Subscription;
+
+  constructor(private editorService: EditorService) {
+    this.nodeSubscription = this.editorService.nodeSelected.subscribe(n => this.selectedNode = n);
     this.selectedNode = null;
   }
 
@@ -25,24 +27,23 @@ export class EditorSidebarComponent implements OnInit {
     this.onStoryInfoClick();
   }
 
+  ngOnDestroy() {
+    if (this.nodeSubscription) {
+      this.nodeSubscription.unsubscribe();
+    }
+  }
+
   onActorClick(actor: any) {
-    actor.nodeType = 'actor';
-    this.selectNode(actor);
+    this.editorService.selectNode(actor, 'actor');
   }
 
   onRoomClick(room: any) {
-    room.nodeType = 'room';
-    this.selectNode(room);
+    this.editorService.selectNode(room, 'room');
   }
 
   onStoryInfoClick() {
-    (<any>this.story).nodeType = 'storyInfo';
-    this.selectNode(this.story);
+    this.editorService.selectNode(this.story, 'storyInfo');
   }
 
-  private selectNode(node: any) {
-    this.selectedNode = node;
-    this.nodeSelected.emit(node);
-  }
 
 }

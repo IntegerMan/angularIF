@@ -1,5 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {EntityData} from '../../engine/story-data/entity-data';
+import {ItemData} from '../../engine/story-data/item-data';
+import {EditorService} from '../editor.service';
 
 @Component({
   selector: 'if-contents-list',
@@ -12,9 +14,14 @@ export class ContentsListComponent implements OnInit {
   @Input()
   entity: EntityData;
 
-  constructor() { }
+  constructor(private editorService: EditorService) {
+
+  }
 
   ngOnInit() {
   }
 
+  onObjectClick(obj: ItemData) {
+    this.editorService.selectNode(obj, 'entity');
+  }
 }

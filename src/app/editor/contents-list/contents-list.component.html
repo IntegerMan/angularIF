@@ -1,5 +1,5 @@
-<ul class="collection" *ngFor="let obj of entity.contents">
-  <li class="collection-item panel-bg">
+<div class="collection" *ngFor="let obj of entity.contents">
+  <a class="collection-item" (click)="onObjectClick(obj)">
     {{obj.name}}
-  </li>
-</ul>
+  </a>
+</div>

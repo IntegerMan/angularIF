@@ -5,15 +5,11 @@
     <a class="collection-item"
        (click)="onStoryInfoClick()"
        [ngClass]="{active: selectedNode === story}">Story Info</a>
-  </div>
-  <div class="collection with-header">
     <div class="collection-header">Actors</div>
     <a *ngFor="let actor of story.actors"
        class="collection-item"
        [ngClass]="{active: selectedNode === actor}"
        (click)="onActorClick(actor)">{{actor.key}}</a>
-  </div>
-  <div class="collection with-header">
     <div class="collection-header">Rooms</div>
     <a *ngFor="let room of story.rooms"
        class="collection-item"
