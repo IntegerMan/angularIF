@@ -1,5 +1,4 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {TreeNode} from 'primeng/primeng';
 import {StoryData} from '../../engine/story-data/story-data';
 
 @Component({
@@ -14,7 +13,7 @@ export class EditorRendererComponent implements OnInit {
   story: StoryData;
 
   @Input()
-  node: TreeNode;
+  node: any;
 
   constructor() { }
 

@@ -1,13 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {LoggingService} from '../../utility/logging.service';
-import {TreeNode} from 'primeng/primeng';
-import {ActivatedRoute, Params, Router, UrlSegment} from '@angular/router';
+import {ActivatedRoute, Params, UrlSegment} from '@angular/router';
 import {TextOutputService} from '../../engine/text-output.service';
 import {StoryService} from '../../services/story.service';
 import {Subscription} from 'rxjs/Subscription';
-import {EditorTreeComponent} from '../editor-tree/editor-tree.component';
 import {StoryData} from '../../engine/story-data/story-data';
+import {EditorSidebarComponent} from '../editor-sidebar/editor-sidebar.component';
 
 @Component({
   selector: 'if-editor-host',
@@ -20,12 +19,12 @@ export class EditorHostComponent implements OnInit, OnDestroy {
   public story: StoryData;
   public loading: boolean = true;
   public isImporting: boolean = false;
-  public selectedNode: TreeNode;
+  public selectedNode: any;
   private routerSubscription: Subscription;
   private routerParamSubscription: Subscription;
   private fileSaver: any;
 
-  @ViewChild('editTree') private treeControl: EditorTreeComponent;
+  @ViewChild('sidebar') private sidebar: EditorSidebarComponent;
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
@@ -51,7 +50,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
 
   }
 
-  onNodeSelected(node: TreeNode): void {
+  onNodeSelected(node: any): void {
     this.logger.debug(`Node Selected`);
     this.logger.debug(node);
     this.selectedNode = node;
@@ -116,8 +115,8 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     LoggingService.instance.debug(`Loaded story ${this.story.name}`);
 
     this.loading = false;
-    if (this.treeControl) {
-      this.selectedNode = this.treeControl.selectedNode;
+    if (this.sidebar) {
+      this.selectedNode = this.sidebar.selectedNode;
     }
   }
 

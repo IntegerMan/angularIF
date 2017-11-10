@@ -1,5 +1,4 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {TreeNode} from 'primeng/primeng';
 import {StoryData} from '../../engine/story-data/story-data';
 
 @Component({
@@ -9,9 +8,6 @@ import {StoryData} from '../../engine/story-data/story-data';
   encapsulation: ViewEncapsulation.None
 })
 export class StoryInfoEditorComponent implements OnInit {
-
-  @Input()
-  node: TreeNode;
 
   @Input()
   story: StoryData;

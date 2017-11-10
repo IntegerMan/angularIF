@@ -1,10 +1,10 @@
-<div [ngSwitch]="node.type">
+<div [ngSwitch]="node.nodeType">
 
-  <if-story-info-editor *ngSwitchCase="'storyInfo'" [story]="story" [node]="node"></if-story-info-editor>
+  <if-story-info-editor *ngSwitchCase="'storyInfo'" [story]="story"></if-story-info-editor>
   <if-room-list-editor *ngSwitchCase="'roomsRoot'" [story]="story"></if-room-list-editor>
-  <if-room-editor *ngSwitchCase="'room'" [story]="story" [room]="node.data"></if-room-editor>
+  <if-room-editor *ngSwitchCase="'room'" [story]="story" [room]="node"></if-room-editor>
   <if-actor-list-editor *ngSwitchCase="'actorsRoot'" [story]="story"></if-actor-list-editor>
-  <if-actor-editor *ngSwitchCase="'actor'" [story]="story" [actor]="node.data"></if-actor-editor>
-  <span *ngSwitchDefault class="warn-text">{{node.type}} was unsupported</span>
+  <if-actor-editor *ngSwitchCase="'actor'" [story]="story" [actor]="node"></if-actor-editor>
+  <span *ngSwitchDefault class="warn-text">{{node.nodeType}} was unsupported</span>
 
 </div>
