@@ -40,7 +40,6 @@ export class TokenComponent implements OnInit {
         break;
 
       case TokenClassification.Noun:
-        output += 'blue ';
         break;
 
       case TokenClassification.Adverb:
@@ -48,7 +47,6 @@ export class TokenComponent implements OnInit {
         break;
 
       case TokenClassification.Adjective:
-        output += 'light-blue ';
         break;
 
       case TokenClassification.Ignorable:
