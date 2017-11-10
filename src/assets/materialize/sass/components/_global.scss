@@ -492,7 +492,12 @@ td, th{
     line-height: $collection-line-height;
     padding: 10px 20px;
     margin: 0;
-    border-bottom: 1px solid $collection-border-color;
+    // border-bottom: 1px solid $collection-border-color;
+
+    &.indent {
+      // font-size: 80%;
+      padding-left: 50px;
+    }
 
     // Avatar Collection
     &.avatar {
@@ -571,7 +576,12 @@ td, th{
     }
     .collection-item {
       padding-left: 30px;
-    }
+
+      &.indent {
+        padding-left: 50px;
+      }
+        
+    }    
     .collection-item.avatar {
       padding-left: 72px;
     }

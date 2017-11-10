@@ -17,10 +17,10 @@
     <a class="collection-item"
        [ngClass]="{active: selectedNode === actor}"
        (click)="onActorClick(actor)">{{actor.key}}</a>
-    <a class="collection-item"
+    <a class="collection-item indent"
        *ngFor="let obj of actor.contents"
        [ngClass]="{active: selectedNode === obj}"
-       (click)="onObjectClick(obj)"><span style="margin-left: 1rem;">{{obj.key}}</span></a>
+       (click)="onObjectClick(obj)"><span>{{obj.key}}</span></a>
   </div>
 
   <!-- Rooms -->
@@ -30,8 +30,8 @@
         [ngClass]="{active: selectedNode === room}"
         (click)="onRoomClick(room)">{{room.key}}</a>
     <a *ngFor="let obj of room.contents"
-        class="collection-item"
+        class="collection-item indent"
         [ngClass]="{active: selectedNode === obj}"
-        (click)="onObjectClick(obj)"><span style="margin-left: 1rem;">{{obj.key}}</span></a>
+        (click)="onObjectClick(obj)"><span>{{obj.key}}</span></a>
   </div>
 </div>
