@@ -6,7 +6,6 @@
   <div class="row" *ngIf="!isImporting">
     <div class="col m3">
       <if-editor-sidebar [story]="story" (nodeSelected)="onNodeSelected($event)"></if-editor-sidebar>
-      <!--<if-editor-tree #editTree [story]="story" (nodeSelected)="onNodeSelected($event)"></if-editor-tree>-->
     </div>
     <div class="col m9">
       <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode" [story]="story"></if-editor-renderer>

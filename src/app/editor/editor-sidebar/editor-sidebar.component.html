@@ -2,15 +2,23 @@
 
   <div class="collection with-header">
     <div class="collection-header">General</div>
-    <a class="collection-item" (click)="onStoryInfoClick()">Story Info</a>
+    <a class="collection-item"
+       (click)="onStoryInfoClick()"
+       [ngClass]="{active: selectedNode === story}">Story Info</a>
   </div>
   <div class="collection with-header">
     <div class="collection-header">Actors</div>
-    <a class="collection-item" *ngFor="let actor of story.actors" (click)="onActorClick(actor)">{{actor.key}}</a>
+    <a *ngFor="let actor of story.actors"
+       class="collection-item"
+       [ngClass]="{active: selectedNode === actor}"
+       (click)="onActorClick(actor)">{{actor.key}}</a>
   </div>
   <div class="collection with-header">
     <div class="collection-header">Rooms</div>
-    <a class="collection-item" *ngFor="let room of story.rooms" (click)="onRoomClick(room)">{{room.key}}</a>
+    <a *ngFor="let room of story.rooms"
+       class="collection-item"
+       [ngClass]="{active: selectedNode === room}"
+       (click)="onRoomClick(room)">{{room.key}}</a>
   </div>
 
 </div>

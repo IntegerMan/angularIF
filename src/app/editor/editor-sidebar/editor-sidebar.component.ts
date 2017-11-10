@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {StoryData} from '../../engine/story-data/story-data';
-import {ActorData} from '../../engine/story-data/actor-data';
-import {RoomData} from '../../engine/story-data/room-data';
 
 @Component({
   selector: 'if-editor-sidebar',
