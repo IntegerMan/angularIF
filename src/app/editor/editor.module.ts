@@ -17,6 +17,7 @@ import { ActorEditorComponent } from './actor-editor/actor-editor.component';
 import { EditorSidebarComponent } from './editor-sidebar/editor-sidebar.component';
 import { EditorService } from './editor.service';
 import { EntityEditorComponent } from './entity-editor/entity-editor.component';
+import { StringsListComponent } from './strings-list/strings-list.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { EntityEditorComponent } from './entity-editor/entity-editor.component';
     VerbCardComponent,
     ActorEditorComponent,
     EditorSidebarComponent,
-    EntityEditorComponent
+    EntityEditorComponent,
+    StringsListComponent
   ]
 })
 export class EditorModule {

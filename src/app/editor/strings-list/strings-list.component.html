@@ -1,0 +1,15 @@
+<!--suppress ALL -->
+<div class="card theme-bg white-text hoverable">
+  <div class="card-content">
+    <div class="card-title">
+      <h2>String Resources</h2>
+    </div>
+
+    <div class="row" style="margin-top: 1rem;">
+      <div *ngFor="let res of strings; let i = index;" class="input-field col s12">
+        <textarea [(ngModel)]="res.value" id="string{{i}}" type="text" class="validate materialize-textarea"></textarea>
+        <label [attr.for]="'string'+i" class="active">{{res.key}}</label>
+      </div>
+    </div>
+  </div>
+</div>
