@@ -3,6 +3,7 @@
   <if-story-info-editor *ngSwitchCase="'storyInfo'" [story]="story" [node]="node"></if-story-info-editor>
   <if-room-list-editor *ngSwitchCase="'roomsRoot'" [story]="story"></if-room-list-editor>
   <if-room-editor *ngSwitchCase="'room'" [story]="story" [room]="node.data"></if-room-editor>
+  <if-actor-editor *ngSwitchCase="'actor'" [story]="story" [actor]="node.data"></if-actor-editor>
   <span *ngSwitchDefault class="warn-text">{{node.type}} was unsupported</span>
 
 </div>
