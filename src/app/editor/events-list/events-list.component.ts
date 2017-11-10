@@ -1,5 +1,7 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {EntityData} from '../../engine/story-data/entity-data';
+import {KeyValuePair} from '../../utility/key-value-pair';
+import {RoomData} from '../../engine/story-data/room-data';
 
 @Component({
   selector: 'if-events-list',
@@ -7,14 +9,32 @@ import {EntityData} from '../../engine/story-data/entity-data';
   styleUrls: ['./events-list.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class EventsListComponent implements OnInit {
+export class EventsListComponent implements OnInit, OnChanges {
 
   @Input()
-  entity: EntityData;
+  entity: any;
+  kvps: KeyValuePair[];
 
-  constructor() { }
+  constructor() {
+    this.kvps = [];
+  }
 
   ngOnInit() {
+    this.updateData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateData();
+  }
+
+  private updateData() {
+    this.kvps.length = 0;
+    if (this.entity && this.entity.events) {
+      for (const key of Object.getOwnPropertyNames(this.entity.events)) {
+        const kvp = new KeyValuePair(key, this.entity.events[key]);
+        this.kvps.push(kvp);
+      }
+    }
   }
 
 }

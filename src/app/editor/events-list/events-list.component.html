@@ -1,3 +1,4 @@
-<p>
-  events-list works!
-</p>
+<p-dataTable [value]="kvps" [editable]="true">
+  <p-column field="key" header="Key" [editable]="false"></p-column>
+  <p-column field="value" header="Value" [editable]="true"></p-column>
+</p-dataTable>
