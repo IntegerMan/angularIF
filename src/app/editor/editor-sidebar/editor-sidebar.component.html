@@ -5,6 +5,9 @@
     <a class="collection-item"
        (click)="onStoryInfoClick()"
        [ngClass]="{active: selectedNode === story}">Story Info</a>
+    <a class="collection-item"
+       (click)="onStringsClick()"
+       [ngClass]="{active: selectedNode === story.strings}">Strings</a>
     <div class="collection-header">Actors</div>
     <a *ngFor="let actor of story.actors"
        class="collection-item"

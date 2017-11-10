@@ -45,5 +45,8 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
     this.editorService.selectNode(this.story, 'storyInfo');
   }
 
+  onStringsClick() {
+    this.editorService.selectNode(this.story.strings, 'strings');
+  }
 
 }

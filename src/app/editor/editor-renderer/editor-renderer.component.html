@@ -4,6 +4,7 @@
   <if-room-editor *ngSwitchCase="'room'" [story]="story" [room]="node"></if-room-editor>
   <if-actor-editor *ngSwitchCase="'actor'" [story]="story" [actor]="node"></if-actor-editor>
   <if-entity-editor *ngSwitchCase="'entity'" [story]="story" [entity]="node"></if-entity-editor>
-  <span *ngSwitchDefault class="warn-text">{{node.nodeType}} was unsupported</span>
+
+  <span *ngSwitchDefault class="warn-text">Node type '{{node.nodeType}}' does not have an editor component registered for it.</span>
 
 </div>

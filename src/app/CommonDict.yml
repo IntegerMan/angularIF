@@ -47,6 +47,9 @@ terms:
   - Stroll
   - Sprint
   - Repeat
+  - Walk
+  - Screw
+  - Unscrew
 fallback:
   open: Adjective
   using: Preposition
