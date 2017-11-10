@@ -37,6 +37,10 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
     this.editorService.selectNode(actor, 'actor');
   }
 
+  onObjectClick(entity: any) {
+    this.editorService.selectNode(entity, 'entity');
+  }
+
   onRoomClick(room: any) {
     this.editorService.selectNode(room, 'room');
   }
