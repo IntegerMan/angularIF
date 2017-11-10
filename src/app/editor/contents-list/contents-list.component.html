@@ -1,3 +1,5 @@
-<p>
-  contents-list works!
-</p>
+<ul class="collection" *ngFor="let obj of entity.contents">
+  <li class="collection-item panel-bg">
+    {{obj.name}}
+  </li>
+</ul>
