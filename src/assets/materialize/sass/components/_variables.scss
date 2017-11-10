@@ -35,7 +35,7 @@
 // 1. Colors
 // ==========================================================================
 
-$primary-color: color("materialize-red", "lighten-2") !default;
+$primary-color: color("blue-grey", "darken-2") !default;
 $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: darken($primary-color, 15%) !default;
 
@@ -328,11 +328,11 @@ $interval-size: $range / $intervals !default;
 // 24. Collections
 // ==========================================================================
 
-$collection-border-color: #e0e0e0 !default;
-$collection-bg-color: #fff !default;
+$collection-border-color: color("grey", 'darken-4') !default;
+$collection-bg-color: color("grey", 'darken-3') !default;
+$collection-hover-bg-color: color("grey", "darken-2") !default;
 $collection-active-bg-color: $secondary-color !default;
 $collection-active-color: lighten($secondary-color, 55%) !default;
-$collection-hover-bg-color: #ddd !default;
 $collection-link-color: $secondary-color !default;
 $collection-line-height: 1.5rem !default;
 

@@ -1,42 +1,37 @@
-<div class="card-panel panel-bg black-text">
+<div class="collection with-header z-depth-1">
 
-  <div class="collection with-header">
-
-    <!-- High-Level Information -->
-    <div class="collection-header">General</div>
+  <!-- High-Level Information -->
+  <div class="collection-header">General</div>
+  <div>
     <a class="collection-item"
-       (click)="onStoryInfoClick()"
-       [ngClass]="{active: selectedNode === story}">Story Info</a>
+      (click)="onStoryInfoClick()"
+      [ngClass]="{active: selectedNode === story}">Story Info</a>
     <a class="collection-item"
-       (click)="onStringsClick()"
-       [ngClass]="{active: selectedNode === story.strings}">Strings</a>
-
-    <!-- Actors -->
-    <div class="collection-header">Actors</div>
-    <div *ngFor="let actor of story.actors">
-      <a
-         class="collection-item"
-         [ngClass]="{active: selectedNode === actor}"
-         (click)="onActorClick(actor)">{{actor.key}}</a>
-      <div *ngFor="let obj of actor.contents">
-        <a class="collection-item"
-           [ngClass]="{active: selectedNode === obj}"
-           (click)="onObjectClick(obj)"><span style="margin-left: 1rem;">{{obj.key}}</span></a>
-      </div>
-    </div>
-
-    <!-- Rooms -->
-    <div class="collection-header">Rooms</div>
-    <div *ngFor="let room of story.rooms">
-      <a class="collection-item"
-         [ngClass]="{active: selectedNode === room}"
-         (click)="onRoomClick(room)">{{room.key}}</a>
-      <div *ngFor="let obj of room.contents">
-        <a class="collection-item"
-           [ngClass]="{active: selectedNode === obj}"
-           (click)="onObjectClick(obj)"><span style="margin-left: 1rem;">{{obj.key}}</span></a>
-      </div>
-    </div>
+      (click)="onStringsClick()"
+      [ngClass]="{active: selectedNode === story.strings}">String Resources</a>
   </div>
 
+  <!-- Actors -->
+  <div class="collection-header">Actors</div>
+  <div *ngFor="let actor of story.actors">
+    <a class="collection-item"
+       [ngClass]="{active: selectedNode === actor}"
+       (click)="onActorClick(actor)">{{actor.key}}</a>
+    <a class="collection-item"
+       *ngFor="let obj of actor.contents"
+       [ngClass]="{active: selectedNode === obj}"
+       (click)="onObjectClick(obj)"><span style="margin-left: 1rem;">{{obj.key}}</span></a>
+  </div>
+
+  <!-- Rooms -->
+  <div class="collection-header">Rooms</div>
+  <div *ngFor="let room of story.rooms">
+    <a class="collection-item"
+        [ngClass]="{active: selectedNode === room}"
+        (click)="onRoomClick(room)">{{room.key}}</a>
+    <a *ngFor="let obj of room.contents"
+        class="collection-item"
+        [ngClass]="{active: selectedNode === obj}"
+        (click)="onObjectClick(obj)"><span style="margin-left: 1rem;">{{obj.key}}</span></a>
+  </div>
 </div>
