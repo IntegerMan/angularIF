@@ -1,0 +1,23 @@
+<div class="card white-text blue-grey darken-2 hoverable">
+  <div class="card-content">
+    <div class="card-title">
+      <h2>Actors</h2>
+    </div>
+
+    <ul *ngIf="story.actors && story.actors.length > 0" class="collection">
+      <div *ngFor="let actor of story.actors">
+        <li class="collection-item panel-bg">{{actor.name}}</li>
+      </div>
+    </ul>
+
+    <span *ngIf="!story.actors || story.actors.length <= 0">
+      This story does not contain any actors.
+    </span>
+
+  </div>
+  <div class="card-action blue-grey darken-4">
+    <a class="waves-effect waves-light btn" (click)="addActor()">
+      Add Actor
+    </a>
+  </div>
+</div>

@@ -16,6 +16,7 @@ import { NavigationListComponent } from './navigation-list/navigation-list.compo
 import { EventsListComponent } from './events-list/events-list.component';
 import { VerbCardComponent } from './verb-card/verb-card.component';
 import { ActorEditorComponent } from './actor-editor/actor-editor.component';
+import { ActorListEditorComponent } from './actor-list-editor/actor-list-editor.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { ActorEditorComponent } from './actor-editor/actor-editor.component';
     NavigationListComponent,
     EventsListComponent,
     VerbCardComponent,
-    ActorEditorComponent
+    ActorEditorComponent,
+    ActorListEditorComponent
   ]
 })
 export class EditorModule {
