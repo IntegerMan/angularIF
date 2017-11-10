@@ -20,6 +20,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "if",
       "styles": [
+        "assets/materialize/sass/materialize.scss",
         "styles.scss"
       ],
       "scripts": [],
@@ -56,7 +57,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {
     }
   },
