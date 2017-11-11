@@ -10,10 +10,14 @@
 <nav>
   <div class="nav-wrapper">
     <div class="col s12">
+
+
       <a (click)="onHomeClick()" style="margin-left: 2rem; margin-right: 0rem; font-size: 150%; font-weight: bold;" class="white-text">IF Edit</a>
-      <a (click)="onStoryClick()" class="breadcrumb">Story</a>
-      <span class="breadcrumb">Rooms</span>
-      <a href="#!" class="breadcrumb">Pit of despair</a>
+      <a *ngFor="let crumb of breadcrumbs" 
+         class="breadcrumb"
+         (click)="onBreadcrumbClick(crumb);">
+         {{getBreadcrumbName(crumb)}}
+      </a>
       <ul class="right">
         <!-- Dropdown Trigger -->
         <li>

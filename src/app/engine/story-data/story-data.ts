@@ -23,6 +23,9 @@ export class StoryData {
   rooms: RoomData[];
   actors: ActorData[];
 
-  strings: any[];
+  strings: any;
+
+  // Editor Info
+  nodeType: string;
 
 }

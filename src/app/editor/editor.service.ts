@@ -40,9 +40,9 @@ export class EditorService {
     return this.selectedNode && this.selectedNode.contents;
   }
  
-  public selectNode(node: any, nodeType: string) {
+  public selectNode(node: any, nodeType: string = null) {
 
-    if (node && nodeType) {
+    if (node && nodeType && nodeType !== null && nodeType !== undefined) {
       node.nodeType = nodeType;
     }
 

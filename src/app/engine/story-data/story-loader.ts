@@ -19,9 +19,29 @@ export class StoryLoader {
   private data: StoryData;
 
   constructor(data: StoryData) {
-    this.data = data;
+    this.data = this.cleanseData(data);
   }
 
+  cleanseData(data: StoryData): StoryData {
+
+    data.nodeType = 'storyInfo';
+    if (!data.strings) {
+      data.strings = {};
+    }
+    data.strings.nodeType = 'strings';
+
+    for (const room of data.rooms) {
+      room.nodeType = 'room';
+      this.updateParent(room);
+    }
+    for (const actor of data.actors) {
+      actor.nodeType = 'actor';
+      this.updateParent(actor);
+    }
+
+    return data;
+  }
+ 
   loadIntoStory(story: Story): void {
 
     // Standard items go here
@@ -247,4 +267,15 @@ export class StoryLoader {
     entity.addAdjectiveAliases(alias.adjectives);
 
   }
+  
+  private updateParent(container: EntityData) {
+    if (container.contents) {
+      for (const obj of container.contents) {
+        obj.parent = container;
+        obj.nodeType = 'entity';
+        this.updateParent(obj);
+      }
+    }
+  }
+  
 }
