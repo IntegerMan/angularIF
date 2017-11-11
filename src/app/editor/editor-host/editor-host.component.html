@@ -3,12 +3,17 @@
 <div *ngIf="story">
 
   <!-- Main UI -->
-  <div class="row" *ngIf="!isImporting">
-    <div class="col m3">
-      <if-editor-sidebar [story]="story"></if-editor-sidebar>
-    </div>
-    <div class="col m9">
-      <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode" [story]="story"></if-editor-renderer>
+  <div *ngIf="!isImporting">
+
+    <if-editor-toolbar></if-editor-toolbar>
+
+    <div class="row" >
+      <div class="col m3">
+        <if-editor-sidebar [story]="story"></if-editor-sidebar>
+      </div>
+      <div class="col m9">
+        <if-editor-renderer *ngIf="selectedNode" [node]="selectedNode" [story]="story"></if-editor-renderer>
+      </div>
     </div>
   </div>
 

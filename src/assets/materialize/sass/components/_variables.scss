@@ -36,8 +36,8 @@
 // ==========================================================================
 
 $primary-color: color("blue-grey", "darken-2") !default;
-$primary-color-light: lighten($primary-color, 15%) !default;
-$primary-color-dark: darken($primary-color, 15%) !default;
+$primary-color-light: color("blue-grey", "base") !default;
+$primary-color-dark: color("blue-grey", "darken-4") !default;
 
 $secondary-color: color("teal", "lighten-1") !default;
 $secondary-color-dark: darken($secondary-color, 15%) !default;
@@ -45,6 +45,10 @@ $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 $link-color: color("light-blue", "darken-1") !default;
 $text-color: #ffffff;
+
+$panel-bg-color: color("grey", 'darken-3') !default; 
+$panel-border-color: color("grey", 'darken-4') !default; 
+$panel-hover-color: color("grey", 'darken-2') !default; 
 
 // 2. Badges
 // ==========================================================================
@@ -72,7 +76,7 @@ $button-disabled-color: #9F9F9F !default;
 // Raised buttons
 $button-raised-background: $secondary-color !default;
 $button-raised-background-hover: lighten($button-raised-background, 5%) !default;
-$button-raised-color: #fff !default;
+$button-raised-color: $text-color !default;
 
 // Large buttons
 $button-large-icon-font-size: 1.6rem !default;
@@ -85,7 +89,7 @@ $button-flat-disabled-color: lighten(#999, 10%) !default;
 // Floating buttons
 $button-floating-background: $secondary-color !default;
 $button-floating-background-hover: $button-floating-background !default;
-$button-floating-color: #fff !default;
+$button-floating-color: $text-color !default;
 $button-floating-size: 40px !default;
 $button-floating-large-size: 56px !default;
 $button-floating-radius: 50% !default;
@@ -114,7 +118,7 @@ $carousel-item-width: $carousel-item-height !default;
 
 $collapsible-height: 3rem !default;
 $collapsible-line-height: $collapsible-height !default;
-$collapsible-header-color: #fff !default;
+$collapsible-header-color: $text-color !default;
 $collapsible-border-color: #ddd !default;
 
 
@@ -147,8 +151,8 @@ $timepicker-clock-plate-bg: #eee;
 // 9. Dropdown
 // ==========================================================================
 
-$dropdown-bg-color: #fff !default;
-$dropdown-hover-bg-color: #eee !default;
+$dropdown-bg-color: $panel-bg-color !default;
+$dropdown-hover-bg-color: $panel-hover-color !default;
 $dropdown-color: $secondary-color !default;
 $dropdown-item-height: 50px !default;
 
@@ -246,15 +250,15 @@ $navbar-line-height: $navbar-height !default;
 $navbar-height-mobile: 56px !default;
 $navbar-line-height-mobile: $navbar-height-mobile !default;
 $navbar-font-size: 1rem !default;
-$navbar-font-color: #fff !default;
+$navbar-font-color: $text-color !default;
 $navbar-brand-font-size: 2.1rem !default;
 
 // 15. Side Navigation
 // ==========================================================================
 
 $sidenav-font-size: 14px !default;
-$sidenav-font-color: rgba(0,0,0,.87) !default;
-$sidenav-bg-color: #fff !default;
+$sidenav-font-color: rgba(255,255,255,.87) !default;
+$sidenav-bg-color: $panel-bg-color !default;
 $sidenav-padding: 16px !default;
 $sidenav-item-height: 48px !default;
 $sidenav-line-height: $sidenav-item-height !default;
@@ -279,7 +283,7 @@ $spinner-default-color: $secondary-color !default;
 
 $tabs-underline-color: $primary-color-light !default;
 $tabs-text-color: $primary-color !default;
-$tabs-bg-color: #fff !default;
+$tabs-bg-color: $panel-bg-color !default;
 
 
 // 19. Tables
@@ -331,9 +335,9 @@ $interval-size: $range / $intervals !default;
 // 24. Collections
 // ==========================================================================
 
-$collection-border-color: color("grey", 'darken-4') !default;
-$collection-bg-color: color("grey", 'darken-3') !default;
-$collection-hover-bg-color: color("grey", "darken-2") !default;
+$collection-border-color: $panel-border-color !default;
+$collection-bg-color: $panel-bg-color !default;
+$collection-hover-bg-color: $panel-hover-color !default;
 $collection-active-bg-color: $secondary-color !default;
 $collection-active-color: lighten($secondary-color, 55%) !default;
 $collection-link-color: $secondary-color !default;

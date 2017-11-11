@@ -43,9 +43,13 @@ export class CloakStory extends Story {
 
   public previewCloakDrop(context: CommandContext): boolean {
 
+    // TODO: This can be accomplished via an if block with a room check condition
+
     if (context.currentRoom === this.cloakroom) {
 
       if (!this.hasDroppedCloak) {
+
+        // TODO: This can be accomplished via an increase score command with a do-once limiter
         context.score.increaseScore();
         this.hasDroppedCloak = true;
       }
@@ -78,10 +82,14 @@ export class CloakStory extends Story {
 
     context.currentRoom.setAttribute('isDark', isDark);
 
+    // TODO: I can probably handle this in script if I have an action that sets attributes on 
+    // another entity and can trigger that on taken and on dropped.
+
   }
 
   public onReadMessage(context: CommandContext, message: WorldEntity) {
 
+    // TODO: In order to have this in scripting, I'll need an if / else command
     const isWin: boolean = this.blundersRemaining > 0;
 
     if (isWin) {
@@ -95,6 +103,8 @@ export class CloakStory extends Story {
   }
 
   private isCommandAllowedInBar(context: CommandContext, command: Command): boolean {
+
+    // TODO: This is way over-complicated. A simpler one can be done via scripting an an IF command
 
     // Anything is allowed in the light
     if (context.currentRoom.getAttribute('isDark', true) === false) {
