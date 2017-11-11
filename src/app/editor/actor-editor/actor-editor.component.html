@@ -26,6 +26,20 @@
         <label for="name" class="active">Actor Name</label>
       </div>
     </div>
+    <div class="row" *ngIf="selectedTab === 0">
+      <div class="input-field col s6">
+        <input id="startRoom" [(ngModel)]="actor.startRoom" type="text" class="validate" data-length="64">
+        <label for="startRoom" class="active">Start Room (Key)</label>
+      </div>
+      <div class="switch col s6">
+          <label>
+            NPC
+            <input type="checkbox" [(ngModel)]="actor.isPlayer">
+            <span class="lever"></span>
+            Player
+          </label>
+        </div>
+    </div>
 
     <!-- Collections go here -->
     <if-attributes-list [entity]="actor" *ngIf="selectedTab === 1"></if-attributes-list>
