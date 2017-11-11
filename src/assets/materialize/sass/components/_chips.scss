@@ -3,7 +3,7 @@
   height: 32px;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(0,0,0,.6);
+  color: $chip-fg-color;
   line-height: 32px;
   padding: 0 12px;
   border-radius: 16px;
@@ -48,7 +48,7 @@
 
   .chip.selected {
     background-color: $chip-selected-color;
-    color: #fff;
+    color: $chip-fg-color;
   }
 
   .input {

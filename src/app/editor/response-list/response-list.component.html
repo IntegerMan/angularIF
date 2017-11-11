@@ -1,0 +1,19 @@
+<div *ngFor="let item of responseItems">
+    <div [ngSwitch]="getItemType(item)">
+
+        <blockquote *ngSwitchCase="'string'">
+            <if-md [text]="item"></if-md>
+        </blockquote>
+
+        <div *ngSwitchCase="'invoke'"
+             class="chip orange darken-3 tooltipped"
+             data-tooltip="invoke a method">
+
+            <i class="material-icons tiny" alt="invoke">call_made</i>   
+            Call <code>{{item.invoke}}</code>
+
+        </div>
+
+        <span *ngSwitchDefault class="warn-text">No handler for {{getItemType(item)}}.</span>
+    </div>
+</div>

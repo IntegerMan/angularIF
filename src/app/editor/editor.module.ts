@@ -18,6 +18,7 @@ import { EditorSidebarComponent } from './editor-sidebar/editor-sidebar.componen
 import { EditorService } from './editor.service';
 import { EntityEditorComponent } from './entity-editor/entity-editor.component';
 import { StringsListComponent } from './strings-list/strings-list.component';
+import { ResponseListComponent } from './response-list/response-list.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { StringsListComponent } from './strings-list/strings-list.component';
     ActorEditorComponent,
     EditorSidebarComponent,
     EntityEditorComponent,
-    StringsListComponent
+    StringsListComponent,
+    ResponseListComponent
   ]
 })
 export class EditorModule {

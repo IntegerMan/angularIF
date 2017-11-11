@@ -1,3 +1,4 @@
+import { MarkdownPresenterComponent } from './markdown-presenter/markdown-presenter.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {LoadingIndicatorComponent} from './loading-indicator/loading-indicator.component';
@@ -9,7 +10,6 @@ import {
   ConfirmDialogModule, ConfirmationService, TreeModule, DataTableModule, SharedModule
 } from 'primeng/primeng';
 import {RouterModule} from '@angular/router';
-import {MarkdownPresenterComponent} from '../utility/markdown-presenter/markdown-presenter.component';
 import {FormsModule} from '@angular/forms';
 @NgModule({
   imports: [

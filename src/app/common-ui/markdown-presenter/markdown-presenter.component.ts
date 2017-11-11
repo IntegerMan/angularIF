@@ -1,5 +1,5 @@
+import { LoggingService } from '../../utility/logging.service';
 import {MarkdownService} from '../../text-rendering/markdown.service';
-import {LoggingService} from '../logging.service';
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
