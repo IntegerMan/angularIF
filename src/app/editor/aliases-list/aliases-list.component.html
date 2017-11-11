@@ -1,4 +1,15 @@
 <div>
-  <span class="chip token-noun white-text" *ngFor="let noun of entity.aliases.nouns">{{noun}}</span>
-  <span class="chip token-adjective white-text" *ngFor="let adj of entity.aliases.adjectives">{{adj}}</span>
+  
+  <span class="chip token-noun valign-wrapper" 
+  *ngFor="let noun of entity.aliases.nouns">
+  <i class="material-icons" style="font-size: 12px;" alt="Noun">devices</i>   
+    <span>{{noun}}</span>
+  </span>
+
+  <span class="chip token-adjective valign-wrapper" 
+  *ngFor="let adj of entity.aliases.adjectives">
+  <i class="material-icons" style="font-size: 14px;" alt="Adjective">label_outline</i>   
+    <span>{{adj}}</span>
+  </span>
+
 </div>

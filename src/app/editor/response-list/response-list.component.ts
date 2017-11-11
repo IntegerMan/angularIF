@@ -22,8 +22,6 @@ export class ResponseListComponent implements OnInit, OnChanges {
 
   public getItemType(item: any): string {
 
-    console.log(item);
-
     const itemType = typeof (item);
 
     if (item && itemType === 'string') {
