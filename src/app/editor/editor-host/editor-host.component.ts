@@ -110,6 +110,9 @@ export class EditorHostComponent implements OnInit, OnDestroy {
       this.story = this.storyService.getStoryData(storyKey);
     }
 
+    // Ensure the service knows what we're talking about
+    this.editorService.storyData = this.story;
+
     if (!this.story) {
       // TODO: Redirect to a not found route
       LoggingService.instance.warning(`Story ${storyKey} could not be found.`);

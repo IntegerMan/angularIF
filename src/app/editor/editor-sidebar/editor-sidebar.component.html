@@ -12,7 +12,10 @@
   </div>
 
   <!-- Actors -->
-  <div class="collection-header">Actors</div>
+  <div class="collection-header">
+    Actors
+    <a (click)="onAddActorClick()" class="secondary-content white-text"><i class="material-icons">add</i></a>
+  </div>
   <div *ngFor="let actor of story.actors">
     <a class="collection-item"
        [ngClass]="{active: selectedNode === actor}"
@@ -24,7 +27,10 @@
   </div>
 
   <!-- Rooms -->
-  <div class="collection-header">Rooms</div>
+  <div class="collection-header">
+    Rooms
+    <a (click)="onAddRoomClick()" class="secondary-content white-text"><i class="material-icons">add</i></a>
+  </div>
   <div *ngFor="let room of story.rooms">
     <a class="collection-item"
         [ngClass]="{active: selectedNode === room}"
