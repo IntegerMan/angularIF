@@ -1,3 +1,4 @@
+import { EditorService } from '../editor.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -8,9 +9,37 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class EditorToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private editorService: EditorService) { }
 
   ngOnInit() {
+  }
+
+  onAddActorClick(): void {
+    this.editorService.addActor();
+  }
+
+  onAddObjectClick(): void {
+    this.editorService.addObject();
+  }
+
+  onAddRoomClick(): void {
+    this.editorService.addRoom();    
+  }
+
+  onAddVerbClick(): void {
+    this.editorService.addVerb();    
+  }
+
+  onAddAliasClick(): void {
+    this.editorService.addAlias();    
+  }
+
+  onAddAttributeClick(): void {
+    this.editorService.addAttribute();    
+  }
+
+  onAddEventClick(): void {
+    this.editorService.addEvent();    
   }
 
 }

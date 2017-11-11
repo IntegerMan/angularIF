@@ -1,10 +1,11 @@
 <ul id="dropdownAdd" class="dropdown-content">
-    <li><a href="#!">Actor</a></li>
-    <li><a href="#!">Room</a></li>
-    <li><a href="#!">Object</a></li>
-    <li><a href="#!">Attribute</a></li>
-    <li><a href="#!">Alias</a></li>
-    <li><a href="#!">Event</a></li>
+    <li><a (click)="onAddActorClick()">Actor</a></li>
+    <li><a (click)="onAddRoomClick()">Room</a></li>
+    <li><a (click)="onAddObjectClick()">Object</a></li>
+    <li><a (click)="onAddAttributeClick()">Attribute</a></li>
+    <li><a (click)="onAddAliasClick()">Alias</a></li>
+    <li><a (click)="onAddVerbClick()">Verb</a></li>
+    <li><a (click)="onAddEventClick()">Event</a></li>
   </ul>
 <nav>
   <div class="nav-wrapper">
@@ -15,7 +16,13 @@
       <a href="#!" class="breadcrumb">Pit of despair</a>
       <ul class="right">
         <!-- Dropdown Trigger -->
-        <li><a class="dropdown-button" href="#!" data-activates="dropdownAdd"><i class="material-icons left">add</i>Add<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li>
+          <a class="dropdown-button" href="#!" data-activates="dropdownAdd">
+            Add
+            <i class="material-icons right">arrow_drop_down</i>
+            <i class="material-icons left">add</i>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

@@ -25,6 +25,22 @@ export class NaturalLanguageService {
     NaturalLanguageService._instance = this;
   }
 
+  public isTerm(word: string, tagToMatch: string) {
+    const term: LanguageTerm = this.getTerm(word);
+
+    return term.tags.filter(t => t === tagToMatch).length > 0;
+  }
+
+  public getTerm(word: string): LanguageTerm {
+    const terms: LanguageTerm[] = this.getTerms(word);
+
+    if (terms && terms.length > 0) {
+      return terms[0];
+    }
+
+    return null;
+  }
+
   public getTerms(sentence: string): LanguageTerm[] {
 
     this.logger.log(`Language service is extracting terms from: ${sentence}`);

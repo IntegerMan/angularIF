@@ -13,4 +13,8 @@ export abstract class EntityData {
   
   contents: ItemData[];
 
+  // Editor Specific items here:
+  parent: EntityData;
+  nodeType: string;
+
 }
