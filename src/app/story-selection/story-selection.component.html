@@ -1,19 +1,21 @@
-<div class="card theme-bg small white-text">
-  <div class="card-content">
+<div class="card">
+  <div class="card-action">
     <h1>Angular IF</h1>
-    <p class="flow-text" style="margin-top: 2rem;">
-      The Angular Interactive Fiction project aims at using modern web technologies and natural language
-      processing libraries to offer a slick and responsive take on old-school Interactive Fiction games.
+  </div>
+  <div class="card-content">
+    <p class="flow-text">
+      The Angular Interactive Fiction project uses modern web technologies and natural language
+      processing to offer a slick and responsive take on old-school Interactive Fiction games.
     </p>
   </div>
 </div>
 
-<div class="card panel-bg white-text" style="margin-top: 2rem;">
+<div class="card" style="margin-top: 2rem;">
   <div class="card-content">
     <div class="card-title">
       <h2>Select a Story</h2>
     </div>
-    <p>
+    <p style="margin-bottom: 1rem;">
       At the moment, the engine consists of a tech demo and a larger game that is still in development until early 2018.
     </p>
     <div class="row">
@@ -22,12 +24,13 @@
       </div>
     </div>
   </div>
-  <div class="card-action grey darken-2">
+  <div class="card-action">
     <a [routerLink]="['/Editor']"
     class="waves-effect waves-light btn">
       Create a New Story
     </a>
     <a [routerLink]="['/Editor', 'Import']"
+    style="margin-left: 1rem;"
     class="waves-effect waves-light btn">
       Load a Story Draft
     </a>

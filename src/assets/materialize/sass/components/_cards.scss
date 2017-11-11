@@ -5,6 +5,7 @@
   padding: $card-padding;
   margin: $element-top-margin 0 $element-bottom-margin 0;
   border-radius: 2px;
+  color: $text-color;
   @extend .z-depth-1;
   background-color: $card-bg-color;
 }
@@ -15,6 +16,7 @@
   background-color: $card-bg-color;
   transition: box-shadow .25s;
   border-radius: 2px;
+  color: $text-color;
   @extend .z-depth-1;
 
 
@@ -162,7 +164,7 @@
       border-radius: 0 0 2px 2px;
     }
     position: relative;
-    background-color: inherit;
+    background-color: $card-action-bg-color;
     border-top: 1px solid rgba(160,160,160,.2);
     padding: 16px $card-padding;
 

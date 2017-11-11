@@ -22,8 +22,8 @@
 </div>
 
 <!-- Main UI -->
-<div #StoryCard class="card white-text" (window:resize)="onResize()" [style.height.px]="storyCardHeight">
-  <div class="card-header theme-bg">
+<div #StoryCard class="card" (window:resize)="onResize()" [style.height.px]="storyCardHeight">
+  <div class="card-header">
     <div class="valign-wrapper" style="margin-left: 8px;">
       <h1>
         <span class="fa fa-fw {{icon}}"></span>
@@ -35,7 +35,7 @@
   <div class="card-content full-height content-bg" #scrollMe style="overflow-y: auto;">
     <if-line-renderer *ngFor="let line of lines" [line]="line"></if-line-renderer>
   </div>
-  <div class="card-footer theme-bg z-depth-1 hoverable" style="padding-left: 8px; padding-right: 8px; padding-top: 8px;">
+  <div class="card-action z-depth-1 hoverable" style="padding-left: 8px; padding-right: 8px; padding-top: 8px;">
     <if-command-area></if-command-area>
   </div>
 </div>

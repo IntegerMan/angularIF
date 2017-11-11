@@ -1,4 +1,4 @@
-<div class="card small hoverable white-text blue-grey darken-2">
+<div class="card small hoverable content-bg">
   <div class="card-content">
     <span class="card-title activator">
       <span class="fa fa-fw {{story.fontAwesomeIcon}}"></span>
@@ -13,7 +13,7 @@
     <br />
     <if-md [text]="story.description"></if-md>
   </div>
-  <div class="card-action blue-grey darken-4">
+  <div class="card-action">
     <a [routerLink]="['/Stories', story.key]"
        class="waves-effect waves-light">
       Play
