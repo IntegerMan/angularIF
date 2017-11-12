@@ -13,8 +13,6 @@ export class VerbsListComponent implements OnInit, OnChanges {
   @Input()
   entity: EntityData;
 
-  verbs: any[] = [];
-
   constructor() { }
 
   ngOnInit() {
@@ -26,12 +24,7 @@ export class VerbsListComponent implements OnInit, OnChanges {
   }
 
   private updateData() {
-    this.verbs.length = 0;
 
-    if (this.entity && this.entity.verbs) {
-      for (const key of Object.getOwnPropertyNames(this.entity.verbs)) {
-        this.verbs.push(new KeyValuePair(key, this.entity.verbs[key]));
-      }
-    }
   }
+
 }

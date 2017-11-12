@@ -1,7 +1,8 @@
 import { EditorService } from '../editor.service';
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {StoryData} from '../../engine/story-data/story-data';
 import {ItemData} from '../../engine/story-data/item-data';
+import {VerbData} from '../../engine/story-data/verb-data';
 
 @Component({
   selector: 'if-entity-editor',
@@ -9,7 +10,7 @@ import {ItemData} from '../../engine/story-data/item-data';
   styleUrls: ['./entity-editor.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class EntityEditorComponent implements OnInit {
+export class EntityEditorComponent implements OnInit, OnChanges {
 
   @Input()
   story: StoryData;
@@ -17,21 +18,37 @@ export class EntityEditorComponent implements OnInit {
   @Input()
   entity: ItemData;
 
-  selectedTab: number = 0;
+  selectedTab: string = 'info';
+  lookVerb: VerbData;
 
   constructor(private editorService: EditorService) {
    }
 
   ngOnInit() {
     $('ul.tabs').tabs();
+    this.updateLookVerb();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.updateLookVerb();
   }
 
   addObject(): void {
     this.editorService.addObject();
   }
 
-  selectTab(number: number) {
-    this.selectedTab = number;
+  selectTab(tab: string) {
+    this.selectedTab = tab;
+  }
+
+  private updateLookVerb() {
+    // A common case is wanting to know what the look description will be, so include that center stage
+    const lookVerb = this.entity.verbData.filter(v => v.name === 'look');
+    if (lookVerb && lookVerb.length > 0) {
+      this.lookVerb = lookVerb[0];
+    } else {
+      this.lookVerb = undefined;
+    }
   }
 
 }

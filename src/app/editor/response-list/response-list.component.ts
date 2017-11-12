@@ -1,5 +1,3 @@
-import { Error } from 'tslint/lib/error';
-import { selector } from 'rxjs/operator/publish';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -14,7 +12,7 @@ export class ResponseListComponent implements OnInit, OnChanges {
   responses: any[];
 
   responseItems: any[] = [];
-  
+
   constructor() { }
 
   ngOnInit() {
@@ -41,7 +39,8 @@ export class ResponseListComponent implements OnInit, OnChanges {
     this.responseItems.length = 0;
 
     if (this.responses && this.responses instanceof Array) {
-      this.responseItems = this.responses;
+      // We want a clone of the data, not the reference itself. This is important since we're going to truncate it later
+      this.responseItems = this.responses.slice();
     } else {
       this.responseItems.push(this.responses);
     }

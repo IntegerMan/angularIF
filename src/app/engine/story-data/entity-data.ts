@@ -1,5 +1,6 @@
 import {ItemData} from './item-data';
 import {AliasData} from './alias-data';
+import {VerbData} from './verb-data';
 
 export abstract class EntityData {
 
@@ -8,13 +9,15 @@ export abstract class EntityData {
 
   aliases: AliasData;
 
-  verbs: {};
+  verbData: VerbData[];
+
   attributes: {};
-  
+
   contents: ItemData[];
 
   // Editor Specific items here:
   parent: EntityData;
   nodeType: string;
+  verbs: {};
 
 }

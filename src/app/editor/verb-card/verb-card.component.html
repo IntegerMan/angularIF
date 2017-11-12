@@ -1,11 +1,11 @@
 <div class="card content-bg">
   <div class="card-content">
     <div class="card-title">
-      <h4>{{verb.key}}</h4>
+      <h4>{{verb.name}}</h4>
     </div>
 
-    <if-response-list [responses]="verb.value"></if-response-list>
-    
+    <if-response-list [responses]="verb.handler"></if-response-list>
+
   </div>
   <div class="card-action">
     <a class="waves-effect waves-light btn" (click)="edit()">

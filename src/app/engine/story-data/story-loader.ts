@@ -13,6 +13,7 @@ import { StoryResponse } from '../responses/story-response';
 import { WorldEntity } from '../entities/world-entity';
 import {AliasData} from './alias-data';
 import {ItemData} from './item-data';
+import {VerbData} from './verb-data';
 
 export class StoryLoader {
 
@@ -32,6 +33,7 @@ export class StoryLoader {
 
     for (const room of data.rooms) {
       room.nodeType = 'room';
+      this.migrateVerbs(room);
       if (!room.contents) {
         room.contents = [];
       }
@@ -40,6 +42,7 @@ export class StoryLoader {
 
     for (const actor of data.actors) {
       actor.nodeType = 'actor';
+      this.migrateVerbs(actor);
       if (!actor.contents) {
         actor.contents = [];
       }
@@ -48,7 +51,7 @@ export class StoryLoader {
 
     return data;
   }
- 
+
   loadIntoStory(story: Story): void {
 
     // Standard items go here
@@ -176,7 +179,7 @@ export class StoryLoader {
     this.buildAttributes(entity, entityData);
 
     // Copy over all verbs
-    this.buildVerbHandlers(entity, entityData.verbs);
+    this.buildVerbHandlers(entity, entityData.verbData);
 
     this.buildAliases(entity, entityData.aliases);
 
@@ -190,10 +193,10 @@ export class StoryLoader {
     }
   }
 
-  private buildVerbHandlers(entity: WorldEntity, verbData: {}): void {
+  private buildVerbHandlers(entity: WorldEntity, verbData: VerbData[]): void {
     if (verbData) {
-      for (const verb of Object.getOwnPropertyNames(verbData)) {
-        entity.verbs[verb] = this.buildResponse(verbData[verb], entity);
+      for (const verb of verbData) {
+        entity.verbs[verb.name] = this.buildResponse(verb.handler, entity);
       }
     }
   }
@@ -274,7 +277,7 @@ export class StoryLoader {
     entity.addAdjectiveAliases(alias.adjectives);
 
   }
-  
+
   private updateParent(container: EntityData) {
     if (container.contents) {
       for (const obj of container.contents) {
@@ -285,9 +288,31 @@ export class StoryLoader {
           obj.contents = [];
         }
 
+        this.migrateVerbs(obj);
         this.updateParent(obj);
       }
     }
   }
-  
+
+
+  private migrateVerbs(entity: EntityData): void {
+
+    if (!entity.verbData) {
+      entity.verbData = [];
+      // Migrate from verbs to verbData
+      if (entity.verbs) {
+        for (const prop of Object.getOwnPropertyNames(entity.verbs)) {
+          const v: VerbData = new VerbData();
+          v.name = prop;
+          v.handler = entity.verbs[prop];
+          entity.verbData.push(v);
+        }
+
+        // Chop out the old system entirely
+        entity.verbs = undefined;
+      }
+    }
+  }
+
+
 }

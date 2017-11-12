@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {VerbData} from "../../engine/story-data/verb-data";
 
 @Component({
   selector: 'if-verb-card',
@@ -9,7 +10,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 export class VerbCardComponent implements OnInit {
 
   @Input()
-  verb: any;
+  verb: VerbData;
 
   constructor() { }
 
