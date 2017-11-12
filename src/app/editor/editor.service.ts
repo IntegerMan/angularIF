@@ -7,6 +7,8 @@ import { AliasData } from '../engine/story-data/alias-data';
 import { ActorData } from '../engine/story-data/actor-data';
 import { StoryData } from '../engine/story-data/story-data';
 import {EventEmitter, Injectable} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {AddAliasDialogComponent} from "./add-alias-dialog/add-alias-dialog.component";
 
 @Injectable()
 export class EditorService {
@@ -19,7 +21,8 @@ export class EditorService {
   private fileSaver: any;
 
   constructor(private nlpService: NaturalLanguageService,
-              private logger: LoggingService) {
+              private logger: LoggingService,
+              private dialog: MatDialog) {
 
     this.nodeSelected = new EventEmitter<any>();
     this.selectedNode = null;
@@ -181,7 +184,18 @@ export class EditorService {
     }
 
     if (!name || name === null) {
-      // TODO: Pop up some UI to ask the user to get an alias name
+
+      const dialogRef = this.dialog.open(AddAliasDialogComponent, {
+        width: '300px'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.logger.debug(`The add alias dialog was closed with a result of ${result}`);
+        if (result) {
+          this.addAlias(result);
+        }
+      });
+
       return;
     }
 

@@ -21,6 +21,7 @@ import { StringsListComponent } from './strings-list/strings-list.component';
 import { ResponseListComponent } from './response-list/response-list.component';
 import { EditorToolbarComponent } from './editor-toolbar/editor-toolbar.component';
 import { JsonExportComponent } from './json-export/json-export.component';
+import { AddAliasDialogComponent } from './add-alias-dialog/add-alias-dialog.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,11 @@ import { JsonExportComponent } from './json-export/json-export.component';
     StringsListComponent,
     ResponseListComponent,
     EditorToolbarComponent,
-    JsonExportComponent
+    JsonExportComponent,
+    AddAliasDialogComponent
+  ],
+  entryComponents: [
+    AddAliasDialogComponent
   ]
 })
 export class EditorModule {

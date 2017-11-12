@@ -23,6 +23,15 @@ export class StoryLoader {
     this.data = this.cleanseData(data);
   }
 
+  private static ensureCommonDataFields(entity: EntityData) {
+    if (!entity.contents) {
+      entity.contents = [];
+    }
+    if (!entity.aliases) {
+      entity.aliases = new AliasData();
+    }
+  }
+
   cleanseData(data: StoryData): StoryData {
 
     data.nodeType = 'storyInfo';
@@ -33,22 +42,19 @@ export class StoryLoader {
 
     for (const room of data.rooms) {
       room.nodeType = 'room';
-      if (!room.contents) {
-        room.contents = [];
-      }
+      StoryLoader.ensureCommonDataFields(room);
       this.updateParent(room);
     }
 
     for (const actor of data.actors) {
       actor.nodeType = 'actor';
-      if (!actor.contents) {
-        actor.contents = [];
-      }
+      StoryLoader.ensureCommonDataFields(actor);
       this.updateParent(actor);
     }
 
     return data;
   }
+
 
   loadIntoStory(story: Story): void {
 
@@ -282,9 +288,7 @@ export class StoryLoader {
         obj.parent = container;
         obj.nodeType = 'entity';
 
-        if (!obj.contents) {
-          obj.contents = [];
-        }
+        StoryLoader.ensureCommonDataFields(obj);
 
         this.updateParent(obj);
       }

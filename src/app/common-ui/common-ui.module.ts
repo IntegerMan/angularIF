@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {LoadingIndicatorComponent} from './loading-indicator/loading-indicator.component';
 import {
+  MatDialogModule,
   MatExpansionModule, MatInputModule, MatSelectModule, MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -24,6 +25,7 @@ import {FormsModule} from '@angular/forms';
     RouterModule,
     DataTableModule,
     MatSelectModule,
+    MatDialogModule,
     SharedModule
   ],
   exports: [
@@ -39,6 +41,7 @@ import {FormsModule} from '@angular/forms';
     FormsModule,
     DataTableModule,
     MatSelectModule,
+    MatDialogModule,
     SharedModule
   ],
   providers: [

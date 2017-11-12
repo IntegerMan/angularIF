@@ -2,6 +2,10 @@ export class ArrayHelper {
 
   static removeIfPresent(items: any[], item: any): boolean {
 
+    if (!items) {
+      return false;
+    }
+
     const index: number = items.indexOf(item);
     if (index < 0) {
       return false;

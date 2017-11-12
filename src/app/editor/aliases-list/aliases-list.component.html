@@ -1,15 +1,17 @@
 <div>
-  
-  <span class="chip token-noun valign-wrapper" 
+
+  <span class="chip token-noun valign-wrapper"
   *ngFor="let noun of entity.aliases.nouns">
-  <i class="material-icons" style="font-size: 12px;" alt="Noun">devices</i>   
+  <i class="material-icons" style="font-size: 12px;" alt="Noun">devices</i>
     <span>{{noun}}</span>
+    <i class="close material-icons" (click)="onRemoveClick(noun)">close</i>
   </span>
 
-  <span class="chip token-adjective valign-wrapper" 
+  <span class="chip token-adjective valign-wrapper"
   *ngFor="let adj of entity.aliases.adjectives">
-  <i class="material-icons" style="font-size: 14px;" alt="Adjective">label_outline</i>   
+  <i class="material-icons" style="font-size: 14px;" alt="Adjective">label_outline</i>
     <span>{{adj}}</span>
+    <i class="close material-icons" (click)="onRemoveClick(adj)">close</i>
   </span>
 
 </div>

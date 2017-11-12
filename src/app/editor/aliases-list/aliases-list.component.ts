@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {EntityData} from '../../engine/story-data/entity-data';
 import {AliasData} from '../../engine/story-data/alias-data';
+import {ArrayHelper} from "../../utility/array-helper";
 
 @Component({
   selector: 'if-aliases-list',
@@ -21,6 +22,12 @@ export class AliasesListComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.ensureAliases();
+  }
+
+  onRemoveClick(token: string) {
+    ArrayHelper.removeIfPresent(this.entity.aliases.adjectives, token);
+    ArrayHelper.removeIfPresent(this.entity.aliases.nouns, token);
+    console.warn(this.entity.aliases);
   }
 
   private ensureAliases() {
