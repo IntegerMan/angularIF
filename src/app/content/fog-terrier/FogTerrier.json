@@ -722,6 +722,26 @@
       "attributes": {},
       "aliases": {},
       "contents": []
+    },
+    {
+      "key": "burglar",
+      "name": "a shady individual",
+      "isPlayer": false,
+      "startRoom": "providence",
+      "verbs": {},
+      "attributes": {},
+      "aliases": {},
+      "contents": []
+    },
+    {
+      "key": "wife",
+      "name": "Helen",
+      "isPlayer": false,
+      "startRoom": "smallclearing",
+      "verbs": {},
+      "attributes": {},
+      "aliases": {},
+      "contents": []
     }
   ]
 }
