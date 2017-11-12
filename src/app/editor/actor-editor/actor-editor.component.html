@@ -27,9 +27,21 @@
       </div>
     </div>
     <div class="row" *ngIf="selectedTab === 0">
-      <div class="input-field col s6">
-        <input id="startRoom" [(ngModel)]="actor.startRoom" type="text" class="validate" data-length="64">
-        <label for="startRoom" class="active">Start Room (Key)</label>
+      <div class="col s6">
+        <mat-form-field floatPlaceholder="always">
+          <mat-select [(ngModel)]="actor.startRoom" style="width: 100%;" placeholder="Start Room">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let key of roomKeys" [value]="key">{{key}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!--<p-dropdown [options]="roomKeys" [(ngModel)]="actor.startRoom" optionLabel="Start Room"></p-dropdown>-->
+
+        <!--<select id="startRoom" style="width: 100%;" [ngModel]="actor.startRoom">-->
+          <!--<option [ngValue]="null" [selected]="!actor.startRoom">Nowhere</option>-->
+          <!--<option *ngFor="let room of story.rooms" [ngValue]="room.key" [selected]="room.key === actor.startRoom">{{room.key}}</option>-->
+        <!--</select>-->
+        <!--<label for="startRoom" class="active">Start Room (Key)</label>-->
       </div>
       <div class="switch col s6">
           <label>

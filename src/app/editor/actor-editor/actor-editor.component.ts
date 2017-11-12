@@ -18,13 +18,18 @@ export class ActorEditorComponent implements OnInit {
   actor: ActorData;
 
   selectedTab: number = 0;
+  roomKeys: string[] = [];
 
-  constructor(private editorService: EditorService) { 
+  constructor(private editorService: EditorService) {
 
   }
 
   ngOnInit() {
+
     $('ul.tabs').tabs();
+
+    this.updateRoomOptions();
+
   }
 
   addObject(): void {
@@ -34,4 +39,11 @@ export class ActorEditorComponent implements OnInit {
   selectTab(number: number) {
     this.selectedTab = number;
   }
+
+  private updateRoomOptions() {
+    this.roomKeys.length = 0;
+    this.story.rooms.forEach(r => this.roomKeys.push(r.key));
+    this.roomKeys.sort();
+  }
+
 }

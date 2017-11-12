@@ -682,7 +682,7 @@
     {
       "key": "yourself",
       "name": "yourself",
-      "startRoom": "backyard",
+      "startRoom": "office",
       "isPlayer": true,
       "verbs": {
         "look": "You look yourself over and seem to be in roughly the same shape you were in the last time you checked.",
@@ -712,6 +712,16 @@
           "contents": []
         }
       ]
+    },
+    {
+      "key": "moose",
+      "name": "bull moose",
+      "isPlayer": false,
+      "startRoom": "thewoods",
+      "verbs": {},
+      "attributes": {},
+      "aliases": {},
+      "contents": []
     }
   ]
 }

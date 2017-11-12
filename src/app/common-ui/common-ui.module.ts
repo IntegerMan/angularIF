@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {LoadingIndicatorComponent} from './loading-indicator/loading-indicator.component';
 import {
-  MatCardModule, MatExpansionModule, MatInputModule, MatProgressBarModule, MatToolbarModule,
+  MatExpansionModule, MatInputModule, MatSelectModule, MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
 import {
@@ -15,24 +15,21 @@ import {FormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    MatCardModule,
     MatExpansionModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatProgressBarModule,
     MatInputModule,
     ConfirmDialogModule,
     TreeModule,
     RouterModule,
     DataTableModule,
+    MatSelectModule,
     SharedModule
   ],
   exports: [
-    MatCardModule,
     MatExpansionModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatProgressBarModule,
     MatInputModule,
     LoadingIndicatorComponent,
     ConfirmDialogModule,
@@ -41,6 +38,7 @@ import {FormsModule} from '@angular/forms';
     MarkdownPresenterComponent,
     FormsModule,
     DataTableModule,
+    MatSelectModule,
     SharedModule
   ],
   providers: [
