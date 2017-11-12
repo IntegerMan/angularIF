@@ -694,7 +694,7 @@
     },
     {
       "key": "terrier",
-      "name": "Jester the Cairn Terrier",
+      "name": "Jester",
       "isPlayer": false,
       "startRoom": "office",
       "verbs": {},
