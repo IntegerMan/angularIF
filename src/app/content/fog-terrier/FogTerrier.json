@@ -691,6 +691,27 @@
         ]
       },
       "contents": []
+    },
+    {
+      "key": "terrier",
+      "name": "Jester the Cairn Terrier",
+      "isPlayer": false,
+      "startRoom": "office",
+      "verbs": {},
+      "attributes": {},
+      "aliases": {},
+      "contents": [
+        {
+          "allowHang": false,
+          "describeWithRoom": true,
+          "key": "collar",
+          "name": "blue collar",
+          "verbs": {},
+          "attributes": {},
+          "aliases": {},
+          "contents": []
+        }
+      ]
     }
   ]
 }
