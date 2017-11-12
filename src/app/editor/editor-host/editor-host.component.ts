@@ -16,14 +16,14 @@ import {EditorService} from '../editor.service';
 })
 export class EditorHostComponent implements OnInit, OnDestroy {
 
-  public story: StoryData;
   public loading: boolean = true;
   public isImporting: boolean = false;
   public selectedNode: any;
+  public story: StoryData;
+
   private routerSubscription: Subscription;
   private routerParamSubscription: Subscription;
   private nodeSubscription: Subscription;
-  private fileSaver: any;
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
@@ -55,32 +55,21 @@ export class EditorHostComponent implements OnInit, OnDestroy {
   }
 
   onNodeSelected(node: any): void {
-    this.logger.debug(`Node Selected`);
-    this.logger.debug(node);
     this.selectedNode = node;
   }
 
   onSaveClick(): void {
-    LoggingService.instance.log('Generating JSON data for story');
-
-    if (!this.fileSaver) {
-      this.fileSaver = require('file-saver');
-    }
-
-    const data: string = JSON.stringify(this.story);
-    const blob: Blob = new Blob([data], {type: 'text/plain;charset=utf-8'});
-    this.fileSaver.saveAs(blob, `${this.story.name}.json`);
-
+    this.editorService.saveToJSON();
   }
 
   onLoadClick(): void {
     LoggingService.instance.log('Requested to import JSON');
 
     this.isImporting = true;
-
   }
 
   onImported(data: StoryData): void {
+    this.editorService.storyData = data;
     this.story = data;
     this.isImporting = false;
   }
@@ -101,25 +90,27 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     }
 
     const storyKey: string = p['key'];
+    let story: StoryData = null;
 
     if (storyKey === undefined) {
       LoggingService.instance.debug(`Starting from blank story`);
-      this.story = this.storyService.buildEmptyStoryData();
+      story = this.storyService.buildEmptyStoryData();
     } else {
       LoggingService.instance.debug(`Loading story with key ${storyKey}`);
-      this.story = this.storyService.getStoryData(storyKey);
+      story = this.storyService.getStoryData(storyKey);
     }
 
     // Ensure the service knows what we're talking about
-    this.editorService.storyData = this.story;
+    this.editorService.storyData = story;
+    this.story = story;
 
-    if (!this.story) {
+    if (!story) {
       // TODO: Redirect to a not found route
       LoggingService.instance.warning(`Story ${storyKey} could not be found.`);
       return;
     }
 
-    LoggingService.instance.debug(`Loaded story ${this.story.name}`);
+    LoggingService.instance.debug(`Loaded story ${story.name}`);
 
     this.loading = false;
     this.selectedNode = this.editorService.selectedNode;

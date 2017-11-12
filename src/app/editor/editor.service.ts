@@ -1,3 +1,4 @@
+import { LoggingService } from '../utility/logging.service';
 import { NaturalLanguageService } from '../engine/parser/natural-language.service';
 import { ItemData } from '../engine/story-data/item-data';
 import { EntityData } from '../engine/story-data/entity-data';
@@ -10,14 +11,31 @@ import {EventEmitter, Injectable} from '@angular/core';
 @Injectable()
 export class EditorService {
 
-  storyData: StoryData;
+  public storyData: StoryData;
   nodeSelected: EventEmitter<any>;
 
   selectedNode: any;
 
-  constructor(private nlpService: NaturalLanguageService) {
+  private fileSaver: any;
+
+  constructor(private nlpService: NaturalLanguageService,
+              private logger: LoggingService) {
+
     this.nodeSelected = new EventEmitter<any>();
     this.selectedNode = null;
+
+  }
+
+  public saveToJSON(): void {
+    this.logger.log('Generating JSON data for story');
+    
+    if (!this.fileSaver) {
+      this.fileSaver = require('file-saver');
+    }
+
+    const data: string = JSON.stringify(this.storyData);
+    const blob: Blob = new Blob([data], {type: 'text/plain;charset=utf-8'});
+    this.fileSaver.saveAs(blob, `${this.storyData.name}.json`);
   }
 
   public get canAddVerb() {

@@ -29,6 +29,7 @@ export class EditorImportComponent implements OnInit {
 
   onImport() {
     const story: StoryData = JSON.parse(this.data);
+    
     if (story) {
       this.imported.emit(story);
     }
