@@ -32,10 +32,17 @@ export class StoryLoader {
 
     for (const room of data.rooms) {
       room.nodeType = 'room';
+      if (!room.contents) {
+        room.contents = [];
+      }
       this.updateParent(room);
     }
+
     for (const actor of data.actors) {
       actor.nodeType = 'actor';
+      if (!actor.contents) {
+        actor.contents = [];
+      }
       this.updateParent(actor);
     }
 
@@ -273,6 +280,11 @@ export class StoryLoader {
       for (const obj of container.contents) {
         obj.parent = container;
         obj.nodeType = 'entity';
+
+        if (!obj.contents) {
+          obj.contents = [];
+        }
+
         this.updateParent(obj);
       }
     }

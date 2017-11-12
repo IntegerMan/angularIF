@@ -40,6 +40,14 @@ export class EditorService {
     return this.selectedNode && this.selectedNode.contents;
   }
  
+  public get canAddRoom() {
+    return true;
+  }
+ 
+  public get canAddActor() {
+    return true;
+  }
+ 
   public selectNode(node: any, nodeType: string = null) {
 
     if (node && nodeType && nodeType !== null && nodeType !== undefined) {
@@ -52,19 +60,36 @@ export class EditorService {
   }
 
   public addRoom(): void {
+
+    // Verify we can handle rooms
+    if (!this.canAddRoom) {
+      // TODO: It'd be nice to throw a toast notification up here.
+      return;
+    }
+    
     const room = new RoomData();
     room.key = 'newRoom';
     room.name = 'New Room';
+    room.nodeType = 'room';
     this.configureNewEntity(room);
     
     this.storyData.rooms.push(room);
+    this.selectNode(room);
   }
 
   public addActor(): void {
+
+    // Verify we can handle children
+    if (!this.canAddActor) {
+      // TODO: It'd be nice to throw a toast notification up here.
+      return;
+    }
+    
     const actor = new ActorData();
     actor.key = 'newActor';
     actor.name = 'New Actor';
     actor.isPlayer = false;
+    actor.nodeType = 'actor';
 
     // TODO: If our current context is a room, it'd be nice to set that as the start location
     actor.startRoom = null;
@@ -73,6 +98,7 @@ export class EditorService {
     this.configureNewEntity(actor);
     
     this.storyData.actors.push(actor);
+    this.selectNode(actor);
   }
 
   public addObject(): void {
@@ -87,10 +113,12 @@ export class EditorService {
     item.key = 'newObject';
     item.name = 'New Object';
     item.parent = this.selectedNode;
+    item.nodeType = 'entity';
     
     this.configureNewEntity(item);
     
-    this.selectedNode.contents.push(item);
+    this.selectedNode.contents.push(item);    
+    this.selectNode(item);
   }
 
   public addVerb(name: string = null): void {

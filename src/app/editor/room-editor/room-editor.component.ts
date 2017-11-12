@@ -1,3 +1,4 @@
+import { EditorService } from '../editor.service';
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {RoomData} from '../../engine/story-data/room-data';
 import {StoryData} from '../../engine/story-data/story-data';
@@ -18,14 +19,16 @@ export class RoomEditorComponent implements OnInit {
 
   selectedTab: number = 0;
 
-  constructor() { }
+  constructor(private editorService: EditorService) { 
+
+  }
 
   ngOnInit() {
     $('ul.tabs').tabs();
   }
 
   addObject(): void {
-    // TODO: Duh
+    this.editorService.addObject();
   }
 
   selectTab(number: number) {

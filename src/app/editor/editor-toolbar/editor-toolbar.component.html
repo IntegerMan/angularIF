@@ -1,11 +1,11 @@
 <ul id="dropdownAdd" class="dropdown-content">
-    <li><a (click)="onAddActorClick()">Actor</a></li>
-    <li><a (click)="onAddRoomClick()">Room</a></li>
-    <li><a (click)="onAddObjectClick()">Object</a></li>
-    <li><a (click)="onAddAttributeClick()">Attribute</a></li>
-    <li><a (click)="onAddAliasClick()">Alias</a></li>
-    <li><a (click)="onAddVerbClick()">Verb</a></li>
-    <li><a (click)="onAddEventClick()">Event</a></li>
+    <li *ngIf="canAddActor"><a (click)="onAddActorClick()">Actor</a></li>
+    <li *ngIf="canAddRoom"><a (click)="onAddRoomClick()">Room</a></li>
+    <li *ngIf="canAddObject"><a (click)="onAddObjectClick()">Object</a></li>
+    <li *ngIf="canAddVerb"><a (click)="onAddVerbClick()">Verb</a></li>
+    <li *ngIf="canAddAttribute"><a (click)="onAddAttributeClick()">Attribute</a></li>
+    <li *ngIf="canAddEvent"><a (click)="onAddEventClick()">Event</a></li>
+    <li *ngIf="canAddAlias"><a (click)="onAddAliasClick()">Alias</a></li>
   </ul>
 <nav>
   <div class="nav-wrapper">
@@ -21,7 +21,7 @@
       <ul class="right">
         <!-- Dropdown Trigger -->
         <li>
-          <a class="dropdown-button" href="#!" data-activates="dropdownAdd">
+          <a class="dropdown-button" data-activates="dropdownAdd">
             Add
             <i class="material-icons right">arrow_drop_down</i>
             <i class="material-icons left">add</i>
