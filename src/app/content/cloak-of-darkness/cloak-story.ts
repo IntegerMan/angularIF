@@ -28,7 +28,7 @@ export class CloakStory extends Story {
     if (this.storyData === null || !this.storyData) {
 
       LoggingService.instance.debug(`Loading story file for ${this.constructor.name}...`);
-      this.storyData = <StoryData> require('json-loader!yaml-loader!App/Content/Cloak-of-Darkness/CloakOfDarkness.yml');
+      this.storyData = <StoryData> require('json-loader!App/Content/Cloak-of-Darkness/CloakOfDarkness.json');
 
     }
 
@@ -82,7 +82,7 @@ export class CloakStory extends Story {
 
     context.currentRoom.setAttribute('isDark', isDark);
 
-    // TODO: I can probably handle this in script if I have an action that sets attributes on 
+    // TODO: I can probably handle this in script if I have an action that sets attributes on
     // another entity and can trigger that on taken and on dropped.
 
   }

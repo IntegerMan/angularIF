@@ -1,0 +1,213 @@
+{
+  "name": "Cloak of Darkness",
+  "version": 1,
+  "authors": "Adapted by [Matt Eland](http://www.matteland.com), Original story by [Roger Firth](http://www.firthworks.com/roger/).",
+  "description": "A short demo based on [Roger Firth's specification](http://www.firthworks.com/roger/cloak/) to compare various Interactive Fiction development languages. ",
+  "maxScore": 2,
+  "icon": "fa-moon-o",
+  "introText": [
+    "Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera House. It's surprising that there aren't more people about but, hey, what *do* you expect in a cheap demo game...? "
+  ],
+  "rooms": [
+    {
+      "key": "foyer",
+      "name": "Foyer of the Opera House",
+      "nav": {
+        "north": {
+          "goMessage": "You've only just arrived, and besides, the weather outside seems to be getting worse."
+        },
+        "west": "cloakroom",
+        "south": "bar"
+      },
+      "verbData": [
+        {
+          "name": "look",
+          "handler": [
+            "You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers overhead. The entrance from the street is to the north, and there are doorways south and west. "
+          ]
+        }
+      ],
+      "contents": []
+    },
+    {
+      "key": "cloakroom",
+      "name": "Cloakroom",
+      "nav": {
+        "east": "foyer"
+      },
+      "contents": [
+        {
+          "key": "hook",
+          "name": "small brass hook",
+          "aliases": {
+            "nouns": [
+              "Peg"
+            ]
+          },
+          "attributes": {
+            "describeWithRoom": false,
+            "allowHang": true,
+            "maxContents": 1
+          },
+          "contents": [],
+          "verbData": [
+            {
+              "name": "look",
+              "handler": "{{#hasContents}} It's just a small brass hook with {{contentsText}} hanging on it. {{/hasContents}} {{^hasContents}} It's just a small brass hook screwed to the wall. {{/hasContents}} "
+            }
+          ]
+        }
+      ],
+      "verbData": [
+        {
+          "name": "look",
+          "handler": [
+            "The walls of this small room were clearly once lined with hooks, though now only one remains. The exit is a door to the east. "
+          ]
+        }
+      ]
+    },
+    {
+      "key": "bar",
+      "name": "Foyer Bar",
+      "nav": {
+        "north": {
+          "room": "foyer"
+        }
+      },
+      "attributes": {
+        "isDark": true,
+        "darkName": "Darkness",
+        "darkDescription": "It is pitch dark, and you can't see a thing."
+      },
+      "events": {
+        "previewAction": [
+          {
+            "invoke": "previewBarAction"
+          }
+        ],
+        "onEnter": [
+          {
+            "invoke": "onBarEnter"
+          }
+        ]
+      },
+      "contents": [
+        {
+          "key": "message",
+          "name": "scrawled message",
+          "attributes": {
+            "describeWithRoom": false
+          },
+          "aliases": {
+            "nouns": [
+              "Writing",
+              "Sawdust",
+              "Words",
+              "Word",
+              "Note",
+              "Floor",
+              "Ground"
+            ],
+            "adjectives": [
+              "Written",
+              "Dusty"
+            ]
+          },
+          "contents": [],
+          "verbData": [
+            {
+              "name": "look",
+              "handler": [
+                {
+                  "invoke": "onReadMessage"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "verbData": [
+        {
+          "name": "look",
+          "handler": [
+            "The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty. There seems to be some sort of message scrawled in the sawdust on the floor. "
+          ]
+        }
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "key": "yourself",
+      "name": "yourself",
+      "startRoom": "foyer",
+      "isPlayer": true,
+      "contents": [
+        {
+          "key": "cloak",
+          "name": "black velvet cloak",
+          "inRoomDescription": "A dark black velvet cloak rests in a heap on the floor.",
+          "attributes": {
+            "isWearable": true,
+            "isWorn": true
+          },
+          "events": {
+            "previewDrop": [
+              {
+                "invoke": "previewCloakDrop"
+              }
+            ]
+          },
+          "contents": [],
+          "verbData": [
+            {
+              "name": "look",
+              "handler": [
+                "A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops. Its blackness is so deep that it almost seems to suck light from the room."
+              ]
+            },
+            {
+              "name": "examine",
+              "handler": [
+                "The velvet cloak almost seems to have darkness woven into its very fabric. Everything about it is darker than it should be."
+              ]
+            }
+          ]
+        }
+      ],
+      "verbData": [
+        {
+          "name": "look",
+          "handler": "You look yourself over and seem to be in roughly the same shape you were in the last time you checked."
+        },
+        {
+          "name": "examine",
+          "handler": [
+            "Taking some time, you look yourself over, finding the same old scars and blemishes you've accrued over the years. You don't love everything about your body, but it's yours and you're used to it. "
+          ]
+        }
+      ]
+    }
+  ],
+  "strings": [
+    {
+      "barBlunder": "Blundering around in the dark isn't a good idea!"
+    },
+    {
+      "barCantSee": "It's pitch black; you can't see a thing!"
+    },
+    {
+      "barCantManipulate": "In the dark? You could easily disturb something!"
+    },
+    {
+      "cloakDropFail": "This isn't the best place to leave a smart cloak lying around."
+    },
+    {
+      "messageWin": "The message, neatly marked in the sawdust, reads..."
+    },
+    {
+      "messageLose": "The message has been carelessly trampled, making it difficult to read. You can just distinguish the words..."
+    }
+  ]
+}
