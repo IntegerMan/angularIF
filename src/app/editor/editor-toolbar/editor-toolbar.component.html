@@ -13,7 +13,7 @@
 
 
       <a (click)="onHomeClick()" style="margin-left: 2rem; margin-right: 0rem; font-size: 150%; font-weight: bold;" class="white-text">IF Edit</a>
-      <a *ngFor="let crumb of breadcrumbs" 
+      <a *ngFor="let crumb of breadcrumbs"
          class="breadcrumb"
          (click)="onBreadcrumbClick(crumb);">
          {{getBreadcrumbName(crumb)}}
@@ -21,7 +21,7 @@
       <ul class="right">
         <!-- Dropdown Trigger -->
         <li>
-          <a class="dropdown-button" data-activates="dropdownAdd">
+          <a class="waves-effect waves-light dropdown-button" data-activates="dropdownAdd">
             Add
             <i class="material-icons right">arrow_drop_down</i>
             <i class="material-icons left">add</i>

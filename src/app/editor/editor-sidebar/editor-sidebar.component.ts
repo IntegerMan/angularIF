@@ -14,6 +14,8 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
   @Input()
   story: StoryData;
 
+  json: any;
+
   selectedNode: any;
 
   private nodeSubscription: Subscription;
@@ -21,6 +23,9 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
   constructor(private editorService: EditorService) {
     this.nodeSubscription = this.editorService.nodeSelected.subscribe(n => this.selectedNode = n);
     this.selectedNode = null;
+
+    // Special menu option to allow selecting the JSON option
+    this.json = { nodeType: 'json'};
   }
 
   ngOnInit() {
@@ -53,8 +58,12 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
     this.editorService.selectNode(this.story.strings, 'strings');
   }
 
+  onJSONClick() {
+    this.editorService.selectNode(this.json);
+  }
+
   onAddActorClick(): void {
-    this.editorService.addActor();    
+    this.editorService.addActor();
   }
 
   onAddRoomClick(): void {

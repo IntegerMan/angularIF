@@ -5,6 +5,7 @@
   <if-actor-editor *ngSwitchCase="'actor'" [story]="story" [actor]="node"></if-actor-editor>
   <if-entity-editor *ngSwitchCase="'entity'" [story]="story" [entity]="node"></if-entity-editor>
   <if-strings-list *ngSwitchCase="'strings'" [story]="story"></if-strings-list>
+  <if-json-export *ngSwitchCase="'json'"></if-json-export>
 
   <span *ngSwitchDefault class="warn-text">Node type '{{node.nodeType}}' does not have an editor component registered for it.</span>
 

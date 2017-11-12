@@ -26,16 +26,27 @@ export class EditorService {
 
   }
 
-  public saveToJSON(): void {
-    this.logger.log('Generating JSON data for story');
-    
+  public saveToJSON(data: string = null): void {
+
+    if (!data || data === null || data.length <= 0) {
+      data = this.getJSON();
+    }
+
     if (!this.fileSaver) {
       this.fileSaver = require('file-saver');
     }
 
-    const data: string = JSON.stringify(this.storyData);
     const blob: Blob = new Blob([data], {type: 'text/plain;charset=utf-8'});
     this.fileSaver.saveAs(blob, `${this.storyData.name}.json`);
+  }
+
+  getJSON(): string {
+
+    this.logger.log('Generating JSON data for story');
+
+    // Serialize to JSON, stripping out editor properties in the process
+    return JSON.stringify(this.storyData, this.jsonFilter);
+
   }
 
   public get canAddVerb() {
@@ -57,18 +68,18 @@ export class EditorService {
   public get canAddObject() {
     return this.selectedNode && this.selectedNode.contents;
   }
- 
+
   public get canAddRoom() {
     return true;
   }
- 
+
   public get canAddActor() {
     return true;
   }
- 
+
   public selectNode(node: any, nodeType: string = null) {
 
-    if (node && nodeType && nodeType !== null && nodeType !== undefined) {
+    if (node && nodeType && nodeType !== null && nodeType !== undefined && typeof(node) === 'object') {
       node.nodeType = nodeType;
     }
 
@@ -84,13 +95,13 @@ export class EditorService {
       // TODO: It'd be nice to throw a toast notification up here.
       return;
     }
-    
+
     const room = new RoomData();
     room.key = 'newRoom';
     room.name = 'New Room';
     room.nodeType = 'room';
     this.configureNewEntity(room);
-    
+
     this.storyData.rooms.push(room);
     this.selectNode(room);
   }
@@ -102,7 +113,7 @@ export class EditorService {
       // TODO: It'd be nice to throw a toast notification up here.
       return;
     }
-    
+
     const actor = new ActorData();
     actor.key = 'newActor';
     actor.name = 'New Actor';
@@ -112,9 +123,9 @@ export class EditorService {
     // TODO: If our current context is a room, it'd be nice to set that as the start location
     actor.startRoom = null;
     actor.parent = null;
-    
+
     this.configureNewEntity(actor);
-    
+
     this.storyData.actors.push(actor);
     this.selectNode(actor);
   }
@@ -132,10 +143,10 @@ export class EditorService {
     item.name = 'New Object';
     item.parent = this.selectedNode;
     item.nodeType = 'entity';
-    
+
     this.configureNewEntity(item);
-    
-    this.selectedNode.contents.push(item);    
+
+    this.selectedNode.contents.push(item);
     this.selectNode(item);
   }
 
@@ -155,7 +166,7 @@ export class EditorService {
     // Verify the verb doesn't already exist
     if (this.selectedNode.verbs[name]) {
       // TODO: It'd be nice to throw a toast notification up here.
-      return;      
+      return;
     }
 
     this.selectedNode.verbs[name] = [];
@@ -214,14 +225,23 @@ export class EditorService {
 
     this.selectedNode.events[name] = [];
   }
- 
+
   private configureNewEntity(entity: EntityData): void {
 
     entity.verbs = {};
     entity.attributes = {};
     entity.aliases = new AliasData();
     entity.contents = [];
-    
+
   }
 
+  private jsonFilter(name: string, value: any): any {
+
+    // These properties are editor conveniences and should not be serialized.
+    if (name === 'nodeType' || name === 'parent') {
+      return undefined;
+    }
+
+    return value;
+  }
 }

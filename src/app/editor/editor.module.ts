@@ -20,6 +20,7 @@ import { EntityEditorComponent } from './entity-editor/entity-editor.component';
 import { StringsListComponent } from './strings-list/strings-list.component';
 import { ResponseListComponent } from './response-list/response-list.component';
 import { EditorToolbarComponent } from './editor-toolbar/editor-toolbar.component';
+import { JsonExportComponent } from './json-export/json-export.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { EditorToolbarComponent } from './editor-toolbar/editor-toolbar.componen
     EntityEditorComponent,
     StringsListComponent,
     ResponseListComponent,
-    EditorToolbarComponent
+    EditorToolbarComponent,
+    JsonExportComponent
   ]
 })
 export class EditorModule {

@@ -9,6 +9,9 @@
     <a class="collection-item"
       (click)="onStringsClick()"
       [ngClass]="{active: selectedNode === story.strings}">String Resources</a>
+    <a class="collection-item"
+      (click)="onJSONClick()"
+      [ngClass]="{active: selectedNode === this.json}">JSON</a>
   </div>
 
   <!-- Actors -->
