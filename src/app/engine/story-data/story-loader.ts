@@ -33,7 +33,6 @@ export class StoryLoader {
 
     for (const room of data.rooms) {
       room.nodeType = 'room';
-      this.migrateVerbs(room);
       if (!room.contents) {
         room.contents = [];
       }
@@ -42,7 +41,6 @@ export class StoryLoader {
 
     for (const actor of data.actors) {
       actor.nodeType = 'actor';
-      this.migrateVerbs(actor);
       if (!actor.contents) {
         actor.contents = [];
       }
@@ -288,31 +286,9 @@ export class StoryLoader {
           obj.contents = [];
         }
 
-        this.migrateVerbs(obj);
         this.updateParent(obj);
       }
     }
   }
-
-
-  private migrateVerbs(entity: EntityData): void {
-
-    if (!entity.verbData) {
-      entity.verbData = [];
-      // Migrate from verbs to verbData
-      if (entity.verbs) {
-        for (const prop of Object.getOwnPropertyNames(entity.verbs)) {
-          const v: VerbData = new VerbData();
-          v.name = prop;
-          v.handler = entity.verbs[prop];
-          entity.verbData.push(v);
-        }
-
-        // Chop out the old system entirely
-        entity.verbs = undefined;
-      }
-    }
-  }
-
 
 }

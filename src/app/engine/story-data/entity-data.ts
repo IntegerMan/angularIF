@@ -18,6 +18,5 @@ export abstract class EntityData {
   // Editor Specific items here:
   parent: EntityData;
   nodeType: string;
-  verbs: {};
 
 }

@@ -228,7 +228,7 @@ export class EditorService {
 
   private configureNewEntity(entity: EntityData): void {
 
-    entity.verbs = {};
+    entity.verbData = [];
     entity.attributes = {};
     entity.aliases = new AliasData();
     entity.contents = [];
