@@ -199,7 +199,7 @@ export class EditorService {
       return;
     }
 
-    const isAdjective: boolean = this.nlpService.isTerm(name, 'adjective');
+    const isAdjective: boolean = this.nlpService.isTerm(name, 'Adjective');
 
     if (isAdjective) {
       this.selectedNode.aliases.adjectives.push(name);

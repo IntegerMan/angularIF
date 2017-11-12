@@ -30,6 +30,12 @@ export class StoryLoader {
     if (!entity.aliases) {
       entity.aliases = new AliasData();
     }
+    if (!entity.aliases.nouns) {
+      entity.aliases.nouns = [];
+    }
+    if (!entity.aliases.adjectives) {
+      entity.aliases.adjectives = [];
+    }
   }
 
   cleanseData(data: StoryData): StoryData {

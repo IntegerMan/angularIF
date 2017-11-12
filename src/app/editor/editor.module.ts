@@ -22,6 +22,7 @@ import { ResponseListComponent } from './response-list/response-list.component';
 import { EditorToolbarComponent } from './editor-toolbar/editor-toolbar.component';
 import { JsonExportComponent } from './json-export/json-export.component';
 import { AddAliasDialogComponent } from './add-alias-dialog/add-alias-dialog.component';
+import { EditorCardCommandsComponent } from './editor-card-commands/editor-card-commands.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { AddAliasDialogComponent } from './add-alias-dialog/add-alias-dialog.com
     ResponseListComponent,
     EditorToolbarComponent,
     JsonExportComponent,
-    AddAliasDialogComponent
+    AddAliasDialogComponent,
+    EditorCardCommandsComponent
   ],
   entryComponents: [
     AddAliasDialogComponent

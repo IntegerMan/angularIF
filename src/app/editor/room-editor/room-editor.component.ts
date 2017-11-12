@@ -34,10 +34,6 @@ export class RoomEditorComponent implements OnInit, OnChanges {
     this.updateLookVerb();
   }
 
-  addObject(): void {
-    this.editorService.addObject();
-  }
-
   selectTab(tab: string) {
     this.selectedTab = tab;
   }

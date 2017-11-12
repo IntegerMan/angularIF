@@ -17,7 +17,7 @@ export class ActorEditorComponent implements OnInit {
   @Input()
   actor: ActorData;
 
-  selectedTab: number = 0;
+  selectedTab: string = 'info';
   roomKeys: string[] = [];
 
   constructor(private editorService: EditorService) {
@@ -32,12 +32,8 @@ export class ActorEditorComponent implements OnInit {
 
   }
 
-  addObject(): void {
-    this.editorService.addObject();
-  }
-
-  selectTab(number: number) {
-    this.selectedTab = number;
+  selectTab(name: string) {
+    this.selectedTab = name;
   }
 
   private updateRoomOptions() {

@@ -6,17 +6,17 @@
 
     <div class="card-tabs" style="margin-bottom: 1rem;">
       <ul class="tabs tabs-fixed-width tabs-transparent">
-        <li class="tab"><a (click)="selectTab(0)" [ngClass]="{active: selectedTab === 0}">Basic</a></li>
-        <li class="tab"><a (click)="selectTab(1)" [ngClass]="{active: selectedTab === 1}">Attributes</a></li>
-        <li class="tab"><a (click)="selectTab(2)" [ngClass]="{active: selectedTab === 2}">Inventory</a></li>
-        <li class="tab"><a (click)="selectTab(3)" [ngClass]="{active: selectedTab === 3}">Verbs</a></li>
-        <li class="tab"><a (click)="selectTab(4)" [ngClass]="{active: selectedTab === 4}">Aliases</a></li>
-        <li class="tab"><a (click)="selectTab(5)" [ngClass]="{active: selectedTab === 5}">Events</a></li>
+        <li class="tab"><a (click)="selectTab('info')" [ngClass]="{active: selectedTab === 'basic'}">Basic</a></li>
+        <li class="tab"><a (click)="selectTab('attributes')" [ngClass]="{active: selectedTab === 'attributes'}">Attributes</a></li>
+        <li class="tab"><a (click)="selectTab('objects')" [ngClass]="{active: selectedTab === 'inventory'}">Inventory</a></li>
+        <li class="tab"><a (click)="selectTab('verbs')" [ngClass]="{active: selectedTab === 'verbs'}">Verbs</a></li>
+        <li class="tab"><a (click)="selectTab('aliases')" [ngClass]="{active: selectedTab === 'aliases'}">Aliases</a></li>
+        <li class="tab"><a (click)="selectTab('events')" [ngClass]="{active: selectedTab === 'events'}">Events</a></li>
       </ul>
     </div>
 
     <!-- Basic Information -->
-    <div class="row" *ngIf="selectedTab === 0">
+    <div class="row" *ngIf="selectedTab === 'info'">
       <div class="input-field col s6">
         <input id="key" [(ngModel)]="actor.key" type="text" required class="validate" data-length="64">
         <label for="key" class="active">Key</label>
@@ -54,16 +54,14 @@
     </div>
 
     <!-- Collections go here -->
-    <if-attributes-list [entity]="actor" *ngIf="selectedTab === 1"></if-attributes-list>
-    <if-contents-list [entity]="actor" *ngIf="selectedTab === 2"></if-contents-list>
-    <if-verbs-list [entity]="actor" *ngIf="selectedTab === 3"></if-verbs-list>
-    <if-aliases-list [entity]="actor" *ngIf="selectedTab === 4"></if-aliases-list>
-    <if-events-list [entity]="actor" *ngIf="selectedTab === 5"></if-events-list>
+    <if-attributes-list [entity]="actor" *ngIf="selectedTab === 'attributes'"></if-attributes-list>
+    <if-contents-list [entity]="actor" *ngIf="selectedTab === 'objects'"></if-contents-list>
+    <if-verbs-list [entity]="actor" *ngIf="selectedTab === 'verbs'"></if-verbs-list>
+    <if-aliases-list [entity]="actor" *ngIf="selectedTab === 'aliases'"></if-aliases-list>
+    <if-events-list [entity]="actor" *ngIf="selectedTab === 'events'"></if-events-list>
 
   </div>
   <div class="card-action">
-    <a class="waves-effect waves-light btn" (click)="addObject()">
-      Add Object
-    </a>
+    <if-editor-card-commands [entity]="actor" [selectedTab]="selectedTab"></if-editor-card-commands>
   </div>
 </div>
