@@ -1,15 +1,14 @@
 import { LoggingService } from '../utility/logging.service';
 import { NaturalLanguageService } from '../engine/parser/natural-language.service';
 import { ItemData } from '../engine/story-data/item-data';
-import { EntityData } from '../engine/story-data/entity-data';
 import { RoomData } from '../engine/story-data/room-data';
-import { AliasData } from '../engine/story-data/alias-data';
 import { ActorData } from '../engine/story-data/actor-data';
 import { StoryData } from '../engine/story-data/story-data';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.component';
 import {AddEntityDialogComponent} from './add-entity-dialog/add-entity-dialog.component';
+import {StoryLoader} from '../engine/story-data/story-loader';
 
 @Injectable()
 export class EditorService {
@@ -112,8 +111,7 @@ export class EditorService {
     room.key = key;
     room.name = name;
     room.nodeType = 'room';
-    this.configureNewEntity(room);
-
+    StoryLoader.ensureCommonDataFields(room);
     this.storyData.rooms.push(room);
     this.selectNode(room);
   }
@@ -144,8 +142,7 @@ export class EditorService {
     actor.startRoom = null;
     actor.parent = null;
 
-    this.configureNewEntity(actor);
-
+    StoryLoader.ensureCommonDataFields(actor);
     this.storyData.actors.push(actor);
     this.selectNode(actor);
   }
@@ -172,8 +169,7 @@ export class EditorService {
     item.parent = this.selectedNode;
     item.nodeType = 'entity';
 
-    this.configureNewEntity(item);
-
+    StoryLoader.ensureCommonDataFields(item);
     this.selectedNode.contents.push(item);
     this.selectNode(item);
   }
@@ -263,15 +259,6 @@ export class EditorService {
     }
 
     this.selectedNode.events[name] = [];
-  }
-
-  private configureNewEntity(entity: EntityData): void {
-
-    entity.verbData = [];
-    entity.attributes = {};
-    entity.aliases = new AliasData();
-    entity.contents = [];
-
   }
 
   private jsonFilter(name: string, value: any): any {

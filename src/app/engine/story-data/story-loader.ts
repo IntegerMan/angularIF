@@ -23,7 +23,7 @@ export class StoryLoader {
     this.data = this.cleanseData(data);
   }
 
-  private static ensureCommonDataFields(entity: EntityData) {
+  static ensureCommonDataFields(entity: EntityData) {
     if (!entity.contents) {
       entity.contents = [];
     }
