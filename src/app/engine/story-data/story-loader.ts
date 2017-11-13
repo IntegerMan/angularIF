@@ -29,6 +29,7 @@ export class StoryLoader {
     }
     if (!entity.verbData) {
       entity.verbData = [];
+      this.migrateVerbs(entity);
     }
     if (!entity.aliases) {
       entity.aliases = new AliasData();
@@ -39,6 +40,7 @@ export class StoryLoader {
     if (!entity.aliases.adjectives) {
       entity.aliases.adjectives = [];
     }
+
   }
 
   cleanseData(data: StoryData): StoryData {
@@ -302,6 +304,24 @@ export class StoryLoader {
         this.updateParent(obj);
       }
     }
+  }
+
+  private static migrateVerbs(entity: EntityData): void {
+
+    // Migrate from verbs to verbData
+    if ((<any>entity).verbs) {
+
+      for (const prop of Object.getOwnPropertyNames((<any>entity).verbs)) {
+        const v: VerbData = new VerbData();
+        v.name = prop;
+        v.handler = (<any>entity).verbs[prop];
+        entity.verbData.push(v);
+      }
+
+      // Chop out the old system entirely
+      (<any>entity).verbs = undefined;
+    }
+
   }
 
 }
