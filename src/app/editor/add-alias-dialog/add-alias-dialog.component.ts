@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 })
 export class AddAliasDialogComponent implements OnInit {
 
-  alias: string = 'new alias';
+  alias: string;
 
   constructor(public dialogRef: MatDialogRef<AddAliasDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {

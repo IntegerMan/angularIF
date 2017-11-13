@@ -23,6 +23,7 @@ import { EditorToolbarComponent } from './editor-toolbar/editor-toolbar.componen
 import { JsonExportComponent } from './json-export/json-export.component';
 import { AddAliasDialogComponent } from './add-alias-dialog/add-alias-dialog.component';
 import { EditorCardCommandsComponent } from './editor-card-commands/editor-card-commands.component';
+import { AddEntityDialogComponent } from './add-entity-dialog/add-entity-dialog.component';
 
 @NgModule({
   imports: [
@@ -53,10 +54,12 @@ import { EditorCardCommandsComponent } from './editor-card-commands/editor-card-
     EditorToolbarComponent,
     JsonExportComponent,
     AddAliasDialogComponent,
-    EditorCardCommandsComponent
+    EditorCardCommandsComponent,
+    AddEntityDialogComponent
   ],
   entryComponents: [
-    AddAliasDialogComponent
+    AddAliasDialogComponent,
+    AddEntityDialogComponent
   ]
 })
 export class EditorModule {

@@ -8,7 +8,8 @@ import { ActorData } from '../engine/story-data/actor-data';
 import { StoryData } from '../engine/story-data/story-data';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {AddAliasDialogComponent} from "./add-alias-dialog/add-alias-dialog.component";
+import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.component';
+import {AddEntityDialogComponent} from './add-entity-dialog/add-entity-dialog.component';
 
 @Injectable()
 export class EditorService {
@@ -91,7 +92,7 @@ export class EditorService {
 
   }
 
-  public addRoom(): void {
+  public addRoom(key: string = null, name: string = null): void {
 
     // Verify we can handle rooms
     if (!this.canAddRoom) {
@@ -99,9 +100,17 @@ export class EditorService {
       return;
     }
 
+    if (!key || !name) {
+      const method = this.addRoom;
+      const entityType = 'Room';
+      this.getNameAndKeyForNewEntity(entityType, method);
+
+      return;
+    }
+
     const room = new RoomData();
-    room.key = 'newRoom';
-    room.name = 'New Room';
+    room.key = key;
+    room.name = name;
     room.nodeType = 'room';
     this.configureNewEntity(room);
 
@@ -109,7 +118,7 @@ export class EditorService {
     this.selectNode(room);
   }
 
-  public addActor(): void {
+  public addActor(key: string = null, name: string = null): void {
 
     // Verify we can handle children
     if (!this.canAddActor) {
@@ -117,9 +126,17 @@ export class EditorService {
       return;
     }
 
+    if (!key || !name) {
+      const method = this.addActor;
+      const entityType = 'Actor';
+      this.getNameAndKeyForNewEntity(entityType, method);
+
+      return;
+    }
+
     const actor = new ActorData();
-    actor.key = 'newActor';
-    actor.name = 'New Actor';
+    actor.key = key;
+    actor.name = name;
     actor.isPlayer = false;
     actor.nodeType = 'actor';
 
@@ -133,17 +150,25 @@ export class EditorService {
     this.selectNode(actor);
   }
 
-  public addObject(): void {
-
+  public addObject(key: string = null, name: string = null): void {
     // Verify we can handle children
     if (!this.canAddObject) {
       // TODO: It'd be nice to throw a toast notification up here.
       return;
     }
 
+    // Prompt to enter a name / key
+    if (!key || !name) {
+      const method = this.addObject;
+      const entityType = 'Object';
+      this.getNameAndKeyForNewEntity(entityType, method);
+
+      return;
+    }
+
     const item = new ItemData();
-    item.key = 'newObject';
-    item.name = 'New Object';
+    item.key = key;
+    item.name = name;
     item.parent = this.selectedNode;
     item.nodeType = 'entity';
 
@@ -257,5 +282,25 @@ export class EditorService {
     }
 
     return value;
+  }
+
+  private getNameAndKeyForNewEntity(entityType: string, callback: (key?: string, name?: string) => void) {
+
+    // Ensure we have proper context on callback
+    if (callback) {
+      callback = callback.bind(this);
+    }
+
+    const dialogRef = this.dialog.open(AddEntityDialogComponent, {
+      width: '450px',
+      data: {entityType: entityType}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.logger.debug(`The Add ${entityType} dialog was closed with a result of ${result}`);
+      if (result && result.key && result.name && callback) {
+        callback(result.key, result.name);
+      }
+    });
   }
 }

@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Add {{entityType}}</h1>
+
+<div mat-dialog-content>
+  <div class="input-field">
+    <input type="text" id="key" [(ngModel)]="key" required class="validate">
+    <label for="key" class="active">Key</label>
+  </div>
+  <div class="input-field">
+    <input type="text" id="name" [(ngModel)]="name" required class="validate">
+    <label for="name" class="active">Name</label>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <a class="btn waves-light waves-ripple" (click)="confirmSelection()">
+    Add
+  </a>
+  <a class="btn waves-light waves-ripple warn-bg" (click)="dialogRef.close()" style="margin-left: 1rem;">
+    Cancel
+  </a>
+</div>
