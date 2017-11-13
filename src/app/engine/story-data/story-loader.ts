@@ -27,6 +27,9 @@ export class StoryLoader {
     if (!entity.contents) {
       entity.contents = [];
     }
+    if (!entity.verbData) {
+      entity.verbData = [];
+    }
     if (!entity.aliases) {
       entity.aliases = new AliasData();
     }
