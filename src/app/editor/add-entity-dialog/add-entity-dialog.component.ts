@@ -19,6 +19,12 @@ export class AddEntityDialogComponent implements OnInit {
 
     if (data.entityType) {
       this.entityType = data.entityType;
+      if (data.key) {
+        this.key = data.key;
+      }
+      if (data.name) {
+        this.name = data.name;
+      }
     }
 
   }

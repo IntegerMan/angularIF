@@ -102,7 +102,7 @@ export class EditorService {
     if (!key || !name) {
       const method = this.addRoom;
       const entityType = 'Room';
-      this.getNameAndKeyForNewEntity(entityType, method);
+      this.getNameAndKeyForNewEntity(entityType, method, key);
 
       return;
     }
@@ -127,7 +127,7 @@ export class EditorService {
     if (!key || !name) {
       const method = this.addActor;
       const entityType = 'Actor';
-      this.getNameAndKeyForNewEntity(entityType, method);
+      this.getNameAndKeyForNewEntity(entityType, method, key);
 
       return;
     }
@@ -158,7 +158,12 @@ export class EditorService {
     if (!key || !name) {
       const method = this.addObject;
       const entityType = 'Object';
-      this.getNameAndKeyForNewEntity(entityType, method);
+
+      if (!key && this.selectedNode && this.selectedNode.key) {
+        key = `${this.selectedNode.key}_`;
+      }
+
+      this.getNameAndKeyForNewEntity(entityType, method, key);
 
       return;
     }
@@ -171,7 +176,7 @@ export class EditorService {
 
     StoryLoader.ensureCommonDataFields(item);
     this.selectedNode.contents.push(item);
-    this.selectNode(item);
+    //  Selecting it turns out to not be a good UX: this.selectNode(item);
   }
 
   public addVerb(name: string = null): void {
@@ -271,7 +276,9 @@ export class EditorService {
     return value;
   }
 
-  private getNameAndKeyForNewEntity(entityType: string, callback: (key?: string, name?: string) => void) {
+  private getNameAndKeyForNewEntity(entityType: string,
+                                    callback: (key?: string, name?: string) => void,
+                                    key: string = '') {
 
     // Ensure we have proper context on callback
     if (callback) {
@@ -280,7 +287,7 @@ export class EditorService {
 
     const dialogRef = this.dialog.open(AddEntityDialogComponent, {
       width: '450px',
-      data: {entityType: entityType}
+      data: {entityType: entityType, key: key, name: ''}
     });
 
     dialogRef.afterClosed().subscribe(result => {
