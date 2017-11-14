@@ -18,6 +18,8 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
 
   selectedNode: any;
 
+  sidebarHeight: number;
+
   private nodeSubscription: Subscription;
 
   constructor(private editorService: EditorService) {
@@ -30,6 +32,7 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.onStoryInfoClick();
+    this.onResize();
   }
 
   ngOnDestroy() {
@@ -70,4 +73,7 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
     this.editorService.addRoom();
   }
 
+  onResize(): void {
+    this.sidebarHeight = window.innerHeight - 120;
+  }
 }
