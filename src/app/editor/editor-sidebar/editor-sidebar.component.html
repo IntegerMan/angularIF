@@ -21,7 +21,7 @@
       <span class="badge" [ngClass]="{'blue darken-3 white-text': story.actors.length > 0}" data-badge-caption="actors">{{story.actors.length}}</span>
       <a (click)="onAddActorClick()" class="secondary-content white-text"><i class="material-icons">add</i></a>
     </div>
-    <div *ngFor="let actor of story.actors">
+    <div *ngFor="let actor of story.actors | entitySort">
       <a class="collection-item"
          [ngClass]="{active: selectedNode === actor}"
          (click)="onActorClick(actor)">
@@ -41,7 +41,7 @@
       <span class="badge" [ngClass]="{'blue darken-3 white-text': story.rooms.length > 0}" data-badge-caption="rooms">{{story.rooms.length}}</span>
       <a (click)="onAddRoomClick()" class="secondary-content white-text"><i class="material-icons">add</i></a>
     </div>
-    <div *ngFor="let room of story.rooms">
+    <div *ngFor="let room of story.rooms | entitySort">
       <a class="collection-item"
          [ngClass]="{active: selectedNode === room}"
          (click)="onRoomClick(room)">

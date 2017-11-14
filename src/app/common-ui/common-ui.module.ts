@@ -12,6 +12,7 @@ import {
 } from 'primeng/primeng';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import { EntitySortPipe } from './entity-sort.pipe';
 @NgModule({
   imports: [
     CommonModule,
@@ -42,14 +43,16 @@ import {FormsModule} from '@angular/forms';
     DataTableModule,
     MatSelectModule,
     MatDialogModule,
-    SharedModule
+    SharedModule,
+    EntitySortPipe
   ],
   providers: [
     ConfirmationService
   ],
   declarations: [
     LoadingIndicatorComponent,
-    MarkdownPresenterComponent
+    MarkdownPresenterComponent,
+    EntitySortPipe
   ]
 })
 export class CommonUIModule { }
