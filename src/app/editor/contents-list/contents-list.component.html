@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="margin-bottom: 0;">
   <div class="col s6" >
     <div class="collection" *ngIf="entity.contents.length > 0">
       <a *ngFor="let obj of entity.contents | entitySort" class="collection-item" (click)="onObjectClick(obj)">
