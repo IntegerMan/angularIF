@@ -1,5 +1,13 @@
-<div class="collection" *ngIf="entity.contents.length > 0">
-  <a *ngFor="let obj of entity.contents" class="collection-item" (click)="onObjectClick(obj)">
-    {{obj.name}}
-  </a>
+<div class="row">
+  <div class="col s6" >
+    <div class="collection" *ngIf="entity.contents.length > 0">
+      <a *ngFor="let obj of entity.contents" class="collection-item" (click)="onObjectClick(obj)">
+        {{obj.name}}
+      </a>
+    </div>
+    <span *ngIf="entity.contents.length <= 0" class="grey-text center-align">(No contents are present)</span>
+  </div>
+  <div class="col s6">
+    <if-look-renderer [entity]="entity"></if-look-renderer>
+  </div>
 </div>

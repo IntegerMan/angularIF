@@ -24,6 +24,7 @@ import { JsonExportComponent } from './json-export/json-export.component';
 import { AddAliasDialogComponent } from './add-alias-dialog/add-alias-dialog.component';
 import { EditorCardCommandsComponent } from './editor-card-commands/editor-card-commands.component';
 import { AddEntityDialogComponent } from './add-entity-dialog/add-entity-dialog.component';
+import { LookRendererComponent } from './look-renderer/look-renderer.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { AddEntityDialogComponent } from './add-entity-dialog/add-entity-dialog.
     JsonExportComponent,
     AddAliasDialogComponent,
     EditorCardCommandsComponent,
-    AddEntityDialogComponent
+    AddEntityDialogComponent,
+    LookRendererComponent
   ],
   entryComponents: [
     AddAliasDialogComponent,

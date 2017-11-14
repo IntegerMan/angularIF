@@ -1,8 +1,6 @@
-import { EditorService } from '../editor.service';
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {RoomData} from '../../engine/story-data/room-data';
 import {StoryData} from '../../engine/story-data/story-data';
-import {VerbData} from '../../engine/story-data/verb-data';
 
 @Component({
   selector: 'if-room-editor',
@@ -10,7 +8,7 @@ import {VerbData} from '../../engine/story-data/verb-data';
   styleUrls: ['./room-editor.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class RoomEditorComponent implements OnInit, OnChanges {
+export class RoomEditorComponent implements OnInit {
 
   @Input()
   room: RoomData;
@@ -19,33 +17,16 @@ export class RoomEditorComponent implements OnInit, OnChanges {
   story: StoryData;
 
   selectedTab: string = 'info';
-  lookVerb: VerbData;
 
-  constructor(private editorService: EditorService) {
-
+  constructor() {
   }
 
   ngOnInit() {
     $('ul.tabs').tabs();
-    this.updateLookVerb();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateLookVerb();
   }
 
   selectTab(tab: string) {
     this.selectedTab = tab;
-  }
-
-  private updateLookVerb() {
-    // A common case is wanting to know what the look description will be, so include that center stage
-    const lookVerb = this.room.verbData.filter(v => v.name === 'look');
-    if (lookVerb && lookVerb.length > 0) {
-      this.lookVerb = lookVerb[0];
-    } else {
-      this.lookVerb = undefined;
-    }
   }
 
 }

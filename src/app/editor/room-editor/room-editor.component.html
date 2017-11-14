@@ -28,8 +28,7 @@
           <label for="name" class="active">Room Name</label>
         </div>
       </div>
-      <if-verb-card [verb]="lookVerb" *ngIf="lookVerb"></if-verb-card>
-      <span class="warn-text" *ngIf="!lookVerb">This room does not have a verb handler for the 'look' verb.</span>
+      <if-look-renderer [entity]="room"></if-look-renderer>
     </div>
 
     <!-- Collections go here -->
