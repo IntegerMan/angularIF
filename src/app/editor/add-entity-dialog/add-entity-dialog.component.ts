@@ -33,7 +33,10 @@ export class AddEntityDialogComponent implements OnInit {
   }
 
   confirmSelection() {
-    this.dialogRef.close({key: this.key, name: this.name});
+    this.onEnterPressed(this.key, this.name);
   }
 
+  onEnterPressed(key: String, name: String) {
+    this.dialogRef.close({key: key, name: name});
+  }
 }

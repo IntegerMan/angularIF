@@ -20,6 +20,11 @@ export class AddAliasDialogComponent implements OnInit {
   }
 
   confirmSelection() {
-    this.dialogRef.close(this.alias);
+    this.onEnterPressed(this.alias);
   }
+
+  onEnterPressed(name: String) {
+    this.dialogRef.close(name);
+  }
+
 }

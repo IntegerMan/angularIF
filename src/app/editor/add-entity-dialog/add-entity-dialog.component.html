@@ -2,11 +2,13 @@
 
 <div mat-dialog-content>
   <div class="input-field">
-    <input type="text" id="key" [(ngModel)]="key" required class="validate">
+    <input type="text" id="key" [(ngModel)]="key" required class="validate" #entityKey
+           (keyup.enter)="onEnterPressed(entityKey.value, entityName.value);">
     <label for="key" class="active">Key</label>
   </div>
   <div class="input-field">
-    <input type="text" id="name" [(ngModel)]="name" required class="validate">
+    <input type="text" id="name" [(ngModel)]="name" required class="validate" #entityName
+           (keyup.enter)="onEnterPressed(entityKey.value, entityName.value);">
     <label for="name" class="active">Name</label>
   </div>
 </div>
