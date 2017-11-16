@@ -25,7 +25,9 @@
       <a class="collection-item"
          [ngClass]="{active: selectedNode === actor}"
          (click)="onActorClick(actor)">
-        <span class="badge" [ngClass]="{'blue darken-1 white-text': actor.contents.length > 0}"
+        <span class="badge" 
+        	  [ngClass]="{'blue darken-1 white-text': actor.contents.length > 0}"
+        	  (click)="onActorObjectsClick(actor)"
               data-badge-caption="items">{{actor.contents.length}}</span>
         {{actor.key}}
       </a>
@@ -46,6 +48,7 @@
          [ngClass]="{active: selectedNode === room}"
          (click)="onRoomClick(room)">
         <span class="badge" [ngClass]="{'blue darken-1 white-text': room.contents.length > 0}"
+        	  (click)="onRoomObjectsClick(room)"
               data-badge-caption="objects">{{room.contents.length}}</span>
         {{room.key}}
       </a>

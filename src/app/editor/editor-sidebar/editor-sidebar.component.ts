@@ -45,11 +45,19 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
     this.editorService.selectNode(actor, 'actor');
   }
 
+  onActorObjectsClick(actor: any) {
+    this.editorService.selectNode(actor, 'actor');
+  }
+  
   onObjectClick(entity: any) {
     this.editorService.selectNode(entity, 'entity');
   }
-
+  
   onRoomClick(room: any) {
+    this.editorService.selectNode(room, 'room');
+  }
+
+  onRoomObjectsClick(room: any) {
     this.editorService.selectNode(room, 'room');
   }
 
@@ -69,6 +77,7 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
     this.editorService.addActor();
   }
 
+  
   onAddRoomClick(): void {
     this.editorService.addRoom();
   }
