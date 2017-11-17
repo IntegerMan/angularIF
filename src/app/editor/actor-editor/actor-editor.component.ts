@@ -1,7 +1,8 @@
-import { EditorService } from '../editor.service';
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActorData} from '../../engine/story-data/actor-data';
 import {StoryData} from '../../engine/story-data/story-data';
+
+declare var $: any;
 
 @Component({
   selector: 'if-actor-editor',
@@ -20,7 +21,7 @@ export class ActorEditorComponent implements OnInit {
   selectedTab: string = 'info';
   roomKeys: string[] = [];
 
-  constructor(private editorService: EditorService) {
+  constructor() {
 
   }
 
@@ -38,7 +39,9 @@ export class ActorEditorComponent implements OnInit {
 
   private updateRoomOptions() {
     this.roomKeys.length = 0;
-    this.story.rooms.forEach(r => this.roomKeys.push(r.key));
+    if (this.story) {
+      this.story.rooms.forEach(r => this.roomKeys.push(r.key));
+    }
     this.roomKeys.sort();
   }
 

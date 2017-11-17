@@ -4,14 +4,16 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['jasmine', '@angular/cli', 'jquery-3.2.1'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
+      require('karma-jquery'),
       require('@angular/cli/plugins/karma')
     ],
+    files: [ './src/assets/materialize/js/bin/materialize.min.js'],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
