@@ -6,7 +6,7 @@ import {LexiconService} from '../../engine/parser/lexicon.service';
 import {EditorModule} from '../editor.module';
 import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
 import {CommonUIModule} from '../../common-ui/common-ui.module';
-import {MatDialogModule} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 describe('AddAliasDialogComponent', () => {
   let component: AddAliasDialogComponent;
@@ -15,7 +15,13 @@ describe('AddAliasDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CommonUIModule, EditorModule],
-      providers: [ NaturalLanguageService, LexiconService, LoggingService]
+      providers: [
+        NaturalLanguageService,
+        LexiconService,
+        LoggingService,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     })
     .compileComponents();
   }));
