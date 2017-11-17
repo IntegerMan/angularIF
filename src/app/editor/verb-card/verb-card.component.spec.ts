@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VerbCardComponent } from './verb-card.component';
+import {LoggingService} from '../../utility/logging.service';
+import {LexiconService} from '../../engine/parser/lexicon.service';
+import {EditorModule} from '../editor.module';
+import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
 
 describe('VerbCardComponent', () => {
   let component: VerbCardComponent;
@@ -8,7 +12,8 @@ describe('VerbCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VerbCardComponent ]
+      imports: [ EditorModule ],
+      providers: [ NaturalLanguageService, LexiconService, LoggingService]
     })
     .compileComponents();
   }));

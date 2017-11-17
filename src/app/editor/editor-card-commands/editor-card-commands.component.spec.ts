@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditorCardCommandsComponent } from './editor-card-commands.component';
+import {LoggingService} from '../../utility/logging.service';
+import {LexiconService} from '../../engine/parser/lexicon.service';
+import {EditorModule} from '../editor.module';
+import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
 
 describe('EditorCardCommandsComponent', () => {
   let component: EditorCardCommandsComponent;
@@ -8,7 +12,8 @@ describe('EditorCardCommandsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditorCardCommandsComponent ]
+      imports: [ EditorModule],
+      providers: [ NaturalLanguageService, LexiconService, LoggingService]
     })
     .compileComponents();
   }));

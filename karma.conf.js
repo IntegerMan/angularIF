@@ -13,7 +13,10 @@ module.exports = function (config) {
       require('karma-jquery'),
       require('@angular/cli/plugins/karma')
     ],
-    files: [ './src/assets/materialize/js/bin/materialize.min.js'],
+    files: [
+      './src/assets/materialize/js/bin/materialize.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js'
+    ],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },

@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EntityEditorComponent } from './entity-editor.component';
+import {LoggingService} from '../../utility/logging.service';
+import {LexiconService} from '../../engine/parser/lexicon.service';
+import {EditorModule} from '../editor.module';
+import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
+import {TestDataProvider} from '../../engine/story-data/test-data-provider';
 
 describe('EntityEditorComponent', () => {
   let component: EntityEditorComponent;
@@ -8,7 +13,8 @@ describe('EntityEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EntityEditorComponent ]
+      imports: [ EditorModule],
+      providers: [ NaturalLanguageService, LexiconService, LoggingService]
     })
     .compileComponents();
   }));
@@ -16,6 +22,7 @@ describe('EntityEditorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EntityEditorComponent);
     component = fixture.componentInstance;
+    component.entity = TestDataProvider.buildItem();
     fixture.detectChanges();
   });
 

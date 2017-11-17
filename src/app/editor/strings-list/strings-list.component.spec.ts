@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StringsListComponent } from './strings-list.component';
+import {LoggingService} from '../../utility/logging.service';
+import {LexiconService} from '../../engine/parser/lexicon.service';
+import {EditorModule} from '../editor.module';
+import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
 
 describe('StringsListComponent', () => {
   let component: StringsListComponent;
@@ -8,7 +12,8 @@ describe('StringsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StringsListComponent ]
+      imports: [ EditorModule ],
+      providers: [ NaturalLanguageService, LexiconService, LoggingService]
     })
     .compileComponents();
   }));

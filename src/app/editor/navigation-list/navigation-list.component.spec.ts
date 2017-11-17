@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavigationListComponent } from './navigation-list.component';
+import {LoggingService} from '../../utility/logging.service';
+import {LexiconService} from '../../engine/parser/lexicon.service';
+import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
+import {EditorModule} from '../editor.module';
 
 describe('NavigationListComponent', () => {
   let component: NavigationListComponent;
@@ -8,7 +12,8 @@ describe('NavigationListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationListComponent ]
+      imports: [ EditorModule ],
+      providers: [ NaturalLanguageService, LexiconService, LoggingService]
     })
     .compileComponents();
   }));

@@ -11,7 +11,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 export class EditorToolbarComponent implements OnInit, OnDestroy {
 
   breadcrumbs: any[];
-  
+
   canAddObject: boolean = false;
   canAddRoom: boolean = false;
   canAddVerb: boolean = false;
@@ -19,10 +19,10 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
   canAddAttribute: boolean = false;
   canAddEvent: boolean = false;
   canAddAlias: boolean = false;
-  
+
   private nodeSelectedSubscription: Subscription;
 
-  constructor(private editorService: EditorService) { 
+  constructor(private editorService: EditorService) {
     this.breadcrumbs = [];
   }
 
@@ -47,23 +47,23 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
   }
 
   onAddRoomClick(): void {
-    this.editorService.addRoom();    
+    this.editorService.addRoom();
   }
 
   onAddVerbClick(): void {
-    this.editorService.addVerb();    
+    this.editorService.addVerb();
   }
 
   onAddAliasClick(): void {
-    this.editorService.addAlias();    
+    this.editorService.addAlias();
   }
 
   onAddAttributeClick(): void {
-    this.editorService.addAttribute();    
+    this.editorService.addAttribute();
   }
 
   onAddEventClick(): void {
-    this.editorService.addEvent();    
+    this.editorService.addEvent();
   }
 
   onBreadcrumbClick(breadcrumb: any): void {
@@ -71,6 +71,10 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
   }
 
   getBreadcrumbName(breadcrumb: any): string {
+
+    if (!breadcrumb) {
+      return '';
+    }
 
     if (breadcrumb.nodeType) {
       if (breadcrumb.nodeType === 'strings') {
@@ -100,8 +104,8 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
     this.canAddObject = this.editorService.canAddObject;
     this.canAddRoom = this.editorService.canAddRoom;
     this.canAddVerb = this.editorService.canAddVerb;
-    
-  }  
+
+  }
 
   private updateBreadcrumbs(node: any): void {
 
