@@ -49,6 +49,7 @@ terms:
   - Repeat
   - Unscrew
   - Screw
+  - ReportBug
 fallback:
   open: Adjective
   using: Preposition

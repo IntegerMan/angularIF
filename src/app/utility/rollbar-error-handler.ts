@@ -11,7 +11,7 @@ export let rollbarConfig = {
   accessToken: '2eaf4f1d5d8442ca97589706748ba22f',
   captureUncaught: true,
   captureUnhandledRejections: true,
-  enabled: environment.production,
+  enabled: true, // environment.production,
   environment: environment.environmentName
 };
 
@@ -20,7 +20,11 @@ export const RollbarService = new InjectionToken<Rollbar>('rollbar');
 @Injectable()
 export class RollbarErrorHandler implements ErrorHandler {
 
-  constructor(private injector: Injector) {}
+  static instance: RollbarErrorHandler;
+
+  constructor(private injector: Injector) {
+    RollbarErrorHandler.instance = this;
+  }
 
   handleError(err: any): void {
 

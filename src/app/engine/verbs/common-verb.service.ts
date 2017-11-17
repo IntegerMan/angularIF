@@ -17,6 +17,7 @@ import {HangHandler} from './hang-handler';
 import {PutHandler} from './put-handler';
 import {DebugHandler} from './debug-handler';
 import {WaitHandler} from './wait-handler';
+import {ReportbugHandler} from './reportbug-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -40,6 +41,7 @@ export class CommonVerbService {
     verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));
     verbs.push(new CloseHandler(['close', 'shut']));
     verbs.push(new RestartHandler(['restart', 'reset']));
+    verbs.push(new ReportbugHandler(['reportbug']));
     verbs.push(new DieHandler(['die', 'forfeit', 'suicide']));
     verbs.push(new WinHandler(['win', 'cheat']));
     verbs.push(new SaveHandler(['save']));

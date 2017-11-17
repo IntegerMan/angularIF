@@ -38,7 +38,7 @@ export class UserInputService {
     // Now that we know what the user said, try to figure out what it means
     const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens, context);
 
-    const isDebugCommand: boolean = command.verb && command.verb.name === 'debug';
+    const isDebugCommand: boolean = command.verb && (command.verb.name === 'debug' || command.verb.name === 'reportbug');
 
     this.outputService.displayUserCommand(sentence, command);
 
@@ -50,7 +50,7 @@ export class UserInputService {
     }
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
-    context.resolveNouns(tokens);
+    context.resolveNouns(tokens, isDebugCommand);
 
     // Create a command context. This will give the command handler more utility information
     this.ifService.logUserCommandToAnalytics(context, command);

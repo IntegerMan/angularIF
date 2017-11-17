@@ -97,7 +97,7 @@ export class CommandContext {
     return entity;
   }
 
-  resolveNouns(tokens: CommandToken[]): void {
+  resolveNouns(tokens: CommandToken[], announceConfusion: boolean): void {
 
     let isFirst: boolean = true;
     const confusedNames: string[] = [];
@@ -116,7 +116,7 @@ export class CommandContext {
     }
 
     // Tell the user all of the mistakes they made in one go.
-    if (confusedNames.length > 0) {
+    if (confusedNames.length > 0 && announceConfusion) {
       this.outputService.displayParserError(`You don't see ${StringHelper.toOxfordCommaList(confusedNames, 'or')} here.`);
     }
 
