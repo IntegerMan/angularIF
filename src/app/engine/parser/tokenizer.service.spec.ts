@@ -1,11 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { TokenizerService } from './tokenizer.service';
+import {LoggingService} from '../../utility/logging.service';
+import {LexiconService} from './lexicon.service';
+import {EngineModule} from '../engine.module';
+import {NaturalLanguageService} from './natural-language.service';
 
 describe('TokenizerService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TokenizerService]
+      imports: [ EngineModule ],
+      providers: [ NaturalLanguageService, LexiconService, LoggingService]
     });
   });
 

@@ -1,11 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { ScoreService } from './score.service';
+import {EngineModule} from './engine.module';
 
 describe('ScoreService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ScoreService]
+      imports: [EngineModule]
     });
   });
 

@@ -32,7 +32,10 @@ export class GameStateHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.mainText = this.ifService.story.player.currentRoom.name;
+    const story = this.ifService.story;
+    if (story) {
+      this.mainText = story.player.currentRoom.name;
+    }
 
     this.lineAddedSubscription = this.output.lineAdded.subscribe(l => this.handleLineAdded(l));
     this.gameStateSubscription = this.ifService.gameStateChanged.subscribe(s => this.updateData());

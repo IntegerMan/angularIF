@@ -1,11 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { TextOutputService } from './text-output.service';
+import {EngineModule} from './engine.module';
 
 describe('TextOutputService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TextOutputService]
+      imports: [EngineModule]
     });
   });
 

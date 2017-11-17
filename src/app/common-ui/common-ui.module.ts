@@ -13,6 +13,8 @@ import {
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import { EntitySortPipe } from './entity-sort.pipe';
+import {TemplatingService} from '../engine/parser/templating.service';
+import {MarkdownService} from '../text-rendering/markdown.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -47,7 +49,9 @@ import { EntitySortPipe } from './entity-sort.pipe';
     EntitySortPipe
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    MarkdownService,
+    TemplatingService
   ],
   declarations: [
     LoadingIndicatorComponent,

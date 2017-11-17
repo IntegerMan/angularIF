@@ -59,8 +59,6 @@ const appRoutes: Routes = [
     LoggingService,
     TextOutputService,
     GoogleAnalyticsService,
-    MarkdownService,
-    TemplatingService,
     StoryService,
     { provide: ErrorHandler, useClass: RollbarErrorHandler },
     { provide: RollbarService, useFactory: rollbarFactory }

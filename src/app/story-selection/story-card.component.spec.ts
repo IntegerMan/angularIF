@@ -1,6 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StoryCardComponent } from './story-card.component';
+import {LoggingService} from '../utility/logging.service';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {ConfirmationService} from 'primeng/primeng';
+import {StoryHostModule} from '../story-host/story-host.module';
+import {StoryService} from '../services/story.service';
+import {RouterTestingModule} from '@angular/router/testing';
+import {LexiconService} from '../engine/parser/lexicon.service';
+import {EngineModule} from '../engine/engine.module';
+import {GoogleAnalyticsService} from '../utility/google-analytics.service';
+import {NaturalLanguageService} from '../engine/parser/natural-language.service';
+import {StorySelectionModule} from './story-selection.module';
+import {CloakStory} from '../content/cloak-of-darkness/cloak-story';
 
 describe('StoryCardComponent', () => {
   let component: StoryCardComponent;
@@ -8,7 +20,8 @@ describe('StoryCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StoryCardComponent ]
+      imports: [StorySelectionModule, EngineModule, RouterTestingModule, NoopAnimationsModule],
+      providers: [ NaturalLanguageService, LexiconService, LoggingService, ConfirmationService, GoogleAnalyticsService, StoryService]
     })
     .compileComponents();
   }));
@@ -16,6 +29,7 @@ describe('StoryCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StoryCardComponent);
     component = fixture.componentInstance;
+    component.story = new CloakStory();
     fixture.detectChanges();
   });
 
