@@ -7,6 +7,9 @@ import {EntityData} from './entity-data';
 import {VerbData} from './verb-data';
 import {WorldEntity} from '../entities/world-entity';
 import {Room} from '../entities/room';
+import {Command} from '../parser/command';
+import {CommandToken} from '../parser/command-token';
+import {LanguageTerm} from '../parser/language-term';
 
 export class TestDataProvider {
 
@@ -58,5 +61,23 @@ export class TestDataProvider {
   static buildGameRoom(): Room {
     const room: Room = new Room('Test Room', 'testRoom');
     return room;
+  }
+
+  static buildCommand(): Command {
+    const command: Command = new Command('Eat the purple dog with the silver fork from the diner');
+    return command;
+  }
+
+  static buildLanguageTerm(): LanguageTerm {
+    const term: LanguageTerm = new LanguageTerm();
+    term.text = 'squirrel';
+    term.bestTag = 'noun';
+    term.tags = ['noun', 'singular'];
+    return term;
+  }
+
+  static buildCommandToken(): CommandToken {
+    const token: CommandToken = new CommandToken(TestDataProvider.buildLanguageTerm());
+    return token;
   }
 }
