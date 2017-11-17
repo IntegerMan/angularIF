@@ -26,7 +26,7 @@
         <label for="name" class="active">Actor Name</label>
       </div>
     </div>
-    <div class="row" *ngIf="selectedTab === 0">
+    <div class="row" *ngIf="selectedTab === 'info'">
       <div class="col s6">
         <mat-form-field floatPlaceholder="always">
           <mat-select [(ngModel)]="actor.startRoom" style="width: 100%;" placeholder="Start Room">
