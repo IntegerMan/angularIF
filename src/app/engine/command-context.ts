@@ -57,7 +57,7 @@ export class CommandContext {
 
   }
 
-  getSingleObjectForToken(token: CommandToken): WorldEntity {
+  getSingleObjectForToken(token: CommandToken, announceConfusion: boolean = true): WorldEntity {
 
     // TODO: This shouldn't really live in the context object
 
@@ -84,7 +84,9 @@ export class CommandContext {
       this.logger.log(`Possible matches for '${token.name}': ${StringHelper.toOxfordCommaList(entities.map(e => e.name))}`);
 
       // TODO: Better disambiguation is needed here
-      this.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);
+      if (announceConfusion) {
+        this.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);
+      }
 
       this.wasConfused = true;
 
@@ -104,7 +106,7 @@ export class CommandContext {
 
     const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
     for (const noun of nouns) {
-      noun.entity = this.getSingleObjectForToken(noun);
+      noun.entity = this.getSingleObjectForToken(noun, announceConfusion);
       if (!noun.entity) {
         if (isFirst) {
           confusedNames.push(noun.getCannotSeeName());

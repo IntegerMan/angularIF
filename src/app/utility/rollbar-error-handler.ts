@@ -11,7 +11,7 @@ export let rollbarConfig = {
   accessToken: '2eaf4f1d5d8442ca97589706748ba22f',
   captureUncaught: true,
   captureUnhandledRejections: true,
-  enabled: true, // environment.production,
+  enabled: environment.production,
   environment: environment.environmentName
 };
 

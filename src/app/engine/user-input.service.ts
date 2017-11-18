@@ -12,6 +12,7 @@ import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {CommandResult} from './command-result';
 import {LexiconService} from './parser/lexicon.service';
+import {logger} from 'codelyzer/util/logger';
 
 @Injectable()
 export class UserInputService {
@@ -39,6 +40,9 @@ export class UserInputService {
     const command: Command = this.sentenceParser.buildCommandFromSentenceTokens(sentence, tokens, context);
 
     const isDebugCommand: boolean = command.verb && (command.verb.name === 'debug' || command.verb.name === 'reportbug');
+    if (isDebugCommand) {
+      logger.debug('Command recognized as a debugging command');
+    }
 
     this.outputService.displayUserCommand(sentence, command);
 
@@ -50,7 +54,7 @@ export class UserInputService {
     }
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
-    context.resolveNouns(tokens, isDebugCommand);
+    context.resolveNouns(tokens, !isDebugCommand);
 
     // Create a command context. This will give the command handler more utility information
     this.ifService.logUserCommandToAnalytics(context, command);

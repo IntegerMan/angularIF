@@ -76,3 +76,4 @@ expand:
   nw: northwest
   sw: southwest
   se: southeast
+  bugreport: reportbug
