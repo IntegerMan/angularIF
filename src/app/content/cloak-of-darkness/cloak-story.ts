@@ -64,9 +64,9 @@ export class CloakStory extends Story {
     return false;
   }
 
-  public previewBarAction(context: CommandContext, command: Command): boolean {
+  public previewBarAction(context: CommandContext): boolean {
 
-    if (!this.isCommandAllowedInBar(context, command)) {
+    if (!this.isCommandAllowedInBar(context)) {
       if (this.blundersRemaining > 0) {
         this.blundersRemaining -= 1;
       }
