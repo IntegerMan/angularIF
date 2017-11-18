@@ -63,11 +63,6 @@ export class StoryHostComponent implements OnInit, OnDestroy {
 
     LoggingService.instance.debug(`Loaded story ${story.name}`);
 
-    // Import the common set of verbs
-    for (const verb of this.verbService.getCommonVerbs()) {
-      story.verbHandlers.push(verb);
-    }
-
     this.story = story;
     this.loading = false;
   }

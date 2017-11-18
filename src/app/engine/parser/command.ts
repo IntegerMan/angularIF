@@ -36,6 +36,8 @@ export class Command {
 
   public execute(context: CommandContext): CommandResult {
 
+    context.command = this;
+
     // This is decently important to log
     context.logger.debug(`Handling command associated with sentence ${this.userInput}.`);
     context.logger.debug(this);
@@ -76,11 +78,8 @@ export class Command {
     }
 
     // Give the room a chance to veto any command
-    if (!context.currentRoom.sendPreviewEvent(context, this.verbHandler.name, this) ||
-        !context.currentRoom.sendPreviewEvent(context, 'action', this)) {
-
+    if (!this.verbHandler.sendPreviewEvents(this, context)) {
       return CommandResult.BuildActionFailedResult();
-
     }
 
     return this.verbHandler.handleCommand(this, context);

@@ -20,6 +20,7 @@ import {ScoreService} from './score.service';
 import {CommandResult} from './command-result';
 import {GameState} from './game-state.enum';
 import {TemplatingService} from './parser/templating.service';
+import {CommonVerbService} from './verbs/common-verb.service';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -46,6 +47,7 @@ export class InteractiveFictionService {
               private lexer: LexiconService,
               private confirmService: ConfirmationService,
               private templatingService: TemplatingService,
+              private verbService: CommonVerbService,
               private analytics: GoogleAnalyticsService,
               private stateService: StateService,
               private scoreService: ScoreService) {
@@ -299,6 +301,12 @@ export class InteractiveFictionService {
   private initializeStory(story: Story) {
 
     this.gameState = GameState.initializing;
+
+    // Import the common set of verbs
+    // TODO: It'd be nice to move this out of IF service and closer to the story instantiation
+    for (const verb of this.verbService.getCommonVerbs()) {
+      story.verbHandlers.push(verb);
+    }
 
     // Boot up the story world
     story.initialize();

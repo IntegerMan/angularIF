@@ -14,6 +14,13 @@ export class PutHandler extends VerbHandler {
     return VerbType.manipulate;
   }
 
+  sendPreviewEvents(command: Command, context: CommandContext): boolean {
+    const subject: WorldEntity = this.assertHasObjectWithEntity(command, context);
+
+    return subject.sendPreviewEvent(context, 'drop', this)
+      && super.sendPreviewEvents(command, context);
+  }
+
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
     // Figure out what we're talking about.

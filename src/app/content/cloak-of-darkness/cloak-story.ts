@@ -45,8 +45,11 @@ export class CloakStory extends Story {
 
     // TODO: This can be accomplished via an if block with a room check condition
 
+    console.warn('preview cloak drop');
+
     if (context.currentRoom === this.cloakroom) {
 
+      console.warn(`Has dropped cloak: ${this.hasDroppedCloak}`);
       if (!this.hasDroppedCloak) {
 
         // TODO: This can be accomplished via an increase score command with a do-once limiter
@@ -102,8 +105,11 @@ export class CloakStory extends Story {
     context.ifService.endGame(isWin);
   }
 
-  private isCommandAllowedInBar(context: CommandContext, command: Command): boolean {
+  private isCommandAllowedInBar(context: CommandContext): boolean {
 
+    const command: Command = context.command;
+
+    context.logger.debug(`Is Command Allowed in bar? ${command.verbHandler}`);
     // TODO: This is way over-complicated. A simpler one can be done via scripting an an IF command
 
     // Anything is allowed in the light
@@ -112,6 +118,9 @@ export class CloakStory extends Story {
     }
 
     if (command.verbHandler) {
+
+      context.logger.debug(`VerbType ${command.verbHandler.verbType}`);
+
       switch (command.verbHandler.verbType) {
 
         case VerbType.system:
@@ -132,6 +141,9 @@ export class CloakStory extends Story {
           if (dir) {
 
             const link: RoomLink = context.currentRoom.roomLink[dir.name];
+
+            context.logger.debug(`Attempting to go ${dir.name} from the bar.`);
+            context.logger.debug(link);
 
             if (link && link.target) {
 

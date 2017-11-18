@@ -14,6 +14,7 @@ import {StateService} from './state.service';
 import {ScoreService} from './score.service';
 import {TokenClassification} from './parser/token-classification.enum';
 import {TemplatingService} from './parser/templating.service';
+import {Command} from './parser/command';
 
 export class CommandContext {
 
@@ -34,6 +35,7 @@ export class CommandContext {
   state: StateService;
   score: ScoreService;
   story: Story;
+  command: Command;
   wasConfused: boolean = false;
 
   constructor(ifService: InteractiveFictionService,

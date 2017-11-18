@@ -39,6 +39,11 @@ export abstract class VerbHandler {
 
   }
 
+  sendPreviewEvents(command: Command, context: CommandContext): boolean {
+    return context.currentRoom.sendPreviewEvent(context, this.name, this) &&
+      context.currentRoom.sendPreviewEvent(context, 'action', this);
+  }
+
   canHandleVerb(verbToken: CommandToken): boolean {
 
     // TODO: Key lookup would likely be better here
@@ -67,4 +72,5 @@ export abstract class VerbHandler {
 
     return true;
   }
+
 }

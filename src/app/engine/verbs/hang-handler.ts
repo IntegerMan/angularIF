@@ -40,6 +40,13 @@ export class HangHandler extends VerbHandler {
     return HangHandler.attemptHang(context, subject, prep);
   }
 
+  sendPreviewEvents(command: Command, context: CommandContext): boolean {
+    const subject: WorldEntity = this.assertHasObjectWithEntity(command, context);
+
+    return subject.sendPreviewEvent(context, 'drop', this)
+      && super.sendPreviewEvents(command, context);
+  }
+
   static attemptHang(context: CommandContext, subject: WorldEntity, prep: CommandToken): CommandResult {
 
     const suspender = prep.modifies;

@@ -18,6 +18,7 @@ export class TextOutputService {
   private static _instance: TextOutputService;
 
   lines: TextLine[] = [];
+  lastLine: TextLine = null;
   linesChanged: EventEmitter<TextLine[]>;
   lineAdded: EventEmitter<TextLine>;
 
@@ -115,6 +116,7 @@ export class TextOutputService {
 
     // Update the collection. If components displaying this are bound to our lines collection, they'll update
     this.lines.push(line);
+    this.lastLine = line;
 
     // Fire events
     this.lineAdded.emit(line);
