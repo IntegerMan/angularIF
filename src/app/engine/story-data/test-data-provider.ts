@@ -71,6 +71,7 @@ export class TestDataProvider {
   static buildLanguageTerm(): LanguageTerm {
     const term: LanguageTerm = new LanguageTerm();
     term.text = 'squirrel';
+    term.normal = term.text;
     term.bestTag = 'noun';
     term.tags = ['noun', 'singular'];
     return term;

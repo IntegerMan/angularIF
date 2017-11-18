@@ -13,7 +13,7 @@ export class TokenizerService {
 
   }
 
-  private static getTokenFromTerm(term) {
+  private static getTokenFromTerm(term): CommandToken {
     const token: CommandToken = new CommandToken(term);
     token.classification = TokenizerService.getClassificationFromTerm(term);
     return token;
@@ -51,7 +51,7 @@ export class TokenizerService {
     return TokenClassification.Unknown;
   }
 
-  public getTokenForWord(word: string) {
+  public getTokenForWord(word: string): CommandToken {
 
     // Validate input
     if (!word || word.length  <= 0) {
