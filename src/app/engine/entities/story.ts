@@ -4,7 +4,6 @@ import {VerbHandler} from '../verbs/verb-handler';
 import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
 import {TextOutputService} from '../text-output.service';
-import {CommonDictionary} from '../parser/common-dictionary';
 import {StoryResponse} from '../responses/story-response';
 import {CommandContext} from '../command-context';
 import {StoryData} from '../story-data/story-data';
@@ -45,11 +44,6 @@ export class Story {
     this.strings = {};
 
     this.output = TextOutputService.instance;
-
-    // TODO: This should probably go elsewhere
-    const dict = new CommonDictionary();
-    dict.addTerms();
-
   }
 
   public initialize(): void {

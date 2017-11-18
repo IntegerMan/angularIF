@@ -4,6 +4,7 @@ import {CommandToken} from './command-token';
 import {StringHelper} from '../../utility/string-helper';
 import {ArrayHelper} from '../../utility/array-helper';
 import {TokenizerService} from './tokenizer.service';
+import {CommonDictionary} from './common-dictionary';
 
 @Injectable()
 export class LexiconService {
@@ -36,6 +37,12 @@ export class LexiconService {
     this._expandRules = {};
 
     LexiconService._instance = this;
+  }
+
+  useDefaults(): void {
+
+    const dict = new CommonDictionary();
+    dict.addTerms();
 
   }
 
@@ -80,6 +87,14 @@ export class LexiconService {
 
     return false;
 
+  }
+
+  get replacementRuleCount(): number {
+    return Object.getOwnPropertyNames(this._replaceRules).length;
+  }
+
+  get expansionRuleCount(): number {
+    return Object.getOwnPropertyNames(this._expandRules).length;
   }
 
   addFallback(term: string, classification: TokenClassification): void {
@@ -130,4 +145,5 @@ export class LexiconService {
       this.lexicon[term] = tag;
     }
   }
+
 }

@@ -61,6 +61,7 @@ substitute:
   north west: northwest
   south east: southeast
   south west: southwest
+  cannot: can not
 expand:
   g: repeat
   x: examine

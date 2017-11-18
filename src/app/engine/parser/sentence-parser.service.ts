@@ -5,7 +5,6 @@ import {LoggingService} from '../../utility/logging.service';
 import {TokenClassification} from './token-classification.enum';
 import {TokenizerService} from './tokenizer.service';
 import {LexiconService} from './lexicon.service';
-import {WorldEntity} from '../entities/world-entity';
 import {CommandContext} from '../command-context';
 
 @Injectable()

@@ -284,12 +284,16 @@ export class InteractiveFictionService {
 
   private initializeEngine() {
 
+    this.lexer.useDefaults();
+
+    /*
     this.outputService.displayTitle(`${this.engineName}`, `v${this.engineVersion}`);
     this.outputService.displayAuthor(`Developed by ${this.engineAuthor}`);
     this.outputService.displayBlankLine();
     this.outputService.displaySystem(this.copyrightText);
     this.outputService.displaySystem(this.licenseText);
     this.outputService.displayBlankLine();
+    */
   }
 
   private initializeStory(story: Story) {
