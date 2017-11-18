@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {VerbData} from "../../engine/story-data/verb-data";
+import {VerbData} from '../../engine/story-data/verb-data';
 
 @Component({
   selector: 'if-verb-card',

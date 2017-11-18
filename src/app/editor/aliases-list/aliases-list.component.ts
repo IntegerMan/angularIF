@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {EntityData} from '../../engine/story-data/entity-data';
 import {AliasData} from '../../engine/story-data/alias-data';
-import {ArrayHelper} from "../../utility/array-helper";
+import {ArrayHelper} from '../../utility/array-helper';
 
 @Component({
   selector: 'if-aliases-list',

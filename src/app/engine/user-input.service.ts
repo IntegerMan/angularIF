@@ -12,7 +12,6 @@ import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {CommandResult} from './command-result';
 import {LexiconService} from './parser/lexicon.service';
-import {logger} from 'codelyzer/util/logger';
 
 @Injectable()
 export class UserInputService {
@@ -41,7 +40,7 @@ export class UserInputService {
 
     const isDebugCommand: boolean = command.verb && (command.verb.name === 'debug' || command.verb.name === 'reportbug');
     if (isDebugCommand) {
-      logger.debug('Command recognized as a debugging command');
+      this.logger.debug('Command recognized as a debugging command');
     }
 
     this.outputService.displayUserCommand(sentence, command);

@@ -8,7 +8,7 @@ import {LexiconService} from '../engine/parser/lexicon.service';
 import {EngineModule} from '../engine/engine.module';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {NaturalLanguageService} from '../engine/parser/natural-language.service';
-import {InteractiveFictionService} from "../engine/interactive-fiction.service";
+import {InteractiveFictionService} from '../engine/interactive-fiction.service';
 
 describe('GameStateHeaderComponent', () => {
   let component: GameStateHeaderComponent;
