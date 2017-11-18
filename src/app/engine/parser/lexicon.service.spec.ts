@@ -4,9 +4,7 @@ import { LexiconService } from './lexicon.service';
 import {LoggingService} from '../../utility/logging.service';
 import {NaturalLanguageService} from './natural-language.service';
 import {EngineModule} from '../engine.module';
-import {CommonDictionary} from './common-dictionary';
 import {CommandToken} from './command-token';
-import {LanguageTerm} from './language-term';
 import {TokenizerService} from './tokenizer.service';
 
 describe('LexiconService', () => {
