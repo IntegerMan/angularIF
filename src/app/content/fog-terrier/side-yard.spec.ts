@@ -15,11 +15,13 @@ import {FogTerrierStory} from './fog-terrier-story';
 import {Room} from '../../engine/entities/room';
 import {TestingModule} from '../../testing/testing.module';
 import {FogTerrierTestingService} from './fog-terrier-testing.service';
+import {WorldEntity} from '../../engine/entities/world-entity';
 
 describe('FogTerrier.YourHouse.Sideyard', () => {
 
   let game: FogTerrierTestingService;
   let room: Room;
+  let whacker: WorldEntity;
 
   beforeEach(() =>  {
     TestBed.configureTestingModule({
@@ -35,6 +37,9 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
       game = testingService;
       room = game.warpTo('sideyard');
+
+      // Find objects
+      whacker = room.findEntityByKey('sideyard_weed_whacker');
 
     })));
 
@@ -61,6 +66,22 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   it('should contain an exit to the northwest to the frontyard', () => {
     game.input('nw');
     expect(game.currentRoom.key).toBe('frontyard');
+  });
+
+  // Object: Weed Whacker (missing object referenced in passing)
+
+  it('should contain a weed whacker "missing" object', () => {
+    expect(whacker).toBeTruthy();
+  });
+
+  it('should resolve "weed whacker" as the weed whacker "missing" object', () => {
+    const entity: WorldEntity = game.lookForEntity('weed whacker', whacker.key);
+    expect(entity).toBeTruthy();
+  });
+
+  it('should resolve "whacker" as the weed whacker "missing" object', () => {
+    const entity: WorldEntity = game.lookForEntity('whacker', whacker.key);
+    expect(entity).toBeTruthy();
   });
 
 });

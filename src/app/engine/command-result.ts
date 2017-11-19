@@ -1,8 +1,11 @@
+import {Command} from './parser/command';
+
 export class CommandResult {
 
   succeeded: boolean = false;
   parsed: boolean = false;
   countsAsMove: boolean = false;
+  command: Command = null;
 
   static BuildParseFailedResult(): CommandResult {
     return new CommandResult();

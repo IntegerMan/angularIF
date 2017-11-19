@@ -49,7 +49,10 @@ export class UserInputService {
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
     if (unknowns && unknowns.length > 0 && !isDebugCommand) {
       this.displayParserError(unknowns, context);
-      return CommandResult.BuildParseFailedResult();
+
+      const unknownResult = CommandResult.BuildParseFailedResult();
+      unknownResult.command = command;
+      return unknownResult;
     }
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
@@ -59,12 +62,16 @@ export class UserInputService {
     this.ifService.logUserCommandToAnalytics(context, command);
 
     // If the parser wasn't sure what we were referring to with something, then don't send it to a verb handler.
+    let result: CommandResult;
     if (context.wasConfused && !(isDebugCommand)) {
-      return CommandResult.BuildParseFailedResult();
+      result = CommandResult.BuildParseFailedResult();
+    } else {
+      // Okay, we can send the command off to be interpreted and just return the result
+      result = this.ifService.handleUserCommand(command, context);
     }
 
-    // Okay, we can send the command off to be interpreted and just return the result
-    return this.ifService.handleUserCommand(command, context);
+    result.command = command;
+    return result;
   }
 
 

@@ -58,6 +58,8 @@ export class LookHandler extends VerbHandler {
       context.outputService.displayStory(`${StringHelper.capitalize(entity.that)} is wholly unremarkable.`);
     }
 
+    return CommandResult.BuildActionSuccessResult();
+
   }
 
   private static listPlayerInventory(context: CommandContext): CommandResult {

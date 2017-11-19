@@ -32,6 +32,7 @@ terms:
   - Chandeliers
   - Message
   - Note
+  - Whacker
   Verb:
   - Open
   - Procure
@@ -62,6 +63,7 @@ substitute:
   south east: southeast
   south west: southwest
   cannot: can not
+  weed whacker: whacker
 expand:
   g: repeat
   x: examine
