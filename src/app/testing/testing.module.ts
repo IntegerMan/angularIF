@@ -12,7 +12,20 @@ import {EditorModule} from '../editor/editor.module';
 import {StoryTestingService} from './story-testing.service';
 
 @NgModule({
-  imports: [ StoryHostModule, EngineModule, EditorModule, RouterTestingModule, NoopAnimationsModule],
-  providers: [ NaturalLanguageService, LexiconService, LoggingService, InteractiveFictionService, GoogleAnalyticsService, StoryTestingService]
+  imports: [
+    StoryHostModule,
+    EngineModule,
+    EditorModule,
+    RouterTestingModule,
+    NoopAnimationsModule
+  ],
+  providers: [
+    NaturalLanguageService,
+    LexiconService,
+    LoggingService,
+    InteractiveFictionService,
+    GoogleAnalyticsService,
+    StoryTestingService
+  ]
 })
 export class TestingModule { }
