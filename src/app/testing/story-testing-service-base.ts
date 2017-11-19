@@ -59,7 +59,7 @@ export class StoryTestingServiceBase {
     const result = this.input(`x ${description}`);
     return this.getEntityFromResult(result, key);
   }
-  
+
   get maxScore(): number {
     return this.ifService.maxScore;
   }

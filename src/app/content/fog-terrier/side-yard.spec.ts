@@ -84,4 +84,9 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
     expect(entity).toBeTruthy();
   });
 
+  it('should respond to looking at the weed whacker with the "not here" message', () => {
+    game.input('x weed whacker');
+    expect(game.lastReply).toContain(`You don't see`);
+  });
+
 });
