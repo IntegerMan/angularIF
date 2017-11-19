@@ -1,17 +1,12 @@
 import {async, inject, TestBed} from '@angular/core/testing';
 
-import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
-import {LexiconService} from '../../engine/parser/lexicon.service';
-import {LoggingService} from '../../utility/logging.service';
 import {CloakStory} from './cloak-story';
-import {StoryHostModule} from '../../story-host/story-host.module';
-import {EngineModule} from '../../engine/engine.module';
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
-import {GoogleAnalyticsService} from '../../utility/google-analytics.service';
 import {CommandContext} from '../../engine/command-context';
 import {UserInputService} from '../../engine/user-input.service';
 import {TextOutputService} from '../../engine/text-output.service';
 import {GameState} from '../../engine/game-state.enum';
+import {TestingModule} from '../../testing/testing.module';
 
 describe('CloakStory', () => {
 
@@ -23,8 +18,7 @@ describe('CloakStory', () => {
 
   beforeEach(() =>  {
     TestBed.configureTestingModule({
-      imports: [ StoryHostModule, EngineModule],
-      providers: [ NaturalLanguageService, LexiconService, LoggingService, InteractiveFictionService, GoogleAnalyticsService]
+      imports: [ TestingModule ]
     })
       .compileComponents();
 
