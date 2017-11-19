@@ -8,6 +8,8 @@ import {Actor} from '../engine/entities/actor';
 import {TextLine} from '../text-rendering/text-line';
 import {Room} from '../engine/entities/room';
 import {GameState} from '../engine/game-state.enum';
+import {WorldEntity} from '../engine/entities/world-entity';
+import {isNullOrUndefined} from "util";
 
 export class StoryTestingServiceBase {
 
@@ -44,6 +46,20 @@ export class StoryTestingServiceBase {
     return this.player.currentRoom;
   }
 
+  getEntityFromResult(result: CommandResult, key: string = null): WorldEntity {
+    const tokens = result.command.objects.filter(o => o.entity &&  (isNullOrUndefined(key) || o.entity.key === key));
+    if (tokens && tokens.length > 0)  {
+      return tokens[0].entity;
+    }
+
+    return null;
+  }
+
+  lookForEntity(description: string, key: string = null): WorldEntity {
+    const result = this.input(`x ${description}`);
+    return this.getEntityFromResult(result, key);
+  }
+  
   get maxScore(): number {
     return this.ifService.maxScore;
   }
