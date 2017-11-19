@@ -52,10 +52,16 @@ export class LookHandler extends VerbHandler {
       return CommandResult.BuildActionSuccessResult();
     } else if (entity.invokeVerbResponse(context, 'look', entity)) {
       return CommandResult.BuildActionSuccessResult();
-    } else if (isScrutinize) {
-      context.outputService.displayStory(`You stare at ${entity.that} but fail to notice anything you hadn't noticed before.`);
+    }
+
+    if (entity.isMissing) {
+      context.outputService.displayStory(`You don't see ${entity.that} here.`);
     } else {
-      context.outputService.displayStory(`${StringHelper.capitalize(entity.that)} is wholly unremarkable.`);
+      if (isScrutinize) {
+        context.outputService.displayStory(`You stare at ${entity.that} but fail to notice anything you hadn't noticed before.`);
+      } else {
+        context.outputService.displayStory(`${StringHelper.capitalize(entity.that)} is wholly unremarkable.`);
+      }
     }
 
     return CommandResult.BuildActionSuccessResult();

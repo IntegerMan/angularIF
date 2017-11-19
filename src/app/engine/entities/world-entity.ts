@@ -327,4 +327,14 @@ export abstract class WorldEntity {
     this.attributes[name] = value;
   }
 
+  /**
+   * Gets a value indicating whether or not this entity has the 'missing' attribute associated with it.
+   * The missing attribute indicates that an object is not truly present, but may need special interaction code.
+   * @returns {boolean} true if the missing attribute is present and set to true, otherwise false.
+   */
+  get isMissing(): boolean {
+    return this.getAttribute('missing', 'false');
+  }
+
+
 }
