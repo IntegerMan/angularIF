@@ -10,6 +10,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {EditorModule} from '../editor/editor.module';
 import {StoryTestingService} from './story-testing.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -25,7 +26,9 @@ import {StoryTestingService} from './story-testing.service';
     LoggingService,
     InteractiveFictionService,
     GoogleAnalyticsService,
-    StoryTestingService
+    StoryTestingService,
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} }
   ]
 })
 export class TestingModule { }

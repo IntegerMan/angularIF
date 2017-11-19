@@ -62,10 +62,6 @@ export class GetHandler extends VerbHandler {
 
         return CommandResult.BuildActionSuccessResult();
 
-      } else {
-
-        return CommandResult.BuildActionFailedResult();
-
       }
 
     }

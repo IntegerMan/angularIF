@@ -17,7 +17,7 @@ export class PortableEntity extends WorldEntity {
   }
 
   allowPickup(context: CommandContext): boolean {
-    return true;
+    return this.isPortable;
   }
 
   /**

@@ -93,4 +93,10 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
     expect(game.lastReply).toContain(`You don't see`);
   });
 
+  it('should fail to get the weed whacker with a custom message.', () => {
+    game.input('get weed whacker');
+    expect(game.player.findEntityByKey(whacker.key)).toBeFalsy();
+    expect(game.lastReply).toContain(`isn't really the time`);
+  });
+
 });

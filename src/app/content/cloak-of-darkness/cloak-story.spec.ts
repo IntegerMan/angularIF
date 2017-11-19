@@ -63,6 +63,19 @@ describe('CloakStory', () => {
     expect(game.currentRoom.key).toBe('bar');
   });
 
+  it('should not be possible to take the hook', () => {
+    game.input('w');
+    game.input('get hook');
+    expect(game.player.findEntityByKey('hook')).toBeFalsy();
+  });
+
+  it('should be possible to get the cloak off of the hook', () => {
+    game.input('w');
+    game.input('put cloak on hook hook');
+    game.input('get cloak');
+    expect(game.player.findEntityByKey('cloak')).toBeTruthy();
+  });
+
   it('should allow going south, then back to the north (in the dark)', () => {
     game.input('s');
     game.input('n');

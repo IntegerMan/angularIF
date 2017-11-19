@@ -261,7 +261,15 @@ export abstract class WorldEntity {
       return defaultValue;
     }
 
-    return this.attributes[attributeName];
+    let value = this.attributes[attributeName];
+
+    if (value && value === 'false') {
+      value = false;
+    } else if (value && value === 'true') {
+      value = true;
+    }
+
+    return value;
   }
 
   sendPreviewEvent(context: CommandContext, eventName: string, data: any): boolean {
@@ -333,7 +341,16 @@ export abstract class WorldEntity {
    * @returns {boolean} true if the missing attribute is present and set to true, otherwise false.
    */
   get isMissing(): boolean {
-    return this.getAttribute('missing', 'false');
+    return this.getAttribute('missing', false);
+  }
+
+  /**
+   * Gets a value indicating whether or not this entity has the 'portable' attribute associated with it.
+   * The portable attribute indicates that an object can be picked up.
+   * @returns {boolean} true if the portable attribute is present and set to true, otherwise false.
+   */
+  get isPortable(): boolean {
+    return this.getAttribute('portable', false);
   }
 
 
