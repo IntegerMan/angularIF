@@ -1,6 +1,5 @@
 import {async, inject, TestBed} from '@angular/core/testing';
 
-import {CloakStory} from './cloak-story';
 import {GameState} from '../../engine/game-state.enum';
 import {TestingModule} from '../../testing/testing.module';
 import {CloakTestingService} from './cloak-testing.service';
@@ -22,7 +21,7 @@ describe('CloakStory', () => {
     (testingService: CloakTestingService) => {
 
     game = testingService;
-    game.initialize();
+
   })));
 
   it('should create', () => {
