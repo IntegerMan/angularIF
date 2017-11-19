@@ -30,6 +30,10 @@ export class EditorCardCommandsComponent implements OnInit {
     this.editorService.addAlias();
   }
 
+  addAttribute(): void {
+    this.editorService.addAttribute();
+  }
+
   playStoryHere(): void {
     this.editorService.playStory(<RoomData>this.entity);
   }

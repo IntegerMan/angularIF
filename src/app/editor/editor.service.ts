@@ -9,7 +9,7 @@ import {MatDialog} from '@angular/material';
 import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.component';
 import {AddEntityDialogComponent} from './add-entity-dialog/add-entity-dialog.component';
 import {StoryLoader} from '../engine/story-data/story-loader';
-import {EntityData} from '../engine/story-data/entity-data';
+import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
 
 @Injectable()
 export class EditorService {
@@ -251,10 +251,21 @@ export class EditorService {
     }
 
     if (!name || name === null) {
-      // TODO: Pop up some UI to ask the user to get an attribute name and value
+
+      const dialogRef = this.dialog.open(AddAttributeDialogComponent, {
+        width: '300px',
+        data: {name: name, value: value}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.logger.debug(`The add attribute dialog was closed with a result of ${result}`);
+        if (result) {
+          this.addAttribute(result.key, result.value);
+        }
+      });
+
       return;
     }
-
     this.selectedNode.attributes[name] = value;
   }
 

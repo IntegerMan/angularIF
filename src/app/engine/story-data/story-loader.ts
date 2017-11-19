@@ -40,6 +40,9 @@ export class StoryLoader {
     if (!entity.aliases.adjectives) {
       entity.aliases.adjectives = [];
     }
+    if (!entity.attributes) {
+      entity.attributes = {};
+    }
 
   }
 

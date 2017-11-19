@@ -26,6 +26,7 @@ import { EditorCardCommandsComponent } from './editor-card-commands/editor-card-
 import { AddEntityDialogComponent } from './add-entity-dialog/add-entity-dialog.component';
 import { LookRendererComponent } from './look-renderer/look-renderer.component';
 import {StoryHostModule} from '../story-host/story-host.module';
+import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
 
 @NgModule({
   imports: [
@@ -59,11 +60,13 @@ import {StoryHostModule} from '../story-host/story-host.module';
     AddAliasDialogComponent,
     EditorCardCommandsComponent,
     AddEntityDialogComponent,
-    LookRendererComponent
+    LookRendererComponent,
+    AddAttributeDialogComponent
   ],
   entryComponents: [
     AddAliasDialogComponent,
-    AddEntityDialogComponent
+    AddEntityDialogComponent,
+    AddAttributeDialogComponent
   ]
 })
 export class EditorModule {

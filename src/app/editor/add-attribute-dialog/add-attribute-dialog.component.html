@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Add Attribute</h1>
+
+<div mat-dialog-content>
+  <div class="input-field">
+    <input type="text" id="key" [(ngModel)]="key" required class="validate" #entityKey
+           (keyup.enter)="onEnterPressed(entityKey.value, entityValue.value);">
+    <label for="key" class="active">Key</label>
+  </div>
+  <div class="input-field">
+    <input type="text" id="value" [(ngModel)]="value" required class="validate" #entityValue
+           (keyup.enter)="onEnterPressed(entityKey.value, entityValue.value);">
+    <label for="value" class="active">Value</label>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <a class="btn waves-light waves-ripple" (click)="confirmSelection()">
+    Add
+  </a>
+  <a class="btn waves-light waves-ripple warn-bg" (click)="dialogRef.close()" style="margin-left: 1rem;">
+    Cancel
+  </a>
+</div>
