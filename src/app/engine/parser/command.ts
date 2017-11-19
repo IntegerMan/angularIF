@@ -38,7 +38,7 @@ export class Command {
 
     context.command = this;
 
-    // This is decently important to log
+    // This is decently important to shouldLog
     context.logger.debug(`Handling command associated with sentence ${this.userInput}.`);
     context.logger.debug(this);
 

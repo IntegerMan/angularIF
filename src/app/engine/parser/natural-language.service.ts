@@ -8,6 +8,8 @@ export class NaturalLanguageService {
 
   private static _instance: NaturalLanguageService;
 
+  shouldLog: boolean = false;
+
   static get instance(): NaturalLanguageService {
     if (!this._instance) {
       this._instance = new NaturalLanguageService(LexiconService.instance, LoggingService.instance);
@@ -43,10 +45,15 @@ export class NaturalLanguageService {
 
   public getTerms(sentence: string): LanguageTerm[] {
 
-    this.logger.log(`Language service is extracting terms from: ${sentence}`);
+    if (this.shouldLog) {
+      this.logger.log(`Language service is extracting terms from: ${sentence}`);
+    }
 
     const data: LanguageTerm[] = this.nlp(sentence, this.lexer.lexicon).terms().data();
-    this.logger.log(data);
+
+    if (this.shouldLog) {
+      this.logger.log(data);
+    }
 
     return data;
   }

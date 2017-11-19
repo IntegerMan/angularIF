@@ -4,6 +4,8 @@ import {LoggingService} from '../../utility/logging.service';
 @Injectable()
 export class TemplatingService {
 
+  public shouldLog: boolean = false;
+
   private templater: any;
 
   constructor(private logger: LoggingService) {
@@ -12,12 +14,16 @@ export class TemplatingService {
 
   public applyTemplate(input: string, data: any): string {
 
-    this.logger.debug(`Applying template to string ${input}`);
-    this.logger.debug(data);
+    if (this.shouldLog) {
+      this.logger.debug(`Applying template to string ${input}`);
+      this.logger.debug(data);
+    }
 
     const output: string = this.templater.render(input, data);
 
-    this.logger.debug(`Templated output: ${output}`);
+    if (this.shouldLog) {
+      this.logger.debug(`Templated output: ${output}`);
+    }
 
     return output;
   }

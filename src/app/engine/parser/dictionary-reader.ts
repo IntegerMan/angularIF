@@ -4,6 +4,8 @@ import {StringHelper} from '../../utility/string-helper';
 
 export abstract class DictionaryReader {
 
+  public static shouldLog: boolean = false;
+
   public static readDictionary(source: any): void {
 
     LoggingService.instance.debug(`Reading dictionary ${source.name} by ${source.author.name}.`);
@@ -14,7 +16,9 @@ export abstract class DictionaryReader {
     if (source.terms) {
       for (const tag of Object.getOwnPropertyNames(source.terms)) {
         const terms: string[] = source.terms[tag];
-        LoggingService.instance.debug(`Dictionary loaded tag ${tag} containing ${StringHelper.toOxfordCommaList(terms)}`);
+        if (this.shouldLog) {
+          LoggingService.instance.debug(`Dictionary loaded tag ${tag} containing ${StringHelper.toOxfordCommaList(terms)}`);
+        }
         lexer.add(tag, terms);
       }
     }
@@ -22,7 +26,9 @@ export abstract class DictionaryReader {
     // Register fallbacks for things that are verbs which can also be other terms
     if (source.fallback) {
       for (const token of Object.getOwnPropertyNames(source.fallback)) {
-        LoggingService.instance.debug(`Dictionary loaded fallback ${token} of type ${source.fallback[token]}`);
+        if (this.shouldLog) {
+          LoggingService.instance.debug(`Dictionary loaded fallback ${token} of type ${source.fallback[token]}`);
+        }
         lexer.addFallback(token, source.fallback[token]);
       }
     }
@@ -30,7 +36,9 @@ export abstract class DictionaryReader {
     // Register string replacement rules
     if (source.substitute) {
       for (const token of Object.getOwnPropertyNames(source.substitute)) {
-        LoggingService.instance.debug(`Dictionary loaded string replace rule: ${token} -> ${source.substitute[token]}`);
+        if (this.shouldLog) {
+          LoggingService.instance.debug(`Dictionary loaded string replace rule: ${token} -> ${source.substitute[token]}`);
+        }
         lexer.addReplacementRule(token, source.substitute[token]);
       }
     }
@@ -38,7 +46,9 @@ export abstract class DictionaryReader {
     // Register string expansion rules
     if (source.expand) {
       for (const token of Object.getOwnPropertyNames(source.expand)) {
-        LoggingService.instance.debug(`Dictionary loaded string expansion rule: ${token} -> ${source.expand[token]}`);
+        if (this.shouldLog) {
+          LoggingService.instance.debug(`Dictionary loaded string expansion rule: ${token} -> ${source.expand[token]}`);
+        }
         lexer.addExpansionRule(token, source.expand[token]);
       }
     }

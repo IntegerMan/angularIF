@@ -77,7 +77,7 @@ export abstract class WorldEntity {
 
     if (nouns) {
       for (const noun of nouns) {
-        LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
+        // LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
         this.nouns.push(noun.toLocaleLowerCase());
       }
     }
@@ -88,7 +88,7 @@ export abstract class WorldEntity {
 
     if (adjectives) {
       for (const adjective of adjectives) {
-        LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
+        // LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
         this.adjectives.push(adjective.toLocaleLowerCase());
       }
     }

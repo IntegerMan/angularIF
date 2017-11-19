@@ -32,6 +32,18 @@ export class StoryTestingServiceBase {
     return this.inputService.handleUserSentence(sentence);
   }
 
+  warpTo(roomKey: string, describe: boolean = true): Room {
+
+    this.ifService.setActorRoom(this.player, this.story.findRoomByKey(roomKey));
+    this.context = this.ifService.buildCommandContext();
+
+    if (describe) {
+      this.ifService.describeRoom(this.player.currentRoom, this.context);
+    }
+
+    return this.player.currentRoom;
+  }
+
   get maxScore(): number {
     return this.ifService.maxScore;
   }

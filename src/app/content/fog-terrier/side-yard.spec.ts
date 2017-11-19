@@ -13,40 +13,54 @@ import {TextOutputService} from '../../engine/text-output.service';
 import {GameState} from '../../engine/game-state.enum';
 import {FogTerrierStory} from './fog-terrier-story';
 import {Room} from '../../engine/entities/room';
+import {TestingModule} from '../../testing/testing.module';
+import {FogTerrierTestingService} from './fog-terrier-testing.service';
 
 describe('FogTerrier.YourHouse.Sideyard', () => {
 
-  let story: FogTerrierStory;
-  let ifService: InteractiveFictionService;
-  let input: UserInputService;
-  let output: TextOutputService;
-  let context: CommandContext;
+  let game: FogTerrierTestingService;
   let room: Room;
 
   beforeEach(() =>  {
     TestBed.configureTestingModule({
-      imports: [ StoryHostModule, EngineModule],
-      providers: [ NaturalLanguageService, LexiconService, LoggingService, InteractiveFictionService, GoogleAnalyticsService]
+      imports: [ TestingModule ],
+      providers: [ FogTerrierTestingService ]
     })
       .compileComponents();
 
   });
 
-  beforeEach(async(inject([InteractiveFictionService, UserInputService, TextOutputService],
-    (service: InteractiveFictionService, inputService: UserInputService, outputService: TextOutputService) => {
+  beforeEach(async(inject([FogTerrierTestingService],
+    (testingService: FogTerrierTestingService) => {
 
-    story = new FogTerrierStory();
-    ifService = service;
-    input = inputService;
-    output = outputService;
+      game = testingService;
+      room = game.warpTo('sideyard');
 
-    ifService.initialize(story);
-    context = ifService.buildCommandContext();
-    room = story.findRoomByKey('sideyard');
-  })));
+    })));
 
-  it('should contain', () => {
+  it('should start in the requested room', () => {
     expect(room).toBeTruthy();
+    expect(room.key).toBe('sideyard');
+  });
+
+  it('should contain an exit to the south to the backyard', () => {
+    game.input('s');
+    expect(game.currentRoom.key).toBe('backyard');
+  });
+
+  it('should contain an exit to the southwest to the backyard', () => {
+    game.input('sw');
+    expect(game.currentRoom.key).toBe('backyard');
+  });
+
+  it('should contain an exit to the north to the frontyard', () => {
+    game.input('n');
+    expect(game.currentRoom.key).toBe('frontyard');
+  });
+
+  it('should contain an exit to the northwest to the frontyard', () => {
+    game.input('nw');
+    expect(game.currentRoom.key).toBe('frontyard');
   });
 
 });
