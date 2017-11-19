@@ -1,6 +1,6 @@
 <if-loading *ngIf="loading"></if-loading>
 
-<div *ngIf="story">
+<div *ngIf="story && !editorService.isPlaying">
 
   <!-- Main UI -->
   <div *ngIf="!isImporting">
@@ -46,4 +46,8 @@
     </ul>
   </div>
 
+</div>
+
+<div *ngIf="editorService.isPlaying && gameStory">
+  <if-story [story]="gameStory" [isPreview]="true" (backRequested)="onPreviewEnded($event)"></if-story>
 </div>

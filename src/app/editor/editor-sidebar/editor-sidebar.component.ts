@@ -31,7 +31,9 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.onStoryInfoClick();
+    if (!this.editorService.selectedNode) {
+      this.onStoryInfoClick();
+    }
     this.onResize();
   }
 
@@ -48,11 +50,11 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
   onActorObjectsClick(actor: any) {
     this.editorService.selectNode(actor, 'actor');
   }
-  
+
   onObjectClick(entity: any) {
     this.editorService.selectNode(entity, 'entity');
   }
-  
+
   onRoomClick(room: any) {
     this.editorService.selectNode(room, 'room');
   }
@@ -77,7 +79,7 @@ export class EditorSidebarComponent implements OnInit, OnDestroy {
     this.editorService.addActor();
   }
 
-  
+
   onAddRoomClick(): void {
     this.editorService.addRoom();
   }

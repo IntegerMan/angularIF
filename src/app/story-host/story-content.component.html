@@ -2,8 +2,13 @@
 <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425" class="bg-dark">
 </p-confirmDialog>
 
+<!-- Back to Editor -->
+<div class="fixed-action-btn" *ngIf="isPreview">
+  <a class="btn-floating btn-large waves-effect waves-light warn-bg tooltipped" (click)="backToEditor()" data-tooltip="Return to Editor"><i class="material-icons">arrow_back</i></a>
+</div>
+
 <!-- Toolbar -->
-<div class="fixed-action-btn">
+<div class="fixed-action-btn" *ngIf="!isPreview">
   <a class="btn-floating btn-large tooltipped" data-tooltip="Show application options"  data-position="left">
     <i class="material-icons">menu</i>
   </a>

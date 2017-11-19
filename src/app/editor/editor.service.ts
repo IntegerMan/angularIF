@@ -9,11 +9,15 @@ import {MatDialog} from '@angular/material';
 import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.component';
 import {AddEntityDialogComponent} from './add-entity-dialog/add-entity-dialog.component';
 import {StoryLoader} from '../engine/story-data/story-loader';
+import {EntityData} from '../engine/story-data/entity-data';
 
 @Injectable()
 export class EditorService {
 
   public storyData: StoryData;
+  public isPlaying: boolean = false;
+
+  playRequested: EventEmitter<RoomData>;
   nodeSelected: EventEmitter<any>;
 
   selectedNode: any;
@@ -25,6 +29,7 @@ export class EditorService {
               private dialog: MatDialog) {
 
     this.nodeSelected = new EventEmitter<any>();
+    this.playRequested = new EventEmitter<RoomData>();
     this.selectedNode = null;
 
   }
@@ -81,6 +86,9 @@ export class EditorService {
   }
 
   public selectNode(node: any, nodeType: string = null) {
+
+    this.logger.debug(`Selecting node`);
+    this.logger.debug(node);
 
     if (node && nodeType && nodeType !== null && nodeType !== undefined && typeof(node) === 'object') {
       node.nodeType = nodeType;
@@ -266,6 +274,19 @@ export class EditorService {
     this.selectedNode.events[name] = [];
   }
 
+  playStory(room: RoomData): void {
+    this.isPlaying = true;
+    this.playRequested.emit(room);
+  }
+
+  returnToEditor(node: any): void {
+    this.isPlaying = false;
+
+    if (node) {
+      this.selectNode(node);
+    }
+  }
+
   private jsonFilter(name: string, value: any): any {
 
     // These properties are editor conveniences and should not be serialized.
@@ -297,4 +318,5 @@ export class EditorService {
       }
     });
   }
+
 }

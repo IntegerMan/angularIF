@@ -25,11 +25,13 @@ import { AddAliasDialogComponent } from './add-alias-dialog/add-alias-dialog.com
 import { EditorCardCommandsComponent } from './editor-card-commands/editor-card-commands.component';
 import { AddEntityDialogComponent } from './add-entity-dialog/add-entity-dialog.component';
 import { LookRendererComponent } from './look-renderer/look-renderer.component';
+import {StoryHostModule} from '../story-host/story-host.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    CommonUIModule
+    CommonUIModule,
+    StoryHostModule
   ],
   providers: [
     EditorService

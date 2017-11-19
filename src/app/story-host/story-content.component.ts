@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {InteractiveFictionService} from '../engine/interactive-fiction.service';
 import {Story} from '../engine/entities/story';
 import {LoggingService} from '../utility/logging.service';
@@ -16,6 +16,12 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
 
   @Input()
   story: Story;
+
+  @Input()
+  isPreview: boolean = false;
+
+  @Output()
+  backRequested: EventEmitter<string>;
 
   lines: TextLine[] = [];
   title: string;
@@ -36,6 +42,7 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
               private ifService: InteractiveFictionService) {
 
     this.onResize();
+    this.backRequested = new EventEmitter<string>();
 
   }
 
@@ -89,6 +96,10 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
     this.storyCardHeight = window.innerHeight - 250;
   }
 
+  backToEditor(): void {
+    this.backRequested.emit(this.story.player.currentRoom.key);
+  }
+
   private onLinesChanged(): void {
     this.respondToNextViewChecked = true;
   }
@@ -117,5 +128,4 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
         break;
     }
   }
-
 }

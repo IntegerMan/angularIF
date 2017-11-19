@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {EditorService} from '../editor.service';
 import {EntityData} from '../../engine/story-data/entity-data';
+import {RoomData} from '../../engine/story-data/room-data';
 
 @Component({
   selector: 'if-editor-card-commands',
@@ -29,4 +30,7 @@ export class EditorCardCommandsComponent implements OnInit {
     this.editorService.addAlias();
   }
 
+  playStoryHere(): void {
+    this.editorService.playStory(<RoomData>this.entity);
+  }
 }

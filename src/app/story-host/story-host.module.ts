@@ -45,7 +45,7 @@ import {StoryHostComponent} from './story-host.component';
     EntityDebugComponent
   ],
   exports: [
-
+    StoryContentComponent
   ],
   providers: [
     CommandEntryService

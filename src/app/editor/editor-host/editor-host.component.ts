@@ -7,6 +7,9 @@ import {StoryService} from '../../services/story.service';
 import {Subscription} from 'rxjs/Subscription';
 import {StoryData} from '../../engine/story-data/story-data';
 import {EditorService} from '../editor.service';
+import {Story} from '../../engine/entities/story';
+import {RoomData} from '../../engine/story-data/room-data';
+import {StoryLoader} from '../../engine/story-data/story-loader';
 
 @Component({
   selector: 'if-editor-host',
@@ -20,16 +23,18 @@ export class EditorHostComponent implements OnInit, OnDestroy {
   public isImporting: boolean = false;
   public selectedNode: any;
   public story: StoryData;
+  public gameStory: Story;
 
   private routerSubscription: Subscription;
   private routerParamSubscription: Subscription;
   private nodeSubscription: Subscription;
+  private playSubscription: Subscription;
 
   constructor(private outputService: TextOutputService,
               private logger: LoggingService,
               private route: ActivatedRoute,
               private ifService: InteractiveFictionService,
-              private editorService: EditorService,
+              public editorService: EditorService,
               private storyService: StoryService) {
 
   }
@@ -38,6 +43,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.route.url.subscribe(u => this.onUrlEvent(u));
     this.routerParamSubscription = this.route.params.subscribe(p => this.loadFromParameters(p));
     this.nodeSubscription = this.editorService.nodeSelected.subscribe(n => this.onNodeSelected(n));
+    this.playSubscription = this.editorService.playRequested.subscribe(r => this.onPlayRequested(r));
   }
 
   ngOnDestroy(): void {
@@ -50,6 +56,9 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     }
     if (this.nodeSubscription) {
       this.nodeSubscription.unsubscribe();
+    }
+    if (this.playSubscription) {
+      this.playSubscription.unsubscribe();
     }
 
   }
@@ -72,6 +81,22 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     this.editorService.storyData = data;
     this.story = data;
     this.isImporting = false;
+  }
+
+  onPreviewEnded(key: string) {
+    let room = null;
+    this.logger.warning(`Exiting story and returning to editor with a key of ${key}`);
+
+    if (key) {
+      const rooms = this.story.rooms.filter(r => r.key === key);
+      if (rooms && rooms.length > 0) {
+        room = rooms[0];
+      }
+    }
+
+    this.logger.debug(room);
+
+    this.editorService.returnToEditor(room);
   }
 
   onImportCancelled(): void {
@@ -121,4 +146,32 @@ export class EditorHostComponent implements OnInit, OnDestroy {
       this.isImporting = true;
     }
   }
+
+  private onPlayRequested(room: RoomData) {
+
+    this.loading = true;
+
+    const json: string = this.editorService.getJSON();
+    this.gameStory = new Story('Editor Preview');
+
+    this.gameStory.storyData = JSON.parse(json);
+    const loader = new StoryLoader(this.gameStory.storyData);
+
+    // Read metadata from the story data file
+    loader.loadIntoStory(this.gameStory);
+    this.ifService.initialize(this.gameStory);
+
+    // Warp the actor to the requested location
+    if (room) {
+      const storyRoom = this.gameStory.findRoomByKey(room.key);
+      if (storyRoom) {
+        this.ifService.setActorRoom(this.gameStory.player, storyRoom);
+        this.outputService.clear();
+        this.ifService.describeRoom(storyRoom, this.ifService.buildCommandContext());
+      }
+    }
+
+    this.loading = false;
+  }
+
 }
