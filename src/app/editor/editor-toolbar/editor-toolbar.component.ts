@@ -38,6 +38,10 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  onHomeClick(): void {
+    this.editorService.selectNode(this.editorService.storyData);
+  }
+
   onAddActorClick(): void {
     this.editorService.addActor();
   }

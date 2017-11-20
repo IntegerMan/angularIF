@@ -11,7 +11,7 @@ declare const Clipboard: any;
 })
 export class JsonExportComponent implements OnInit {
 
-  private json: string;
+  public json: string;
 
   constructor(private editorService: EditorService) {
 
