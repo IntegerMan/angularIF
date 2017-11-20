@@ -31,7 +31,7 @@
         </div>
       </div>
       <if-verb-card [verb]="lookVerb" *ngIf="lookVerb"></if-verb-card>
-      <span class="warn-text" *ngIf="!lookVerb">This object does not have a verb handler for the 'look' verb.</span>
+      <if-warning *ngIf="!lookVerb">This object does not have a verb handler for the 'look' verb.</if-warning>
     </div>
 
     <!-- Collections go here -->

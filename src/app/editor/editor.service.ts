@@ -12,6 +12,7 @@ import {StoryLoader} from '../engine/story-data/story-loader';
 import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
 import {AddVerbHandlerDialogComponent} from './add-verb-handler-dialog/add-verb-handler-dialog.component';
 import {VerbData} from '../engine/story-data/verb-data';
+import {EntityData} from '../engine/story-data/entity-data';
 
 @Injectable()
 export class EditorService {
@@ -315,6 +316,21 @@ export class EditorService {
     if (node) {
       this.selectNode(node);
     }
+  }
+
+  editVerb(verb: VerbData, entity: EntityData) {
+
+    // Set parent so we can navigate out via done and via the breadcrumbs
+    (<any>verb).parent = entity;
+
+    // Stick that bad boy into the navigation chain
+    this.selectNode(verb, 'verbHandler');
+  }
+
+  deleteVerb(verb: VerbData, entity: EntityData) {
+
+    // TODO: Prompt the user to confirm
+
   }
 
   private jsonFilter(name: string, value: any): any {

@@ -1,11 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VerbCardComponent } from './verb-card.component';
-import {LoggingService} from '../../utility/logging.service';
-import {LexiconService} from '../../engine/parser/lexicon.service';
-import {EditorModule} from '../editor.module';
-import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
 import {TestDataProvider} from '../../engine/story-data/test-data-provider';
+import {TestingModule} from '../../testing/testing.module';
 
 describe('VerbCardComponent', () => {
   let component: VerbCardComponent;
@@ -13,8 +10,7 @@ describe('VerbCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ EditorModule ],
-      providers: [ NaturalLanguageService, LexiconService, LoggingService]
+      imports: [ TestingModule ]
     })
     .compileComponents();
   }));
@@ -23,6 +19,7 @@ describe('VerbCardComponent', () => {
     fixture = TestBed.createComponent(VerbCardComponent);
     component = fixture.componentInstance;
     component.verb = TestDataProvider.buildVerb();
+    component.entity = TestDataProvider.buildItem();
     fixture.detectChanges();
   });
 

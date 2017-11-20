@@ -1,2 +1,2 @@
 <if-verb-card [verb]="lookVerb" *ngIf="lookVerb"></if-verb-card>
-<span class="warn-text" *ngIf="!lookVerb">This entity does not have a 'look' verb handler.</span>
+<if-warning *ngIf="!lookVerb">This entity does not have a 'look' verb handler.</if-warning>

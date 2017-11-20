@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-content">
+    <div class="card-title">
+      <h2>{{entity.key}} - {{verb.name}}</h2>
+    </div>
+
+    <if-response-list *ngIf="verb.handler" [responses]="verb.handler"></if-response-list>
+    <if-warning *ngIf="!verb.handler">No handlers have been defined yet for this verb.</if-warning>
+
+  </div>
+  <div class="card-action">
+    <a class="waves-effect waves-light btn" (click)="onDone()">
+      Done
+    </a>
+  </div>
+</div>

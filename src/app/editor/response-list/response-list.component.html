@@ -9,11 +9,12 @@
              class="chip orange accent-2 tooltipped"
              data-tooltip="invoke a method">
 
-            <i class="material-icons tiny" alt="Invoke">call_made</i>   
+            <i class="material-icons tiny" alt="Invoke">call_made</i>
             Call <code>{{item.invoke}}</code>
 
         </div>
 
-        <span *ngSwitchDefault class="warn-text">No handler for {{getItemType(item)}}.</span>
+        <if-warning *ngSwitchDefault>No handler for {{getItemType(item)}}.</if-warning>
+
     </div>
 </div>

@@ -15,6 +15,7 @@ import {FormsModule} from '@angular/forms';
 import { EntitySortPipe } from './entity-sort.pipe';
 import {TemplatingService} from '../engine/parser/templating.service';
 import {MarkdownService} from '../text-rendering/markdown.service';
+import { WarningComponent } from './warning/warning.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -32,21 +33,22 @@ import {MarkdownService} from '../text-rendering/markdown.service';
     SharedModule
   ],
   exports: [
+    ConfirmDialogModule,
+    TreeModule,
+    RouterModule,
+    FormsModule,
+    DataTableModule,
+    SharedModule,
     MatExpansionModule,
     MatToolbarModule,
     MatTooltipModule,
     MatInputModule,
-    LoadingIndicatorComponent,
-    ConfirmDialogModule,
-    TreeModule,
-    RouterModule,
-    MarkdownPresenterComponent,
-    FormsModule,
-    DataTableModule,
     MatSelectModule,
     MatDialogModule,
-    SharedModule,
-    EntitySortPipe
+    EntitySortPipe,
+    LoadingIndicatorComponent,
+    MarkdownPresenterComponent,
+    WarningComponent
   ],
   providers: [
     ConfirmationService,
@@ -56,7 +58,8 @@ import {MarkdownService} from '../text-rendering/markdown.service';
   declarations: [
     LoadingIndicatorComponent,
     MarkdownPresenterComponent,
-    EntitySortPipe
+    EntitySortPipe,
+    WarningComponent
   ]
 })
 export class CommonUIModule { }

@@ -1,5 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {VerbData} from '../../engine/story-data/verb-data';
+import {EditorService} from '../editor.service';
+import {EntityData} from '../../engine/story-data/entity-data';
 
 @Component({
   selector: 'if-verb-card',
@@ -10,19 +12,22 @@ import {VerbData} from '../../engine/story-data/verb-data';
 export class VerbCardComponent implements OnInit {
 
   @Input()
+  entity: EntityData;
+
+  @Input()
   verb: VerbData;
 
-  constructor() { }
+  constructor(private editorService: EditorService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   edit(): void {
-    // TODO
+    this.editorService.editVerb(this.verb, this.entity);
   }
 
   delete(): void {
-    // TODO
+    this.editorService.deleteVerb(this.verb, this.entity);
   }
 
 }
