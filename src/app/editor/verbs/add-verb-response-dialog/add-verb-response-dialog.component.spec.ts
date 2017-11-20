@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddVerbHandlerDialogComponent } from './add-verb-handler-dialog.component';
-import {TestingModule} from '../../testing/testing.module';
+import { AddVerbResponseDialogComponent } from './add-verb-response-dialog.component';
+import {TestingModule} from '../../../testing/testing.module';
 
-describe('AddVerbHandlerDialogComponent', () => {
-  let component: AddVerbHandlerDialogComponent;
-  let fixture: ComponentFixture<AddVerbHandlerDialogComponent>;
+describe('AddVerbResponseDialogComponent', () => {
+  let component: AddVerbResponseDialogComponent;
+  let fixture: ComponentFixture<AddVerbResponseDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -15,7 +15,7 @@ describe('AddVerbHandlerDialogComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddVerbHandlerDialogComponent);
+    fixture = TestBed.createComponent(AddVerbResponseDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

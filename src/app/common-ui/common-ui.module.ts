@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {LoadingIndicatorComponent} from './loading-indicator/loading-indicator.component';
 import {
+  MAT_PLACEHOLDER_GLOBAL_OPTIONS,
   MatDialogModule,
   MatExpansionModule, MatInputModule, MatRadioModule, MatSelectModule, MatToolbarModule,
   MatTooltipModule
@@ -55,7 +56,8 @@ import { WarningComponent } from './warning/warning.component';
   providers: [
     ConfirmationService,
     MarkdownService,
-    TemplatingService
+    TemplatingService,
+    {provide: MAT_PLACEHOLDER_GLOBAL_OPTIONS, useValue: {float: 'always'}}
   ],
   declarations: [
     LoadingIndicatorComponent,

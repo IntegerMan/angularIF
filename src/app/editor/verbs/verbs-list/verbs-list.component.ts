@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {EntityData} from '../../engine/story-data/entity-data';
-import {KeyValuePair} from '../../utility/key-value-pair';
+import {EntityData} from '../../../engine/story-data/entity-data';
+import {KeyValuePair} from '../../../utility/key-value-pair';
 
 @Component({
   selector: 'if-verbs-list',

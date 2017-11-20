@@ -22,7 +22,6 @@ export class AddAttributeDialogComponent implements OnInit {
       this.value = data.value;
     }
 
-    console.warn('Bang. Opened Dialog');
   }
 
   ngOnInit() {

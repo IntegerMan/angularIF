@@ -30,7 +30,7 @@
           <label for="name" class="active">Entity Name</label>
         </div>
       </div>
-      <if-verb-card [verb]="lookVerb" *ngIf="lookVerb"></if-verb-card>
+      <if-verb-card [verb]="lookVerb" *ngIf="lookVerb" [entity]="entity"></if-verb-card>
       <if-warning *ngIf="!lookVerb">This object does not have a verb handler for the 'look' verb.</if-warning>
     </div>
 

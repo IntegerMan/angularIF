@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {EntityData} from '../../engine/story-data/entity-data';
-import {VerbData} from '../../engine/story-data/verb-data';
-import {EditorService} from '../editor.service';
+import {EntityData} from '../../../engine/story-data/entity-data';
+import {VerbData} from '../../../engine/story-data/verb-data';
+import {EditorService} from '../../editor.service';
 
 @Component({
   selector: 'if-verb-editor',
@@ -55,6 +55,9 @@ export class VerbEditorComponent implements OnInit, OnChanges {
     }
 
     if (itemType === 'object') {
+      if (item.type) {
+        return item.type;
+      }
       if (item.invoke) {
         return 'invoke';
       }

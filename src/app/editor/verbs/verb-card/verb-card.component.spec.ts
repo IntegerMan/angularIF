@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VerbCardComponent } from './verb-card.component';
-import {TestDataProvider} from '../../engine/story-data/test-data-provider';
-import {TestingModule} from '../../testing/testing.module';
+import {TestDataProvider} from '../../../engine/story-data/test-data-provider';
+import {TestingModule} from '../../../testing/testing.module';
 
 describe('VerbCardComponent', () => {
   let component: VerbCardComponent;

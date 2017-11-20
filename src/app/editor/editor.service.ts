@@ -10,10 +10,11 @@ import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.compo
 import {AddEntityDialogComponent} from './add-entity-dialog/add-entity-dialog.component';
 import {StoryLoader} from '../engine/story-data/story-loader';
 import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
-import {AddVerbHandlerDialogComponent} from './add-verb-handler-dialog/add-verb-handler-dialog.component';
+import {AddVerbHandlerDialogComponent} from './verbs/add-verb-handler-dialog/add-verb-handler-dialog.component';
 import {VerbData} from '../engine/story-data/verb-data';
 import {EntityData} from '../engine/story-data/entity-data';
 import {isNullOrUndefined} from 'util';
+import {AddVerbResponseDialogComponent} from './verbs/add-verb-response-dialog/add-verb-response-dialog.component';
 
 @Injectable()
 export class EditorService {
@@ -294,21 +295,30 @@ export class EditorService {
 
     if (isNullOrUndefined(response)) {
 
-      const dialogRef = this.dialog.open(AddAttributeDialogComponent, {
-        width: '300px',
-        data: {verb: verb}
+      const dialogRef = this.dialog.open(AddVerbResponseDialogComponent, {
+        width: '300px'
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.logger.debug(`The add attribute dialog was closed with a result of ${result}`);
+        this.logger.debug(`The add verb response dialog was closed with a result of ${result}`);
         if (result) {
-          this.addAttribute(result.key, result.value);
+          this.addResponse(verb, result);
         }
       });
 
       return;
     }
-    this.selectedNode.attributes[name] = value;
+
+    // Get it to the point where we can just stick our new content in there.
+    if (!verb.handler) {
+      verb.handler = [];
+    } else if (!(verb.handler instanceof Array)) {
+      verb.handler = [verb.handler];
+    }
+
+    verb.handler.push(response);
+
+    console.log(verb.handler);
   }
 
   public addEvent(name: string = null): void {
@@ -341,6 +351,10 @@ export class EditorService {
   }
 
   editVerb(verb: VerbData, entity: EntityData) {
+
+    if (!entity) {
+      throw new Error('Entity was not defined');
+    }
 
     // Set parent so we can navigate out via done and via the breadcrumbs
     (<any>verb).parent = entity;

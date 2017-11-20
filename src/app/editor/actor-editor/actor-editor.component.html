@@ -28,7 +28,7 @@
     </div>
     <div class="row" *ngIf="selectedTab === 'info'">
       <div class="col s6">
-        <mat-form-field floatPlaceholder="always">
+        <mat-form-field>
           <mat-select [(ngModel)]="actor.startRoom" style="width: 100%;" placeholder="Start Room">
             <mat-option>None</mat-option>
             <mat-option *ngFor="let key of roomKeys" [value]="key">{{key}}</mat-option>

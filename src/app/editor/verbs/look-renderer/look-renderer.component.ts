@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {EntityData} from '../../engine/story-data/entity-data';
-import {VerbData} from '../../engine/story-data/verb-data';
+import {EntityData} from '../../../engine/story-data/entity-data';
+import {VerbData} from '../../../engine/story-data/verb-data';
 
 @Component({
   selector: 'if-look-renderer',

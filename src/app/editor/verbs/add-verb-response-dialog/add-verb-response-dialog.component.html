@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Add Response</h1>
+
+<div mat-dialog-content style="padding-bottom: 2rem;">
+  <mat-form-field>
+    <mat-select placeholder="Type" [(ngModel)]="responseType" style="width: 100%;">
+      <mat-option [value]="'story'">Story Text</mat-option>
+      <mat-option [value]="'invoke'">Call a Function</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Content" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"
+    [(ngModel)]="value" style="width: 100%;">
+    </textarea>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <a class="btn waves-light waves-ripple" (click)="confirmSelection()">
+    Add
+  </a>
+  <a class="btn waves-light waves-ripple warn-bg" (click)="dialogRef.close()" style="margin-left: 1rem;">
+    Cancel
+  </a>
+</div>

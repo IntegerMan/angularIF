@@ -4,6 +4,7 @@ import {AggregateResponse} from './aggregate-response';
 import {RenderType} from '../../text-rendering/render-type.enum';
 import {LoggingService} from '../../utility/logging.service';
 import {InvokeResponse} from './invoke-response';
+import {Story} from '../entities/story';
 
 export class ResponseGenerator {
 
@@ -28,8 +29,12 @@ export class ResponseGenerator {
       return aggregate;
     }
 
-    if (data.invoke) {
-      return new InvokeResponse(data.invoke, context);
+    const dataType = data.type;
+    switch (dataType) {
+      case 'invoke':
+        return new InvokeResponse(data.value, context);
+      case 'story':
+        return new OutputResponse(data.value, RenderType.narrative, context);
     }
 
     // Log it and return

@@ -27,6 +27,9 @@ export class ResponseListComponent implements OnInit, OnChanges {
     }
 
     if (itemType === 'object') {
+      if (item.type) {
+        return item.type;
+      }
       if (item.invoke) {
         return 'invoke';
       }
