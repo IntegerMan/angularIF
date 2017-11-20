@@ -68,6 +68,7 @@ expand:
   g: repeat
   x: examine
   l: look
+  i: inventory
   e: east
   w: west
   s: south
