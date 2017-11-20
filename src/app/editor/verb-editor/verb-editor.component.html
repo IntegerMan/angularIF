@@ -1,14 +1,40 @@
 <div class="card">
   <div class="card-content">
     <div class="card-title">
-      <h2>{{entity.key}} - {{verb.name}}</h2>
+      <h2>{{verb.name}} {{entity.key}}</h2>
     </div>
 
-    <if-response-list *ngIf="verb.handler" [responses]="verb.handler"></if-response-list>
-    <if-warning *ngIf="!verb.handler">No handlers have been defined yet for this verb.</if-warning>
+    <div *ngIf="responseItems.length > 0" class="card-panel content-bg">
+      <div *ngFor="let item of responseItems">
+        <div [ngSwitch]="getItemType(item)">
+
+          <blockquote *ngSwitchCase="'string'">
+            <if-md [text]="item"></if-md>
+          </blockquote>
+
+          <div *ngSwitchCase="'invoke'"
+               class="chip orange accent-2 tooltipped"
+               data-tooltip="invoke a method">
+
+            <i class="material-icons tiny" alt="Invoke">call_made</i>
+            Call <code>{{item.invoke}}</code>
+
+          </div>
+
+          <if-warning *ngSwitchDefault>No handler for {{getItemType(item)}}.</if-warning>
+
+        </div>
+
+      </div>
+    </div>
+
+    <if-warning *ngIf="responseItems.length <= 0">No handlers have been defined yet for this verb.</if-warning>
 
   </div>
   <div class="card-action">
+    <a class="waves-effect waves-light btn" (click)="addResponse()">
+      Add Response
+    </a>
     <a class="waves-effect waves-light btn" (click)="onDone()">
       Done
     </a>

@@ -10,6 +10,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 export class AddAliasDialogComponent implements OnInit {
 
   alias: string;
+  partOfSpeech: string = 'noun';
 
   constructor(public dialogRef: MatDialogRef<AddAliasDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -24,7 +25,7 @@ export class AddAliasDialogComponent implements OnInit {
   }
 
   onEnterPressed(name: String) {
-    this.dialogRef.close(name);
+    this.dialogRef.close({name: name, partOfSpeech: this.partOfSpeech});
   }
 
 }

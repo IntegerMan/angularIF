@@ -1,11 +1,15 @@
 <h1 mat-dialog-title>Add Alias</h1>
 
-<div mat-dialog-content>
+<div mat-dialog-content style="padding-bottom: 2rem;">
   <div class="input-field">
     <input type="text" id="alias" [(ngModel)]="alias" required #aliasName
            (keyup.enter)="onEnterPressed(aliasName.value);">
     <label for="alias" class="active">Alias</label>
   </div>
+  <mat-radio-group [(ngModel)]="partOfSpeech" [required]="true">
+    <mat-radio-button value="noun">Noun</mat-radio-button>
+    <mat-radio-button value="adjective" style="margin-left: 1rem;">Adjective</mat-radio-button>
+  </mat-radio-group>
 </div>
 
 <div mat-dialog-actions>

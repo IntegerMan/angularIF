@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import {LoadingIndicatorComponent} from './loading-indicator/loading-indicator.component';
 import {
   MatDialogModule,
-  MatExpansionModule, MatInputModule, MatSelectModule, MatToolbarModule,
+  MatExpansionModule, MatInputModule, MatRadioModule, MatSelectModule, MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
 import {
@@ -24,6 +24,7 @@ import { WarningComponent } from './warning/warning.component';
     MatToolbarModule,
     MatTooltipModule,
     MatInputModule,
+    MatRadioModule,
     ConfirmDialogModule,
     TreeModule,
     RouterModule,
@@ -45,6 +46,7 @@ import { WarningComponent } from './warning/warning.component';
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
+    MatRadioModule,
     EntitySortPipe,
     LoadingIndicatorComponent,
     MarkdownPresenterComponent,

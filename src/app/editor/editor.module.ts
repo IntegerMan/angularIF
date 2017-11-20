@@ -29,6 +29,7 @@ import {StoryHostModule} from '../story-host/story-host.module';
 import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
 import { AddVerbHandlerDialogComponent } from './add-verb-handler-dialog/add-verb-handler-dialog.component';
 import { VerbEditorComponent } from './verb-editor/verb-editor.component';
+import { AddVerbResponseDialogComponent } from './add-verb-response-dialog/add-verb-response-dialog.component';
 
 @NgModule({
   imports: [
@@ -65,13 +66,15 @@ import { VerbEditorComponent } from './verb-editor/verb-editor.component';
     LookRendererComponent,
     AddAttributeDialogComponent,
     AddVerbHandlerDialogComponent,
-    VerbEditorComponent
+    VerbEditorComponent,
+    AddVerbResponseDialogComponent
   ],
   entryComponents: [
     AddAliasDialogComponent,
     AddEntityDialogComponent,
     AddAttributeDialogComponent,
-    AddVerbHandlerDialogComponent
+    AddVerbHandlerDialogComponent,
+    AddVerbResponseDialogComponent
   ]
 })
 export class EditorModule {

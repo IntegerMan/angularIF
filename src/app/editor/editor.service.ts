@@ -13,6 +13,7 @@ import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-
 import {AddVerbHandlerDialogComponent} from './add-verb-handler-dialog/add-verb-handler-dialog.component';
 import {VerbData} from '../engine/story-data/verb-data';
 import {EntityData} from '../engine/story-data/entity-data';
+import {isNullOrUndefined} from 'util';
 
 @Injectable()
 export class EditorService {
@@ -229,7 +230,7 @@ export class EditorService {
     this.selectedNode.verbData.push(verbData);
   }
 
-  public addAlias(name: string = null): void {
+  public addAlias(name: string = null, partOfSpeech: string = null): void {
 
     // Verify we can handle aliases
     if (!this.canAddAlias) {
@@ -246,14 +247,14 @@ export class EditorService {
       dialogRef.afterClosed().subscribe(result => {
         this.logger.debug(`The add alias dialog was closed with a result of ${result}`);
         if (result) {
-          this.addAlias(result);
+          this.addAlias(result.name, result.partOfSpeech);
         }
       });
 
       return;
     }
 
-    const isAdjective: boolean = this.nlpService.isTerm(name, 'Adjective');
+    const isAdjective: boolean = partOfSpeech === 'adjective';
 
     if (isAdjective) {
       this.selectedNode.aliases.adjectives.push(name);
@@ -275,6 +276,27 @@ export class EditorService {
       const dialogRef = this.dialog.open(AddAttributeDialogComponent, {
         width: '300px',
         data: {name: name, value: value}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.logger.debug(`The add attribute dialog was closed with a result of ${result}`);
+        if (result) {
+          this.addAttribute(result.key, result.value);
+        }
+      });
+
+      return;
+    }
+    this.selectedNode.attributes[name] = value;
+  }
+
+  addResponse(verb: VerbData, response: any = null): void {
+
+    if (isNullOrUndefined(response)) {
+
+      const dialogRef = this.dialog.open(AddAttributeDialogComponent, {
+        width: '300px',
+        data: {verb: verb}
       });
 
       dialogRef.afterClosed().subscribe(result => {
