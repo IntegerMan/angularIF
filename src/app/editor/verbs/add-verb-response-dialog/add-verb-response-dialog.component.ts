@@ -15,12 +15,20 @@ export class AddVerbResponseDialogComponent implements OnInit {
   @Input()
   value: string = '';
 
+  isEdit: boolean = false;
+  header: string = 'Add Response';
+  okText: string = 'Add';
+
   constructor(public dialogRef: MatDialogRef<AddVerbResponseDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 
     if (data) {
-      if (data.responseType) {
-        this.responseType = data.responseType;
+      this.isEdit = true;
+      this.header = 'Edit Response';
+      this.okText = 'Save';
+
+      if (data.type) {
+        this.responseType = data.type;
       }
       if (data.value) {
         this.value = data.value;

@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} f
 import {EntityData} from '../../../engine/story-data/entity-data';
 import {VerbData} from '../../../engine/story-data/verb-data';
 import {EditorService} from '../../editor.service';
+import {ArrayHelper} from '../../../utility/array-helper';
 
 @Component({
   selector: 'if-verb-editor',
@@ -24,10 +25,14 @@ export class VerbEditorComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.ngOnChanges(null);
+    this.updateItems();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.updateItems();
+  }
+
+  updateItems() {
     this.responseItems.length = 0;
 
     if (this.verb.handler && this.verb.handler instanceof Array) {
@@ -44,6 +49,50 @@ export class VerbEditorComponent implements OnInit, OnChanges {
 
   addResponse(): void {
     this.editorService.addResponse(this.verb);
+    this.updateItems();
+  }
+
+  onEditClick(item: any): void {
+    this.editorService.editResponse(this.verb, item);
+  }
+
+  onDeleteClick(item: any): void {
+
+    // TODO: Confirming would be nice...
+
+    if (this.verb.handler === item) {
+      this.verb.handler = [];
+    } else {
+      ArrayHelper.removeIfPresent(this.verb.handler, item);
+    }
+    this.updateItems();
+  }
+
+  onMoveUpClick(item: any): void {
+
+  }
+
+  onMoveDownClick(item: any): void {
+
+  }
+
+  getItemHeader(item: any): string {
+
+    if (item && typeof(item) === 'string') {
+      return 'Story Text';
+    }
+
+    switch (item.type) {
+
+      case 'story':
+        return 'Story Text';
+
+      case 'invoke':
+        return 'Call Method';
+
+      default:
+        return item.type;
+    }
   }
 
   getItemType(item: any): string {

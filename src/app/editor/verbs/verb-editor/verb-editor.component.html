@@ -4,25 +4,37 @@
       <h2>{{verb.name}} {{entity.key}}</h2>
     </div>
 
-    <div *ngIf="responseItems.length > 0" class="card-panel content-bg">
-      <div *ngFor="let item of responseItems">
-        <div [ngSwitch]="getItemType(item)">
+    <div *ngIf="responseItems.length > 0">
+      <div *ngFor="let item of responseItems" class="card content-bg">
+        <div class="card-content">
 
-          <blockquote *ngSwitchCase="'string'">
-            <if-md [text]="item"></if-md>
-          </blockquote>
-
-          <div *ngSwitchCase="'invoke'"
-               class="chip orange accent-2 tooltipped"
-               data-tooltip="invoke a method">
-
-            <i class="material-icons tiny" alt="Invoke">call_made</i>
-            Call <code>{{item.invoke}}</code>
-
+          <div class="card-title">
+            {{getItemHeader(item)}}
           </div>
 
-          <if-warning *ngSwitchDefault>No handler for {{getItemType(item)}}.</if-warning>
+          <div [ngSwitch]="getItemType(item)">
 
+            <if-md *ngSwitchCase="'story'" [text]="item.value"></if-md>
+            <if-md *ngSwitchCase="'string'" [text]="item"></if-md>
+
+            <div *ngSwitchCase="'invoke'"
+                 class="chip orange accent-2 tooltipped"
+                 data-tooltip="invoke a method">
+
+              <i class="material-icons tiny" alt="Invoke">call_made</i>
+              Call <code>{{item.invoke}}</code>
+
+            </div>
+
+            <if-warning *ngSwitchDefault>No handler for {{getItemType(item)}}.</if-warning>
+          </div>
+
+        </div>
+        <div class="card-action">
+          <a (click)="onEditClick(item)" style="margin-right: 1rem;">Edit</a>
+          <!--<a (click)="onMoveUpClick(item)" style="margin-right: 1rem;">Move Up</a>-->
+          <!--<a (click)="onMoveDownClick(item)" style="margin-right: 1rem;">Move Down</a>-->
+          <a (click)="onDeleteClick(item)" style="margin-right: 1rem;">Delete</a>
         </div>
 
       </div>

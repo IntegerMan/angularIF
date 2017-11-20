@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Add Response</h1>
+<h1 mat-dialog-title>{{header}}</h1>
 
 <div mat-dialog-content style="padding-bottom: 2rem;">
   <mat-form-field>
@@ -16,7 +16,7 @@
 
 <div mat-dialog-actions>
   <a class="btn waves-light waves-ripple" (click)="confirmSelection()">
-    Add
+    {{okText}}
   </a>
   <a class="btn waves-light waves-ripple warn-bg" (click)="dialogRef.close()" style="margin-left: 1rem;">
     Cancel

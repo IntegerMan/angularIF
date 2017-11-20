@@ -15,6 +15,7 @@ import {VerbData} from '../engine/story-data/verb-data';
 import {EntityData} from '../engine/story-data/entity-data';
 import {isNullOrUndefined} from 'util';
 import {AddVerbResponseDialogComponent} from './verbs/add-verb-response-dialog/add-verb-response-dialog.component';
+import {ArrayHelper} from '../utility/array-helper';
 
 @Injectable()
 export class EditorService {
@@ -317,8 +318,39 @@ export class EditorService {
     }
 
     verb.handler.push(response);
+  }
 
-    console.log(verb.handler);
+  editResponse(verb: VerbData, item: any): void {
+
+    // Translate from simple string to a more standard representation
+    if (item && typeof (item) === 'string') {
+      const newItem = {type: 'story', value: item};
+
+      if (verb.handler instanceof Array) {
+        ArrayHelper.replaceElement(verb.handler, item, newItem);
+      } else {
+        verb.handler = [newItem];
+      }
+      item = newItem;
+    }
+
+    const dialogRef = this.dialog.open(AddVerbResponseDialogComponent, {
+      width: '300px',
+      data: item
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.logger.debug(`The edit verb response dialog was closed`);
+      this.logger.debug(result);
+      if (result) {
+
+        if (!verb.handler || typeof(verb.handler) === 'string') {
+          verb.handler = [result];
+        } else {
+          ArrayHelper.replaceElement(verb.handler, item, result);
+        }
+      }
+    });
   }
 
   public addEvent(name: string = null): void {
@@ -400,5 +432,4 @@ export class EditorService {
       }
     });
   }
-
 }

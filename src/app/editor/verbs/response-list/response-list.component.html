@@ -1,6 +1,9 @@
 <div *ngFor="let item of responseItems">
     <div [ngSwitch]="getItemType(item)">
 
+        <blockquote *ngSwitchCase="'story'">
+            <if-md [text]="item.value"></if-md>
+        </blockquote>
         <blockquote *ngSwitchCase="'string'">
             <if-md [text]="item"></if-md>
         </blockquote>
@@ -10,7 +13,7 @@
              data-tooltip="invoke a method">
 
             <i class="material-icons tiny" alt="Invoke">call_made</i>
-            Call <code>{{item.invoke}}</code>
+            Call <code>{{item.value}}</code>
 
         </div>
 
