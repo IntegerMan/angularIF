@@ -26,6 +26,10 @@ export class EditorCardCommandsComponent implements OnInit {
     this.editorService.addObject();
   }
 
+  addVerb(): void {
+    this.editorService.addVerb();
+  }
+
   addAlias(): void {
     this.editorService.addAlias();
   }

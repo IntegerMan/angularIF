@@ -10,6 +10,8 @@ import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.compo
 import {AddEntityDialogComponent} from './add-entity-dialog/add-entity-dialog.component';
 import {StoryLoader} from '../engine/story-data/story-loader';
 import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
+import {AddVerbHandlerDialogComponent} from './add-verb-handler-dialog/add-verb-handler-dialog.component';
+import {VerbData} from '../engine/story-data/verb-data';
 
 @Injectable()
 export class EditorService {
@@ -58,7 +60,7 @@ export class EditorService {
   }
 
   public get canAddVerb() {
-    return this.selectedNode && this.selectedNode.verbs;
+    return this.selectedNode && this.selectedNode.verbData;
   }
 
   public get canAddAlias() {
@@ -192,21 +194,38 @@ export class EditorService {
     // Verify we can handle verbs
     if (!this.canAddVerb) {
       // TODO: It'd be nice to throw a toast notification up here.
+      this.logger.error('could not add verb');
+      this.logger.error(this.selectedNode);
       return;
     }
 
     if (!name || name === null) {
-      // TODO: Pop up some UI to ask the user to get a verb name
-      name = 'look';
+
+      const dialogRef = this.dialog.open(AddVerbHandlerDialogComponent, {
+        width: '300px'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.logger.debug(`The add verb dialog was closed with a result of ${result}`);
+        if (result) {
+          this.addVerb(result);
+        }
+      });
+
+      return;
     }
 
     // Verify the verb doesn't already exist
-    if (this.selectedNode.verbs[name]) {
+    if (this.selectedNode.verbData.filter(v => v.name === name).length > 0) {
       // TODO: It'd be nice to throw a toast notification up here.
       return;
     }
 
-    this.selectedNode.verbs[name] = [];
+    const verbData: VerbData = new VerbData();
+    verbData.name = name;
+    verbData.handler = [];
+
+    this.selectedNode.verbData.push(verbData);
   }
 
   public addAlias(name: string = null): void {
