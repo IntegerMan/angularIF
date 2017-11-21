@@ -10,6 +10,8 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   let game: FogTerrierTestingService;
   let room: Room;
   let whacker: WorldEntity;
+  let tallGrass: WorldEntity;
+  let wornGrass: WorldEntity;
 
   beforeEach(() =>  {
     TestBed.configureTestingModule({
@@ -28,6 +30,8 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
       // Find objects
       whacker = room.findEntityByKey('sideyard_weed_whacker');
+      tallGrass = room.findEntityByKey('sideyard_grass');
+      wornGrass = room.findEntityByKey('sideyard_worn_trail');
 
     })));
 
@@ -83,9 +87,74 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
   it('should fail to get the weed whacker with a custom message.', () => {
     game.input('get weed whacker');
-    expect(game.player.findEntityByKey(whacker.key)).toBeFalsy();
+    expect(game.player.has(whacker)).toBeFalsy();
     expect(game.lastReply).toContain(`garage`); // Something telling the user that it isn't here
     expect(game.lastReply).toContain(`time`); // Something telling the user that they shouldn't worry about it
   });
 
+  // Object: Tall Grass (scenic object)
+  it('should contain tall grass', () => {
+    expect(tallGrass).toBeTruthy();
+  });
+
+  it('should resolve "tall grass" as the tall grass object', () => {
+    const entity: WorldEntity = game.lookForEntity('tall grass', tallGrass.key);
+    expect(entity).toBeTruthy();
+  });
+
+  it('should have a custom message when inspecting the tall grass', () => {
+    game.input('look at the tall grass');
+    expect(game.lastReply).toContain(`overgrown`);
+  });
+
+  it('should not allow the tall grass to be picked up', () => {
+    game.input('get tall grass');
+    expect(game.player.has(tallGrass)).toBeFalsy();
+    expect(game.lastReply).toContain(`not the time`);
+  });
+
+  it('should have a custom message when trying to pull the tall grass', () => {
+    game.input('pull the tall grass');
+    expect(game.player.has(tallGrass)).toBeFalsy();
+    expect(game.lastReply).toContain(`not the time`);
+  });
+
+  it('should have a custom message when trying to mow the tall grass', () => {
+    game.input('mow the tall grass');
+    expect(game.player.has(tallGrass)).toBeFalsy();
+    expect(game.lastReply).toContain(`not the time`);
+  });
+
+  it('should have a custom message when trying to cut the tall grass', () => {
+    game.input('cut the tall grass');
+    expect(game.player.has(tallGrass)).toBeFalsy();
+    expect(game.lastReply).toContain(`not the time`);
+  });
+
+  // Object: Worn patch of Grass (scenic object)
+  it('should contain a worn patch of grass', () => {
+    expect(wornGrass).toBeTruthy();
+  });
+
+  it('should resolve "worn grass" as the worn patch of grass', () => {
+    const entity: WorldEntity = game.lookForEntity('worn grass', wornGrass.key);
+    expect(entity).toBeTruthy();
+  });
+
+  it('should have a custom message when inspecting the worn patch of grass', () => {
+    game.input('look at the worn grass');
+    expect(game.lastReply).toContain(`overgrown`);
+  });
+
+  it('should not allow the worn grass to be picked up', () => {
+    game.input('get the worn patch of grass');
+    expect(game.player.has(wornGrass)).toBeFalsy();
+    expect(game.lastReply).toContain(`have enough`);
+  });
+
+  it('should have a custom message when trying to cut the worn patch grass', () => {
+    game.input('cut the worn patch of grass');
+    expect(game.player.has(wornGrass)).toBeFalsy();
+    expect(game.lastReply).toContain(`short`);
+  });
 });

@@ -2,6 +2,7 @@ import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
 import {ArrayHelper} from '../../utility/array-helper';
 import {CommandContext} from '../command-context';
+import {isNullOrUndefined} from 'util';
 
 export class Actor extends WorldEntity {
 
@@ -48,4 +49,13 @@ export class Actor extends WorldEntity {
 
   }
 
+  has(entity: WorldEntity): boolean {
+
+    if (this.contents.indexOf(entity) >= 0) {
+      return true;
+    } else {
+      return !isNullOrUndefined(this.findEntityByKey(entity.key));
+    }
+
+  }
 }
