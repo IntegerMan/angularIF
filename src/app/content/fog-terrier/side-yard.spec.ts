@@ -1,17 +1,5 @@
 import {async, inject, TestBed} from '@angular/core/testing';
 
-import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
-import {LexiconService} from '../../engine/parser/lexicon.service';
-import {LoggingService} from '../../utility/logging.service';
-import {StoryHostModule} from '../../story-host/story-host.module';
-import {EngineModule} from '../../engine/engine.module';
-import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
-import {GoogleAnalyticsService} from '../../utility/google-analytics.service';
-import {CommandContext} from '../../engine/command-context';
-import {UserInputService} from '../../engine/user-input.service';
-import {TextOutputService} from '../../engine/text-output.service';
-import {GameState} from '../../engine/game-state.enum';
-import {FogTerrierStory} from './fog-terrier-story';
 import {Room} from '../../engine/entities/room';
 import {TestingModule} from '../../testing/testing.module';
 import {FogTerrierTestingService} from './fog-terrier-testing.service';
@@ -96,8 +84,8 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   it('should fail to get the weed whacker with a custom message.', () => {
     game.input('get weed whacker');
     expect(game.player.findEntityByKey(whacker.key)).toBeFalsy();
-    expect(game.lastReply).toContain(`garage`);
-    expect(game.lastReply).toContain(`isn't really the time`);
+    expect(game.lastReply).toContain(`garage`); // Something telling the user that it isn't here
+    expect(game.lastReply).toContain(`time`); // Something telling the user that they shouldn't worry about it
   });
 
 });

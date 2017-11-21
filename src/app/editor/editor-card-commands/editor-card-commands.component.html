@@ -10,6 +10,6 @@
 <a class="waves-effect waves-light btn" (click)="addAttribute()" style="margin-right: 1rem;" *ngIf="selectedTab === 'attributes'">
   Add Attributes
 </a>
-<a class="waves-effect waves-light btn" (click)="playStoryHere()" style="margin-right: 1rem;" *ngIf="entity.nodeType === 'room'">
+<a class="waves-effect waves-light btn" (click)="playStoryHere()" style="margin-right: 1rem;" *ngIf="entity && entity.nodeType === 'room'">
   Play Story Here
 </a>

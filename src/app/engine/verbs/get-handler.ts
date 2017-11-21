@@ -45,9 +45,13 @@ export class GetHandler extends VerbHandler {
 
   private attemptPickup(entity: WorldEntity, context: CommandContext): CommandResult {
 
+    let respondedTo: boolean = false;
+
     if (entity && entity instanceof PortableEntity) {
 
       const item: PortableEntity = entity;
+
+      respondedTo = item.invokeVerbResponse(context, 'get');
 
       const result = item.allowPickup(context);
       if (result) {
@@ -58,7 +62,7 @@ export class GetHandler extends VerbHandler {
         }
 
         context.player.addToInventory(entity);
-        item.onPickup(context);
+        item.onPickup(context, respondedTo);
 
         return CommandResult.BuildActionSuccessResult();
 
@@ -66,7 +70,10 @@ export class GetHandler extends VerbHandler {
 
     }
 
-    context.outputService.displayStory(`You can't pick up ${entity.that}.`);
+    if (!respondedTo) {
+      context.outputService.displayStory(`You can't pick up ${entity.that}.`);
+    }
+
     return CommandResult.BuildActionFailedResult();
 
   }

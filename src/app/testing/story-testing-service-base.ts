@@ -9,7 +9,7 @@ import {TextLine} from '../text-rendering/text-line';
 import {Room} from '../engine/entities/room';
 import {GameState} from '../engine/game-state.enum';
 import {WorldEntity} from '../engine/entities/world-entity';
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from 'util';
 
 export class StoryTestingServiceBase {
 

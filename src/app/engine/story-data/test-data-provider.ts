@@ -46,7 +46,7 @@ export class TestDataProvider {
   public static buildVerb(): VerbData {
     const verb: VerbData = new VerbData();
     verb.name = 'test';
-    verb.handler = 'Yo dawg, this be a test.';
+    verb.handler = [{type: 'story', value: 'Yo dawg, this be a test.'}];
     return verb;
   }
 

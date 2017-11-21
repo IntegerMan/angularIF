@@ -155,13 +155,12 @@ export abstract class WorldEntity {
     return this.attributes.describeWithRoom;
   }
 
-  invokeVerbResponse(context: CommandContext, verbName: string, data: any): boolean {
+  invokeVerbResponse(context: CommandContext, verbName: string, data: any = null): boolean {
 
     if (this.verbs[verbName]) {
       const response: StoryResponse = this.verbs[verbName];
-      response.invoke(context, data);
 
-      return true;
+      return response.invoke(context, data);
     }
 
     return false;

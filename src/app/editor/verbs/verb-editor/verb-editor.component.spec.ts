@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VerbEditorComponent } from './verb-editor.component';
+import {TestingModule} from '../../../testing/testing.module';
+import {TestDataProvider} from '../../../engine/story-data/test-data-provider';
 
 describe('VerbEditorComponent', () => {
   let component: VerbEditorComponent;
@@ -8,7 +10,7 @@ describe('VerbEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VerbEditorComponent ]
+      imports: [ TestingModule ]
     })
     .compileComponents();
   }));
@@ -16,6 +18,8 @@ describe('VerbEditorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VerbEditorComponent);
     component = fixture.componentInstance;
+    component.entity = TestDataProvider.buildItem();
+    component.verb = TestDataProvider.buildVerb();
     fixture.detectChanges();
   });
 
