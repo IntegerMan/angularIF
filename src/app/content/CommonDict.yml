@@ -13,6 +13,7 @@ terms:
   - Glittering
   - Scrawled
   - Unholy
+  - Worn
   Direction:
   - North
   - East
@@ -51,6 +52,7 @@ terms:
   - Unscrew
   - Screw
   - ReportBug
+  - Mow
 fallback:
   open: Adjective
   using: Preposition

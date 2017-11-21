@@ -63,7 +63,7 @@ export class CommandContext {
 
     // TODO: This shouldn't really live in the context object
 
-    const entities: WorldEntity[] = this.currentRoom.findObjectsForToken(token, this);
+    let entities: WorldEntity[] = this.currentRoom.findObjectsForToken(token, this);
 
     // No matches yields an "it's not here" message
     if (!entities || entities.length <= 0) {
@@ -83,16 +83,46 @@ export class CommandContext {
     // If we have more than one best match, show a disambiguation message
     if (entities.length > 1) {
 
-      this.logger.log(`Possible matches for '${token.name}': ${StringHelper.toOxfordCommaList(entities.map(e => e.name))}`);
+      this.logger.warning(`Possible matches for '${token.name}': ${StringHelper.toOxfordCommaList(entities.map(e => e.name))}`);
 
-      // TODO: Better disambiguation is needed here
-      if (announceConfusion) {
-        this.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);
+      // Set the initial score of each object
+      for (const e of entities) {
+        (<any>e).disambiguationScore = 1;
       }
 
-      this.wasConfused = true;
+      // Tally up our scoring based on the modifiers attached to this entity and how well they map to the entity.
+      for (const t of token.modifiedBy) {
+        for (const e of entities) {
+          if (e.adjectives.indexOf(t.name) >= 0) {
+            (<any>e).disambiguationScore += 1;
+          } else if (e.nouns.indexOf(t.name) >= 0) {
+            (<any>e).disambiguationScore += 1;
+          } else {
+            // The user was off a little so we'll penalize it to help others shine, but not enough to disqualify it
+            (<any>e).disambiguationScore -= 0.5;
+          }
+        }
+      }
 
-      return null;
+      // Figure out which item performed the best
+      const maxScore: number = Math.max.apply(Math, entities.map(e => (<any>e).disambiguationScore));
+
+      // Whittle down to the best result based on our disambiguation score.
+      entities = entities.filter(e => (<any>e).disambiguationScore === maxScore);
+
+      if (entities.length > 1) {
+
+        if (announceConfusion) {
+          this.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);
+        }
+
+        this.wasConfused = true;
+
+        return null;
+
+      } else if (entities.length < 1) {
+        throw new Error(`No results after disambiguating for token ${token.name} in ${this.currentRoom.key}`);
+      }
     }
 
     const entity: WorldEntity = entities[0];

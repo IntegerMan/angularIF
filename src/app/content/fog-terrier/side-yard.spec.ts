@@ -143,7 +143,7 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
   it('should have a custom message when inspecting the worn patch of grass', () => {
     game.input('look at the worn grass');
-    expect(game.lastReply).toContain(`overgrown`);
+    expect(game.lastReply).toContain(`clings`);
   });
 
   it('should not allow the worn grass to be picked up', () => {
