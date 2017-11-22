@@ -129,9 +129,6 @@ export class StoryLoader {
 
       // Set the story's player instance
       story.player = actor;
-
-      // Just a precautionary thing, but let's set the actor's attributes
-      actor.attributes.describeWithRoom = false;
     }
 
     // Set up their inventory
@@ -200,6 +197,8 @@ export class StoryLoader {
     this.buildVerbHandlers(entity, entityData.verbData);
 
     this.buildAliases(entity, entityData.aliases);
+
+    entity.setAttribute('describeWithRoom', entityData.describeWithRoom);
 
   }
 

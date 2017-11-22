@@ -30,6 +30,11 @@
           <label for="name" class="active">Entity Name</label>
         </div>
       </div>
+      <div class="row" >
+        <div class=" col s12">
+          <mat-checkbox [(ngModel)]="entity.describeWithRoom">Describe with Room</mat-checkbox>
+        </div>
+      </div>
       <if-verb-card [verb]="lookVerb" *ngIf="lookVerb" [entity]="entity"></if-verb-card>
       <if-warning *ngIf="!lookVerb">This object does not have a verb handler for the 'look' verb.</if-warning>
     </div>

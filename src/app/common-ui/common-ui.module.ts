@@ -5,6 +5,7 @@ import {LoadingIndicatorComponent} from './loading-indicator/loading-indicator.c
 import {
   MAT_PLACEHOLDER_GLOBAL_OPTIONS,
   MatDialogModule,
+  MatCheckboxModule,
   MatExpansionModule, MatInputModule, MatRadioModule, MatSelectModule, MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -26,6 +27,7 @@ import { WarningComponent } from './warning/warning.component';
     MatTooltipModule,
     MatInputModule,
     MatRadioModule,
+    MatCheckboxModule,
     ConfirmDialogModule,
     TreeModule,
     RouterModule,
@@ -48,6 +50,7 @@ import { WarningComponent } from './warning/warning.component';
     MatSelectModule,
     MatDialogModule,
     MatRadioModule,
+    MatCheckboxModule,
     EntitySortPipe,
     LoadingIndicatorComponent,
     MarkdownPresenterComponent,

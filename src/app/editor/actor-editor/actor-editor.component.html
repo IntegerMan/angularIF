@@ -43,14 +43,13 @@
         <!--</select>-->
         <!--<label for="startRoom" class="active">Start Room (Key)</label>-->
       </div>
-      <div class="switch col s6">
-          <label>
-            NPC
-            <input type="checkbox" [(ngModel)]="actor.isPlayer">
-            <span class="lever"></span>
-            Player
-          </label>
-        </div>
+      <div class="col s3">
+        <mat-checkbox [(ngModel)]="actor.describeWithRoom">Describe with Room</mat-checkbox>
+      </div>
+      <div class="col s3">
+        <mat-checkbox [(ngModel)]="actor.isPlayer">Is Player</mat-checkbox>
+      </div>
+
     </div>
 
     <!-- Collections go here -->

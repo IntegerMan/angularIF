@@ -15,6 +15,8 @@ export abstract class EntityData {
 
   contents: ItemData[];
 
+  describeWithRoom: boolean = true;
+
   // Editor Specific items here:
   parent: EntityData;
   nodeType: string;
