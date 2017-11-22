@@ -42,7 +42,7 @@ export class CommonVerbService {
 
     // TODO: Some of these go into cut
     verbs.push(new MowHandler(['mow', 'cut', 'chop', 'slice', 'harvest', 'reap', 'skewer', 'bisect', 'impale']));
-    
+
     verbs.push(new OpenHandler(['open']));
     verbs.push(new PushHandler(['push', 'shove', 'move']));
     verbs.push(new PullHandler(['pull', 'haul', 'tug']));
