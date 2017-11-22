@@ -53,6 +53,14 @@ terms:
   - Screw
   - ReportBug
   - Mow
+  - Harvest
+  - Reap
+  - Chop
+  - Stab
+  - Slice
+  - Bisect
+  - Skewer
+  - Impale
 fallback:
   open: Adjective
   using: Preposition

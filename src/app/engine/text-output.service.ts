@@ -64,16 +64,16 @@ export class TextOutputService {
     this.addLine(new TextLine(text, RenderType.roomName));
   }
 
-  displayStory(text: string): void {
-    this.addLine(new TextLine(text, RenderType.narrative));
+  displayStory(text: string, hint: string = null): void {
+    this.addLine(new TextLine(text, RenderType.narrative, hint));
   }
 
   displayParserError(text: string, hint: string = null): void {
     this.addLine(new TextLine(text, RenderType.parserError, hint));
   }
 
-  displayFailedAction(text: string): void {
-    this.addLine(new TextLine(text, RenderType.failureAction));
+  displayFailedAction(text: string, hint: string = null): void {
+    this.addLine(new TextLine(text, RenderType.failureAction, hint));
   }
 
   displaySuccessAction(text: string): void {
