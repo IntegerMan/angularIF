@@ -39,7 +39,10 @@ export class CommonVerbService {
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));
     verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));
     verbs.push(new DropHandler(['drop', 'discard']));
-    verbs.push(new MowHandler(['mow', 'cut', 'chop', 'slice', 'harvest', 'reap', 'skewer', 'bisect', 'impale'])); // TODO: Some of these go into cut
+
+    // TODO: Some of these go into cut
+    verbs.push(new MowHandler(['mow', 'cut', 'chop', 'slice', 'harvest', 'reap', 'skewer', 'bisect', 'impale']));
+    
     verbs.push(new OpenHandler(['open']));
     verbs.push(new PushHandler(['push', 'shove', 'move']));
     verbs.push(new PullHandler(['pull', 'haul', 'tug']));
