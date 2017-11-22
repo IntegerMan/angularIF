@@ -196,7 +196,7 @@ export class SentenceParserService {
       // If this IS a preposition, we'll want to link it to the prior noun as well. Case study here "worn patch of grass" - we'll want to
       // be able to identify this with the phrase "worn grass" and that's only possible if they're linked together via the of prepositional
       // phrase
-      if (prep.previousToken && SentenceParserService.isNounLike(prep.previousToken)) {
+      if (prep.name === 'of' && prep.previousToken && SentenceParserService.isNounLike(prep.previousToken)) {
         prep.previousToken.setModifiedBy(prep);
       }
     }

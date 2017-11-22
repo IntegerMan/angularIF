@@ -68,11 +68,11 @@ export class CommandToken {
 
   }
 
-  getFirstVerbModified(): CommandToken {
+  getFirstNounModified(): CommandToken {
 
     let candidates = ArrayHelper.clone(this.modifies);
     if (candidates) {
-      candidates = candidates.filter(c => c.classification === TokenClassification.Verb);
+      candidates = candidates.filter(c => c.classification !== TokenClassification.Verb);
     } else {
       return null;
     }

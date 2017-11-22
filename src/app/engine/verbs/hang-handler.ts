@@ -49,8 +49,7 @@ export class HangHandler extends VerbHandler {
 
   static attemptHang(context: CommandContext, subject: WorldEntity, prep: CommandToken): CommandResult {
 
-
-    const suspender: CommandToken = prep.getFirstVerbModified();
+    const suspender: CommandToken = prep.getFirstNounModified();
 
     if (!suspender) {
       context.outputService.displayParserError(`I don't understand what you want to hang ${subject.that} ${prep.name}.`,

@@ -59,7 +59,7 @@ export class PutHandler extends VerbHandler {
 
   static attemptPutInside(context: CommandContext, subject: WorldEntity, prep: CommandToken): CommandResult {
 
-    const container: CommandToken = prep.getFirstVerbModified();
+    const container: CommandToken = prep.getFirstNounModified();
 
     if (!container) {
       context.outputService.displayParserError(`I don't understand what you want to put ${subject.that} ${prep.name}.`,
