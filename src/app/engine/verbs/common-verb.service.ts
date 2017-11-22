@@ -19,6 +19,8 @@ import {DebugHandler} from './debug-handler';
 import {WaitHandler} from './wait-handler';
 import {ReportbugHandler} from './reportbug-handler';
 import {MowHandler} from './mow-handler';
+import {PushHandler} from './push-handler';
+import {PullHandler} from './pull-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -39,6 +41,8 @@ export class CommonVerbService {
     verbs.push(new DropHandler(['drop', 'discard']));
     verbs.push(new MowHandler(['mow', 'cut', 'chop', 'slice', 'harvest', 'reap', 'skewer', 'bisect', 'impale'])); // TODO: Some of these go into cut
     verbs.push(new OpenHandler(['open']));
+    verbs.push(new PushHandler(['push', 'shove', 'move']));
+    verbs.push(new PullHandler(['pull', 'haul', 'tug']));
     verbs.push(new DebugHandler(['debug']));
     verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));
     verbs.push(new CloseHandler(['close', 'shut']));

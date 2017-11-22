@@ -73,4 +73,26 @@ export abstract class VerbHandler {
     return true;
   }
 
+  protected handleGenericVerb(command: Command, context: CommandContext, verbIdentifier: string): CommandResult {
+
+    let respondedTo: boolean = false;
+
+    const targets: WorldEntity[] = command.getDistinctEntitiesFromObjects();
+    if (targets && targets.length > 0) {
+      respondedTo = targets[0].invokeVerbResponse(context, verbIdentifier);
+    }
+
+    if (!respondedTo) {
+
+      const verbName = command.verb.name;
+      const text = `You don't really need to ${verbName} that right now.`;
+      const hint = `You won't need to ${verbName} to finish the story.`;
+      context.outputService.displayStory(text, hint);
+
+      return CommandResult.BuildActionFailedResult();
+    } else {
+      return CommandResult.BuildActionSuccessResult();
+    }
+  }
+
 }
