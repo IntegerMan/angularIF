@@ -35,8 +35,10 @@
 
         <dt>Modifies</dt>
         <dd>
-          <if-token *ngIf="token.modifies" [token]="token.modifies" [includeModifiers]="false" [includeEntity]="true" [autoSize]="false"></if-token>
-          <span *ngIf="!token.modifies" class="grey-text small-text">(None)</span>
+          <div *ngFor="let token of token.modifies">
+            <if-token [token]="token" [includeModifiers]="false" [includeEntity]="true" [autoSize]="false"></if-token>
+          </div>
+          <span *ngIf="token.modifies.length < 1" class="grey-text small-text">(None)</span>
         </dd>
 
         <dt>Modified By</dt>

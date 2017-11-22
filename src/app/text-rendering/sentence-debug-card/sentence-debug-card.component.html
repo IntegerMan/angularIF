@@ -27,8 +27,8 @@
       <dd>
         <div *ngFor="let prepKvp of command.prepositions | kvp" class="mb-1">
           <if-token [token]="prepKvp.value" [includeModifiers]="true" [includeEntity]="true"></if-token>
-          <if-token *ngIf="prepKvp.value.modifies" [token]="prepKvp.value.modifies" [includeModifiers]="false" [includeEntity]="true"></if-token>
-          <span *ngIf="!prepKvp.value.modifies" class="grey-text small-text">(None)</span>
+          <if-token *ngFor="let modifies of prepKvp.value.modifies" [token]="modifies" [includeModifiers]="false" [includeEntity]="true"></if-token>
+          <span *ngIf="!prepKvp.value.modifies || prepKvp.value.modifies.length <= 0" class="grey-text small-text">(None)</span>
         </div>
         <span *ngIf="!command.hasPrepositions" class="grey-text small-text">(None)</span>
       </dd>

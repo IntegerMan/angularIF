@@ -70,7 +70,7 @@ export class TokenComponent implements OnInit {
     }
 
     // Modifiers should be rendered at a small level
-    if (this.token.modifies && this.autoSize) {
+    if (this.token.modifies && this.token.modifies.length > 0 && this.autoSize) {
       output += 'small-text ';
     }
 
@@ -89,20 +89,23 @@ export class TokenComponent implements OnInit {
       tooltip += ' (Inferred)';
     }
 
-    if (this.token.modifies) {
-      tooltip += `\r\nModifies: ${this.token.modifies.name}`;
+    if (this.token.modifies && this.token.modifies.length > 0) {
+      tooltip += `\r\nModifies: ${this.getCommaSeparatedNamesOfModifierTokens(this.token.modifies)}`;
     }
 
     if (this.token.modifiedBy && this.token.modifiedBy.length > 0) {
-      let modifiedByNames: string = '';
-      for (const modifiedBy of this.token.modifiedBy) {
-        modifiedByNames += modifiedBy.name + ' ';
-      }
-
-      tooltip += `\r\nModified by: ${modifiedByNames}`;
+      tooltip += `\r\nModified by: ${this.getCommaSeparatedNamesOfModifierTokens(this.token.modifiedBy)}`;
     }
 
     return tooltip;
 
+  }
+
+  private getCommaSeparatedNamesOfModifierTokens(collection: CommandToken[]): string {
+    let names: string = '';
+    for (const m of collection) {
+      names += m.name + ' ';
+    }
+    return names;
   }
 }

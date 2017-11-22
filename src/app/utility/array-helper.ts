@@ -37,4 +37,7 @@ export class ArrayHelper {
 
   }
 
+  static clone(arr: any[]): any[] {
+    return arr.slice();
+  }
 }

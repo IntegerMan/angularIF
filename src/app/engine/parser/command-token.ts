@@ -2,6 +2,7 @@ import {TokenClassification} from './token-classification.enum';
 import {LanguageTerm} from './language-term';
 import {WorldEntity} from '../entities/world-entity';
 import {StringHelper} from '../../utility/string-helper';
+import {ArrayHelper} from '../../utility/array-helper';
 
 export class CommandToken {
 
@@ -12,10 +13,8 @@ export class CommandToken {
 
   previousToken: CommandToken;
   nextToken: CommandToken;
-  modifies: CommandToken;
+  modifies: CommandToken[];
   modifiedBy: CommandToken[];
-
-  // TODO: Do I want entity or entities?  How should disambiguation work?
   entity: WorldEntity;
 
   constructor(term: LanguageTerm) {
@@ -24,6 +23,7 @@ export class CommandToken {
     this.name = term.normal;
     this.classification = TokenClassification.Unknown;
     this.modifiedBy = [];
+    this.modifies = [];
 
   }
 
@@ -49,7 +49,7 @@ export class CommandToken {
       throw new Error('Cannot set modified by on a token to a null token');
     }
 
-    modifier.modifies = this;
+    modifier.modifies.push(this);
     this.modifiedBy.push(modifier);
   }
 
@@ -64,6 +64,22 @@ export class CommandToken {
       return `an ${this.name}`;
     } else {
       return `a ${this.name}`;
+    }
+
+  }
+
+  getFirstVerbModified(): CommandToken {
+
+    let candidates = ArrayHelper.clone(this.modifies);
+    if (candidates) {
+      candidates = candidates.filter(c => c.classification === TokenClassification.Verb);
+    } else {
+      return null;
+    }
+    if (candidates.length > 0) {
+      return candidates[0];
+    } else {
+      return null;
     }
 
   }
