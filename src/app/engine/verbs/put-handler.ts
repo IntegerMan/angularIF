@@ -59,9 +59,9 @@ export class PutHandler extends VerbHandler {
 
   static attemptPutInside(context: CommandContext, subject: WorldEntity, prep: CommandToken): CommandResult {
 
-    const container = prep.modifies;
+    const container: CommandToken = prep.getFirstVerbModified();
 
-    if (!container || container.classification === TokenClassification.Verb) {
+    if (!container) {
       context.outputService.displayParserError(`I don't understand what you want to put ${subject.that} ${prep.name}.`,
         `Try saying 'Put ${subject.that} in [object name]'.`);
       return CommandResult.BuildParseFailedResult();
