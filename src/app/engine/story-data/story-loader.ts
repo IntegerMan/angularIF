@@ -241,47 +241,51 @@ export class StoryLoader {
 
         room.roomLink = {};
         for (const direction of Object.getOwnPropertyNames(roomData.nav)) {
-
-          const value: string | DirectionData = roomData.nav[direction];
-          if (!value) {
-            continue;
-          }
-
-          const dirData: DirectionData = value as DirectionData;
-
-          let target: Room = null;
-          let goResponse: StoryResponse = null;
-          let lookResponse: StoryResponse = null;
-
-          if (typeof (value) === 'string') {
-            target = story.findRoomByKey(value as string);
-          } else {
-            if (dirData.room) {
-              target = story.findRoomByKey(dirData.room);
-            }
-          }
-
-          // Build out the link
-          const link = new RoomLink(room, direction, target);
-
-          if (typeof (value) !== 'string') {
-
-            goResponse = this.buildResponse(dirData.goMessage, link);
-            link.goResponse = goResponse;
-
-            lookResponse = this.buildResponse(dirData.lookMessage, link);
-            link.lookResponse = lookResponse;
-
-          }
-
-          // Register the link now
-          room.roomLink[direction] = link;
-
+          this.createRoomLink(roomData, direction, story, room);
         }
 
       }
 
     }
+  }
+
+  private createRoomLink(roomData, direction, story: Story, room: Room): void {
+
+    const value: string | DirectionData = roomData.nav[direction];
+    if (!value) {
+      return;
+    }
+
+    const dirData: DirectionData = value as DirectionData;
+
+    let target: Room = null;
+    let goResponse: StoryResponse = null;
+    let lookResponse: StoryResponse = null;
+
+    if (typeof (value) === 'string') {
+      target = story.findRoomByKey(value as string);
+    } else {
+      if (dirData.room) {
+        target = story.findRoomByKey(dirData.room);
+      }
+    }
+
+    // Build out the link
+    const link = new RoomLink(room, direction, target);
+
+    if (typeof (value) !== 'string') {
+
+      goResponse = this.buildResponse(dirData.goMessage, link);
+      link.goResponse = goResponse;
+
+      lookResponse = this.buildResponse(dirData.lookMessage, link);
+      link.lookResponse = lookResponse;
+
+    }
+
+    // Register the link now
+    room.roomLink[direction] = link;
+    
   }
 
   private buildAliases(entity: WorldEntity, alias: AliasData) {
