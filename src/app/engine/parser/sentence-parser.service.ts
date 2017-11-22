@@ -192,6 +192,13 @@ export class SentenceParserService {
     const prepositions: CommandToken[] = tokens.filter(t => SentenceParserService.isPreposition(t));
     for (const prep of prepositions) {
       command.addPreposition(prep);
+
+      // If this IS a preposition, we'll want to link it to the prior noun as well. Case study here "worn patch of grass" - we'll want to
+      // be able to identify this with the phrase "worn grass" and that's only possible if they're linked together via the of prepositional
+      // phrase
+      if (prep.previousToken && SentenceParserService.isNounLike(prep.previousToken)) {
+        prep.previousToken.setModifiedBy(prep);
+      }
     }
 
   }

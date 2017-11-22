@@ -110,6 +110,15 @@ export class CommandContext {
       // Whittle down to the best result based on our disambiguation score.
       entities = entities.filter(e => (<any>e).disambiguationScore === maxScore);
 
+      // If we're still confused but we have an 'of' preposition, piggy back onto its resolution.
+      if (entities.length > 1) {
+
+        const ofTokens = token.modifiedBy.filter(m => m.name === 'of' && m.previousToken && m.previousToken.entity);
+        if (ofTokens.length > 0) {
+          entities = [ofTokens[0].previousToken.entity];
+        }
+      }
+
       if (entities.length > 1) {
 
         if (announceConfusion) {

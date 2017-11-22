@@ -14,9 +14,10 @@ export class GetHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    const entities: WorldEntity[] = command.objects.filter(o => o.entity).map(o => o.entity);
+    // Get a DISTINCT list of entities we wish to pick up
+    const entities: WorldEntity[] = command.getDistinctEntitiesFromObjects();
 
-    if (!entities || entities.length <= 0) {
+    if (entities.length <= 0) {
       context.outputService.displayParserError('I\'m not sure what you want to pick up.');
       return CommandResult.BuildParseFailedResult();
     }

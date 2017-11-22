@@ -104,7 +104,7 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
   it('should have a custom message when inspecting the tall grass', () => {
     game.input('look at the tall grass');
-    expect(game.lastReply).toContain(`overgrown`);
+    expect(game.lastReply).toContain(`clinging`);
   });
 
   it('should not allow the tall grass to be picked up', () => {
