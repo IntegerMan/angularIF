@@ -117,21 +117,21 @@ export class PutHandler extends VerbHandler {
     if (command.objects.length < 1) {
 
       context.outputService.displayParserError('I don\'t understand what you\'re trying to place.',
-        'Try saying \'Hang [object name] on [target name]\'.');
+        'Try saying \'Put [object name] on [target name]\'.');
 
       return null;
     }
 
-    const itemToHang: CommandToken = command.objects[0];
-    const entityToHang: WorldEntity = itemToHang.entity;
+    const source: CommandToken = command.objects[0];
+    const sourceEntity: WorldEntity = source.entity;
 
     // Verify that we're talking about is present
-    if (!entityToHang) {
-      context.outputService.displayParserError(`You don't see ${itemToHang.userInput} here.`);
+    if (!sourceEntity) {
+      context.outputService.displayParserError(`You don't see ${source.userInput} here.`);
       return null;
     }
 
-    return entityToHang;
+    return sourceEntity;
   }
 
 }
