@@ -1,5 +1,4 @@
 exclude:
-- /src/assets/**
 - /src/assets/primeng/.*
 component_depth: 1
 languages:
