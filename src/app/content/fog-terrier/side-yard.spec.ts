@@ -116,19 +116,19 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   it('should have a custom message when trying to pull the tall grass', () => {
     game.input('pull the tall grass');
     expect(game.player.has(tallGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`not the time`);
+    expect(game.lastReply).toContain(`attend`);
   });
 
   it('should have a custom message when trying to mow the tall grass', () => {
     game.input('mow the tall grass');
     expect(game.player.has(tallGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`not the time`);
+    expect(game.lastReply).toContain(`attend`);
   });
 
   it('should have a custom message when trying to cut the tall grass', () => {
     game.input('cut the tall grass');
     expect(game.player.has(tallGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`not the time`);
+    expect(game.lastReply).toContain(`attend`);
   });
 
   // Object: Worn patch of Grass (scenic object)
@@ -143,18 +143,18 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
   it('should have a custom message when inspecting the worn patch of grass', () => {
     game.input('look at the worn grass');
-    expect(game.lastReply).toContain(`clings`);
+    expect(game.lastReply).toContain(`walk`);
   });
 
   it('should not allow the worn grass to be picked up', () => {
     game.input('get the worn patch of grass');
     expect(game.player.has(wornGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`have enough`);
+    expect(game.lastReply).toContain(`trampled`);
   });
 
   it('should have a custom message when trying to cut the worn patch grass', () => {
     game.input('cut the worn patch of grass');
     expect(game.player.has(wornGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`short`);
+    expect(game.lastReply).toContain(`attend`);
   });
 });
