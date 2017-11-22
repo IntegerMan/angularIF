@@ -1,4 +1,6 @@
 # Angular Interactive Fiction Engine
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/IntegerMan/angularIF.svg)](https://greenkeeper.io/)
 An Angular 4 modern web application built around the old pieces of Interactive Fiction or text adventures of the 1980's and early 1990's.
 
 ## What is Interactive Fiction?
