@@ -10,11 +10,14 @@ import {Room} from '../engine/entities/room';
 import {GameState} from '../engine/game-state.enum';
 import {WorldEntity} from '../engine/entities/world-entity';
 import {isNullOrUndefined} from 'util';
+import {EntitySpec} from './entity-spec';
 
 export class StoryTestingServiceBase {
 
   story: Story;
   context: CommandContext;
+
+  lastInput: string = '';
 
   constructor(protected ifService: InteractiveFictionService,
               protected inputService: UserInputService,
@@ -31,6 +34,7 @@ export class StoryTestingServiceBase {
   }
 
   input(sentence: string): CommandResult {
+    this.lastInput = sentence;
     return this.inputService.handleUserSentence(sentence);
   }
 
@@ -80,11 +84,16 @@ export class StoryTestingServiceBase {
     return this.context.player;
   }
 
-  get lastReply(): String {
+  get lastReply(): string {
     return this.lastReplyLine.text;
   }
 
   get lastReplyLine(): TextLine {
     return this.outputService.lastLine;
   }
+
+  buildEntitySpec(key: string, room: Room) {
+    return new EntitySpec(key, room, this);
+  }
+
 }

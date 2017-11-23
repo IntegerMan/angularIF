@@ -329,7 +329,7 @@ export abstract class WorldEntity {
 
   setAttribute(name: string, value: any): void {
 
-    LoggingService.instance.debug(`Setting ${this.key}.${name} to ${value}`);
+    // LoggingService.instance.debug(`Setting ${this.key}.${name} to ${value}`);
 
     this.attributes[name] = value;
   }

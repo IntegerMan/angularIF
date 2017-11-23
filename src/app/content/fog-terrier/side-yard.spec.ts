@@ -10,7 +10,6 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   let game: FogTerrierTestingService;
   let room: Room;
   let whacker: WorldEntity;
-  let tallGrass: WorldEntity;
   let wornGrass: WorldEntity;
 
   beforeEach(() =>  {
@@ -30,7 +29,6 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
       // Find objects
       whacker = room.findEntityByKey('sideyard_weed_whacker');
-      tallGrass = room.findEntityByKey('sideyard_grass');
       wornGrass = room.findEntityByKey('sideyard_worn_trail');
 
     })));
@@ -93,42 +91,17 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   });
 
   // Object: Tall Grass (scenic object)
-  it('should contain tall grass', () => {
-    expect(tallGrass).toBeTruthy();
-  });
+  it('should contain tall grass that passes spec validation', () => {
 
-  it('should resolve "tall grass" as the tall grass object', () => {
-    const entity: WorldEntity = game.lookForEntity('tall grass', tallGrass.key);
-    expect(entity).toBeTruthy();
-  });
+    const spec = game.buildEntitySpec('sideyard_grass', room)
+      .shouldResolveFrom('tall grass')
+      .shouldNotBeGettable('not the time')
+      .shouldRespondToVerbWith('look', 'clinging')
+      .shouldRespondToVerbWith('pull', 'attend')
+      .shouldRespondToVerbWith('cut', 'attend')
+      .shouldRespondToVerbWith('mow', 'attend');
 
-  it('should have a custom message when inspecting the tall grass', () => {
-    game.input('look at the tall grass');
-    expect(game.lastReply).toContain(`clinging`);
-  });
-
-  it('should not allow the tall grass to be picked up', () => {
-    game.input('get tall grass');
-    expect(game.player.has(tallGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`not the time`);
-  });
-
-  it('should have a custom message when trying to pull the tall grass', () => {
-    game.input('pull the tall grass');
-    expect(game.player.has(tallGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`attend`);
-  });
-
-  it('should have a custom message when trying to mow the tall grass', () => {
-    game.input('mow the tall grass');
-    expect(game.player.has(tallGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`attend`);
-  });
-
-  it('should have a custom message when trying to cut the tall grass', () => {
-    game.input('cut the tall grass');
-    expect(game.player.has(tallGrass)).toBeFalsy();
-    expect(game.lastReply).toContain(`attend`);
+    expect(spec.validate()).toBeFalsy();
   });
 
   // Object: Worn patch of Grass (scenic object)
