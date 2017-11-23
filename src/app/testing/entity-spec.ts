@@ -64,10 +64,17 @@ export class EntitySpec {
   }
 
   public shouldDescribeWithRoom(): EntitySpec {
+    // TODO
     return this;
   }
 
   public shouldNotDescribeWithRoom(): EntitySpec {
+    // TODO
+    return this;
+  }
+
+  public shouldHaveAttributeValue(attribute: string, value: any): EntitySpec {
+    // TODO
     return this;
   }
 
