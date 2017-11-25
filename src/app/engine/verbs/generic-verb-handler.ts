@@ -11,11 +11,13 @@ import {WorldEntity} from '../entities/world-entity';
  */
 export class GenericVerbHandler extends VerbHandler {
 
+  public isDestructive: boolean;
+
   private _defaultResponse: string;
   private _verbName: string;
   private _verbType: VerbType;
 
-  constructor(verbName: string, verbType: VerbType, normals: string[], defaultResponse: string = null) {
+  constructor(verbName: string, normals: string[], options: any = {}) {
 
     // Ensure the marquee verb is included
     if (normals.indexOf(verbName) < 0) {
@@ -26,12 +28,17 @@ export class GenericVerbHandler extends VerbHandler {
     super(normals);
 
     // Set fields
+    if (options && options.verbType) {
+      this._verbType = options.verbType;
+    } else {
+      this._verbType = VerbType.manipulate;
+    }
     this._verbName = verbName;
-    this._verbType = verbType;
+    this.isDestructive = options && options.isDestructive;
 
     // Set the default response of the verb
-    if (defaultResponse) {
-      this._defaultResponse = defaultResponse;
+    if (options && options.defaultResponse) {
+      this._defaultResponse = options.defaultResponse;
     } else {
       this._defaultResponse = `You don't really need to ${verbName} that right now.`;
     }
@@ -71,6 +78,17 @@ export class GenericVerbHandler extends VerbHandler {
     // We'll use a default response for missing / marker objects
     if (entity.isMissing) {
       context.outputService.displayStory(`You don't see ${entity.that} here.`);
+      return true;
+    }
+
+    if (this.isDestructive && entity.getAttribute('doNotWishToHarm', false) === true) {
+      context.outputService.displayStory(`You don't want to damage ${entity.that}.`);
+      return true;
+    }
+
+    // Display a special response when trying to manipulate something that is clearly huge
+    if (this.verbType === VerbType.manipulate && entity.getAttribute('isMassive', false) === true) {
+      context.outputService.displayStory(`You don't seriously expect to be able to ${this._verbName} ${entity.that} do you? It's huge!`);
       return true;
     }
 

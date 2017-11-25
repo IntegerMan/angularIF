@@ -72,7 +72,11 @@ export class GetHandler extends VerbHandler {
     }
 
     if (!respondedTo) {
-      context.outputService.displayStory(`You can't pick up ${entity.that}.`);
+      if (entity.getAttribute('isMassive', false) === true) {
+        context.outputService.displayStory(`Surely you can't be serious. That's well beyond your ability to even budge.`);
+      } else {
+        context.outputService.displayStory(`You can't pick up ${entity.that}.`);
+      }
     }
 
     return CommandResult.BuildActionFailedResult();

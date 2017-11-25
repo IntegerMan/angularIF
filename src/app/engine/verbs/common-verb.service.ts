@@ -38,20 +38,26 @@ export class CommonVerbService {
     verbs.push(new DropHandler(['drop', 'discard']));
 
     // Generic Verbs
-    verbs.push(new GenericVerbHandler('push', VerbType.manipulate, ['push', 'shove', 'move']));
-    verbs.push(new GenericVerbHandler('pull', VerbType.manipulate, ['haul', 'tug']));
+    verbs.push(new GenericVerbHandler('push', ['push', 'shove', 'move']));
+    verbs.push(new GenericVerbHandler('pull', ['haul', 'tug']));
     verbs.push(new GenericVerbHandler('cut',
-      VerbType.manipulate,
       ['chop', 'slice', 'skewer', 'bisect', 'impale'],
-      `There are more pressing matters to attend to at the moment besides cutting things at random.`));
+      {
+        defaultResponse: `There are more pressing matters to attend to at the moment besides cutting things at random.`,
+        isDestructive: true
+      }));
+
     verbs.push(new GenericVerbHandler('mow',
-      VerbType.manipulate,
       ['harvest', 'reap'],
-      `If you wanted to mow, you probably should have done it before there were more pressing things to attend to.`));
+      {
+        defaultResponse: `If you wanted to mow, you probably should have done it before there were more pressing things to attend to.`,
+        isDestructive: true
+        }
+      ));
 
     // We'll want these to be more specific later, certainly.
-    verbs.push(new GenericVerbHandler('open', VerbType.manipulate, ['open']));
-    verbs.push(new GenericVerbHandler('close', VerbType.manipulate, ['close', 'shut']));
+    verbs.push(new GenericVerbHandler('open', ['open']));
+    verbs.push(new GenericVerbHandler('close', ['close', 'shut']));
 
     verbs.push(new DebugHandler(['debug']));
     verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));

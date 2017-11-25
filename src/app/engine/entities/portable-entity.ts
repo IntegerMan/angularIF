@@ -37,7 +37,7 @@ export class PortableEntity extends WorldEntity {
    */
   onPickup(context: CommandContext, alreadyResponded: boolean): void {
     if (!alreadyResponded) {
-      context.outputService.displayStory(`You pick up ${this.article} ${this.name}.`);
+      context.outputService.displayStory(`You pick up ${this.that}.`);
     }
   }
 

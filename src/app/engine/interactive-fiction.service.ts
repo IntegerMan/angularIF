@@ -326,7 +326,7 @@ export class InteractiveFictionService {
     // Grab verb handlers from the story.
     this.verbHandlers.length = 0;
     for (const verb of story.verbHandlers) {
-      this.logger.log(`Loaded verb handler: ${verb.name}`);
+      // this.logger.log(`Loaded verb handler: ${verb.name}`);
       this.verbHandlers.push(verb);
     }
 

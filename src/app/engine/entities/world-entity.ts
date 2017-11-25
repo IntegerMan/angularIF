@@ -6,6 +6,7 @@ import {CommandToken} from '../parser/command-token';
 import {ArrayHelper} from '../../utility/array-helper';
 import {StringHelper} from '../../utility/string-helper';
 import {StoryResponse} from '../responses/story-response';
+import {isNullOrUndefined} from 'util';
 
 export abstract class WorldEntity {
 
@@ -13,7 +14,6 @@ export abstract class WorldEntity {
   parent: WorldEntity = null;
   nouns: string[];
   adjectives: string[];
-  article: string = 'the';
   isAlive: boolean = false;
   key: string;
 
@@ -41,8 +41,17 @@ export abstract class WorldEntity {
     // Auto-detecting here seems like it would make sense, but we don't yet have adequate dictionaries
   }
 
+  getArticle(defaultArticle: string = 'the'): string {
+    const value = this.getAttribute('article', defaultArticle);
+    if (isNullOrUndefined(value)) {
+      return '';
+    } else {
+      return value;
+    }
+  }
+
   get that(): string {
-    return `${this.article} ${this.name}`.trim();
+    return `${this.getArticle()} ${this.name}`.trim();
   }
 
   get currentRoom(): Room {
