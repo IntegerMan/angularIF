@@ -64,17 +64,37 @@ export class EntitySpec {
   }
 
   public shouldDescribeWithRoom(): EntitySpec {
-    // TODO
+
+    this.checks.push( () => {
+      if (!this.entity.shouldDescribeWithRoom(this.game.context)) {
+        return `${this.entity.that} should describe with the room (${this.room.key}), but does not.`;
+      }
+      return null;
+    });
+
     return this;
   }
 
   public shouldNotDescribeWithRoom(): EntitySpec {
-    // TODO
+
+    this.checks.push( () => {
+      if (this.entity.shouldDescribeWithRoom(this.game.context)) {
+        return `${this.entity.that} should not describe with the room (${this.room.key}), but does.`;
+      }
+      return null;
+    });
+
     return this;
   }
 
-  public shouldHaveAttributeValue(attribute: string, value: any): EntitySpec {
-    // TODO
+  public shouldHaveAttributeValue(attribute: string, expected: any): EntitySpec {
+    this.checks.push( () => {
+      const actual = this.entity.getAttribute(attribute, undefined);
+      if (actual !== expected) {
+        return `${this.entity.that} should have attribute ${attribute} of value ${expected} but has a value of ${actual} instead.`;
+      }
+      return null;
+    });
     return this;
   }
 

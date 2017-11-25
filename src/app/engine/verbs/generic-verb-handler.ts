@@ -42,33 +42,38 @@ export class GenericVerbHandler extends VerbHandler {
   }
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
-    let respondedTo: boolean = false;
 
-    const targets: WorldEntity[] = command.getDistinctEntitiesFromObjects();
-    if (targets && targets.length > 0) {
-
-      const entity: WorldEntity = targets[0];
-
-      respondedTo = entity.invokeVerbResponse(context, this._verbName);
-
-      // We'll use a default response for missing / marker objects
-      if (!respondedTo && entity.isMissing) {
-        context.outputService.displayStory(`You don't see ${entity.that} here.`);
-        respondedTo = true;
-      }
-
-    }
-
-    if (!respondedTo) {
-
-      const verbName = command.verb.name;
-      const text = this._defaultResponse;
-      const hint = `You won't need to ${verbName} to finish the story.`;
-      context.outputService.displayStory(text, hint);
-
-      return CommandResult.BuildActionFailedResult();
-    } else {
+    if (this.routeCommandToTarget(command, context)) {
       return CommandResult.BuildActionSuccessResult();
     }
+
+    const verbName = command.verb.name;
+    const text = this._defaultResponse;
+    const hint = `You won't need to ${verbName} to finish the story.`;
+    context.outputService.displayStory(text, hint);
+
+    return CommandResult.BuildActionFailedResult();
+  }
+
+  private routeCommandToTarget(command: Command, context: CommandContext): boolean {
+
+    const targets: WorldEntity[] = command.getDistinctEntitiesFromObjects();
+
+    if (!(targets && targets.length > 0)) {
+      return false;
+    }
+
+    const entity: WorldEntity = targets[0];
+    if (entity.invokeVerbResponse(context, this._verbName)) {
+      return true;
+    }
+
+    // We'll use a default response for missing / marker objects
+    if (entity.isMissing) {
+      context.outputService.displayStory(`You don't see ${entity.that} here.`);
+      return true;
+    }
+
+    return false;
   }
 }

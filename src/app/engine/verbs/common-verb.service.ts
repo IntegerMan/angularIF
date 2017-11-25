@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {VerbHandler} from './verb-handler';
 import {CloseHandler} from './close-handler';
-import {OpenHandler} from './open-handler';
 import {LookHandler} from './look-handler';
 import {GoHandler} from './go-handler';
 import {GetHandler} from './get-handler';
@@ -38,7 +37,6 @@ export class CommonVerbService {
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));
     verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));
     verbs.push(new DropHandler(['drop', 'discard']));
-    verbs.push(new OpenHandler(['open']));
 
     // Generic Verbs
     verbs.push(new GenericVerbHandler('push', VerbType.manipulate, ['push', 'shove', 'move']));
@@ -51,6 +49,10 @@ export class CommonVerbService {
       VerbType.manipulate,
       ['harvest', 'reap'],
       `If you wanted to mow, you probably should have done it before there were more pressing things to attend to.`));
+
+    // We'll want these to be more specific later, certainly.
+    verbs.push(new GenericVerbHandler('open', VerbType.manipulate, ['open']));
+    verbs.push(new GenericVerbHandler('close', VerbType.manipulate, ['close', 'shut']));
 
     verbs.push(new DebugHandler(['debug']));
     verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));
