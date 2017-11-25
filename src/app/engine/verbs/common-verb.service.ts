@@ -34,7 +34,7 @@ export class CommonVerbService {
     verbs.push(new LookHandler(['look']));
     verbs.push(new ExamineHandler(['examine', 'inspect']));
     verbs.push(new GoHandler(['go', 'walk', 'run', 'travel', 'exit', 'saunter', 'stroll', 'sprint']));
-    verbs.push(new HangHandler(['hang', 'suspend', 'attach', 'affix'])); // TODO: Some of these should go in 'Put'
+    verbs.push(new HangHandler(['hang', 'suspend', 'attach', 'affix']));
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));
     verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));
     verbs.push(new DropHandler(['drop', 'discard']));
@@ -51,7 +51,6 @@ export class CommonVerbService {
       VerbType.manipulate,
       ['harvest', 'reap'],
       `If you wanted to mow, you probably should have done it before there were more pressing things to attend to.`));
-
 
     verbs.push(new DebugHandler(['debug']));
     verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));

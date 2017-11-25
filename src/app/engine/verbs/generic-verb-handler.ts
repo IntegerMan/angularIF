@@ -12,7 +12,6 @@ import {WorldEntity} from '../entities/world-entity';
 export class GenericVerbHandler extends VerbHandler {
 
   private _defaultResponse: string;
-
   private _verbName: string;
   private _verbType: VerbType;
 
@@ -47,7 +46,17 @@ export class GenericVerbHandler extends VerbHandler {
 
     const targets: WorldEntity[] = command.getDistinctEntitiesFromObjects();
     if (targets && targets.length > 0) {
-      respondedTo = targets[0].invokeVerbResponse(context, this._verbName);
+
+      const entity: WorldEntity = targets[0];
+
+      respondedTo = entity.invokeVerbResponse(context, this._verbName);
+
+      // We'll use a default response for missing / marker objects
+      if (!respondedTo && entity.isMissing) {
+        context.outputService.displayStory(`You don't see ${entity.that} here.`);
+        respondedTo = true;
+      }
+
     }
 
     if (!respondedTo) {
