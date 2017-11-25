@@ -18,9 +18,8 @@ import {PutHandler} from './put-handler';
 import {DebugHandler} from './debug-handler';
 import {WaitHandler} from './wait-handler';
 import {ReportbugHandler} from './reportbug-handler';
-import {MowHandler} from './mow-handler';
-import {PushHandler} from './push-handler';
-import {PullHandler} from './pull-handler';
+import {GenericVerbHandler} from './generic-verb-handler';
+import {VerbType} from './verb-type.enum';
 
 @Injectable()
 export class CommonVerbService {
@@ -39,13 +38,21 @@ export class CommonVerbService {
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));
     verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));
     verbs.push(new DropHandler(['drop', 'discard']));
-
-    // TODO: Some of these go into cut
-    verbs.push(new MowHandler(['mow', 'cut', 'chop', 'slice', 'harvest', 'reap', 'skewer', 'bisect', 'impale']));
-
     verbs.push(new OpenHandler(['open']));
-    verbs.push(new PushHandler(['push', 'shove', 'move']));
-    verbs.push(new PullHandler(['pull', 'haul', 'tug']));
+
+    // Generic Verbs
+    verbs.push(new GenericVerbHandler('push', VerbType.manipulate, ['push', 'shove', 'move']));
+    verbs.push(new GenericVerbHandler('pull', VerbType.manipulate, ['haul', 'tug']));
+    verbs.push(new GenericVerbHandler('cut',
+      VerbType.manipulate,
+      ['chop', 'slice', 'skewer', 'bisect', 'impale'],
+      `There are more pressing matters to attend to at the moment besides cutting things at random.`));
+    verbs.push(new GenericVerbHandler('mow',
+      VerbType.manipulate,
+      ['harvest', 'reap'],
+      `If you wanted to mow, you probably should have done it before there were more pressing things to attend to.`));
+
+
     verbs.push(new DebugHandler(['debug']));
     verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));
     verbs.push(new CloseHandler(['close', 'shut']));
