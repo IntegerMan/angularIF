@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {VerbHandler} from './verb-handler';
-import {CloseHandler} from './close-handler';
 import {LookHandler} from './look-handler';
 import {GoHandler} from './go-handler';
 import {GetHandler} from './get-handler';
@@ -56,7 +55,6 @@ export class CommonVerbService {
 
     verbs.push(new DebugHandler(['debug']));
     verbs.push(new WaitHandler(['wait', 'delay', 'lurk', 'loiter', 'watch']));
-    verbs.push(new CloseHandler(['close', 'shut']));
     verbs.push(new RestartHandler(['restart', 'reset']));
     verbs.push(new ReportbugHandler(['reportbug']));
     verbs.push(new DieHandler(['die', 'forfeit', 'suicide']));
