@@ -66,6 +66,30 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
     expect(spec.validate()).toBeFalsy();
   });
 
+  // Object: Dog Poop (missing object referenced in passing)
+  it(`should contain a dog poop missing object that passes spec validation`, () => {
+
+    const spec = game.buildEntitySpec('sideyard_poop', room)
+      .shouldResolveFrom('dog poo')
+      .shouldResolveFrom('poo')
+      .shouldResolveFrom('poop')
+      .shouldResolveFrom(`Jester's poop`)
+      .shouldResolveFrom('crap')
+      .shouldResolveFrom('shit')
+      .shouldResolveFrom('turd')
+      .shouldResolveFrom('feces')
+      .shouldNotDescribeWithRoom()
+      .shouldHaveAttributeValue('missing', true)
+      .shouldNotBeGettable()
+      .shouldRespondToVerbWith('look', 'don\'t', 'see', 'step');
+
+    // TODO: Support smell once that's available
+
+    // TODO: This should probably be tested with and without Jester in the room since he disambiguates with dog
+
+    expect(spec.validate()).toBeFalsy();
+  });
+
   // Object: Tall Grass (scenic object)
   it('should contain tall grass that passes spec validation', () => {
 
