@@ -80,6 +80,9 @@ substitute:
   south west: southwest
   cannot: can not
   weed whacker: whacker
+  front yard: frontyard
+  side yard: sideyard
+  back yard: backyard
 expand:
   g: repeat
   x: examine

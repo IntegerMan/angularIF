@@ -94,7 +94,7 @@ export class SentenceParserService {
     }
   }
 
-  private associateNounModifiers(command: Command, tokens: CommandToken[]) {
+  private associateNounModifiers(command: Command, tokens: CommandToken[]): void {
     const nounModifiers: CommandToken[] = tokens.filter(t => SentenceParserService.isNounModifier(t));
     for (const modifier of nounModifiers) {
 
@@ -118,7 +118,7 @@ export class SentenceParserService {
     }
   }
 
-  private identifyVerbModifiers(command: Command, tokens: CommandToken[]) {
+  private identifyVerbModifiers(command: Command, tokens: CommandToken[]): void {
 
     // Grab the adverbs and stick them into the sentence as modifiers on the overall sentence
     const adverbs: CommandToken[] = tokens.filter(t => SentenceParserService.isVerbModifier(t));

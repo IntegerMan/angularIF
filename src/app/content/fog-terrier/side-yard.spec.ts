@@ -173,4 +173,18 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
     expect(spec.validate()).toBeFalsy();
   });
 
+  // Object: Sideyard (A here entry)
+  it(`should contain a here entry that passes spec validation`, () => {
+
+    const spec = game.buildEntitySpec('sideyard', room)
+      .shouldResolveFrom(`sideyard`)
+      .shouldResolveFrom(`side yard`)
+      .shouldResolveFrom(`here`)
+      .shouldResolveFrom(`room`)
+      .shouldNotBeGettable('serious')
+      .shouldRespondToVerbWith('look', 'unremarkable', 'yard');
+
+    expect(spec.validate()).toBeFalsy();
+  });
+
 });

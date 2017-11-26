@@ -18,6 +18,9 @@ export class Room extends WorldEntity {
     // This lets other scripts safely refer to currentRoom in a more generic way
     this.currentRoom = this;
 
+    // Set good defaults for rooms
+    this.setAttribute('isMassive', true);
+    this.setAttribute('describeWithRoom', false);
   }
 
   findObjectsForToken(token: CommandToken, context: CommandContext): WorldEntity[] {
@@ -26,6 +29,9 @@ export class Room extends WorldEntity {
     const results: WorldEntity[] = this.addItemsFromContainer(this, token, context);
 
     // Evaluate the room in case you're trying to find the room or the floor or whatever
+
+    console.log(this.nouns);
+    console.log(this.adjectives);
     if (this.isDescribedByToken(token, context)) {
       results.push(this);
     }

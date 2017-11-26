@@ -3,7 +3,7 @@ import {LexiconService} from './lexicon.service';
 import {LoggingService} from '../../utility/logging.service';
 import {LanguageTerm} from './language-term';
 import {TokenClassification} from './token-classification.enum';
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from 'util';
 import {CommandToken} from './command-token';
 
 @Injectable()

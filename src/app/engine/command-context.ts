@@ -142,6 +142,8 @@ export class CommandContext {
 
   resolveNouns(tokens: CommandToken[], announceConfusion: boolean): void {
 
+    // TODO: This really shouldn't be in command context
+
     let isFirst: boolean = true;
     const confusedNames: string[] = [];
 
