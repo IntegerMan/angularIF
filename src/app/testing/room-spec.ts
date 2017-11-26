@@ -12,12 +12,12 @@ export class RoomSpec extends EntitySpec {
     return <RoomSpec>super.shouldResolveFrom(text);
   }
 
-  public shouldNavigateTo(direction: string, newRoomKey: string): RoomSpec {
+  public shouldNavigateTo(command: string, newRoomKey: string): RoomSpec {
     this.addCheck( () => {
-      this.game.input(direction);
+      this.game.input(command);
       const actualKey = this.game.currentRoom.key;
       if (actualKey !== newRoomKey) {
-        return `Expected navigation to ${direction} to result in a current room of ${newRoomKey} but current room is ${actualKey}.`;
+        return `Expected navigation to ${command} to result in a current room of ${newRoomKey} but current room is ${actualKey}.`;
       }
       return null;
     });
@@ -25,12 +25,12 @@ export class RoomSpec extends EntitySpec {
     return this;
   }
 
-  public shouldFailNavigationTo(direction: string, ...expectedResponses: string[]): RoomSpec {
+  public shouldFailNavigationTo(command: string, ...expectedResponses: string[]): RoomSpec {
     this.addCheck( () => {
-      this.game.input(direction);
+      this.game.input(command);
       const actualKey = this.game.currentRoom.key;
       if (actualKey !== this.key) {
-        return `Expected navigation to ${direction} to result in remaining in ${this.key} but current room is ${actualKey}.`;
+        return `Expected navigation to ${command} to result in remaining in ${this.key} but current room is ${actualKey}.`;
       }
       return this.checkForExpectedReply(...expectedResponses);
     });

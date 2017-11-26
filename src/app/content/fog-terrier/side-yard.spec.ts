@@ -42,6 +42,10 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
       .shouldFailNavigationTo('sw', `neighbor's yard`)
       .shouldFailNavigationTo('e', `neighbor's yard`)
       .shouldRespondToVerbWith(`look`, `unremarkable`, `yard`, `weed whacker`, `window well`, `grass`, `front`, `back`, `north`, `south`)
+      .shouldRespondToVerbWith(`look s`, `back yard`)
+      .shouldRespondToVerbWith(`look n`, `front yard`)
+      .shouldRespondToVerbWith(`look w`, `your house`)
+      .shouldRespondToVerbWith(`look e`, `neighbor's house`)
       .shouldNotBeGettable('serious');
 
     expect(spec.validate()).toBeFalsy();
