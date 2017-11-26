@@ -27,6 +27,12 @@ export class TokenizerService {
 
     const classifications = Object.keys(TokenClassification);
 
+    // If this is a possessive noun, we want to interpret it as an adjective
+    if (term.tags && term.tags.indexOf('Possessive') >= 0) {
+      term.tags.push('Adjective');
+      term.bestTag = 'Adjective';
+    }
+
     // Look for a best tag match
     for (const c of classifications) {
       const value: any = TokenClassification[c];
