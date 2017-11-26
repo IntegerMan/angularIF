@@ -3,15 +3,15 @@ import {CommandToken} from './command-token';
 import {Command} from './command';
 import {LoggingService} from '../../utility/logging.service';
 import {TokenClassification} from './token-classification.enum';
-import {TokenizerService} from './tokenizer.service';
 import {LexiconService} from './lexicon.service';
 import {CommandContext} from '../command-context';
+import {NaturalLanguageService} from './natural-language.service';
 
 @Injectable()
 export class SentenceParserService {
 
   constructor(private logger: LoggingService,
-              private tokenizer: TokenizerService,
+              private tokenizer: NaturalLanguageService,
               private lexer: LexiconService) {
 
   }

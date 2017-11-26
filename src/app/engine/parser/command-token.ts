@@ -27,14 +27,6 @@ export class CommandToken {
 
   }
 
-  /***
-   * Gets a value indicating whether or not the term associated with this token was identified as plural
-   * @returns {boolean} whether or not the term is plural
-   */
-  get isPlural(): boolean {
-    return this.term && this.term.tags.filter(t => t === 'Plural').length > 0;
-  }
-
   get userInput(): string {
     return this.term.text;
   }
@@ -54,10 +46,6 @@ export class CommandToken {
   }
 
   getCannotSeeName(): string {
-
-    if (this.isPlural) {
-      return this.name;
-    }
 
     // TODO: This should actually be phonetic on whether it starts with a consonant sound
     if (StringHelper.startsWithVowel(this.name)) {

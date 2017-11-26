@@ -3,8 +3,8 @@ import {TokenClassification} from './token-classification.enum';
 import {CommandToken} from './command-token';
 import {StringHelper} from '../../utility/string-helper';
 import {ArrayHelper} from '../../utility/array-helper';
-import {TokenizerService} from './tokenizer.service';
 import {CommonDictionary} from './common-dictionary';
+import {NaturalLanguageService} from './natural-language.service';
 
 @Injectable()
 export class LexiconService {
@@ -119,7 +119,7 @@ export class LexiconService {
 
   }
 
-  replaceTokens(tokens: CommandToken[], tokenizer: TokenizerService): CommandToken[] {
+  replaceTokens(tokens: CommandToken[], tokenizer: NaturalLanguageService): CommandToken[] {
 
       for (const t of tokens) {
 

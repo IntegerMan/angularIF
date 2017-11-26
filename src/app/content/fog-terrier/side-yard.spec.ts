@@ -130,4 +130,23 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
     expect(spec.validate()).toBeFalsy();
   });
 
+  // Object: Window Wells
+  it(`should contain window wells that pass spec validation`, () => {
+
+    const spec = game.buildEntitySpec('sideyard_window_wells', room)
+      .shouldResolveFrom(`window wells`)
+      .shouldResolveFrom(`window well`)
+      .shouldResolveFrom('windows')
+      .shouldResolveFrom('window')
+      .shouldResolveFrom('wells')
+      .shouldResolveFrom('well')
+      .shouldNotDescribeWithRoom()
+      .shouldNotBeGettable()
+      .shouldRespondToVerbWith('look', 'shallow', 'dark')
+      .shouldRespondToVerbWith('pull', `don't`, `need`)
+      .shouldRespondToVerbWith('cut', `don't want to damage`);
+
+    expect(spec.validate()).toBeFalsy();
+  });
+
 });

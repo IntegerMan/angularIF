@@ -4,7 +4,7 @@ import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
 import {Room} from './entities/room';
 import {Actor} from './entities/actor';
-import {TokenizerService} from './parser/tokenizer.service';
+import {NaturalLanguageService} from './parser/natural-language.service';
 import {CommandToken} from './parser/command-token';
 import {TokenClassification} from './parser/token-classification.enum';
 import {LexiconService} from './parser/lexicon.service';
@@ -41,7 +41,7 @@ export class InteractiveFictionService {
   private verbHandlers: VerbHandler[];
 
   constructor(private logger: LoggingService,
-              private tokenizer: TokenizerService,
+              private tokenizer: NaturalLanguageService,
               private sentenceParser: SentenceParserService,
               private outputService: TextOutputService,
               private lexer: LexiconService,

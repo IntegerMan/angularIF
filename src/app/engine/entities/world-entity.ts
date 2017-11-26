@@ -83,25 +83,11 @@ export abstract class WorldEntity {
   }
 
   addNounAliases(nouns: string[]): void {
-
-    if (nouns) {
-      for (const noun of nouns) {
-        // LoggingService.instance.log(`Registering noun '${noun}' for object '${this.name}'`);
-        this.nouns.push(noun.toLocaleLowerCase());
-      }
-    }
-
+    this.addAliasToList(nouns, this.nouns);
   }
 
   addAdjectiveAliases(adjectives: string[]): void {
-
-    if (adjectives) {
-      for (const adjective of adjectives) {
-        // LoggingService.instance.log(`Registering adjective '${adjective}' for object '${this.name}'`);
-        this.adjectives.push(adjective.toLocaleLowerCase());
-      }
-    }
-
+    this.addAliasToList(adjectives, this.adjectives);
   }
 
   isDescribedByToken(token: CommandToken, context: CommandContext): boolean {
@@ -361,5 +347,14 @@ export abstract class WorldEntity {
     return this.getAttribute('portable', false);
   }
 
+  private addAliasToList(inputs: string[], list: string[]) {
+    if (inputs) {
+      for (const input of inputs) {
+
+        const token: CommandToken = NaturalLanguageService.instance.getTokenForWord(input);
+        list.push(token.name);
+      }
+    }
+  }
 
 }

@@ -5,7 +5,6 @@ import {LoggingService} from '../../utility/logging.service';
 import {NaturalLanguageService} from './natural-language.service';
 import {EngineModule} from '../engine.module';
 import {CommandToken} from './command-token';
-import {TokenizerService} from './tokenizer.service';
 
 describe('LexiconService', () => {
 
@@ -32,7 +31,9 @@ describe('LexiconService', () => {
     expect(service.expansionRuleCount).toBeGreaterThan(0);
   }));
 
-  it('ne evaluates to northeast', inject([LexiconService, TokenizerService], (service: LexiconService, tokenizer: TokenizerService) => {
+  it('ne evaluates to northeast',
+    inject([LexiconService, NaturalLanguageService],
+      (service: LexiconService, tokenizer: NaturalLanguageService) => {
     service.useDefaults();
     const token: CommandToken = tokenizer.getTokenForWord('ne');
     expect(service.replaceTokens([token], tokenizer)[0].name).toBe('northeast');

@@ -7,7 +7,7 @@ import {Actor} from './entities/actor';
 import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './parser/command-token';
-import {TokenizerService} from './parser/tokenizer.service';
+import {NaturalLanguageService} from './parser/natural-language.service';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
 import {StateService} from './state.service';
@@ -69,7 +69,7 @@ export class CommandContext {
     if (!entities || entities.length <= 0) {
       this.logger.log(`No local match found for '${token.name}'`);
 
-      if (!TokenizerService.isSpecialNoun(token)) {
+      if (!NaturalLanguageService.isSpecialNoun(token)) {
 
         this.analytics.emitEvent(
           'Reference Not Found',

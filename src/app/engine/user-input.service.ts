@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {TokenClassification} from './parser/token-classification.enum';
 import {CommandToken} from './parser/command-token';
 import {LoggingService} from '../utility/logging.service';
-import {TokenizerService} from './parser/tokenizer.service';
+import {NaturalLanguageService} from './parser/natural-language.service';
 import {TextOutputService} from './text-output.service';
 import {Command} from './parser/command';
 import {SentenceParserService} from './parser/sentence-parser.service';
@@ -17,7 +17,7 @@ import {LexiconService} from './parser/lexicon.service';
 export class UserInputService {
 
   constructor(private logger: LoggingService,
-              private tokenizer: TokenizerService,
+              private tokenizer: NaturalLanguageService,
               private lexer: LexiconService,
               private sentenceParser: SentenceParserService,
               private ifService: InteractiveFictionService,
