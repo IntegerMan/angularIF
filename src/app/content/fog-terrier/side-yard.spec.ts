@@ -114,4 +114,20 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
     expect(spec.validate()).toBeFalsy();
   });
 
+  // Object: Neighbor's House
+  it(`should contain a neighbor's house that passes spec validation`, () => {
+
+    const spec = game.buildEntitySpec('sideyard_neighbor', room)
+      .shouldResolveFrom(`neighbor's house`)
+      .shouldResolveFrom('other house')
+      .shouldResolveFrom('neighbor')
+      .shouldNotDescribeWithRoom()
+      .shouldNotBeGettable(`can't be serious`)
+      .shouldRespondToVerbWith('look', 'better shape')
+      .shouldRespondToVerbWith('pull', `serious`)
+      .shouldRespondToVerbWith('cut', `don't want to damage`);
+
+    expect(spec.validate()).toBeFalsy();
+  });
+
 });
