@@ -4,12 +4,12 @@ import {Room} from '../engine/entities/room';
 
 export class EntitySpec {
 
-  private key: string;
-
   private checks: Function[];
-  private entity: WorldEntity;
-  private game: StoryTestingServiceBase;
-  private room: Room;
+
+  protected key: string;
+  protected entity: WorldEntity;
+  protected game: StoryTestingServiceBase;
+  protected room: Room;
 
   constructor(key: string, room: Room, testService: StoryTestingServiceBase) {
     this.key = key;
@@ -20,7 +20,7 @@ export class EntitySpec {
 
   public shouldNotBeGettable(...expectedReplyString: string[]): EntitySpec {
 
-    this.checks.push( () => {
+    this.addCheck( () => {
       this.game.input(`get ${this.entity.that}`);
       if (this.game.player.has(this.entity)) {
         return `${this.entity.that} was owned by the player after a get command when it should not have been.`;
@@ -32,7 +32,7 @@ export class EntitySpec {
   }
 
   public shouldBeGettable(...expectedReplyString: string[]): EntitySpec {
-    this.checks.push( () => {
+    this.addCheck( () => {
       this.game.input(`get ${this.entity.that}`);
       if (!this.game.player.has(this.entity)) {
         return `${this.entity.that} was not owned by the player after a get command when it should have been.`;
@@ -44,7 +44,7 @@ export class EntitySpec {
   }
 
   public shouldRespondToVerbWith(verb: string, ...expectedReplyString: string[]): EntitySpec {
-    this.checks.push( () => {
+    this.addCheck( () => {
       this.game.input(`${verb} ${this.entity.that}`);
       return this.checkForExpectedReply(...expectedReplyString);
     });
@@ -53,7 +53,7 @@ export class EntitySpec {
   }
 
   public shouldResolveFrom(text: string): EntitySpec {
-    this.checks.push( () => {
+    this.addCheck( () => {
       if (!this.game.lookForEntity(text, this.key)) {
         return `${this.entity.that} could not be resolved using '${text}'.`;
       }
@@ -65,7 +65,7 @@ export class EntitySpec {
 
   public shouldDescribeWithRoom(): EntitySpec {
 
-    this.checks.push( () => {
+    this.addCheck( () => {
       if (!this.entity.shouldDescribeWithRoom(this.game.context)) {
         return `${this.entity.that} should describe with the room (${this.room.key}), but does not.`;
       }
@@ -77,7 +77,7 @@ export class EntitySpec {
 
   public shouldNotDescribeWithRoom(): EntitySpec {
 
-    this.checks.push( () => {
+    this.addCheck( () => {
       if (this.entity.shouldDescribeWithRoom(this.game.context)) {
         return `${this.entity.that} should not describe with the room (${this.room.key}), but does.`;
       }
@@ -88,7 +88,7 @@ export class EntitySpec {
   }
 
   public shouldHaveAttributeValue(attribute: string, expected: any): EntitySpec {
-    this.checks.push( () => {
+    this.addCheck( () => {
       const actual = this.entity.getAttribute(attribute, undefined);
       if (actual !== expected) {
         return `${this.entity.that} should have attribute ${attribute} of value ${expected} but has a value of ${actual} instead.`;
@@ -105,11 +105,50 @@ export class EntitySpec {
       return `The entity ${this.key} could not be located without a room. Tests could not be evaluated.`;
     }
 
+    // Validate each registered function
+    let output: string;
+    for (const f of this.checks) {
+
+      // Ensure we start from the same room every time. This is important for room navigation tests
+      const resetValidateResult = this.resetForEachTest();
+      if (!resetValidateResult) {
+        return resetValidateResult;
+      }
+
+      // Perform the actual function invoke
+      const result: string = f.bind(this)();
+
+      // Check the result
+      if (result) {
+        if (!output) {
+          output = `Validation failed for entity ${this.key}: ${this.entity.that} in ${this.room.key}`;
+        }
+        output += `\r\n${result}`;
+      }
+    }
+
+    return output;
+  }
+
+  protected addCheck(check: () => (string | any)) {
+    this.checks.push(check);
+  }
+
+  protected checkForExpectedReply(...expectedReplyString: string[]): string {
+    const actualReply: string = this.game.lastReply;
+    for (const expectedReply of expectedReplyString) {
+      if (actualReply.indexOf(expectedReply) < 0) {
+        return `Response '${actualReply}' to '${this.game.lastInput}' did not contain '${expectedReply}'`;
+      }
+    }
+    return null;
+
+  }
+
+  private resetForEachTest(): string {
+
     // Ensure we're where we need to be
     this.game.warpTo(this.room.key, false);
-
-    console.warn(this);
-    console.warn(`Searching for entity with key of ${this.key} in ${this.room.key}`);
 
     // Locate entity
     this.entity = this.room.findEntityByKey(this.key);
@@ -122,32 +161,8 @@ export class EntitySpec {
       return `The entity ${this.key} did not match the expected key of ${this.key}. Tests could not be evaluated.`;
     }
 
-    console.warn(this.entity.that);
-    console.warn(this.entity);
-
-    // Validate each registered function
-    let output: string;
-    for (const f of this.checks) {
-      const result: string = f.bind(this)();
-      if (result) {
-        if (!output) {
-          output = `Validation failed for entity ${this.key}: ${this.entity.that} in ${this.room.key}`;
-        }
-        output += `\r\n${result}`;
-      }
-    }
-
-    return output;
-  }
-
-  private checkForExpectedReply(...expectedReplyString: string[]): string {
-    const actualReply: string = this.game.lastReply;
-    for (const expectedReply of expectedReplyString) {
-      if (actualReply.indexOf(expectedReply) < 0) {
-        return `Response '${actualReply}' to '${this.game.lastInput}' did not contain '${expectedReply}'`;
-      }
-    }
     return null;
 
   }
+
 }

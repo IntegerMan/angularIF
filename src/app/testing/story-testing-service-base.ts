@@ -11,6 +11,7 @@ import {GameState} from '../engine/game-state.enum';
 import {WorldEntity} from '../engine/entities/world-entity';
 import {isNullOrUndefined} from 'util';
 import {EntitySpec} from './entity-spec';
+import {RoomSpec} from './room-spec';
 
 export class StoryTestingServiceBase {
 
@@ -92,8 +93,12 @@ export class StoryTestingServiceBase {
     return this.outputService.lastLine;
   }
 
-  buildEntitySpec(key: string, room: Room) {
+  buildEntitySpec(key: string, room: Room): EntitySpec {
     return new EntitySpec(key, room, this);
+  }
+
+  buildRoomSpec(key: string, room: Room): RoomSpec {
+    return new RoomSpec(key, room, this);
   }
 
 }

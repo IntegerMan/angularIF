@@ -26,29 +26,25 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
     })));
 
-  it('should start in the requested room', () => {
-    expect(room).toBeTruthy();
-    expect(room.key).toBe('sideyard');
-  });
+  // Room: Side Yard
+  it('should contain a side yard room that passes spec validation', () => {
 
-  it('should contain an exit to the south to the backyard', () => {
-    game.input('s');
-    expect(game.currentRoom.key).toBe('backyard');
-  });
+    const spec = game.buildRoomSpec('sideyard', room)
+      .shouldResolveFrom(`sideyard`)
+      .shouldResolveFrom(`side yard`)
+      .shouldResolveFrom(`here`)
+      .shouldResolveFrom(`room`)
+      .shouldNavigateTo('nw', 'frontyard')
+      .shouldNavigateTo('n', 'frontyard')
+      .shouldNavigateTo('sw', 'backyard')
+      .shouldNavigateTo('s', 'backyard')
+      .shouldFailNavigationTo('se', `neighbor's yard`)
+      .shouldFailNavigationTo('sw', `neighbor's yard`)
+      .shouldFailNavigationTo('e', `neighbor's yard`)
+      .shouldRespondToVerbWith(`look`, `unremarkable`, `yard`, `weed whacker`, `window well`, `grass`, `front`, `back`, `north`, `south`)
+      .shouldNotBeGettable('serious');
 
-  it('should contain an exit to the southwest to the backyard', () => {
-    game.input('sw');
-    expect(game.currentRoom.key).toBe('backyard');
-  });
-
-  it('should contain an exit to the north to the frontyard', () => {
-    game.input('n');
-    expect(game.currentRoom.key).toBe('frontyard');
-  });
-
-  it('should contain an exit to the northwest to the frontyard', () => {
-    game.input('nw');
-    expect(game.currentRoom.key).toBe('frontyard');
+    expect(spec.validate()).toBeFalsy();
   });
 
   // Object: Weed Whacker (missing object referenced in passing)
@@ -169,20 +165,6 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
       .shouldRespondToVerbWith('look', 'shallow', 'dark')
       .shouldRespondToVerbWith('pull', `don't`, `need`)
       .shouldRespondToVerbWith('cut', `don't want to damage`);
-
-    expect(spec.validate()).toBeFalsy();
-  });
-
-  // Object: Sideyard (A here entry)
-  it(`should contain a here entry that passes spec validation`, () => {
-
-    const spec = game.buildEntitySpec('sideyard', room)
-      .shouldResolveFrom(`sideyard`)
-      .shouldResolveFrom(`side yard`)
-      .shouldResolveFrom(`here`)
-      .shouldResolveFrom(`room`)
-      .shouldNotBeGettable('serious')
-      .shouldRespondToVerbWith('look', 'unremarkable', 'yard');
 
     expect(spec.validate()).toBeFalsy();
   });
