@@ -17,7 +17,7 @@ export class RoomSpec extends EntitySpec {
       this.game.input(command);
       const actualKey = this.game.currentRoom.key;
       if (actualKey !== newRoomKey) {
-        return `Expected navigation to ${command} to result in a current room of ${newRoomKey} but current room is ${actualKey}.`;
+        return `Expected '${command}' to result in a current room of ${newRoomKey} but current room is ${actualKey}.`;
       }
       return null;
     });

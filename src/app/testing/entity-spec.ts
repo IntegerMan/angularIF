@@ -43,12 +43,20 @@ export class EntitySpec {
     return this;
   }
 
-  public shouldRespondToVerbWith(verb: string, ...expectedReplyString: string[]): EntitySpec {
+  public shouldRespondToCommandWith(input: string, ...expectedReplyString: string[]): EntitySpec {
     this.addCheck( () => {
-      this.game.input(`${verb} ${this.entity.that}`);
+      this.game.input(input);
       return this.checkForExpectedReply(...expectedReplyString);
     });
 
+    return this;
+  }
+
+  public shouldRespondToVerbWith(verb: string, ...expectedReplyString: string[]): EntitySpec {
+    this.addCheck( () => {
+      this.game.input(`${verb} ${this.entity.that}`, ...expectedReplyString);
+      return this.checkForExpectedReply(...expectedReplyString);
+    });
     return this;
   }
 
@@ -105,13 +113,17 @@ export class EntitySpec {
       return `The entity ${this.key} could not be located without a room. Tests could not be evaluated.`;
     }
 
+    if (!this.checks) {
+      return `Checks collection is not defined. Context of the test object may not be correct: ${this.constructor.name}`;
+    }
+
     // Validate each registered function
     let output: string;
     for (const f of this.checks) {
 
       // Ensure we start from the same room every time. This is important for room navigation tests
       const resetValidateResult = this.resetForEachTest();
-      if (!resetValidateResult) {
+      if (resetValidateResult && resetValidateResult !== null) {
         return resetValidateResult;
       }
 

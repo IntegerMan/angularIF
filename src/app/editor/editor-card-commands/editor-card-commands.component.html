@@ -13,3 +13,6 @@
 <a class="waves-effect waves-light btn" (click)="playStoryHere()" style="margin-right: 1rem;" *ngIf="entity && entity.nodeType === 'room'">
   Play Story Here
 </a>
+<a class="waves-effect waves-light btn warn-bg" (click)="delete()" style="margin-right: 1rem;" *ngIf="canDelete()">
+  Delete
+</a>

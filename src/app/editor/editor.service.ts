@@ -1,9 +1,9 @@
-import { LoggingService } from '../utility/logging.service';
-import { NaturalLanguageService } from '../engine/parser/natural-language.service';
-import { ItemData } from '../engine/story-data/item-data';
-import { RoomData } from '../engine/story-data/room-data';
-import { ActorData } from '../engine/story-data/actor-data';
-import { StoryData } from '../engine/story-data/story-data';
+import {LoggingService} from '../utility/logging.service';
+import {NaturalLanguageService} from '../engine/parser/natural-language.service';
+import {ItemData} from '../engine/story-data/item-data';
+import {RoomData} from '../engine/story-data/room-data';
+import {ActorData} from '../engine/story-data/actor-data';
+import {StoryData} from '../engine/story-data/story-data';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.component';
@@ -63,32 +63,82 @@ export class EditorService {
 
   }
 
-  public get canAddVerb() {
+  public get canAddVerb(): boolean {
     return this.selectedNode && this.selectedNode.verbData;
   }
 
-  public get canAddAlias() {
+  public get canAddAlias(): boolean {
     return this.selectedNode && this.selectedNode.aliases;
   }
 
-  public get canAddAttribute() {
+  public get canAddAttribute(): boolean {
     return this.selectedNode && this.selectedNode.attributes;
   }
 
-  public get canAddEvent() {
+  public get canAddEvent(): boolean {
     return this.selectedNode && this.selectedNode.events;
   }
 
-  public get canAddObject() {
+  public get canAddObject(): boolean {
     return this.selectedNode && this.selectedNode.contents;
   }
 
-  public get canAddRoom() {
+  public get canAddRoom(): boolean {
     return true;
   }
 
-  public get canAddActor() {
+  public get canAddActor(): boolean {
     return true;
+  }
+
+  canDelete(entity: EntityData): boolean {
+
+    return entity &&
+           entity.nodeType &&
+           (entity.nodeType === 'entity' ||
+            entity.nodeType === 'actor' ||
+            entity.nodeType === 'room' ||
+            entity.nodeType === 'verb');
+
+  }
+
+  public delete(entity: EntityData): void {
+
+    // Validate that this is acceptable
+    if  (!this.canDelete(entity)) {
+      return;
+    }
+
+    // Do the delete
+    switch (entity.nodeType) {
+      case 'entity':
+        if (entity.parent) {
+          ArrayHelper.removeIfPresent(entity.parent.contents, entity);
+        }
+        break;
+
+      case 'actor':
+        ArrayHelper.removeIfPresent(this.storyData.actors, entity);
+        break;
+
+      case 'room':
+        ArrayHelper.removeIfPresent(this.storyData.rooms, entity);
+        break;
+
+      case 'verb':
+        if (entity.parent) {
+          ArrayHelper.removeIfPresent(entity.parent.verbData, entity);
+        }
+        break;
+    }
+
+    // Navigate off of the current node and onto a better one
+    if (entity.parent) {
+      this.selectNode(entity.parent);
+    } else {
+      this.selectNode(this.storyData);
+    }
+
   }
 
   public selectNode(node: any, nodeType: string = null) {
@@ -432,4 +482,5 @@ export class EditorService {
       }
     });
   }
+
 }

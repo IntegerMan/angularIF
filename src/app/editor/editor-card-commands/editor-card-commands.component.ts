@@ -41,4 +41,13 @@ export class EditorCardCommandsComponent implements OnInit {
   playStoryHere(): void {
     this.editorService.playStory(<RoomData>this.entity);
   }
+
+  canDelete(): boolean {
+    return this.editorService.canDelete(this.entity);
+  }
+
+  delete(): void {
+    this.editorService.delete(this.entity);
+  }
+
 }

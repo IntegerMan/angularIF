@@ -143,11 +143,7 @@ export abstract class WorldEntity {
       return true;
     }
 
-    if (this.attributes.describeWithRoom === undefined) {
-      return true;
-    }
-
-    return this.attributes.describeWithRoom;
+    return this.getAttribute('describeWithRoom', true);
   }
 
   invokeVerbResponse(context: CommandContext, verbName: string, data: any = null): boolean {
