@@ -14,6 +14,7 @@ import { WorldEntity } from '../entities/world-entity';
 import {AliasData} from './alias-data';
 import {ItemData} from './item-data';
 import {VerbData} from './verb-data';
+import {isNullOrUndefined} from 'util';
 
 export class StoryLoader {
 
@@ -220,7 +221,7 @@ export class StoryLoader {
 
   private buildResponse(input: string | any[], context: any): StoryResponse {
 
-    if (input === undefined)  {
+    if (isNullOrUndefined(input))  {
       return undefined;
     }
 
@@ -231,61 +232,60 @@ export class StoryLoader {
 
     for (const roomData of this.data.rooms) {
 
-      // Set up room to room navigation
+      if (!roomData.directions) {
+        roomData.directions = [];
+      }
+
+      // Migrate from the old model of doing things to the new array-based model
       if (roomData.nav) {
 
-        const room: Room = story.findRoomByKey(roomData.key);
-        if (!room) {
-          continue;
-        }
-
-        room.roomLink = {};
         for (const direction of Object.getOwnPropertyNames(roomData.nav)) {
-          this.createRoomLink(roomData, direction, story, room);
+
+          const value: any = roomData.nav[direction];
+
+          let dir: DirectionData;
+          if (typeof (value) === 'string') {
+            dir = new DirectionData();
+            dir.room = value;
+            dir.lookMessage = null;
+            dir.goMessage = null;
+            dir.aliases = null;
+            dir.key = direction;
+          } else {
+            dir = roomData.nav[direction];
+            dir.key = direction;
+          }
+
+          roomData.directions.push(dir);
         }
 
+      }
+
+      const room: Room = story.findRoomByKey(roomData.key);
+
+      for (const dir of roomData.directions) {
+        this.createRoomLink(dir, story, room);
       }
 
     }
   }
 
-  private createRoomLink(roomData, direction, story: Story, room: Room): void {
-
-    const value: string | DirectionData = roomData.nav[direction];
-    if (!value) {
-      return;
-    }
-
-    const dirData: DirectionData = value as DirectionData;
+  private createRoomLink(direction: DirectionData, story: Story, room: Room): void {
 
     let target: Room = null;
-    let goResponse: StoryResponse = null;
-    let lookResponse: StoryResponse = null;
 
-    if (typeof (value) === 'string') {
-      target = story.findRoomByKey(value as string);
-    } else {
-      if (dirData.room) {
-        target = story.findRoomByKey(dirData.room);
-      }
+    if (direction.room) {
+      target = story.findRoomByKey(direction.room);
     }
 
     // Build out the link
-    const link = new RoomLink(room, direction, target);
-
-    if (typeof (value) !== 'string') {
-
-      goResponse = this.buildResponse(dirData.goMessage, link);
-      link.goResponse = goResponse;
-
-      lookResponse = this.buildResponse(dirData.lookMessage, link);
-      link.lookResponse = lookResponse;
-
-    }
+    const link = new RoomLink(room, direction.key, target);
+    link.goResponse = this.buildResponse(direction.goMessage, link);
+    link.lookResponse = this.buildResponse(direction.lookMessage, link);
 
     // Register the link now
-    room.roomLink[direction] = link;
-    
+    room.roomLink[direction.key] = link;
+
   }
 
   private buildAliases(entity: WorldEntity, alias: AliasData) {

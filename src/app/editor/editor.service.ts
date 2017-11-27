@@ -454,7 +454,7 @@ export class EditorService {
   private jsonFilter(name: string, value: any): any {
 
     // These properties are editor conveniences and should not be serialized.
-    if (name === 'nodeType' || name === 'parent' || name === 'ids') {
+    if (name === 'nodeType' || name === 'parent' || name === 'ids' || name === 'nav') {
       return undefined;
     }
 

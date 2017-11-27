@@ -1,6 +1,7 @@
 import {WorldEntity} from '../engine/entities/world-entity';
 import {StoryTestingServiceBase} from './story-testing-service-base';
 import {Room} from '../engine/entities/room';
+import {isNull, isNullOrUndefined} from 'util';
 
 export class EntitySpec {
 
@@ -123,7 +124,7 @@ export class EntitySpec {
 
       // Ensure we start from the same room every time. This is important for room navigation tests
       const resetValidateResult = this.resetForEachTest();
-      if (resetValidateResult && resetValidateResult !== null) {
+      if (!isNullOrUndefined(resetValidateResult)) {
         return resetValidateResult;
       }
 
@@ -147,12 +148,16 @@ export class EntitySpec {
   }
 
   protected checkForExpectedReply(...expectedReplyString: string[]): string {
+
     const actualReply: string = this.game.lastReply;
+    const actualReplyLower: string = actualReply.toLowerCase();
+
     for (const expectedReply of expectedReplyString) {
-      if (actualReply.indexOf(expectedReply) < 0) {
+      if (actualReplyLower.indexOf(expectedReply.toLowerCase()) < 0) {
         return `Response '${actualReply}' to '${this.game.lastInput}' did not contain '${expectedReply}'`;
       }
     }
+
     return null;
 
   }

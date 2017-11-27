@@ -1,7 +1,30 @@
-<p-dataTable [value]="directions" [editable]="true">
-  <p-column field="key" header="Direction" [editable]="false"></p-column>
-  <p-column field="room" header="Room" [editable]="true"></p-column>
-  <p-column field="goMessage" header="Go" [editable]="true"></p-column>
-  <p-column field="lookMessage" header="Look" [editable]="true"></p-column>
-  <p-column field="name" header="Name" [editable]="true"></p-column>
-</p-dataTable>
+<div class="card content-bg" *ngFor="let dir of directions">
+  <div class="card-content">
+    <div class="card-header">
+      <h4>{{dir.key}}</h4>
+    </div>
+
+    <mat-form-field>
+      <mat-select [(ngModel)]="dir.room" style="width: 100%;" placeholder="Target Room">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let key of roomKeys" [value]="key">{{key}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="input-field">
+      <input id="go" type="text" [(ngModel)]="dir.goMessage">
+      <label for="go" class="active">Go Message</label>
+    </div>
+
+    <div class="input-field">
+      <input id="look" type="text" [(ngModel)]="dir.lookMessage">
+      <label for="go" class="active">Look Message</label>
+    </div>
+
+    <div class="input-field">
+      <input id="alias" type="text" [(ngModel)]="dir.aliases">
+      <label for="go" class="active">Aliases</label>
+    </div>
+
+  </div>
+</div>
