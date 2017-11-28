@@ -5,6 +5,7 @@ import {LanguageTerm} from './language-term';
 import {TokenClassification} from './token-classification.enum';
 import {isNullOrUndefined} from 'util';
 import {CommandToken} from './command-token';
+import {StringHelper} from '../../utility/string-helper';
 
 @Injectable()
 export class NaturalLanguageService {
@@ -51,6 +52,9 @@ export class NaturalLanguageService {
     if (this.shouldLog) {
       this.logger.log(`Language service is extracting terms from: ${sentence}`);
     }
+
+    // Commas are death.
+    sentence = StringHelper.replaceAll(sentence, ',', '');
 
     const data: LanguageTerm[] = this.nlp(sentence, this.lexer.lexicon).terms().data();
 
