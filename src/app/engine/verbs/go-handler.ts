@@ -15,25 +15,32 @@ export class GoHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    const direction: CommandToken = command.getFirstDirection();
+    let link: RoomLink = null;
+    const room: Room = context.currentRoom;
 
-    if (!direction) {
+    const direction: CommandToken = command.getFirstDirection();
+    if (direction) {
+      if (direction.entity && direction.entity instanceof RoomLink) {
+        link = direction.entity;
+      } else {
+        link = room.roomLink[direction.name];
+      }
+    }
+
+    if (!link) {
       context.outputService.displayParserError('In order to go somewhere, you must include a direction.',
         'Try saying "Go East" or, simply, "East" or "E" to move in a direction.');
       return CommandResult.BuildParseFailedResult();
     }
 
-    const room: Room = context.currentRoom;
-
-    const link: RoomLink = room.roomLink[direction.name];
-
     // Send the verb preview event
-    if (!room.sendPreviewEvent(context, this.name, {room, direction, link})) {
+    const dirName: string = link.direction;
+    if (!room.sendPreviewEvent(context, this.name, {room, dirName, link})) {
       return CommandResult.BuildActionFailedResult();
     }
 
     // Send the leave preview event
-    if (!room.sendPreviewEvent(context, 'leave', {room, direction, link})) {
+    if (!room.sendPreviewEvent(context, 'leave', {room, dirName, link})) {
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -45,7 +52,7 @@ export class GoHandler extends VerbHandler {
     const newRoom: Room = link.target;
 
     // Send the enter preview event
-    if (newRoom && !newRoom.sendPreviewEvent(context, 'enter', {room, direction, link})) {
+    if (newRoom && !newRoom.sendPreviewEvent(context, 'enter', {room, dirName, link})) {
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -68,7 +75,7 @@ export class GoHandler extends VerbHandler {
 
     // Give a generic message
     if (!link.goResponse) {
-      context.outputService.displayStory(`You go ${direction.name}.`);
+      context.outputService.displayStory(`You go ${dirName}.`);
     }
 
     // Move the player
@@ -76,7 +83,7 @@ export class GoHandler extends VerbHandler {
 
     // Send events to the old room
     room.sendEvent(context, 'onLeave', link);
-    room.sendEvent(context, this.name, {room, direction, link});
+    room.sendEvent(context, this.name, {room, dirName, link});
 
     // Send the arrive event to the new room
     newRoom.sendEvent(context, 'onEnter', link);

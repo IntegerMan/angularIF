@@ -4,7 +4,6 @@ import {Story} from './entities/story';
 import {InteractiveFictionService} from './interactive-fiction.service';
 import {Room} from './entities/room';
 import {Actor} from './entities/actor';
-import {WorldEntity} from './entities/world-entity';
 import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './parser/command-token';
 import {NaturalLanguageService} from './parser/natural-language.service';

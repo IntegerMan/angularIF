@@ -4,6 +4,7 @@ import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {VerbType} from '../verbs/verb-type.enum';
 import {RoomLink} from '../room-link';
+import {EntityBase} from './entity-base';
 
 export class Room extends WorldEntity {
 
@@ -23,18 +24,21 @@ export class Room extends WorldEntity {
     this.setAttribute('describeWithRoom', false);
   }
 
-  findObjectsForToken(token: CommandToken, context: CommandContext): WorldEntity[] {
+  findObjectsForToken(token: CommandToken, context: CommandContext): EntityBase[] {
 
     // Evaluate the room's contents, including actors in it, and any nested item that is visible
-    const results: WorldEntity[] = [];
+    const results: EntityBase[] = [];
     this.addItemsFromContainer(results, this, token, context);
 
     // Evaluate room links. This is important for things like "go to back yard" or whatever.
     for (const dir of Object.getOwnPropertyNames(this.roomLink)) {
-      const link = this.roomLink[dir];
+      const link: RoomLink = this.roomLink[dir];
       if (link.isDescribedByToken(token, context)) {
         results.push(link);
+      } else if (link.target && link.target.isDescribedByToken(token, context)) {
+        results.push(link); // This here is interesting - I could resolve it to the actual target, but this is probably better
       }
+
     }
 
     // Evaluate the room in case you're trying to find the room or the floor or whatever
@@ -60,7 +64,7 @@ export class Room extends WorldEntity {
     return atr.toLowerCase() === 'false';
   }
 
-  private addItemsFromContainer(list: WorldEntity[], container: WorldEntity, token: CommandToken, context: CommandContext): void {
+  private addItemsFromContainer(list: EntityBase[], container: WorldEntity, token: CommandToken, context: CommandContext): void {
 
     for (const entity of container.getContainedEntities(context, false)) {
 

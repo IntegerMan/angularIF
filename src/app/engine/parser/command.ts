@@ -5,6 +5,7 @@ import {TokenClassification} from './token-classification.enum';
 import {CommandResult} from '../command-result';
 import {VerbType} from '../verbs/verb-type.enum';
 import {EntityBase} from '../entities/entity-base';
+import {RoomLink} from '../room-link';
 
 /**
  * Represents an arrangement of tokens into a sentence structure that can be handed off to a verb interpreter. At present, sentences are
@@ -90,7 +91,9 @@ export class Command {
   getFirstDirection(): CommandToken {
     let direction: CommandToken = null;
 
-    const directions: CommandToken[] = this.objects.filter(o => o.classification === TokenClassification.Direction);
+    const directions: CommandToken[] =
+      this.objects.filter(o => o.classification === TokenClassification.Direction || (o.entity && o.entity instanceof RoomLink));
+
     if (directions && directions.length > 0) {
       direction = directions[0];
     }
