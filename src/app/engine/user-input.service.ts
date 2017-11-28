@@ -56,6 +56,7 @@ export class UserInputService {
     }
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
+    context.resolveDirections(tokens);
     context.resolveNouns(tokens, !isDebugCommand);
 
     // Create a command context. This will give the command handler more utility information

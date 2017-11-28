@@ -3,6 +3,7 @@ import {LanguageTerm} from './language-term';
 import {WorldEntity} from '../entities/world-entity';
 import {StringHelper} from '../../utility/string-helper';
 import {ArrayHelper} from '../../utility/array-helper';
+import {EntityBase} from '../entities/entity-base';
 
 export class CommandToken {
 
@@ -15,7 +16,7 @@ export class CommandToken {
   nextToken: CommandToken;
   modifies: CommandToken[];
   modifiedBy: CommandToken[];
-  entity: WorldEntity;
+  entity: EntityBase;
 
   constructor(term: LanguageTerm) {
 

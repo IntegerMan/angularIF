@@ -17,7 +17,6 @@ import {DebugHandler} from './debug-handler';
 import {WaitHandler} from './wait-handler';
 import {ReportbugHandler} from './reportbug-handler';
 import {GenericVerbHandler} from './generic-verb-handler';
-import {VerbType} from './verb-type.enum';
 
 @Injectable()
 export class CommonVerbService {

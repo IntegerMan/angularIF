@@ -1,38 +1,30 @@
 import {CommandContext} from '../command-context';
 import {Room} from './room';
 import {LoggingService} from '../../utility/logging.service';
-import {NaturalLanguageService} from '../parser/natural-language.service';
 import {CommandToken} from '../parser/command-token';
 import {ArrayHelper} from '../../utility/array-helper';
 import {StringHelper} from '../../utility/string-helper';
 import {StoryResponse} from '../responses/story-response';
 import {isNullOrUndefined} from 'util';
+import {EntityBase} from './entity-base';
 
-export abstract class WorldEntity {
+export abstract class WorldEntity extends EntityBase {
 
   contents: WorldEntity[];
   parent: WorldEntity = null;
-  nouns: string[];
-  adjectives: string[];
   isAlive: boolean = false;
-  key: string;
 
   verbs: any;
   attributes: any;
   events: any;
 
   private _inRoomDescription: string = null;
-  private _name: string;
   private _currentRoom: Room;
 
   constructor(name: string, key: string) {
-
-    this._name = name;
-    this.key = key;
+    super(name, key);
 
     // Initialize collections
-    this.nouns = [];
-    this.adjectives = [];
     this.contents = [];
     this.attributes = {};
     this.verbs = {};
@@ -65,29 +57,6 @@ export abstract class WorldEntity {
       child.currentRoom = value;
     }
 
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  autodetectNounsAndAdjectives(): void {
-
-    const nouns = NaturalLanguageService.instance.getNouns(this.name);
-    const adjectives = NaturalLanguageService.instance.getAdjectives(this.name);
-
-    // Strip the phrase and analyze the nouns present
-    this.addNounAliases(nouns);
-    this.addAdjectiveAliases(adjectives);
-
-  }
-
-  addNounAliases(nouns: string[]): void {
-    this.addAliasToList(nouns, this.nouns);
-  }
-
-  addAdjectiveAliases(adjectives: string[]): void {
-    this.addAliasToList(adjectives, this.adjectives);
   }
 
   isDescribedByToken(token: CommandToken, context: CommandContext): boolean {
@@ -169,7 +138,7 @@ export abstract class WorldEntity {
     return items;
   }
 
-  containsEntity(entity: WorldEntity, isRecursive: boolean): boolean {
+  containsEntity(entity: EntityBase, isRecursive: boolean): boolean {
 
     for (const item of this.contents) {
       if (item === entity) {
@@ -341,16 +310,6 @@ export abstract class WorldEntity {
    */
   get isPortable(): boolean {
     return this.getAttribute('portable', false);
-  }
-
-  private addAliasToList(inputs: string[], list: string[]) {
-    if (inputs) {
-      for (const input of inputs) {
-
-        const token: CommandToken = NaturalLanguageService.instance.getTokenForWord(input);
-        list.push(token.name);
-      }
-    }
   }
 
 }

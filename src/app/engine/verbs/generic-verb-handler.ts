@@ -4,6 +4,7 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {CommandResult} from '../command-result';
 import {WorldEntity} from '../entities/world-entity';
+import {EntityBase} from '../entities/entity-base';
 
 /**
  * Handles a generic verb that doesn't need a lot of specific code. This is typically useful for something we expect the user to potentially
@@ -64,13 +65,17 @@ export class GenericVerbHandler extends VerbHandler {
 
   private routeCommandToTarget(command: Command, context: CommandContext): boolean {
 
-    const targets: WorldEntity[] = command.getDistinctEntitiesFromObjects();
+    const targets: EntityBase[] = command.getDistinctEntitiesFromObjects();
 
     if (!(targets && targets.length > 0)) {
       return false;
     }
 
-    const entity: WorldEntity = targets[0];
+    const entity: WorldEntity = targets[0] as WorldEntity;
+    if (!(entity instanceof WorldEntity)) {
+      return false;
+    }
+
     if (entity.invokeVerbResponse(context, this._verbName)) {
       return true;
     }

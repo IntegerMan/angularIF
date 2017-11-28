@@ -15,6 +15,7 @@ import {AliasData} from './alias-data';
 import {ItemData} from './item-data';
 import {VerbData} from './verb-data';
 import {isNullOrUndefined} from 'util';
+import {NaturalLanguageService} from '../parser/natural-language.service';
 
 export class StoryLoader {
 
@@ -238,27 +239,7 @@ export class StoryLoader {
 
       // Migrate from the old model of doing things to the new array-based model
       if (roomData.nav) {
-
-        for (const direction of Object.getOwnPropertyNames(roomData.nav)) {
-
-          const value: any = roomData.nav[direction];
-
-          let dir: DirectionData;
-          if (typeof (value) === 'string') {
-            dir = new DirectionData();
-            dir.room = value;
-            dir.lookMessage = null;
-            dir.goMessage = null;
-            dir.aliases = null;
-            dir.key = direction;
-          } else {
-            dir = roomData.nav[direction];
-            dir.key = direction;
-          }
-
-          roomData.directions.push(dir);
-        }
-
+        this.migrateNavigationStorage(roomData);
       }
 
       const room: Room = story.findRoomByKey(roomData.key);
@@ -267,6 +248,31 @@ export class StoryLoader {
         this.createRoomLink(dir, story, room);
       }
 
+    }
+  }
+
+  private migrateNavigationStorage(roomData): void {
+
+    // TODO: Pull Cloak over to the new format, then get rid of this migration method and the .nav property.
+
+    for (const direction of Object.getOwnPropertyNames(roomData.nav)) {
+
+      const value: any = roomData.nav[direction];
+
+      let dir: DirectionData;
+      if (typeof (value) === 'string') {
+        dir = new DirectionData();
+        dir.room = value;
+        dir.lookMessage = null;
+        dir.goMessage = null;
+        dir.aliases = null;
+        dir.key = direction;
+      } else {
+        dir = roomData.nav[direction];
+        dir.key = direction;
+      }
+
+      roomData.directions.push(dir);
     }
   }
 
@@ -282,13 +288,14 @@ export class StoryLoader {
     const link = new RoomLink(room, direction.key, target);
     link.goResponse = this.buildResponse(direction.goMessage, link);
     link.lookResponse = this.buildResponse(direction.lookMessage, link);
+    link.addAliases(direction.aliases);
 
     // Register the link now
     room.roomLink[direction.key] = link;
 
   }
 
-  private buildAliases(entity: WorldEntity, alias: AliasData) {
+  private buildAliases(entity: WorldEntity, alias: AliasData): void {
 
     if (!alias) {
       return;
@@ -299,7 +306,7 @@ export class StoryLoader {
 
   }
 
-  private updateParent(container: EntityData) {
+  private updateParent(container: EntityData): void {
     if (container.contents) {
       for (const obj of container.contents) {
         obj.parent = container;

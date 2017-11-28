@@ -4,7 +4,7 @@ import {CommandContext} from '../command-context';
 import {TokenClassification} from './token-classification.enum';
 import {CommandResult} from '../command-result';
 import {VerbType} from '../verbs/verb-type.enum';
-import {WorldEntity} from '../entities/world-entity';
+import {EntityBase} from '../entities/entity-base';
 
 /**
  * Represents an arrangement of tokens into a sentence structure that can be handed off to a verb interpreter. At present, sentences are
@@ -128,7 +128,7 @@ export class Command {
     return this.tokens.filter(t => t.name === 'all' || t.name === 'everything').length > 0;
   }
 
-  getDistinctEntitiesFromObjects(): WorldEntity[] {
+  getDistinctEntitiesFromObjects(): EntityBase[] {
     return Array.from(new Set(this.objects.filter(o => o.entity).map(o => o.entity)));
   }
 

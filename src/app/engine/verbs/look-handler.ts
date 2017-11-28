@@ -7,6 +7,7 @@ import {CommandResult} from '../command-result';
 import {TokenClassification} from '../parser/token-classification.enum';
 import {RoomLink} from '../room-link';
 import { StringHelper } from '../../utility/string-helper';
+import {WorldEntity} from '../entities/world-entity';
 
 export class LookHandler extends VerbHandler {
 
@@ -40,8 +41,8 @@ export class LookHandler extends VerbHandler {
     }
 
     // Let the context object take care of disambiguation and lookup
-    const entity = token.entity;
-    if (!entity) {
+    const entity: WorldEntity = token.entity as WorldEntity;
+    if (!entity || !(entity instanceof WorldEntity)) {
       // The context lookup took care of output to the user, so we just need to abort
       return CommandResult.BuildActionFailedResult();
     }

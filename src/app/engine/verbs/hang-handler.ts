@@ -4,8 +4,8 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {CommandResult} from '../command-result';
 import {CommandToken} from '../parser/command-token';
-import {TokenClassification} from '../parser/token-classification.enum';
 import {WorldEntity} from '../entities/world-entity';
+import {EntityBase} from '../entities/entity-base';
 
 export class HangHandler extends VerbHandler {
 
@@ -17,7 +17,7 @@ export class HangHandler extends VerbHandler {
 
     // Figure out what we're talking about.
     const subject: WorldEntity = this.assertHasObjectWithEntity(command, context);
-    if (!subject) {
+    if (!subject || !(subject instanceof WorldEntity)) {
       return CommandResult.BuildParseFailedResult();
     }
 
@@ -58,8 +58,8 @@ export class HangHandler extends VerbHandler {
     }
 
     // Ensure the hook  / hang target is present
-    const hook: WorldEntity = suspender.entity;
-    if (!hook) {
+    const hook: WorldEntity = suspender.entity as WorldEntity;
+    if (!hook || !(hook instanceof WorldEntity)) {
       context.outputService.displayStory(`You can't hang anything ${prep.name} ${suspender.entity.that}.`);
       return CommandResult.BuildActionFailedResult();
     }
@@ -87,7 +87,7 @@ export class HangHandler extends VerbHandler {
 
   }
 
-  private getSuspender(command: Command, context: CommandContext, entityToHang: WorldEntity): CommandToken {
+  private getSuspender(command: Command, context: CommandContext, entityToHang: EntityBase): CommandToken {
 
     // TODO: With/using may need to be special as in "Hang target from branch with rope"
     const hangerPrep: CommandToken = command.getPrepositionWithFallbacks(['on', 'using', 'with', 'under', 'below']);
@@ -113,7 +113,7 @@ export class HangHandler extends VerbHandler {
 
   private assertEntityIsNotAlive(entityToHang: WorldEntity, context: CommandContext): boolean {
 
-    if (!entityToHang.isAlive) {
+    if (!entityToHang || !entityToHang.isAlive) {
       return true;
     }
 
@@ -137,10 +137,10 @@ export class HangHandler extends VerbHandler {
     }
 
     const itemToHang: CommandToken = command.objects[0];
-    const entityToHang: WorldEntity = itemToHang.entity;
+    const entityToHang: WorldEntity = itemToHang.entity as WorldEntity;
 
     // Verify that we're talking about is present
-    if (!entityToHang) {
+    if (!entityToHang || !(entityToHang instanceof WorldEntity)) {
       context.outputService.displayParserError(`You don't see ${itemToHang.userInput} here.`);
       return null;
     }

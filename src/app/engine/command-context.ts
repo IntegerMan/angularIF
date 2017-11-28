@@ -15,6 +15,7 @@ import {ScoreService} from './score.service';
 import {TokenClassification} from './parser/token-classification.enum';
 import {TemplatingService} from './parser/templating.service';
 import {Command} from './parser/command';
+import {EntityBase} from './entities/entity-base';
 
 export class CommandContext {
 
@@ -59,11 +60,11 @@ export class CommandContext {
 
   }
 
-  getSingleObjectForToken(token: CommandToken, announceConfusion: boolean = true): WorldEntity {
+  getSingleObjectForToken(token: CommandToken, announceConfusion: boolean = true): EntityBase {
 
     // TODO: This shouldn't really live in the context object
 
-    let entities: WorldEntity[] = this.currentRoom.findObjectsForToken(token, this);
+    let entities: EntityBase[] = this.currentRoom.findObjectsForToken(token, this);
 
     // No matches yields an "it's not here" message
     if (!entities || entities.length <= 0) {
@@ -134,7 +135,7 @@ export class CommandContext {
       }
     }
 
-    const entity: WorldEntity = entities[0];
+    const entity: EntityBase = entities[0];
     this.logger.log(`Match found for '${token.name}': ${entity.name}`);
 
     return entity;
@@ -163,6 +164,15 @@ export class CommandContext {
     // Tell the user all of the mistakes they made in one go.
     if (confusedNames.length > 0 && announceConfusion) {
       this.outputService.displayParserError(`You don't see ${StringHelper.toOxfordCommaList(confusedNames, 'or')} here.`);
+    }
+
+  }
+
+  resolveDirections(tokens: CommandToken[]): void {
+
+    const directions: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Direction);
+    for (const dir of directions) {
+      dir.entity = this.currentRoom.roomLink[dir.name];
     }
 
   }

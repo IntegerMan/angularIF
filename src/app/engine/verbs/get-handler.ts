@@ -5,6 +5,8 @@ import {WorldEntity} from '../entities/world-entity';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
 import {PortableEntity} from '../entities/portable-entity';
+import {EntityBase} from '../entities/entity-base';
+import {ArrayHelper} from '../../utility/array-helper';
 
 export class GetHandler extends VerbHandler {
 
@@ -15,7 +17,7 @@ export class GetHandler extends VerbHandler {
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
     // Get a DISTINCT list of entities we wish to pick up
-    const entities: WorldEntity[] = command.getDistinctEntitiesFromObjects();
+    const entities: EntityBase[] = command.getDistinctEntitiesFromObjects();
 
     if (entities.length <= 0) {
       context.outputService.displayParserError('I\'m not sure what you want to pick up.');
@@ -26,7 +28,7 @@ export class GetHandler extends VerbHandler {
     let anySuccess: boolean = false;
     for (const entity of entities) {
 
-      if (context.player.contents.indexOf(entity) >= 0) {
+      if (ArrayHelper.contains(context.player.contents, entity)) {
         context.outputService.displayStory(`You already have ${entity.that}!`);
       } else {
         if (this.attemptPickup(entity, context).succeeded) {
@@ -44,7 +46,7 @@ export class GetHandler extends VerbHandler {
 
   }
 
-  private attemptPickup(entity: WorldEntity, context: CommandContext): CommandResult {
+  private attemptPickup(entity: EntityBase, context: CommandContext): CommandResult {
 
     let respondedTo: boolean = false;
 
@@ -72,7 +74,9 @@ export class GetHandler extends VerbHandler {
     }
 
     if (!respondedTo) {
-      if (entity.getAttribute('isMassive', false) === true) {
+      if (!(entity instanceof WorldEntity)) {
+        context.outputService.displayStory(`You can't be serious.`);
+      } else if ((<WorldEntity>entity).getAttribute('isMassive', false) === true) {
         context.outputService.displayStory(`Surely you can't be serious. That's well beyond your ability to even budge.`);
       } else {
         context.outputService.displayStory(`You can't pick up ${entity.that}.`);

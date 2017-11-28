@@ -134,8 +134,7 @@ export class Story {
   private autodetectNounsAndAdjectives(entity: WorldEntity): void {
 
     // TODO: Is this the best place for this logic?
-
-    entity.autodetectNounsAndAdjectives();
+    entity.addAliases(entity.name);
 
     if (entity.contents && entity.contents.length > 0) {
       for (const child of entity.contents) {

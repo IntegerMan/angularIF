@@ -40,4 +40,9 @@ export class ArrayHelper {
   static clone(arr: any[]): any[] {
     return arr.slice();
   }
+
+  static contains(contents: any[], entity: any): boolean {
+    return contents && contents.indexOf(entity) >= 0;
+  }
+
 }

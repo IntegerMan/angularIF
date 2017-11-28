@@ -1,7 +1,7 @@
 import {WorldEntity} from '../engine/entities/world-entity';
 import {StoryTestingServiceBase} from './story-testing-service-base';
 import {Room} from '../engine/entities/room';
-import {isNull, isNullOrUndefined} from 'util';
+import {isNullOrUndefined} from 'util';
 
 export class EntitySpec {
 

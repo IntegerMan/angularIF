@@ -4,7 +4,6 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {CommandResult} from '../command-result';
 import {CommandToken} from '../parser/command-token';
-import {TokenClassification} from '../parser/token-classification.enum';
 import {WorldEntity} from '../entities/world-entity';
 import {HangHandler} from './hang-handler';
 
@@ -68,8 +67,8 @@ export class PutHandler extends VerbHandler {
     }
 
     // Ensure the hook  / hang target is present
-    const containerEntity: WorldEntity = container.entity;
-    if (!containerEntity) {
+    const containerEntity: WorldEntity = container.entity as WorldEntity;
+    if (!containerEntity || !(containerEntity instanceof WorldEntity)) {
       context.outputService.displayStory(`You can't put anything ${prep.name} ${container.entity.that}.`);
       return CommandResult.BuildActionFailedResult();
     }
@@ -123,10 +122,10 @@ export class PutHandler extends VerbHandler {
     }
 
     const source: CommandToken = command.objects[0];
-    const sourceEntity: WorldEntity = source.entity;
+    const sourceEntity: WorldEntity = source.entity as WorldEntity;
 
     // Verify that we're talking about is present
-    if (!sourceEntity) {
+    if (!sourceEntity || !(sourceEntity instanceof WorldEntity)) {
       context.outputService.displayParserError(`You don't see ${source.userInput} here.`);
       return null;
     }

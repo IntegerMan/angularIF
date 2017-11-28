@@ -3,7 +3,7 @@ import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {RenderType} from '../text-rendering/render-type.enum';
 import {CommandToken} from './parser/command-token';
-import {WorldEntity} from './entities/world-entity';
+import {EntityBase} from './entities/entity-base';
 
 @Injectable()
 export class TextOutputService {
@@ -99,7 +99,7 @@ export class TextOutputService {
     this.addLine(new TextLine(text, RenderType.tokenDebug, token));
   }
 
-  displayEntityDebugInfo(text: string, entity: WorldEntity): void {
+  displayEntityDebugInfo(text: string, entity: EntityBase): void {
     this.addLine(new TextLine(text, RenderType.entityDebug, entity));
   }
 

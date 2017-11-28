@@ -12,6 +12,7 @@ import {WorldEntity} from '../engine/entities/world-entity';
 import {isNullOrUndefined} from 'util';
 import {EntitySpec} from './entity-spec';
 import {RoomSpec} from './room-spec';
+import {EntityBase} from '../engine/entities/entity-base';
 
 export class StoryTestingServiceBase {
 
@@ -51,7 +52,7 @@ export class StoryTestingServiceBase {
     return this.player.currentRoom;
   }
 
-  getEntityFromResult(result: CommandResult, key: string = null): WorldEntity {
+  getEntityFromResult(result: CommandResult, key: string = null): EntityBase {
     const tokens = result.command.objects.filter(o => o.entity &&  (isNullOrUndefined(key) || o.entity.key === key));
     if (tokens && tokens.length > 0)  {
       return tokens[0].entity;
@@ -60,7 +61,7 @@ export class StoryTestingServiceBase {
     return null;
   }
 
-  lookForEntity(description: string, key: string = null): WorldEntity {
+  lookForEntity(description: string, key: string = null): EntityBase {
     const result = this.input(`x ${description}`);
     return this.getEntityFromResult(result, key);
   }

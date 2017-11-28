@@ -3,7 +3,7 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
-import {WorldEntity} from '../entities/world-entity';
+import {EntityBase} from '../entities/entity-base';
 
 export abstract class VerbHandler {
 
@@ -61,7 +61,7 @@ export abstract class VerbHandler {
 
   abstract handleCommand(command: Command, context: CommandContext): CommandResult;
 
-  protected assertHasEntity(context: CommandContext, entity: WorldEntity): boolean {
+  protected assertHasEntity(context: CommandContext, entity: EntityBase): boolean {
 
     // TODO: it'd be nice to auto-pick-up the item if we don't.
 

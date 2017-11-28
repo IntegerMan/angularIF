@@ -26,12 +26,18 @@ export class Room extends WorldEntity {
   findObjectsForToken(token: CommandToken, context: CommandContext): WorldEntity[] {
 
     // Evaluate the room's contents, including actors in it, and any nested item that is visible
-    const results: WorldEntity[] = this.addItemsFromContainer(this, token, context);
+    const results: WorldEntity[] = [];
+    this.addItemsFromContainer(results, this, token, context);
+
+    // Evaluate room links. This is important for things like "go to back yard" or whatever.
+    for (const dir of Object.getOwnPropertyNames(this.roomLink)) {
+      const link = this.roomLink[dir];
+      if (link.isDescribedByToken(token, context)) {
+        results.push(link);
+      }
+    }
 
     // Evaluate the room in case you're trying to find the room or the floor or whatever
-
-    console.log(this.nouns);
-    console.log(this.adjectives);
     if (this.isDescribedByToken(token, context)) {
       results.push(this);
     }
@@ -54,23 +60,16 @@ export class Room extends WorldEntity {
     return atr.toLowerCase() === 'false';
   }
 
-  private addItemsFromContainer(container: WorldEntity, token: CommandToken, context: CommandContext): WorldEntity[] {
-
-    const results: WorldEntity[] = [];
+  private addItemsFromContainer(list: WorldEntity[], container: WorldEntity, token: CommandToken, context: CommandContext): void {
 
     for (const entity of container.getContainedEntities(context, false)) {
 
       if (entity.isDescribedByToken(token, context)) {
-        results.push(entity);
+        list.push(entity);
       }
 
-      const fromContainer = this.addItemsFromContainer(entity, token, context);
-      for (const e of fromContainer) {
-        results.push(e);
-      }
+      this.addItemsFromContainer(list, entity, token, context);
     }
-
-    return results;
   }
 
 }
