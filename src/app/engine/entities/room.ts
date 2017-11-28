@@ -35,8 +35,6 @@ export class Room extends WorldEntity {
       const link: RoomLink = this.roomLink[dir];
       if (link.isDescribedByToken(token, context)) {
         results.push(link);
-      } else if (link.target && link.target.isDescribedByToken(token, context)) {
-        results.push(link); // This here is interesting - I could resolve it to the actual target, but this is probably better
       }
 
     }
