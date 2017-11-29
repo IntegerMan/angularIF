@@ -15,7 +15,6 @@ import {CommandContext} from './command-context';
 import {WorldEntity} from './entities/world-entity';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
-import {StateService} from './state.service';
 import {ScoreService} from './score.service';
 import {CommandResult} from './command-result';
 import {GameState} from './game-state.enum';
@@ -49,7 +48,6 @@ export class InteractiveFictionService {
               private templatingService: TemplatingService,
               private verbService: CommonVerbService,
               private analytics: GoogleAnalyticsService,
-              private stateService: StateService,
               private scoreService: ScoreService) {
 
     // Ensure we start with a unique empty list
@@ -161,7 +159,6 @@ export class InteractiveFictionService {
       this,
       this.confirmService,
       this.templatingService,
-      this.stateService,
       this.scoreService);
   }
 
@@ -311,7 +308,6 @@ export class InteractiveFictionService {
     this.story = story;
 
     this.movesTaken = 0;
-    this.stateService.clear();
     this.scoreService.currentScore = 0;
     this.scoreService.maxScore = story.maxScore;
 

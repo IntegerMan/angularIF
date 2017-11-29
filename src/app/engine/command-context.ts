@@ -8,7 +8,6 @@ import {CommandToken} from './parser/command-token';
 import {NaturalLanguageService} from './parser/natural-language.service';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
-import {StateService} from './state.service';
 import {ScoreService} from './score.service';
 import {TokenClassification} from './parser/token-classification.enum';
 import {TemplatingService} from './parser/templating.service';
@@ -31,7 +30,6 @@ export class CommandContext {
   analytics: GoogleAnalyticsService;
   ifService: InteractiveFictionService;
   confirmService: ConfirmationService;
-  state: StateService;
   score: ScoreService;
   story: Story;
   command: Command;
@@ -41,14 +39,12 @@ export class CommandContext {
   constructor(ifService: InteractiveFictionService,
               confirmService: ConfirmationService,
               templatingService: TemplatingService,
-              stateService: StateService,
               scoreService: ScoreService) {
 
     this.ifService = ifService;
     this.story = ifService.story;
     this.confirmService = confirmService;
     this.templater = templatingService;
-    this.state = stateService;
     this.score = scoreService;
     this.output = new CommandResponseManager();
 
