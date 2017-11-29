@@ -1,5 +1,6 @@
 import {TextLine} from '../text-rendering/text-line';
 import {RenderType} from '../text-rendering/render-type.enum';
+import {TextTemplateProvider} from './text-template-provider';
 
 export class CommandResponseManager {
 
@@ -48,6 +49,14 @@ export class CommandResponseManager {
 
   addSuccessAction(text: string): TextLine {
     return this.addLine(text, RenderType.successAction);
+  }
+
+  addTemplatedLine(text: string, renderType: RenderType, data: any): TextLine {
+
+    if (text && text.indexOf('{{') >= 0) {
+      text = TextTemplateProvider.instance.render(text, data);
+    }
+    return this.addLine(text, renderType, data);
   }
 
 }

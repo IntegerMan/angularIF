@@ -23,9 +23,7 @@ export class OutputResponse extends StoryResponse {
       this.data = context;
     }
 
-    this.text = context.templater.applyTemplate(this.text, this.data);
-
-    context.output.addLine(this.text, this.renderType, this.data);
+    context.output.addTemplatedLine(this.text, this.renderType, this.data);
 
     return true;
   }

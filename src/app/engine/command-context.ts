@@ -10,7 +10,6 @@ import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
 import {ScoreService} from './score.service';
 import {TokenClassification} from './parser/token-classification.enum';
-import {TemplatingService} from './parser/templating.service';
 import {Command} from './parser/command';
 import {EntityBase} from './entities/entity-base';
 import {CommandResponseManager} from './command-response-manager';
@@ -26,7 +25,6 @@ export class CommandContext {
   }
 
   logger: LoggingService;
-  templater: TemplatingService;
   analytics: GoogleAnalyticsService;
   ifService: InteractiveFictionService;
   confirmService: ConfirmationService;
@@ -38,13 +36,11 @@ export class CommandContext {
 
   constructor(ifService: InteractiveFictionService,
               confirmService: ConfirmationService,
-              templatingService: TemplatingService,
               scoreService: ScoreService) {
 
     this.ifService = ifService;
     this.story = ifService.story;
     this.confirmService = confirmService;
-    this.templater = templatingService;
     this.score = scoreService;
     this.output = new CommandResponseManager();
 

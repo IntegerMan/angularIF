@@ -25,7 +25,7 @@ export class WinHandler extends VerbHandler {
     }
 
     // But in dev it is!
-    context.ifService.endGame(true, 'Well, that was easy.');
+    context.ifService.endGame(context, true, 'Well, that was easy.');
 
     return CommandResult.BuildActionSuccessResult();
 

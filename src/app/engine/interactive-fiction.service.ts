@@ -18,8 +18,8 @@ import {ConfirmationService} from 'primeng/primeng';
 import {ScoreService} from './score.service';
 import {CommandResult} from './command-result';
 import {GameState} from './game-state.enum';
-import {TemplatingService} from './parser/templating.service';
 import {CommonVerbService} from './verbs/common-verb.service';
+import {RenderType} from '../text-rendering/render-type.enum';
 
 @Injectable()
 export class InteractiveFictionService {
@@ -45,7 +45,6 @@ export class InteractiveFictionService {
               private outputService: TextOutputService,
               private lexer: LexiconService,
               private confirmService: ConfirmationService,
-              private templatingService: TemplatingService,
               private verbService: CommonVerbService,
               private analytics: GoogleAnalyticsService,
               private scoreService: ScoreService) {
@@ -158,7 +157,6 @@ export class InteractiveFictionService {
     return new CommandContext(
       this,
       this.confirmService,
-      this.templatingService,
       this.scoreService);
   }
 
@@ -201,7 +199,7 @@ export class InteractiveFictionService {
     return this.scoreService.maxScore;
   }
 
-  endGame(isVictory: boolean, message: string = null) {
+  endGame(context: CommandContext, isVictory: boolean, message: string = null) {
 
     if (isVictory) {
       this.gameState = GameState.won;
@@ -217,9 +215,9 @@ export class InteractiveFictionService {
       }
     }
 
-    this.outputService.displayBlankLine();
-    this.outputService.displayGameOver(message, isVictory);
-    this.outputService.displayBlankLine();
+    context.output.addBlankLine();
+    context.output.addLine(message, RenderType.gameOver, isVictory);
+    context.output.addBlankLine();
 
     this.analytics.emitEvent(
       'Game Over',
@@ -244,20 +242,20 @@ export class InteractiveFictionService {
 
   private displayHeadingAndIntro(story: Story, context: CommandContext) {
 
-    this.outputService.displayTitle(story.name, `v${story.version}`);
+    context.output.addLine(story.name, RenderType.header, `v${story.version}`);
 
     if (story.authors) {
-      this.outputService.displayAuthor(story.authors);
+      context.output.addLine(story.authors, RenderType.author);
     }
     if (story.description) {
-      this.outputService.displaySubtitle(story.description);
+      context.output.addLine(story.description, RenderType.subtitle);
     }
 
-    this.outputService.displayBlankLine();
+    context.output.addBlankLine();
 
     story.displayIntroduction(context);
 
-    this.outputService.displayBlankLine();
+    context.output.addBlankLine();
 
   }
 

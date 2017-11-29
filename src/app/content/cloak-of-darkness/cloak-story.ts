@@ -102,7 +102,7 @@ export class CloakStory extends Story {
       context.output.addStory(context.getString('messageLose'));
     }
 
-    context.ifService.endGame(isWin);
+    context.ifService.endGame(context, isWin);
   }
 
   private isCommandAllowedInBar(context: CommandContext): boolean {

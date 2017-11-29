@@ -26,36 +26,8 @@ export class TextOutputService {
     TextOutputService._instance = this;
   }
 
-  displayUserCommand(command: string, sentence: any): void {
-    this.addLine(new TextLine(command, RenderType.userInput, sentence));
-  }
-
-  displayTitle(text: string, smallText: string): void {
-    this.addLine(new TextLine(text, RenderType.header, smallText));
-  }
-
-  displayAuthor(text: string): void {
-    this.addLine(new TextLine(text, RenderType.author));
-  }
-
-  displaySubtitle(text: string): void {
-    this.addLine(new TextLine(text, RenderType.subtitle));
-  }
-
   displaySystem(text: string): void {
     this.addLine(new TextLine(text, RenderType.engine));
-  }
-
-  displayStory(text: string, hint: string = null): void {
-    this.addLine(new TextLine(text, RenderType.narrative, hint));
-  }
-
-  displayParserError(text: string, hint: string = null): void {
-    this.addLine(new TextLine(text, RenderType.parserError, hint));
-  }
-
-  displaySuccessAction(text: string): void {
-    this.addLine(new TextLine(text, RenderType.successAction));
   }
 
   displayBlankLine(): void {
@@ -67,10 +39,6 @@ export class TextOutputService {
     this.lines.length = 0;
 
     this.linesChanged.emit(this.lines);
-  }
-
-  displayGameOver(message: string, isVictory: boolean): void {
-    this.addLine(new TextLine(message, RenderType.gameOver, isVictory));
   }
 
   addLines(lines: TextLine[]): void {
