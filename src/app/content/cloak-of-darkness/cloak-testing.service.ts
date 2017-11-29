@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserInputService} from '../../engine/user-input.service';
-import {TextOutputService} from '../../engine/text-output.service';
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {StoryTestingServiceBase} from '../../testing/story-testing-service-base';
 import {CloakStory} from './cloak-story';
@@ -9,10 +8,9 @@ import {CloakStory} from './cloak-story';
 export class CloakTestingService extends StoryTestingServiceBase {
 
   constructor(ifService: InteractiveFictionService,
-              inputService: UserInputService,
-              outputService: TextOutputService) {
+              inputService: UserInputService) {
 
-    super(ifService, inputService, outputService);
+    super(ifService, inputService);
 
     super.initialize(new CloakStory());
 

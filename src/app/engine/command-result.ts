@@ -1,4 +1,5 @@
 import {Command} from './parser/command';
+import {TextLine} from '../text-rendering/text-line';
 
 export class CommandResult {
 
@@ -6,6 +7,7 @@ export class CommandResult {
   parsed: boolean = false;
   countsAsMove: boolean = false;
   command: Command = null;
+  lines: TextLine[];
 
   static BuildParseFailedResult(): CommandResult {
     return new CommandResult();

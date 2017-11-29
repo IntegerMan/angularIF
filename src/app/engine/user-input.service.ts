@@ -3,7 +3,6 @@ import {TokenClassification} from './parser/token-classification.enum';
 import {CommandToken} from './parser/command-token';
 import {LoggingService} from '../utility/logging.service';
 import {NaturalLanguageService} from './parser/natural-language.service';
-import {TextOutputService} from './text-output.service';
 import {Command} from './parser/command';
 import {SentenceParserService} from './parser/sentence-parser.service';
 import {InteractiveFictionService} from './interactive-fiction.service';
@@ -12,6 +11,8 @@ import {CommandContext} from './command-context';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {CommandResult} from './command-result';
 import {LexiconService} from './parser/lexicon.service';
+import {RenderType} from '../text-rendering/render-type.enum';
+import {ArrayHelper} from '../utility/array-helper';
 
 @Injectable()
 export class UserInputService {
@@ -20,8 +21,7 @@ export class UserInputService {
               private tokenizer: NaturalLanguageService,
               private lexer: LexiconService,
               private sentenceParser: SentenceParserService,
-              private ifService: InteractiveFictionService,
-              private outputService: TextOutputService) { }
+              private ifService: InteractiveFictionService) { }
 
   public handleUserSentence(sentence: string): CommandResult {
 
@@ -43,7 +43,7 @@ export class UserInputService {
       this.logger.debug('Command recognized as a debugging command');
     }
 
-    this.outputService.displayUserCommand(sentence, command);
+    context.output.addLine(sentence, RenderType.userInput, command);
 
     // At this point, we shouldn't have tokens coming in that we can't even classify, but check to be sure
     const unknowns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Unknown);
@@ -52,6 +52,7 @@ export class UserInputService {
 
       const unknownResult = CommandResult.BuildParseFailedResult();
       unknownResult.command = command;
+      unknownResult.lines = ArrayHelper.clone(context.output.lines);
       return unknownResult;
     }
 
@@ -72,9 +73,9 @@ export class UserInputService {
     }
 
     result.command = command;
+    result.lines = ArrayHelper.clone(context.output.lines);
     return result;
   }
-
 
   private extractTokensFromInput(sentence: string): CommandToken[] {
 
@@ -95,13 +96,13 @@ export class UserInputService {
   private displayParserError(unknowns: CommandToken[], context: CommandContext): void {
 
     // Tell the user they're full of it
-    let friendlyText: string;
     if (unknowns && unknowns.length === 1) {
-      friendlyText = unknowns[0].userInput;
+      context.output.addParserError(`I don't know what ${unknowns[0].userInput} means.`);
     } else {
-     friendlyText = StringHelper.toOxfordCommaList(unknowns.map(u => u.userInput), 'or');
+      let friendlyText: string;
+      friendlyText = StringHelper.toOxfordCommaList(unknowns.map(u => u.userInput), 'or');
+      context.output.addParserError(`I don't know what ${friendlyText} mean.`);
     }
-    this.outputService.displayParserError(`I don't know what ${friendlyText} mean.`);
 
     // Log each unknown token to Google Analytics
     for (const token of unknowns) {

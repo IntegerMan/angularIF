@@ -46,4 +46,8 @@ export class CommandResponseManager {
     return this.addLine(text, RenderType.list, items);
   }
 
+  addSuccessAction(text: string): TextLine {
+    return this.addLine(text, RenderType.successAction);
+  }
+
 }

@@ -53,7 +53,7 @@ export class CloakStory extends Story {
       if (!this.hasDroppedCloak) {
 
         // TODO: This can be accomplished via an increase score command with a do-once limiter
-        context.score.increaseScore();
+        context.score.increaseScore(context);
         this.hasDroppedCloak = true;
       }
 
@@ -96,7 +96,7 @@ export class CloakStory extends Story {
     const isWin: boolean = this.blundersRemaining > 0;
 
     if (isWin) {
-      context.score.increaseScore();
+      context.score.increaseScore(context);
       context.output.addStory(context.getString('messageWin'));
     } else {
       context.output.addStory(context.getString('messageLose'));

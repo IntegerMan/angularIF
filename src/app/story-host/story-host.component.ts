@@ -1,9 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {InteractiveFictionService} from '../engine/interactive-fiction.service';
 import {Story} from '../engine/entities/story';
-import {CommonVerbService} from '../engine/verbs/common-verb.service';
 import {LoggingService} from '../utility/logging.service';
-import {TextOutputService} from '../engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Params} from '@angular/router';
 import {StoryService} from '../services/story.service';
@@ -19,12 +17,10 @@ export class StoryHostComponent implements OnInit, OnDestroy {
   public loading: boolean = true;
   private routerSubscription: Subscription;
 
-  constructor(private outputService: TextOutputService,
-              private logger: LoggingService,
+  constructor(private logger: LoggingService,
               private route: ActivatedRoute,
               private ifService: InteractiveFictionService,
-              private storyService: StoryService,
-              private verbService: CommonVerbService) {
+              private storyService: StoryService) {
 
   }
 

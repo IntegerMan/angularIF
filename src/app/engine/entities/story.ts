@@ -28,8 +28,6 @@ export class Story {
   verbHandlers: VerbHandler[];
   introResponse: StoryResponse;
 
-  protected output: TextOutputService;
-
   constructor(key: string) {
 
     this.name = 'Untitled';
@@ -43,7 +41,6 @@ export class Story {
     this.actors = [];
     this.strings = {};
 
-    this.output = TextOutputService.instance;
   }
 
   public initialize(): void {
@@ -68,7 +65,7 @@ export class Story {
     if (this.introResponse) {
       this.introResponse.invoke(context, this);
     } else {
-      this.output.displayStory('The story begins...'); // TODO: Maybe this should go through the response manager?
+      context.output.addStory('The story begins...');
     }
   }
 

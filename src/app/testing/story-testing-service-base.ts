@@ -1,6 +1,5 @@
 import {InteractiveFictionService} from '../engine/interactive-fiction.service';
 import {UserInputService} from '../engine/user-input.service';
-import {TextOutputService} from '../engine/text-output.service';
 import {Story} from '../engine/entities/story';
 import {CommandContext} from '../engine/command-context';
 import {CommandResult} from '../engine/command-result';
@@ -8,22 +7,25 @@ import {Actor} from '../engine/entities/actor';
 import {TextLine} from '../text-rendering/text-line';
 import {Room} from '../engine/entities/room';
 import {GameState} from '../engine/game-state.enum';
-import {WorldEntity} from '../engine/entities/world-entity';
 import {isNullOrUndefined} from 'util';
 import {EntitySpec} from './entity-spec';
 import {RoomSpec} from './room-spec';
 import {EntityBase} from '../engine/entities/entity-base';
+import {ArrayHelper} from '../utility/array-helper';
 
 export class StoryTestingServiceBase {
 
   story: Story;
   context: CommandContext;
+  lines: TextLine[];
 
   lastInput: string = '';
 
   constructor(protected ifService: InteractiveFictionService,
-              protected inputService: UserInputService,
-              protected outputService: TextOutputService) {
+              protected inputService: UserInputService) {
+
+    this.lines = [];
+
   }
 
   initialize(story: Story): Story {
@@ -37,7 +39,13 @@ export class StoryTestingServiceBase {
 
   input(sentence: string): CommandResult {
     this.lastInput = sentence;
-    return this.inputService.handleUserSentence(sentence);
+    const result = this.inputService.handleUserSentence(sentence);
+
+    if (result && result.lines) {
+      this.lines = ArrayHelper.clone(result.lines);
+    }
+
+    return result;
   }
 
   warpTo(roomKey: string, describe: boolean = true): Room {
@@ -91,7 +99,13 @@ export class StoryTestingServiceBase {
   }
 
   get lastReplyLine(): TextLine {
-    return this.outputService.lastLine;
+
+    if (this.lines.length <= 0) {
+      return null;
+    }
+
+    return this.lines[this.lines.length - 1];
+
   }
 
   buildEntitySpec(key: string, room: Room): EntitySpec {
