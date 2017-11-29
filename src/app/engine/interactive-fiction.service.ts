@@ -122,8 +122,6 @@ export class InteractiveFictionService {
 
     const result: CommandResult = command.execute(context);
 
-    this.outputService.addLines(context.output.lines);
-
     if (!this.isGameOver) {
 
       // If we changed rooms, describe the new room now
@@ -138,6 +136,9 @@ export class InteractiveFictionService {
 
     }
     command.result = result;
+
+    // Copy the output to the window
+    this.outputService.addLines(context.output.lines);
 
     this.commandEvaluated.emit(command);
 
@@ -286,17 +287,7 @@ export class InteractiveFictionService {
 
 
   private initializeEngine() {
-
     this.lexer.useDefaults();
-
-    /*
-    this.outputService.displayTitle(`${this.engineName}`, `v${this.engineVersion}`);
-    this.outputService.displayAuthor(`Developed by ${this.engineAuthor}`);
-    this.outputService.displayBlankLine();
-    this.outputService.displaySystem(this.copyrightText);
-    this.outputService.displaySystem(this.licenseText);
-    this.outputService.displayBlankLine();
-    */
   }
 
   private initializeStory(story: Story) {
@@ -340,7 +331,9 @@ export class InteractiveFictionService {
       throw new Error('The player must be initialized and have a starting room when the story begins!');
     }
 
-    this.describeRoom(story.player.currentRoom, this.buildCommandContext());
+    this.describeRoom(story.player.currentRoom, context);
+
+    this.outputService.addLines(context.output.lines);
 
     this.gameState = GameState.underway;
   }
