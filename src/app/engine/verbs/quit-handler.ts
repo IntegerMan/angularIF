@@ -11,7 +11,9 @@ export class QuitHandler extends VerbHandler {
   }
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
-    context.outputService.displaySystem('Quitting will eventually bring you back to a main menu, but this is not yet implemented.');
+
+    // TODO: Find a way to talk to the router (after a confirm) and navigate to the story selection screen (or the editor)
+    context.output.addSystem('Quitting is not yet implemented.');
 
     return CommandResult.BuildFreeActionResult();
   }

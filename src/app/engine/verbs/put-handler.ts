@@ -49,7 +49,7 @@ export class PutHandler extends VerbHandler {
       return PutHandler.attemptPutInside(context, subject, containerPrep);
     }
 
-    context.outputService.displayParserError(`I don't understand where you want to put ${subject.that}.`,
+    context.output.addParserError(`I don't understand where you want to put ${subject.that}.`,
       `Try saying 'Put ${subject.that} in [object name]' or 'Put ${subject.that} on [object name]'.`);
 
     return CommandResult.BuildParseFailedResult();
@@ -61,7 +61,7 @@ export class PutHandler extends VerbHandler {
     const container: CommandToken = prep.getFirstNounModified();
 
     if (!container) {
-      context.outputService.displayParserError(`I don't understand what you want to put ${subject.that} ${prep.name}.`,
+      context.output.addParserError(`I don't understand what you want to put ${subject.that} ${prep.name}.`,
         `Try saying 'Put ${subject.that} in [object name]'.`);
       return CommandResult.BuildParseFailedResult();
     }
@@ -69,7 +69,7 @@ export class PutHandler extends VerbHandler {
     // Ensure the hook  / hang target is present
     const containerEntity: WorldEntity = container.entity as WorldEntity;
     if (!containerEntity || !(containerEntity instanceof WorldEntity)) {
-      context.outputService.displayStory(`You can't put anything ${prep.name} ${container.entity.that}.`);
+      context.output.addStory(`You can't put anything ${prep.name} ${container.entity.that}.`);
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -103,9 +103,9 @@ export class PutHandler extends VerbHandler {
     }
 
     if (targetEntity === context.player) {
-      context.outputService.displayStory(`On second thought, you decide you're fine where you are.`);
+      context.output.addStory(`On second thought, you decide you're fine where you are.`);
     } else {
-      context.outputService.displayStory(`That seems a little cruel.`);
+      context.output.addStory(`That seems a little cruel.`);
     }
 
     return false;
@@ -115,7 +115,7 @@ export class PutHandler extends VerbHandler {
 
     if (command.objects.length < 1) {
 
-      context.outputService.displayParserError('I don\'t understand what you\'re trying to place.',
+      context.output.addParserError('I don\'t understand what you\'re trying to place.',
         'Try saying \'Put [object name] on [target name]\'.');
 
       return null;
@@ -126,7 +126,7 @@ export class PutHandler extends VerbHandler {
 
     // Verify that we're talking about is present
     if (!sourceEntity || !(sourceEntity instanceof WorldEntity)) {
-      context.outputService.displayParserError(`You don't see ${source.userInput} here.`);
+      context.output.addParserError(`You don't see ${source.userInput} here.`);
       return null;
     }
 

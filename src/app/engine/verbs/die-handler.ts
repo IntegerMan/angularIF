@@ -21,7 +21,7 @@ export class DieHandler extends VerbHandler {
       message: 'Are you sure you want to just give up?',
       header: 'Give up?',
       accept: () => context.ifService.endGame(false),
-      reject: () => context.outputService.displaySystem('The story must go on...')
+      reject: () => context.output.addSystem('The story must go on...')
     };
 
     context.confirmService.confirm(confirmation);

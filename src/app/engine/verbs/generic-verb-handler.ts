@@ -58,7 +58,7 @@ export class GenericVerbHandler extends VerbHandler {
     const verbName = command.verb.name;
     const text = this._defaultResponse;
     const hint = `You won't need to ${verbName} to finish the story.`;
-    context.outputService.displayStory(text, hint);
+    context.output.addStory(text, hint);
 
     return CommandResult.BuildActionFailedResult();
   }
@@ -82,18 +82,18 @@ export class GenericVerbHandler extends VerbHandler {
 
     // We'll use a default response for missing / marker objects
     if (entity.isMissing) {
-      context.outputService.displayStory(`You don't see ${entity.that} here.`);
+      context.output.addStory(`You don't see ${entity.that} here.`);
       return true;
     }
 
     if (this.isDestructive && entity.getAttribute('doNotWishToHarm', false) === true) {
-      context.outputService.displayStory(`You don't want to damage ${entity.that}.`);
+      context.output.addStory(`You don't want to damage ${entity.that}.`);
       return true;
     }
 
     // Display a special response when trying to manipulate something that is clearly huge
     if (this.verbType === VerbType.manipulate && entity.getAttribute('isMassive', false) === true) {
-      context.outputService.displayStory(`You don't seriously expect to be able to ${this._verbName} ${entity.that} do you? It's huge!`);
+      context.output.addStory(`You don't seriously expect to be able to ${this._verbName} ${entity.that} do you? It's huge!`);
       return true;
     }
 

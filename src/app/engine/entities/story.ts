@@ -68,7 +68,7 @@ export class Story {
     if (this.introResponse) {
       this.introResponse.invoke(context, this);
     } else {
-      context.outputService.displayStory('The story begins...');
+      this.output.displayStory('The story begins...'); // TODO: Maybe this should go through the response manager?
     }
   }
 

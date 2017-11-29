@@ -11,7 +11,7 @@ export class LoadHandler extends VerbHandler {
   }
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
-    context.outputService.displaySystem('Loading a saved game is not yet supported.');
+    context.output.addSystem('Loading a saved game is not yet supported.');
 
     return CommandResult.BuildFreeActionResult();
   }

@@ -2,8 +2,6 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {RenderType} from '../text-rendering/render-type.enum';
-import {CommandToken} from './parser/command-token';
-import {EntityBase} from './entities/entity-base';
 
 @Injectable()
 export class TextOutputService {
@@ -48,32 +46,12 @@ export class TextOutputService {
     this.addLine(new TextLine(text, RenderType.engine));
   }
 
-  displayPrompt(text: string): void {
-    this.addLine(new TextLine(text, RenderType.enginePrompt));
-  }
-
-  displayHelpText(text: string) {
-    this.addLine(new TextLine(text, RenderType.helpText));
-  }
-
-  displayList(text: string, items: string[]) {
-    this.addLine(new TextLine(text, RenderType.list, items));
-  }
-
-  displayRoomName(text: string): void {
-    this.addLine(new TextLine(text, RenderType.roomName));
-  }
-
   displayStory(text: string, hint: string = null): void {
     this.addLine(new TextLine(text, RenderType.narrative, hint));
   }
 
   displayParserError(text: string, hint: string = null): void {
     this.addLine(new TextLine(text, RenderType.parserError, hint));
-  }
-
-  displayFailedAction(text: string, hint: string = null): void {
-    this.addLine(new TextLine(text, RenderType.failureAction, hint));
   }
 
   displaySuccessAction(text: string): void {
@@ -95,19 +73,13 @@ export class TextOutputService {
     this.addLine(new TextLine(message, RenderType.gameOver, isVictory));
   }
 
-  displayTokenDebugInfo(text: string, token: CommandToken): void {
-    this.addLine(new TextLine(text, RenderType.tokenDebug, token));
+  addLines(lines: TextLine[]): void {
+    for (const l of lines) {
+      this.addLine(l);
+    }
   }
 
-  displayEntityDebugInfo(text: string, entity: EntityBase): void {
-    this.addLine(new TextLine(text, RenderType.entityDebug, entity));
-  }
-
-  displayDynamic(text: string, renderType: RenderType, extraData: any): void {
-    this.addLine(new TextLine(text, renderType, extraData));
-  }
-
-  private addLine(line: TextLine): void {
+  addLine(line: TextLine): void {
 
     // Send the output to the console for good measure
     if (line && line.text && line.text.length > 0) {
@@ -123,4 +95,5 @@ export class TextOutputService {
     this.linesChanged.emit(this.lines);
 
   }
+
 }

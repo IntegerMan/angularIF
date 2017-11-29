@@ -13,7 +13,6 @@ import {RoomLink} from '../room-link';
  */
 export class Command {
 
-
   userInput: string;
   tokens: CommandToken[];
 
@@ -53,7 +52,9 @@ export class Command {
         `${context.story.name} - ${context.currentRoom.name}`,
         context.ifService.commandId);
 
-      context.outputService.displayParserError('I couldn\'t figure out what you want to do. Try starting with a verb.');
+      context.output.addParserError('I couldn\'t figure out what you want to do. Try starting with a verb.',
+        `For a list of understood verbs, type 'verbs'.`);
+
       return CommandResult.BuildParseFailedResult();
     }
 
@@ -66,15 +67,15 @@ export class Command {
         `${context.story.name} - ${context.currentRoom.name}`,
         context.ifService.commandId);
 
-      context.outputService.displayParserError(`I don't know how to respond to the verb '${this.verb.name}' yet.`);
+      context.output.addParserError(`I don't know how to respond to the verb '${this.verb.name}' yet.`);
       return CommandResult.BuildParseFailedResult();
     }
 
     // Make sure the game hasn't already ended
     if (context.ifService.isGameOver && (!this.verbHandler || this.verbHandler.verbType !== VerbType.system)) {
 
-      context.outputService.displayParserError(`It's too late for that - the game is already over!`);
-      context.outputService.displayPrompt('Would you like to Restart, Restore, or Quit?');
+      context.output.addParserError(`It's too late for that - the game is already over!`);
+      context.output.addPrompt('Would you like to Restart, Restore, or Quit?');
 
       return CommandResult.BuildFreeActionResult();
     }

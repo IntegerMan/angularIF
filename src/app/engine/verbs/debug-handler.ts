@@ -4,6 +4,7 @@ import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
 import {CommandResult} from '../command-result';
 import {environment} from '../../../environments/environment';
+import {RenderType} from '../../text-rendering/render-type.enum';
 
 export class DebugHandler extends VerbHandler {
 
@@ -18,20 +19,20 @@ export class DebugHandler extends VerbHandler {
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
     if (!environment.showDebugAids) {
-      context.outputService.displaySystem('Debugging aids are not available.');
+      context.output.addSystem('Debugging aids are not available in a release build.');
       return CommandResult.BuildFreeActionResult();
     }
 
     if (command.tokens.filter(t => !t.isInferred).length <= 1) {
 
       // Just went with 'debug' interpret it at the room level
-      context.outputService.displayEntityDebugInfo(context.currentRoom.name, context.currentRoom);
+      context.output.addLine(context.currentRoom.name, RenderType.entityDebug, context.currentRoom);
 
     } else if (command.isTargetingAll) {
 
       // List everything inside of the room, including the player.
       for (const obj of context.currentRoom.contents) {
-        context.outputService.displayEntityDebugInfo(obj.that, obj);
+        context.output.addLine(obj.that, RenderType.entityDebug, obj);
       }
 
     } else {
@@ -43,10 +44,10 @@ export class DebugHandler extends VerbHandler {
           continue;
         }
 
-        context.outputService.displayTokenDebugInfo(token.name, token);
+        context.output.addLine(token.name, RenderType.tokenDebug, token);
 
         if (token.entity) {
-          context.outputService.displayEntityDebugInfo(token.entity.that, token.entity);
+          context.output.addLine(token.entity.that, RenderType.entityDebug, token.entity);
         }
       }
 

@@ -19,7 +19,7 @@ export class WinHandler extends VerbHandler {
 
     // Win is not a valid verb in production
     if (!environment.showDebugAids) {
-      context.outputService.displaySystem('Cheaters never prosper.');
+      context.output.addSystem('Cheaters never prosper.');
 
       return CommandResult.BuildActionSuccessResult();
     }

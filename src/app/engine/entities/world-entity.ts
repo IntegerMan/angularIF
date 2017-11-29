@@ -99,7 +99,7 @@ export abstract class WorldEntity extends EntityBase {
     this._inRoomDescription = value;
   }
 
-  getInRoomDescription(context: CommandContext, isScrutinize: boolean): string {
+  getInRoomDescription(context: CommandContext): string {
 
     // We accept context so that individual items can customize their appearance as needed, but by default, we'll go with the property
     return this.inRoomDescription;
@@ -171,14 +171,14 @@ export abstract class WorldEntity extends EntityBase {
       return true;
     }
 
-    context.outputService.displayStory(`You can't hang ${itemToHang.that} or anything else on ${this.that}.`);
+    context.output.addStory(`You can't hang ${itemToHang.that} or anything else on ${this.that}.`);
 
     return false;
   }
 
   allowItemStored(context: CommandContext, itemToStore: WorldEntity): boolean {
 
-    context.outputService.displayStory(`You can't put ${itemToStore.that} in ${this.that}.`);
+    context.output.addStory(`You can't put ${itemToStore.that} in ${this.that}.`);
 
     return false;
   }
@@ -186,7 +186,7 @@ export abstract class WorldEntity extends EntityBase {
   onItemHanged(context: CommandContext, itemToHang: WorldEntity): void {
 
     LoggingService.instance.debug(`Hung ${itemToHang.that} on ${this.that}.`);
-    context.outputService.displayStory(`You hang ${itemToHang.that} on ${this.that}.`);
+    context.output.addStory(`You hang ${itemToHang.that} on ${this.that}.`);
 
   }
 

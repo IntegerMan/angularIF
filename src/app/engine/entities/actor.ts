@@ -14,6 +14,7 @@ export class Actor extends WorldEntity {
     this.isAlive = true;
 
     // Add some common synonyms for helping the player refer to their character
+    // TODO: Seems like a bad move
     this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player', 'i']);
 
   }
@@ -24,7 +25,11 @@ export class Actor extends WorldEntity {
 
   allowPickup(context: CommandContext): boolean {
 
-    context.outputService.displayStory('You try your best best lines, but you are not impressed.');
+    if (this.isPlayer) {
+      context.output.addStory('You try your best best lines, but you are not impressed.');
+    } else {
+      context.output.addStory(`You try your best best lines, but ${this.that} is not impressed.`);
+    }
 
     return false;
   }

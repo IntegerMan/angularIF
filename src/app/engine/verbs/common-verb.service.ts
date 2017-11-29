@@ -4,7 +4,6 @@ import {LookHandler} from './look-handler';
 import {GoHandler} from './go-handler';
 import {GetHandler} from './get-handler';
 import {DropHandler} from './drop-handler';
-import {ExamineHandler} from './examine-handler';
 import {RestartHandler} from './restart-handler';
 import {DieHandler} from './die-handler';
 import {WinHandler} from './win-handler';
@@ -28,8 +27,7 @@ export class CommonVerbService {
     const verbs: VerbHandler[] = [];
 
     // TODO: It'd be real nice to have some automated way of getting synonyms within the engine
-    verbs.push(new LookHandler(['look']));
-    verbs.push(new ExamineHandler(['examine', 'inspect']));
+    verbs.push(new LookHandler(['look', 'examine', 'inspect']));
     verbs.push(new GoHandler(['go', 'walk', 'run', 'travel', 'exit', 'saunter', 'stroll', 'sprint']));
     verbs.push(new HangHandler(['hang', 'suspend', 'attach', 'affix']));
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));

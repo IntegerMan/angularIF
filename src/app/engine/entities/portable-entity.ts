@@ -1,6 +1,5 @@
 import { CommandContext } from '../command-context';
 import { WorldEntity } from './world-entity';
-import {CommandResult} from '../command-result';
 
 export class PortableEntity extends WorldEntity {
 
@@ -25,7 +24,7 @@ export class PortableEntity extends WorldEntity {
    * @param {CommandContext} context
    */
   onDropped(context: CommandContext): void {
-    context.outputService.displayStory(`You drop ${this.that}.`);
+    context.output.addStory(`You drop ${this.that}.`);
 
     this.sendEvent(context, 'drop', this);
 
@@ -37,7 +36,7 @@ export class PortableEntity extends WorldEntity {
    */
   onPickup(context: CommandContext, alreadyResponded: boolean): void {
     if (!alreadyResponded) {
-      context.outputService.displayStory(`You pick up ${this.that}.`);
+      context.output.addStory(`You pick up ${this.that}.`);
     }
   }
 

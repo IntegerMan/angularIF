@@ -28,7 +28,7 @@ export class GoHandler extends VerbHandler {
     }
 
     if (!link) {
-      context.outputService.displayParserError('In order to go somewhere, you must include a direction.',
+      context.output.addParserError('In order to go somewhere, you must include a direction.',
         'Try saying "Go East" or, simply, "East" or "E" to move in a direction.');
       return CommandResult.BuildParseFailedResult();
     }
@@ -45,7 +45,7 @@ export class GoHandler extends VerbHandler {
     }
 
     if (!link) {
-      context.outputService.displayStory('You can\'t go that way.');
+      context.output.addStory('You can\'t go that way.');
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -67,7 +67,7 @@ export class GoHandler extends VerbHandler {
     if (!newRoom) {
 
       if (!link.goResponse) {
-        context.outputService.displayStory('Unseen forces prevent you from going that way.');
+        context.output.addStory('Unseen forces prevent you from going that way.');
       }
 
       return CommandResult.BuildActionFailedResult();
@@ -75,7 +75,7 @@ export class GoHandler extends VerbHandler {
 
     // Give a generic message
     if (!link.goResponse) {
-      context.outputService.displayStory(`You go ${dirName}.`);
+      context.output.addStory(`You go ${dirName}.`);
     }
 
     // Move the player

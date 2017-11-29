@@ -20,7 +20,7 @@ export class GetHandler extends VerbHandler {
     const entities: EntityBase[] = command.getDistinctEntitiesFromObjects();
 
     if (entities.length <= 0) {
-      context.outputService.displayParserError('I\'m not sure what you want to pick up.');
+      context.output.addParserError('I\'m not sure what you want to pick up.');
       return CommandResult.BuildParseFailedResult();
     }
 
@@ -29,7 +29,7 @@ export class GetHandler extends VerbHandler {
     for (const entity of entities) {
 
       if (ArrayHelper.contains(context.player.contents, entity)) {
-        context.outputService.displayStory(`You already have ${entity.that}!`);
+        context.output.addStory(`You already have ${entity.that}!`);
       } else {
         if (this.attemptPickup(entity, context).succeeded) {
           anySuccess = true;
@@ -75,11 +75,11 @@ export class GetHandler extends VerbHandler {
 
     if (!respondedTo) {
       if (!(entity instanceof WorldEntity)) {
-        context.outputService.displayStory(`You can't be serious.`);
+        context.output.addStory(`You can't be serious.`);
       } else if ((<WorldEntity>entity).getAttribute('isMassive', false) === true) {
-        context.outputService.displayStory(`Surely you can't be serious. That's well beyond your ability to even budge.`);
+        context.output.addStory(`Surely you can't be serious. That's well beyond your ability to even budge.`);
       } else {
-        context.outputService.displayStory(`You can't pick up ${entity.that}.`);
+        context.output.addStory(`You can't pick up ${entity.that}.`);
       }
     }
 

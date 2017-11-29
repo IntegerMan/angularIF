@@ -52,7 +52,7 @@ export class HangHandler extends VerbHandler {
     const suspender: CommandToken = prep.getFirstNounModified();
 
     if (!suspender) {
-      context.outputService.displayParserError(`I don't understand what you want to hang ${subject.that} ${prep.name}.`,
+      context.output.addParserError(`I don't understand what you want to hang ${subject.that} ${prep.name}.`,
         `Try saying 'Hang ${subject.that} on [object name]'.`);
       return CommandResult.BuildParseFailedResult();
     }
@@ -60,7 +60,7 @@ export class HangHandler extends VerbHandler {
     // Ensure the hook  / hang target is present
     const hook: WorldEntity = suspender.entity as WorldEntity;
     if (!hook || !(hook instanceof WorldEntity)) {
-      context.outputService.displayStory(`You can't hang anything ${prep.name} ${suspender.entity.that}.`);
+      context.output.addStory(`You can't hang anything ${prep.name} ${suspender.entity.that}.`);
       return CommandResult.BuildActionFailedResult();
     }
 
@@ -97,11 +97,11 @@ export class HangHandler extends VerbHandler {
 
       // Check to see if the user was trying a hang ... in X
       if (command.getProposition('in')) {
-        context.outputService.displayStory(`You can't hang something inside of something else!`);
+        context.output.addStory(`You can't hang something inside of something else!`);
       } else {
 
         // TODO: This might benefit from disambiguation or prompting
-        context.outputService.displayParserError(`What are you trying to hang ${entityToHang.that} on?`,
+        context.output.addParserError(`What are you trying to hang ${entityToHang.that} on?`,
           `Try saying 'Hang ${entityToHang.that} on [object name]'.`);
 
       }
@@ -118,9 +118,9 @@ export class HangHandler extends VerbHandler {
     }
 
     if (entityToHang === context.player) {
-      context.outputService.displayStory(`That's awfully morbid. Killing yourself never solved anything.`);
+      context.output.addStory(`That's awfully morbid. Killing yourself never solved anything.`);
     } else {
-      context.outputService.displayStory(`You think about hanging ${entityToHang.that} but then remember that you're not a sociopath.`);
+      context.output.addStory(`You think about hanging ${entityToHang.that} but then remember that you're not a sociopath.`);
     }
 
     return false;
@@ -130,7 +130,7 @@ export class HangHandler extends VerbHandler {
 
     if (command.objects.length < 1) {
 
-      context.outputService.displayParserError('I don\'t understand what you\'re trying to hang.',
+      context.output.addParserError('I don\'t understand what you\'re trying to hang.',
         'Try saying \'Hang [object name] on [target name]\'.');
 
       return null;
@@ -141,7 +141,7 @@ export class HangHandler extends VerbHandler {
 
     // Verify that we're talking about is present
     if (!entityToHang || !(entityToHang instanceof WorldEntity)) {
-      context.outputService.displayParserError(`You don't see ${itemToHang.userInput} here.`);
+      context.output.addParserError(`You don't see ${itemToHang.userInput} here.`);
       return null;
     }
 

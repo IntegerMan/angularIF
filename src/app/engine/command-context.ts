@@ -1,4 +1,3 @@
-import {TextOutputService} from './text-output.service';
 import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
 import {InteractiveFictionService} from './interactive-fiction.service';
@@ -15,6 +14,7 @@ import {TokenClassification} from './parser/token-classification.enum';
 import {TemplatingService} from './parser/templating.service';
 import {Command} from './parser/command';
 import {EntityBase} from './entities/entity-base';
+import {CommandResponseManager} from './command-response-manager';
 
 export class CommandContext {
 
@@ -29,17 +29,16 @@ export class CommandContext {
   logger: LoggingService;
   templater: TemplatingService;
   analytics: GoogleAnalyticsService;
-  outputService: TextOutputService;
   ifService: InteractiveFictionService;
   confirmService: ConfirmationService;
   state: StateService;
   score: ScoreService;
   story: Story;
   command: Command;
+  output: CommandResponseManager;
   wasConfused: boolean = false;
 
   constructor(ifService: InteractiveFictionService,
-              outputService: TextOutputService,
               confirmService: ConfirmationService,
               templatingService: TemplatingService,
               stateService: StateService,
@@ -47,11 +46,11 @@ export class CommandContext {
 
     this.ifService = ifService;
     this.story = ifService.story;
-    this.outputService = outputService;
     this.confirmService = confirmService;
     this.templater = templatingService;
     this.state = stateService;
     this.score = scoreService;
+    this.output = new CommandResponseManager();
 
     // These are commonly needed by classes and shouldn't be injected
     this.logger = LoggingService.instance;
@@ -122,7 +121,7 @@ export class CommandContext {
       if (entities.length > 1) {
 
         if (announceConfusion) {
-          this.outputService.displayParserError(`There is more than one object here matching that description. Can you be more specific?`);
+          this.output.addParserError(`There is more than one object here matching that description. Can you be more specific?`);
         }
 
         this.wasConfused = true;
@@ -162,7 +161,7 @@ export class CommandContext {
 
     // Tell the user all of the mistakes they made in one go.
     if (confusedNames.length > 0 && announceConfusion) {
-      this.outputService.displayParserError(`You don't see ${StringHelper.toOxfordCommaList(confusedNames, 'or')} here.`);
+      this.output.addParserError(`You don't see ${StringHelper.toOxfordCommaList(confusedNames, 'or')} here.`);
     }
 
   }

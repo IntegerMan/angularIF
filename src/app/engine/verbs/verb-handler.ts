@@ -66,7 +66,7 @@ export abstract class VerbHandler {
     // TODO: it'd be nice to auto-pick-up the item if we don't.
 
     if (!context.player.containsEntity(entity, true)) {
-      context.outputService.displayStory(`You'll have to get ${entity.that} first.`);
+      context.output.addStory(`You'll have to get ${entity.that} first.`);
       return false;
     }
 

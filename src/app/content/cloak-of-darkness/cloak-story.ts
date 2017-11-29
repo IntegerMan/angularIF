@@ -60,7 +60,7 @@ export class CloakStory extends Story {
       return true;
     }
 
-    context.outputService.displayStory(context.getString('cloakDropFail'));
+    context.output.addStory(context.getString('cloakDropFail'));
     return false;
   }
 
@@ -97,9 +97,9 @@ export class CloakStory extends Story {
 
     if (isWin) {
       context.score.increaseScore();
-      context.outputService.displayStory(context.getString('messageWin'));
+      context.output.addStory(context.getString('messageWin'));
     } else {
-      context.outputService.displayStory(context.getString('messageLose'));
+      context.output.addStory(context.getString('messageLose'));
     }
 
     context.ifService.endGame(isWin);
@@ -132,7 +132,7 @@ export class CloakStory extends Story {
           return true;
 
         case VerbType.look:
-          context.outputService.displayStory(context.getString('barCantSee'));
+          context.output.addStory(context.getString('barCantSee'));
           return false;
 
         case VerbType.go:
@@ -154,18 +154,18 @@ export class CloakStory extends Story {
             }
           }
 
-          context.outputService.displayStory(context.getString('barBlunder'));
+          context.output.addStory(context.getString('barBlunder'));
           return false;
 
         case VerbType.manipulate:
-          context.outputService.displayStory(context.getString('barCantManipulate'));
+          context.output.addStory(context.getString('barCantManipulate'));
           return false;
 
       }
     }
 
     // Default false
-    context.outputService.displayStory(context.getString('barBlunder'));
+    context.output.addStory(context.getString('barBlunder'));
     return false;
 
   }

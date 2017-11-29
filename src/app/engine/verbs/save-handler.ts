@@ -11,7 +11,7 @@ export class SaveHandler extends VerbHandler {
   }
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
-    context.outputService.displaySystem('Saving your game is not yet supported.');
+    context.output.addSystem('Saving your game is not yet supported.');
 
     return CommandResult.BuildFreeActionResult();
   }

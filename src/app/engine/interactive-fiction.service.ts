@@ -71,25 +71,25 @@ export class InteractiveFictionService {
     this.initializeStory(story);
   }
 
-  describeRoom(room: Room, context: CommandContext, isScrutinize: boolean = false): void {
+  describeRoom(room: Room, context: CommandContext): void {
 
     if (!room.hasLight(context)) {
       this.describeDarkRoom(context);
       return;
     }
 
-    context.outputService.displayRoomName(room.name);
-    context.outputService.displayBlankLine();
+    context.output.addRoomName(room.name);
+    context.output.addBlankLine();
 
     if (!room.invokeVerbResponse(context, 'look',  room)) {
-      context.outputService.displayStory(`This area is wholely unremarkable.`);
+      context.output.addStory(`This area is wholly unremarkable.`);
     }
 
     // Now list all notable items that are present here
     const notableItems: WorldEntity[] = room.contents.filter(e => e.shouldDescribeWithRoom(context));
     for (const entity of notableItems) {
-      context.outputService.displayBlankLine();
-      context.outputService.displayStory(entity.getInRoomDescription(context, isScrutinize));
+      context.output.addBlankLine();
+      context.output.addStory(entity.getInRoomDescription(context));
     }
 
   }
@@ -99,9 +99,9 @@ export class InteractiveFictionService {
     const darkName = context.currentRoom.getAttribute('darkName', 'The Dark');
     const darkDesc = context.currentRoom.getAttribute('darkDescription', 'It is pitch black, and you can\'t see a thing.');
 
-    context.outputService.displayRoomName(darkName);
-    context.outputService.displayBlankLine();
-    context.outputService.displayStory(darkDesc);
+    context.output.addRoomName(darkName);
+    context.output.addBlankLine();
+    context.output.addStory(darkDesc);
 
   }
 
@@ -121,6 +121,8 @@ export class InteractiveFictionService {
     const initialRoom: Room = context.player.currentRoom;
 
     const result: CommandResult = command.execute(context);
+
+    this.outputService.addLines(context.output.lines);
 
     if (!this.isGameOver) {
 
@@ -156,7 +158,6 @@ export class InteractiveFictionService {
   buildCommandContext(): CommandContext {
     return new CommandContext(
       this,
-      this.outputService,
       this.confirmService,
       this.templatingService,
       this.stateService,

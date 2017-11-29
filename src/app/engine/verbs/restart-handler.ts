@@ -23,7 +23,7 @@ export class RestartHandler extends VerbHandler {
         message: 'Are you sure you want to restart? All current progress will be lost.',
         header: 'Restart?',
         accept: () => context.ifService.restartStory(),
-        reject: () => context.outputService.displaySystem('The story must go on...')
+        reject: () => context.output.addSystem('The story must go on...')
       };
 
       context.confirmService.confirm(confirmation);

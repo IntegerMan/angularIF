@@ -25,7 +25,7 @@ export class OutputResponse extends StoryResponse {
 
     this.text = context.templater.applyTemplate(this.text, this.data);
 
-    context.outputService.displayDynamic(this.text, this.renderType, this.data);
+    context.output.addLine(this.text, this.renderType, this.data);
 
     return true;
   }

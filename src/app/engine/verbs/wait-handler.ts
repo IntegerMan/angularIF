@@ -12,7 +12,7 @@ export class WaitHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    context.outputService.displayStory('Time passes...');
+    context.output.addStory('Time passes...');
 
     return CommandResult.BuildActionSuccessResult();
 

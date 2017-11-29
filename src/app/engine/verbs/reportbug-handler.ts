@@ -20,9 +20,9 @@ export class ReportbugHandler extends VerbHandler {
       const input = command.userInput.toLowerCase().replace('reportbug ', '');
       handler.handleError(`${context.currentRoom.key} - ${input}`);
 
-      context.outputService.displaySystem('This message has been reported');
+      context.output.addSystem('Your message has been reported');
     } else {
-      context.outputService.displayFailedAction('The error handler has not been initialized.');
+      context.output.addSystem('The error handler has not been initialized.');
     }
 
     return CommandResult.BuildFreeActionResult();
