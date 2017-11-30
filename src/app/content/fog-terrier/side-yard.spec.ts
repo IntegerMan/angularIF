@@ -1,7 +1,7 @@
 import {Room} from '../../engine/entities/room';
 import {InteractiveFictionEngine} from '../../engine/interactive-fiction-engine';
-import {CloakStory} from '../cloak-of-darkness/cloak-story';
 import {StorySpecVerifier} from '../../testing/story-spec-verifier';
+import {FogTerrierStory} from './fog-terrier-story';
 
 describe('FogTerrier.YourHouse.Sideyard', () => {
 
@@ -10,7 +10,7 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
 
   beforeEach(() =>  {
     const engine = new InteractiveFictionEngine(null);
-    game = new StorySpecVerifier(engine, new CloakStory(engine.nlp));
+    game = new StorySpecVerifier(engine, new FogTerrierStory(engine.nlp));
     room = game.warpTo('sideyard');
   });
 

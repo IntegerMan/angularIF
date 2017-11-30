@@ -52,7 +52,12 @@ export class StorySpecVerifier {
 
   warpTo(roomKey: string, describe: boolean = true): Room {
 
-    InteractiveFictionEngine.setActorRoom(this.player, this.story.findRoomByKey(roomKey));
+    const room = this.story.findRoomByKey(roomKey);
+    if (!room) {
+      throw new Error(`Could not locate room with key of ${roomKey}`);
+    }
+
+    InteractiveFictionEngine.setActorRoom(this.player, room);
     this.context = this.engine.buildCommandContext();
 
     if (describe) {

@@ -159,6 +159,13 @@ export class InteractiveFictionEngine {
 
   static setActorRoom(actor: Actor, room: Room): void {
 
+    if (!actor) {
+      throw new Error(`Actor is required but was null`);
+    }
+    if (!room) {
+      throw new Error(`Room is required but was null`);
+    }
+
     const oldRoom: Room = actor.currentRoom;
 
     // Calling remove and add object methods ensures that token lookup remains accurate
