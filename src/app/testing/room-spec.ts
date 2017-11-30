@@ -1,10 +1,10 @@
 import {EntitySpec} from './entity-spec';
 import {Room} from '../engine/entities/room';
-import {StoryTestingServiceBase} from './story-testing-service-base';
+import {StorySpecVerifier} from './story-spec-verifier';
 
 export class RoomSpec extends EntitySpec {
 
-  constructor(key: string, room: Room, testService: StoryTestingServiceBase) {
+  constructor(key: string, room: Room, testService: StorySpecVerifier) {
     super(key, room, testService);
   }
 

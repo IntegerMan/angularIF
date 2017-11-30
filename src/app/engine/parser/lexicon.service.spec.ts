@@ -35,8 +35,8 @@ describe('LexiconService', () => {
     inject([LexiconService, NaturalLanguageService],
       (service: LexiconService, tokenizer: NaturalLanguageService) => {
     service.useDefaults();
-    const token: CommandToken = tokenizer.getTokenForWord('ne');
-    expect(service.replaceTokens([token], tokenizer)[0].name).toBe('northeast');
+    const token: CommandToken = tokenizer.processor.getTokenForWord('ne');
+    expect(service.replaceTokens([token], tokenizer.processor)[0].name).toBe('northeast');
   }));
 
   it('cannot evaluates to can not', inject([LexiconService], (service: LexiconService) => {

@@ -11,6 +11,7 @@ import {NaturalLanguageService} from '../engine/parser/natural-language.service'
 import {RouterTestingModule} from '@angular/router/testing';
 import {CloakStory} from '../content/cloak-of-darkness/cloak-story';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {NaturalLanguageProcessor} from '../engine/parser/natural-language-processor';
 
 describe('StoryContentComponent', () => {
   let component: StoryContentComponent;
@@ -27,7 +28,7 @@ describe('StoryContentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StoryContentComponent);
     component = fixture.componentInstance;
-    component.story = new CloakStory();
+    component.story = new CloakStory(new NaturalLanguageProcessor());
     fixture.detectChanges();
   });
 

@@ -1,5 +1,5 @@
 import {WorldEntity} from '../engine/entities/world-entity';
-import {StoryTestingServiceBase} from './story-testing-service-base';
+import {StorySpecVerifier} from './story-spec-verifier';
 import {Room} from '../engine/entities/room';
 import {isNullOrUndefined} from 'util';
 
@@ -9,10 +9,10 @@ export class EntitySpec {
 
   protected key: string;
   protected entity: WorldEntity;
-  protected game: StoryTestingServiceBase;
+  protected game: StorySpecVerifier;
   protected room: Room;
 
-  constructor(key: string, room: Room, testService: StoryTestingServiceBase) {
+  constructor(key: string, room: Room, testService: StorySpecVerifier) {
     this.key = key;
     this.checks = [];
     this.game = testService;

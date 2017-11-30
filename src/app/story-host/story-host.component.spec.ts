@@ -8,11 +8,11 @@ import {LexiconService} from '../engine/parser/lexicon.service';
 import {EngineModule} from '../engine/engine.module';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {NaturalLanguageService} from '../engine/parser/natural-language.service';
-import {TestDataProvider} from '../engine/story-data/test-data-provider';
 import {CloakStory} from '../content/cloak-of-darkness/cloak-story';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoryService} from '../services/story.service';
+import {NaturalLanguageProcessor} from '../engine/parser/natural-language-processor';
 
 describe('StoryHostComponent', () => {
   let component: StoryHostComponent;
@@ -29,7 +29,7 @@ describe('StoryHostComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StoryHostComponent);
     component = fixture.componentInstance;
-    component.story = new CloakStory();
+    component.story = new CloakStory(new NaturalLanguageProcessor());
     fixture.detectChanges();
   });
 

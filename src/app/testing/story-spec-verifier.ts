@@ -12,18 +12,22 @@ import {EntityBase} from '../engine/entities/entity-base';
 import {ArrayHelper} from '../utility/array-helper';
 import {InteractiveFictionEngine} from '../engine/interactive-fiction-engine';
 
-export class StoryTestingServiceBase {
+export class StorySpecVerifier {
 
-  story: Story;
   context: CommandContext;
   lines: TextLine[];
+  engine: InteractiveFictionEngine;
+  story: Story;
 
   lastInput: string = '';
 
-  constructor(protected engine: InteractiveFictionEngine) {
+  constructor(engine: InteractiveFictionEngine,
+              story: Story) {
 
     this.lines = [];
 
+    this.engine = engine;
+    this.initialize(story);
   }
 
   initialize(story: Story): Story {

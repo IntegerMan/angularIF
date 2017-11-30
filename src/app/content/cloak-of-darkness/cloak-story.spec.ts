@@ -1,28 +1,16 @@
-import {async, inject, TestBed} from '@angular/core/testing';
-
 import {GameState} from '../../engine/game-state.enum';
-import {TestingModule} from '../../testing/testing.module';
-import {CloakTestingService} from './cloak-testing.service';
+import {StorySpecVerifier} from '../../testing/story-spec-verifier';
+import {InteractiveFictionEngine} from '../../engine/interactive-fiction-engine';
+import {CloakStory} from './cloak-story';
 
 describe('CloakStory', () => {
 
-  let game: CloakTestingService;
+  let game: StorySpecVerifier;
 
   beforeEach(() =>  {
-    TestBed.configureTestingModule({
-      imports: [ TestingModule ],
-      providers: [ CloakTestingService ]
-    })
-      .compileComponents();
-
+    const engine = new InteractiveFictionEngine(null);
+    game = new StorySpecVerifier(engine, new CloakStory(engine.nlp));
   });
-
-  beforeEach(async(inject([CloakTestingService],
-    (testingService: CloakTestingService) => {
-
-    game = testingService;
-
-  })));
 
   it('should create', () => {
     expect(game.story).toBeTruthy();

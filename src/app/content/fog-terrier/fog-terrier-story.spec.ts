@@ -1,28 +1,16 @@
-import {async, inject, TestBed} from '@angular/core/testing';
-
 import {GameState} from '../../engine/game-state.enum';
-import {TestingModule} from '../../testing/testing.module';
-import {FogTerrierTestingService} from './fog-terrier-testing.service';
+import {InteractiveFictionEngine} from '../../engine/interactive-fiction-engine';
+import {StorySpecVerifier} from '../../testing/story-spec-verifier';
+import {FogTerrierStory} from './fog-terrier-story';
 
 describe('FogTerrier', () => {
 
-  let game: FogTerrierTestingService;
+  let game: StorySpecVerifier;
 
   beforeEach(() =>  {
-    TestBed.configureTestingModule({
-      imports: [ TestingModule ],
-      providers: [ FogTerrierTestingService ]
-    })
-      .compileComponents();
-
+    const engine = new InteractiveFictionEngine(null);
+    game = new StorySpecVerifier(engine, new FogTerrierStory(engine.nlp));
   });
-
-  beforeEach(async(inject([FogTerrierTestingService],
-    (testingService: FogTerrierTestingService) => {
-
-      game = testingService;
-
-    })));
 
   it('should create', () => {
     expect(game.story).toBeTruthy();

@@ -24,7 +24,9 @@ export class DieHandler extends VerbHandler {
       reject: () => context.output.addSystem('The story must go on...')
     };
 
-    context.confirmService.confirm(confirmation);
+    if (context.confirmService) {
+      context.confirmService.confirm(confirmation);
+    }
 
     return CommandResult.BuildActionSuccessResult();
 

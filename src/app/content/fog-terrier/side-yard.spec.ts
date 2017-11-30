@@ -1,30 +1,18 @@
-import {async, inject, TestBed} from '@angular/core/testing';
-
 import {Room} from '../../engine/entities/room';
-import {TestingModule} from '../../testing/testing.module';
-import {FogTerrierTestingService} from './fog-terrier-testing.service';
+import {InteractiveFictionEngine} from '../../engine/interactive-fiction-engine';
+import {CloakStory} from '../cloak-of-darkness/cloak-story';
+import {StorySpecVerifier} from '../../testing/story-spec-verifier';
 
 describe('FogTerrier.YourHouse.Sideyard', () => {
 
-  let game: FogTerrierTestingService;
+  let game: StorySpecVerifier;
   let room: Room;
 
   beforeEach(() =>  {
-    TestBed.configureTestingModule({
-      imports: [ TestingModule ],
-      providers: [ FogTerrierTestingService ]
-    })
-      .compileComponents();
-
+    const engine = new InteractiveFictionEngine(null);
+    game = new StorySpecVerifier(engine, new CloakStory(engine.nlp));
+    room = game.warpTo('sideyard');
   });
-
-  beforeEach(async(inject([FogTerrierTestingService],
-    (testingService: FogTerrierTestingService) => {
-
-      game = testingService;
-      room = game.warpTo('sideyard');
-
-    })));
 
   // Room: Side Yard
   it('should contain a side yard room that passes spec validation', () => {

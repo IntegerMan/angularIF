@@ -9,7 +9,6 @@ import {NaturalLanguageService} from '../engine/parser/natural-language.service'
 import {RouterTestingModule} from '@angular/router/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {EditorModule} from '../editor/editor.module';
-import {StoryTestingService} from './story-testing.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @NgModule({
@@ -26,7 +25,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
     LoggingService,
     InteractiveFictionService,
     GoogleAnalyticsService,
-    StoryTestingService,
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: {} }
   ]
