@@ -1,22 +1,13 @@
-import { Injectable } from '@angular/core';
-import {CommandToken} from './command-token';
+import {CommandContext} from '../command-context';
 import {Command} from './command';
 import {LoggingService} from '../../utility/logging.service';
-import {TokenClassification} from './token-classification.enum';
 import {LexiconService} from './lexicon.service';
-import {CommandContext} from '../command-context';
-import {NaturalLanguageService} from './natural-language.service';
+import {CommandToken} from './command-token';
+import {TokenClassification} from './token-classification.enum';
 
-@Injectable()
-export class SentenceParserService {
+export class SentenceParser {
 
-  constructor(private logger: LoggingService,
-              private tokenizer: NaturalLanguageService,
-              private lexer: LexiconService) {
-
-  }
-
-  public buildCommandFromSentenceTokens(sentence: string, tokens: CommandToken[], context: CommandContext): Command {
+  public static buildCommandFromSentenceTokens(sentence: string, tokens: CommandToken[], context: CommandContext): Command {
 
     // Validate inputs since we're an entry method
     if (!sentence || sentence.length <= 0) {
@@ -28,50 +19,49 @@ export class SentenceParserService {
 
     // Log the interpreted tokens
     for (const token of tokens) {
-      this.logger.log(`Read in ${token.classification} token '${token.name}' from input '${token.userInput}'`);
+      LoggingService.instance.log(`Read in ${token.classification} token '${token.name}' from input '${token.userInput}'`);
     }
 
     // Build the basic bones of the object we'll be interpreting now
     const command: Command = new Command(sentence);
 
-    this.identifySentenceVerb(command, tokens);
-    this.identifySentenceNouns(command, tokens);
-    this.identifySentencePrepositions(command, tokens);
+    SentenceParser.identifySentenceVerb(command, tokens);
+    SentenceParser.identifySentenceNouns(command, context, tokens);
+    SentenceParser.identifySentencePrepositions(command, tokens);
 
     // At this point we MAY have a subject depending on the verb / noun order, but typically we won't. Assume it is "I" if no subject
-    this.inferSubjectIfNeeded(command, context);
+    SentenceParser.inferSubjectIfNeeded(command, context);
 
     // For some specialized commands such as "Inventory", there may not be a verb. Handle those as needed.
-    this.inferVerbIfNeeded(command);
+    SentenceParser.inferVerbIfNeeded(command, context);
 
     // Build a list of raw tokens including inferred verb and subject
-    SentenceParserService.identifyRawTokensIncludingInferred(command, tokens);
+    SentenceParser.identifyRawTokensIncludingInferred(command, tokens);
 
     // Adverbs go at the sentence level, though perhaps they could be associated with the verb
-    this.identifyVerbModifiers(command, tokens);
+    SentenceParser.identifyVerbModifiers(command, tokens);
 
     // Adjectives and articles get associated with the next noun
-    this.associateNounModifiers(command, tokens);
+    SentenceParser.associateNounModifiers(command, tokens);
 
     return command;
 
   }
 
-  private inferSubjectIfNeeded(command: Command, context: CommandContext) {
+  private static inferSubjectIfNeeded(command: Command, context: CommandContext) {
 
     // If we didn't have a noun that qualified as a subject, go ahead and add an implicit self token to the beginning of the sentence
     if (!command.subject) {
-      command.subject = this.buildSelfToken(context);
+      command.subject = SentenceParser.buildSelfToken(context);
     }
 
   }
 
-
-  private inferVerbIfNeeded(command: Command) {
+  private static inferVerbIfNeeded(command: Command, context: CommandContext) {
 
     // This will handle some specialized commands such as "Inventory" or "Verbs"
     if (!command.verb && command.objects.length === 1) {
-      command.verb = this.buildLookToken();
+      command.verb = SentenceParser.buildLookToken(context);
     }
 
   }
@@ -94,14 +84,14 @@ export class SentenceParserService {
     }
   }
 
-  private associateNounModifiers(command: Command, tokens: CommandToken[]): void {
-    const nounModifiers: CommandToken[] = tokens.filter(t => SentenceParserService.isNounModifier(t));
+  private static associateNounModifiers(command: Command, tokens: CommandToken[]): void {
+    const nounModifiers: CommandToken[] = tokens.filter(t => SentenceParser.isNounModifier(t));
     for (const modifier of nounModifiers) {
 
-      const nextNoun: CommandToken = SentenceParserService.findNextNoun(modifier);
+      const nextNoun: CommandToken = SentenceParser.findNextNoun(modifier);
       if (nextNoun) {
 
-        this.logger.log(`Associating modifier '${modifier.name}' with '${nextNoun.name}'`);
+        LoggingService.instance.log(`Associating modifier '${modifier.name}' with '${nextNoun.name}'`);
         nextNoun.setModifiedBy(modifier);
 
       } else if (command.verb && modifier.classification === TokenClassification.Preposition) {
@@ -111,20 +101,20 @@ export class SentenceParserService {
 
       } else {
 
-        this.logger.warning(`Could not find a word to associate with the modifier '${modifier.name}'`);
+        LoggingService.instance.warning(`Could not find a word to associate with the modifier '${modifier.name}'`);
 
       }
 
     }
   }
 
-  private identifyVerbModifiers(command: Command, tokens: CommandToken[]): void {
+  private static identifyVerbModifiers(command: Command, tokens: CommandToken[]): void {
 
     // Grab the adverbs and stick them into the sentence as modifiers on the overall sentence
-    const adverbs: CommandToken[] = tokens.filter(t => SentenceParserService.isVerbModifier(t));
+    const adverbs: CommandToken[] = tokens.filter(t => SentenceParser.isVerbModifier(t));
     for (const adverb of adverbs) {
 
-      let target: CommandToken = SentenceParserService.findNextAdverb(adverb);
+      let target: CommandToken = SentenceParser.findNextAdverb(adverb);
 
       if (!target) {
         target = command.verb;
@@ -132,18 +122,18 @@ export class SentenceParserService {
 
       if (target) {
 
-        this.logger.log(`Associating adverb '${adverb.name}' with '${target.name}'`);
+        LoggingService.instance.log(`Associating adverb '${adverb.name}' with '${target.name}'`);
         target.setModifiedBy(adverb);
 
       } else {
 
-        this.logger.warning(`No target present for the adverb '${adverb.name}' to modify`);
+        LoggingService.instance.warning(`No target present for the adverb '${adverb.name}' to modify`);
 
       }
     }
   }
 
-  private identifySentenceNouns(command: Command, tokens: CommandToken[]): void {
+  private static identifySentenceNouns(command: Command, context: CommandContext, tokens: CommandToken[]): void {
 
     let indexOfVerb: number = -1;
     if (command.verb) {
@@ -151,12 +141,12 @@ export class SentenceParserService {
     }
 
     // Grab the nouns and stick them into the sentence as the objects
-    const nouns: CommandToken[] = tokens.filter(t => SentenceParserService.isNounLike(t));
+    const nouns: CommandToken[] = tokens.filter(t => SentenceParser.isNounLike(t));
     for (const noun of nouns) {
 
       // When no verbs are present and the first noun is a direction, interpret it as a 'Go' verb.
       if (!command.verb && noun.classification === TokenClassification.Direction) {
-        command.verb = this.buildGoToken();
+        command.verb = SentenceParser.buildGoToken(context);
       }
 
       // If this noun comes before the verb, we're going to use it as a subject instead of as an object, but only for the first noun
@@ -168,17 +158,18 @@ export class SentenceParserService {
     }
   }
 
-  private identifySentenceVerb(command: Command, tokens: CommandToken[]): void {
+  private static identifySentenceVerb(command: Command, tokens: CommandToken[]): void {
 
     // Grab the first verb and stick that into the sentence as the sentence's main verb
-    const verbs: CommandToken[] = tokens.filter(t => SentenceParserService.isVerbLike(t));
+    const verbs: CommandToken[] = tokens.filter(t => SentenceParser.isVerbLike(t));
     if (verbs.length > 0) {
       command.verb = verbs[0];
 
       if (verbs.length > 1) {
         for (const verb of verbs.splice(1)) {
-          if (this.lexer.attemptToInterpretAsNonVerb(verb)) {
-            this.logger.debug(`Reclassified ${verb.name} as ${verb.classification} since it was not the first verb in the sentence.`);
+          if (LexiconService.instance.attemptToInterpretAsNonVerb(verb)) {
+            LoggingService.instance.debug(
+              `Reclassified ${verb.name} as ${verb.classification} since it was not the first verb in the sentence.`);
           }
         }
       }
@@ -186,17 +177,17 @@ export class SentenceParserService {
 
   }
 
-  private identifySentencePrepositions(command: Command, tokens: CommandToken[]): void {
+  private static identifySentencePrepositions(command: Command, tokens: CommandToken[]): void {
 
     // Grab the first verb and stick that into the sentence as the sentence's main verb
-    const prepositions: CommandToken[] = tokens.filter(t => SentenceParserService.isPreposition(t));
+    const prepositions: CommandToken[] = tokens.filter(t => SentenceParser.isPreposition(t));
     for (const prep of prepositions) {
       command.addPreposition(prep);
 
       // If this IS a preposition, we'll want to link it to the prior noun as well. Case study here "worn patch of grass" - we'll want to
       // be able to identify this with the phrase "worn grass" and that's only possible if they're linked together via the of prepositional
       // phrase
-      if (prep.name === 'of' && prep.previousToken && SentenceParserService.isNounLike(prep.previousToken)) {
+      if (prep.name === 'of' && prep.previousToken && SentenceParser.isNounLike(prep.previousToken)) {
         prep.previousToken.setModifiedBy(prep);
       }
     }
@@ -229,7 +220,7 @@ export class SentenceParserService {
 
     let next: CommandToken = modifier.nextToken;
     while (next) {
-      if (SentenceParserService.isNounLike(next)) {
+      if (SentenceParser.isNounLike(next)) {
         return next;
       }
 
@@ -242,7 +233,7 @@ export class SentenceParserService {
 
     let next: CommandToken = modifier.nextToken;
     while (next) {
-      if (SentenceParserService.isVerbModifier(next)) {
+      if (SentenceParser.isVerbModifier(next)) {
         return next;
       }
 
@@ -251,28 +242,29 @@ export class SentenceParserService {
 
   }
 
-  private buildSelfToken(context: CommandContext): CommandToken {
+  private static buildSelfToken(context: CommandContext): CommandToken {
 
-    const token = this.tokenizer.getTokenForWord('I ');
+    const token = context.engine.nlp.getTokenForWord('I ');
     token.isInferred = true;
     token.entity = context.player;
 
     return token;
   }
 
-  private buildGoToken(): CommandToken {
+  private static buildGoToken(context: CommandContext): CommandToken {
 
-    const token = this.tokenizer.getTokenForWord('go ');
+    const token = context.engine.nlp.getTokenForWord('go ');
     token.isInferred = true;
 
     return token;
   }
 
-  private buildLookToken(): CommandToken {
+  private static buildLookToken(context: CommandContext): CommandToken {
 
-    const token = this.tokenizer.getTokenForWord('look ');
+    const token = context.engine.nlp.getTokenForWord('look ');
     token.isInferred = true;
 
     return token;
   }
+
 }

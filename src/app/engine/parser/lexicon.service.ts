@@ -5,6 +5,7 @@ import {StringHelper} from '../../utility/string-helper';
 import {ArrayHelper} from '../../utility/array-helper';
 import {CommonDictionary} from './common-dictionary';
 import {NaturalLanguageService} from './natural-language.service';
+import {NaturalLanguageProcessor} from './natural-language-processor';
 
 @Injectable()
 export class LexiconService {
@@ -119,7 +120,7 @@ export class LexiconService {
 
   }
 
-  replaceTokens(tokens: CommandToken[], tokenizer: NaturalLanguageService): CommandToken[] {
+  replaceTokens(tokens: CommandToken[], processor: NaturalLanguageProcessor): CommandToken[] {
 
       for (const t of tokens) {
 
@@ -128,7 +129,7 @@ export class LexiconService {
         if (replacementValue) {
 
           // Let's build an entirely new token for it
-          const replacementToken: CommandToken = tokenizer.getTokenForWord(replacementValue);
+          const replacementToken: CommandToken = processor.getTokenForWord(replacementValue);
 
           // Preserve the user input for traceability
           replacementToken.userInput = t.userInput;

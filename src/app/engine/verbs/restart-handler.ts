@@ -13,16 +13,16 @@ export class RestartHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    if (context.ifService.isGameOver) {
+    if (context.engine.isGameOver) {
 
-      context.ifService.restartStory();
+      context.engine.restartStory();
 
     } else {
 
       const confirmation: Confirmation = {
         message: 'Are you sure you want to restart? All current progress will be lost.',
         header: 'Restart?',
-        accept: () => context.ifService.restartStory(),
+        accept: () => context.engine.restartStory(),
         reject: () => context.output.addSystem('The story must go on...')
       };
 

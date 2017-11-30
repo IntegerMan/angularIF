@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit, Input} from '@angular/core';
 import {InteractiveFictionService} from '../engine/interactive-fiction.service';
 import {TextOutputService} from '../engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
-import {ScoreService} from '../engine/score.service';
 import {TextLine} from '../text-rendering/text-line';
 import {RenderType} from '../text-rendering/render-type.enum';
+import {InteractiveFictionEngine} from '../engine/interactive-fiction-engine';
 
 @Component({
   selector: 'if-game-state-header',
@@ -26,23 +26,28 @@ export class GameStateHeaderComponent implements OnInit, OnDestroy {
   private gameStateSubscription: Subscription;
 
   constructor(private ifService: InteractiveFictionService,
-              private output: TextOutputService,
-              private scoreService: ScoreService) {
+              private output: TextOutputService) {
 
   }
 
+  get engine(): InteractiveFictionEngine {
+    return this.ifService.engine;
+  }
+
   ngOnInit(): void {
-    const story = this.ifService.story;
+
+    const story = this.engine.story;
+
     if (story) {
       this.mainText = story.player.currentRoom.name;
     }
 
     this.lineAddedSubscription = this.output.lineAdded.subscribe(l => this.handleLineAdded(l));
-    this.gameStateSubscription = this.ifService.gameStateChanged.subscribe(s => this.updateData());
-    this.commandSubscription = this.ifService.commandEvaluated.subscribe(c => this.updateData());
+    this.gameStateSubscription = this.engine.gameStateChanged.subscribe(s => this.updateData());
+    this.commandSubscription = this.engine.commandEvaluated.subscribe(c => this.updateData());
 
-    this.score = this.scoreService.currentScore;
-    this.maxScore = this.scoreService.maxScore;
+    this.score = this.engine.currentScore;
+    this.maxScore = this.engine.maxScore;
   }
 
   ngOnDestroy(): void {
@@ -77,12 +82,12 @@ export class GameStateHeaderComponent implements OnInit, OnDestroy {
   private updateData(): void {
 
     // Update to the current moves taken count
-    this.movesText = this.getMovesTakenText(this.ifService.movesTaken);
+    this.movesText = this.getMovesTakenText(this.engine.movesTaken);
 
     // Rip the current score. We could listen to an event on that service, but it makes more sense just to listen to commands and reuse
     // an existing subscription
-    this.score = this.scoreService.currentScore;
-    this.maxScore = this.scoreService.maxScore;
+    this.score = this.engine.currentScore;
+    this.maxScore = this.engine.maxScore;
 
   }
 }

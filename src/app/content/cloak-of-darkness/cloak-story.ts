@@ -9,6 +9,7 @@ import {CommandToken} from '../../engine/parser/command-token';
 import {RoomLink} from '../../engine/room-link';
 import {VerbType} from '../../engine/verbs/verb-type.enum';
 import {Command} from '../../engine/parser/command';
+import {NaturalLanguageProcessor} from '../../engine/parser/natural-language-processor';
 
 export class CloakStory extends Story {
 
@@ -18,8 +19,8 @@ export class CloakStory extends Story {
   private hasDroppedCloak: boolean = false;
 
 
-  constructor() {
-    super('Cloak');
+  constructor(processor: NaturalLanguageProcessor) {
+    super('Cloak', processor);
   }
 
   reset(): void {
@@ -53,7 +54,7 @@ export class CloakStory extends Story {
       if (!this.hasDroppedCloak) {
 
         // TODO: This can be accomplished via an increase score command with a do-once limiter
-        context.score.increaseScore(context);
+        context.engine.increaseScore(context);
         this.hasDroppedCloak = true;
       }
 
@@ -96,13 +97,13 @@ export class CloakStory extends Story {
     const isWin: boolean = this.blundersRemaining > 0;
 
     if (isWin) {
-      context.score.increaseScore(context);
+      context.engine.increaseScore(context);
       context.output.addStory(context.getString('messageWin'));
     } else {
       context.output.addStory(context.getString('messageLose'));
     }
 
-    context.ifService.endGame(context, isWin);
+    context.engine.endGame(context, isWin);
   }
 
   private isCommandAllowedInBar(context: CommandContext): boolean {

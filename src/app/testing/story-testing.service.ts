@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import {StoryTestingServiceBase} from './story-testing-service-base';
-import {UserInputService} from '../engine/user-input.service';
-import {InteractiveFictionService} from '../engine/interactive-fiction.service';
+import {InteractiveFictionEngine} from '../engine/interactive-fiction-engine';
 
 @Injectable()
 export class StoryTestingService extends StoryTestingServiceBase {
 
-  constructor(ifService: InteractiveFictionService,
-              inputService: UserInputService) {
-    super(ifService, inputService);
+  constructor(engine: InteractiveFictionEngine) {
+    super(engine);
 
   }
 }

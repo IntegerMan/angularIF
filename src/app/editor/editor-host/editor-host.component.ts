@@ -10,6 +10,7 @@ import {EditorService} from '../editor.service';
 import {Story} from '../../engine/entities/story';
 import {RoomData} from '../../engine/story-data/room-data';
 import {StoryLoader} from '../../engine/story-data/story-loader';
+import {InteractiveFictionEngine} from '../../engine/interactive-fiction-engine';
 
 @Component({
   selector: 'if-editor-host',
@@ -119,7 +120,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
 
     if (storyKey === undefined) {
       LoggingService.instance.debug(`Starting from blank story`);
-      story = this.storyService.buildEmptyStoryData();
+      story = StoryService.buildEmptyStoryData();
     } else {
       LoggingService.instance.debug(`Loading story with key ${storyKey}`);
       story = this.storyService.getStoryData(storyKey);
@@ -147,27 +148,31 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     }
   }
 
+  private get engine(): InteractiveFictionEngine {
+    return this.ifService.engine;
+  }
+
   private onPlayRequested(room: RoomData) {
 
     this.loading = true;
 
     const json: string = this.editorService.getJSON();
-    this.gameStory = new Story('Editor Preview');
+    this.gameStory = new Story('Editor Preview', this.engine.nlp);
 
     this.gameStory.storyData = JSON.parse(json);
     const loader = new StoryLoader(this.gameStory.storyData);
 
     // Read metadata from the story data file
     loader.loadIntoStory(this.gameStory);
-    this.ifService.initialize(this.gameStory);
+    this.engine.initialize(this.gameStory);
 
     // Warp the actor to the requested location
     if (room) {
       const storyRoom = this.gameStory.findRoomByKey(room.key);
       if (storyRoom) {
-        this.ifService.setActorRoom(this.gameStory.player, storyRoom);
+        InteractiveFictionEngine.setActorRoom(this.gameStory.player, storyRoom);
         this.outputService.clear();
-        this.ifService.describeRoom(storyRoom, this.ifService.buildCommandContext());
+        this.engine.describeRoom(storyRoom, this.engine.buildCommandContext());
       }
     }
 

@@ -3,17 +3,18 @@ import { Story } from '../engine/entities/story';
 import { FogTerrierStory } from '../content/fog-terrier/fog-terrier-story';
 import { CloakStory } from '../content/cloak-of-darkness/cloak-story';
 import { StoryData } from '../engine/story-data/story-data';
+import {NaturalLanguageService} from '../engine/parser/natural-language.service';
 
 @Injectable()
 export class StoryService {
 
   private stories: Story[] = [];
 
-  constructor() {
+  constructor(languageService: NaturalLanguageService) {
 
     // TODO: A dynamic load would be nice as well
-    this.stories.push(new FogTerrierStory());
-    this.stories.push(new CloakStory());
+    this.stories.push(new FogTerrierStory(languageService.processor));
+    this.stories.push(new CloakStory(languageService.processor));
 
     // Ensure we have workable data
     for (const story of this.stories) {
@@ -52,7 +53,7 @@ export class StoryService {
     return this.stories;
   }
 
-  buildEmptyStoryData(): StoryData {
+  static buildEmptyStoryData(): StoryData {
     const data = new StoryData();
 
     // Start with decent defaults

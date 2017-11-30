@@ -2,11 +2,12 @@ import {Story} from '../../engine/entities/story';
 import {StoryData} from '../../engine/story-data/story-data';
 import {LoggingService} from '../../utility/logging.service';
 import {StoryLoader} from '../../engine/story-data/story-loader';
+import {NaturalLanguageProcessor} from '../../engine/parser/natural-language-processor';
 
 export class FogTerrierStory extends Story {
 
-  constructor() {
-    super('Fog');
+  constructor(processor: NaturalLanguageProcessor) {
+    super('Fog', processor);
   }
 
   reset(): void {

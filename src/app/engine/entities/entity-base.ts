@@ -1,5 +1,5 @@
 import {CommandToken} from '../parser/command-token';
-import {NaturalLanguageService} from '../parser/natural-language.service';
+import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
 
 export class EntityBase {
 
@@ -26,33 +26,33 @@ export class EntityBase {
     return this._name;
   }
 
-  addAliases(input: string): void {
+  addAliases(input: string, processor: NaturalLanguageProcessor): void {
 
     if (!input) {
       return;
     }
 
-    const nouns = NaturalLanguageService.instance.getNouns(input);
-    this.addNounAliases(nouns);
+    const nouns = processor.getNouns(input);
+    this.addNounAliases(nouns, processor);
 
-    const adjectives = NaturalLanguageService.instance.getAdjectives(input);
-    this.addAdjectiveAliases(adjectives);
+    const adjectives = processor.getAdjectives(input);
+    this.addAdjectiveAliases(adjectives, processor);
 
   }
 
-  addNounAliases(nouns: string[]): void {
-    this.addAliasToList(nouns, this.nouns);
+  addNounAliases(nouns: string[], processor: NaturalLanguageProcessor): void {
+    EntityBase.addAliasToList(nouns, this.nouns, processor);
   }
 
-  addAdjectiveAliases(adjectives: string[]): void {
-    this.addAliasToList(adjectives, this.adjectives);
+  addAdjectiveAliases(adjectives: string[], processor: NaturalLanguageProcessor): void {
+    EntityBase.addAliasToList(adjectives, this.adjectives, processor);
   }
 
-  private addAliasToList(inputs: string[], list: string[]) {
+  private static addAliasToList(inputs: string[], list: string[], processor: NaturalLanguageProcessor) {
     if (inputs) {
       for (const input of inputs) {
 
-        const token: CommandToken = NaturalLanguageService.instance.getTokenForWord(input);
+        const token: CommandToken = processor.getTokenForWord(input);
         list.push(token.name);
       }
     }

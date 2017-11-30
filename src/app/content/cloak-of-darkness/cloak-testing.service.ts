@@ -1,18 +1,16 @@
 import {Injectable} from '@angular/core';
-import {UserInputService} from '../../engine/user-input.service';
-import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
 import {StoryTestingServiceBase} from '../../testing/story-testing-service-base';
 import {CloakStory} from './cloak-story';
+import {InteractiveFictionEngine} from '../../engine/interactive-fiction-engine';
 
 @Injectable()
 export class CloakTestingService extends StoryTestingServiceBase {
 
-  constructor(ifService: InteractiveFictionService,
-              inputService: UserInputService) {
+  constructor(engine: InteractiveFictionEngine) {
 
-    super(ifService, inputService);
+    super(engine);
 
-    super.initialize(new CloakStory());
+    super.initialize(new CloakStory(engine.nlp));
 
   }
 

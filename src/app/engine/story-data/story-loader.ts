@@ -15,7 +15,7 @@ import {AliasData} from './alias-data';
 import {ItemData} from './item-data';
 import {VerbData} from './verb-data';
 import {isNullOrUndefined} from 'util';
-import {NaturalLanguageService} from '../parser/natural-language.service';
+import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
 
 export class StoryLoader {
 
@@ -81,7 +81,7 @@ export class StoryLoader {
     story.maxScore = this.data.maxScore;
     story.description = this.data.description;
     story.authors = this.data.authors;
-    story.introResponse = this.buildResponse(this.data.introText, story);
+    story.introResponse = StoryLoader.buildResponse(this.data.introText, story);
 
     // Copy over string resources
     if (this.data.strings) {
@@ -95,7 +95,7 @@ export class StoryLoader {
     // Initialize the rooms
     story.rooms.length = 0;
     for (const roomData of this.data.rooms) {
-      story.rooms.push(this.buildRoom(roomData, story));
+      story.rooms.push(StoryLoader.buildRoom(roomData, story));
     }
     this.initializeNavigationMesh(story);
 
@@ -103,7 +103,7 @@ export class StoryLoader {
     story.actors.length = 0;
     story.player = null;
     for (const actorData of this.data.actors) {
-      const actor = this.buildActor(actorData, story);
+      const actor = StoryLoader.buildActor(actorData, story);
 
       // Add it to the story
       story.actors.push(actor);
@@ -117,7 +117,7 @@ export class StoryLoader {
 
   }
 
-  private buildActor(actorData: ActorData, story: Story): Actor {
+  private static buildActor(actorData: ActorData, story: Story): Actor {
     const actor = new Actor(actorData.name, actorData.key);
 
     // If this is the player, we'll need to let the story know. Also validate for > 1 player.
@@ -136,12 +136,12 @@ export class StoryLoader {
     // Set up their inventory
     if (actorData.contents) {
       for (const itemData of actorData.contents) {
-        const item = this.buildItem(itemData, story);
+        const item = StoryLoader.buildItem(itemData, story);
         actor.addToInventory(item);
       }
     }
 
-    this.populateCommonFields(actor, actorData);
+    StoryLoader.populateCommonFields(actor, actorData, story);
 
     // Set the actor's start room
     const room: Room = story.findRoomByKey(actorData.startRoom);
@@ -153,37 +153,37 @@ export class StoryLoader {
     return actor;
   }
 
-  private buildItem(itemData: ItemData, story: Story): WorldEntity {
+  private static buildItem(itemData: ItemData, story: Story): WorldEntity {
 
     const item: WorldEntity = new PortableEntity(itemData.name, itemData.key);
 
-    this.populateCommonFields(item, itemData);
+    StoryLoader.populateCommonFields(item, itemData, story);
 
-    this.populateEvents(item, itemData.events);
+    StoryLoader.populateEvents(item, itemData.events);
 
     return item;
   }
 
-  private populateEvents(entity: WorldEntity, events: any) {
+  private static populateEvents(entity: WorldEntity, events: any) {
     if (events) {
       for (const key of Object.getOwnPropertyNames(events)) {
-        entity.events[key] = this.buildResponse(events[key], entity);
+        entity.events[key] = StoryLoader.buildResponse(events[key], entity);
       }
     }
   }
 
-  private buildRoom(roomData: RoomData, story: Story): Room {
+  private static buildRoom(roomData: RoomData, story: Story): Room {
 
     const room: Room = new Room(roomData.name, roomData.key);
 
-    this.populateCommonFields(room, roomData);
+    StoryLoader.populateCommonFields(room, roomData, story);
 
-    this.populateEvents(room, roomData.events);
+    StoryLoader.populateEvents(room, roomData.events);
 
     // Populate all registered items
     if (roomData.contents) {
       for (const itemData of roomData.contents) {
-        const item: WorldEntity = this.buildItem(itemData, story);
+        const item: WorldEntity = StoryLoader.buildItem(itemData, story);
         room.addObject(item);
       }
     }
@@ -191,20 +191,20 @@ export class StoryLoader {
     return room;
   }
 
-  private populateCommonFields(entity: WorldEntity, entityData: EntityData): void {
+  private static populateCommonFields(entity: WorldEntity, entityData: EntityData, story: Story): void {
 
-    this.buildAttributes(entity, entityData);
+    StoryLoader.buildAttributes(entity, entityData);
 
     // Copy over all verbs
-    this.buildVerbHandlers(entity, entityData.verbData);
+    StoryLoader.buildVerbHandlers(entity, entityData.verbData);
 
-    this.buildAliases(entity, entityData.aliases);
+    StoryLoader.buildAliases(entity, entityData.aliases, story.languageProcessor);
 
     entity.setAttribute('describeWithRoom', entityData.describeWithRoom);
 
   }
 
-  private buildAttributes(entity: WorldEntity, entityData: EntityData): void {
+  private static buildAttributes(entity: WorldEntity, entityData: EntityData): void {
     if (entityData.attributes) {
       for (const attribute of Object.getOwnPropertyNames(entityData.attributes)) {
         entity.attributes[attribute] = entityData.attributes[attribute];
@@ -212,15 +212,15 @@ export class StoryLoader {
     }
   }
 
-  private buildVerbHandlers(entity: WorldEntity, verbData: VerbData[]): void {
+  private static buildVerbHandlers(entity: WorldEntity, verbData: VerbData[]): void {
     if (verbData) {
       for (const verb of verbData) {
-        entity.verbs[verb.name] = this.buildResponse(verb.handler, entity);
+        entity.verbs[verb.name] = StoryLoader.buildResponse(verb.handler, entity);
       }
     }
   }
 
-  private buildResponse(input: string | any[], context: any): StoryResponse {
+  private static buildResponse(input: string | any[], context: any): StoryResponse {
 
     if (isNullOrUndefined(input))  {
       return undefined;
@@ -239,19 +239,19 @@ export class StoryLoader {
 
       // Migrate from the old model of doing things to the new array-based model
       if (roomData.nav) {
-        this.migrateNavigationStorage(roomData);
+        StoryLoader.migrateNavigationStorage(roomData);
       }
 
       const room: Room = story.findRoomByKey(roomData.key);
 
       for (const dir of roomData.directions) {
-        this.createRoomLink(dir, story, room);
+        StoryLoader.createRoomLink(dir, story, room);
       }
 
     }
   }
 
-  private migrateNavigationStorage(roomData): void {
+  private static migrateNavigationStorage(roomData): void {
 
     // TODO: Pull Cloak over to the new format, then get rid of this migration method and the .nav property.
 
@@ -276,7 +276,7 @@ export class StoryLoader {
     }
   }
 
-  private createRoomLink(direction: DirectionData, story: Story, room: Room): void {
+  private static createRoomLink(direction: DirectionData, story: Story, room: Room): void {
 
     let target: Room = null;
 
@@ -286,23 +286,23 @@ export class StoryLoader {
 
     // Build out the link
     const link = new RoomLink(room, direction.key, target);
-    link.goResponse = this.buildResponse(direction.goMessage, link);
-    link.lookResponse = this.buildResponse(direction.lookMessage, link);
-    link.addAliases(direction.aliases);
+    link.goResponse = StoryLoader.buildResponse(direction.goMessage, link);
+    link.lookResponse = StoryLoader.buildResponse(direction.lookMessage, link);
+    link.addAliases(direction.aliases, story.languageProcessor);
 
     // Register the link now
     room.roomLink[direction.key] = link;
 
   }
 
-  private buildAliases(entity: WorldEntity, alias: AliasData): void {
+  private static buildAliases(entity: WorldEntity, alias: AliasData, processor: NaturalLanguageProcessor): void {
 
     if (!alias) {
       return;
     }
 
-    entity.addNounAliases(alias.nouns);
-    entity.addAdjectiveAliases(alias.adjectives);
+    entity.addNounAliases(alias.nouns, processor);
+    entity.addAdjectiveAliases(alias.adjectives, processor);
 
   }
 

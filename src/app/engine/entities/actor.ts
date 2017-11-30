@@ -8,14 +8,10 @@ export class Actor extends WorldEntity {
 
   isPlayer: boolean;
 
-  constructor(name: string = 'yourself', key: string = 'you') {
+  constructor(name: string, key: string) {
     super(name, key);
 
     this.isAlive = true;
-
-    // Add some common synonyms for helping the player refer to their character
-    // TODO: Seems like a bad move
-    this.addNounAliases(['me', 'self', 'you', 'myself', 'character', 'avatar', 'player', 'i']);
 
   }
 

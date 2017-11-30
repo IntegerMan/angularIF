@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NaturalLanguageService} from './natural-language.service';
 import {LexiconService} from './lexicon.service';
-import {SentenceParserService} from './sentence-parser.service';
 
 @NgModule({
   imports: [
@@ -10,8 +9,7 @@ import {SentenceParserService} from './sentence-parser.service';
   ],
   providers: [
     LexiconService,
-    NaturalLanguageService,
-    SentenceParserService
+    NaturalLanguageService
   ],
   declarations: []
 })

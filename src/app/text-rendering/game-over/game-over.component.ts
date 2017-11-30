@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {InteractiveFictionService} from '../../engine/interactive-fiction.service';
-import {ScoreService} from '../../engine/score.service';
 import {StringHelper} from '../../utility/string-helper';
 
 @Component({
@@ -20,16 +19,17 @@ export class GameOverComponent implements OnInit {
   maxScore: number;
   movesText: string;
 
-  constructor(private ifService: InteractiveFictionService,
-              private scoreService: ScoreService) {
+  constructor(private ifService: InteractiveFictionService) {
 
   }
 
   ngOnInit() {
 
-    this.score = this.scoreService.currentScore;
-    this.maxScore = this.scoreService.maxScore;
-    this.movesText = StringHelper.pluralize(this.ifService.movesTaken, 'move', 'moves');
+    const engine = this.ifService.engine;
+
+    this.score = engine.currentScore;
+    this.maxScore = engine.maxScore;
+    this.movesText = StringHelper.pluralize(engine.movesTaken, 'move', 'moves');
 
   }
 

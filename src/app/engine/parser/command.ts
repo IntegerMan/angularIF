@@ -50,7 +50,7 @@ export class Command {
         'No Verb',
         this.userInput,
         `${context.story.name} - ${context.currentRoom.name}`,
-        context.ifService.commandId);
+        context.engine.commandId);
 
       context.output.addParserError('I couldn\'t figure out what you want to do. Try starting with a verb.',
         `For a list of understood verbs, type 'verbs'.`);
@@ -65,14 +65,14 @@ export class Command {
         'Unknown Verb',
         this.verb.name,
         `${context.story.name} - ${context.currentRoom.name}`,
-        context.ifService.commandId);
+        context.engine.commandId);
 
       context.output.addParserError(`I don't know how to respond to the verb '${this.verb.name}' yet.`);
       return CommandResult.BuildParseFailedResult();
     }
 
     // Make sure the game hasn't already ended
-    if (context.ifService.isGameOver && (!this.verbHandler || this.verbHandler.verbType !== VerbType.system)) {
+    if (context.engine.isGameOver && (!this.verbHandler || this.verbHandler.verbType !== VerbType.system)) {
 
       context.output.addParserError(`It's too late for that - the game is already over!`);
       context.output.addPrompt('Would you like to Restart, Restore, or Quit?');

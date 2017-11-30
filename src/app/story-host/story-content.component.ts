@@ -6,6 +6,7 @@ import {TextLine} from '../text-rendering/text-line';
 import {TextOutputService} from '../engine/text-output.service';
 import {Subscription} from 'rxjs/Subscription';
 import {GameState} from '../engine/game-state.enum';
+import {InteractiveFictionEngine} from '../engine/interactive-fiction-engine';
 
 @Component({
   selector: 'if-story',
@@ -46,19 +47,23 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
 
   }
 
+  get engine(): InteractiveFictionEngine {
+    return this.ifService.engine;
+  }
+
   ngOnInit() {
 
-    this.ifService.initialize(this.story);
+    this.engine.initialize(this.story);
 
     this.title = this.story.name;
     this.icon = this.story.fontAwesomeIcon;
 
     this.lines = this.outputService.lines;
-    this.gameStateSubscription = this.ifService.gameStateChanged.subscribe((s) => this.onGameStateChanged(s));
+    this.gameStateSubscription = this.engine.gameStateChanged.subscribe((s) => this.onGameStateChanged(s));
     this.linesChangedSubscription = this.outputService.linesChanged.subscribe(() => this.onLinesChanged());
 
     this.scrollToBottom();
-    this.onGameStateChanged(this.ifService.gameState);
+    this.onGameStateChanged(this.engine.gameState);
   }
 
   ngOnDestroy(): void {

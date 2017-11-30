@@ -1,18 +1,17 @@
 import {LoggingService} from '../utility/logging.service';
 import {Story} from './entities/story';
-import {InteractiveFictionService} from './interactive-fiction.service';
 import {Room} from './entities/room';
 import {Actor} from './entities/actor';
 import {StringHelper} from '../utility/string-helper';
 import {CommandToken} from './parser/command-token';
-import {NaturalLanguageService} from './parser/natural-language.service';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
 import {ConfirmationService} from 'primeng/primeng';
-import {ScoreService} from './score.service';
 import {TokenClassification} from './parser/token-classification.enum';
 import {Command} from './parser/command';
 import {EntityBase} from './entities/entity-base';
 import {CommandResponseManager} from './command-response-manager';
+import {InteractiveFictionEngine} from './interactive-fiction-engine';
+import {NaturalLanguageProcessor} from './parser/natural-language-processor';
 
 export class CommandContext {
 
@@ -26,28 +25,33 @@ export class CommandContext {
 
   logger: LoggingService;
   analytics: GoogleAnalyticsService;
-  ifService: InteractiveFictionService;
   confirmService: ConfirmationService;
-  score: ScoreService;
-  story: Story;
   command: Command;
   output: CommandResponseManager;
   wasConfused: boolean = false;
 
-  constructor(ifService: InteractiveFictionService,
-              confirmService: ConfirmationService,
-              scoreService: ScoreService) {
+  private _engine: InteractiveFictionEngine;
 
-    this.ifService = ifService;
-    this.story = ifService.story;
+  constructor(engine: InteractiveFictionEngine,
+              confirmService: ConfirmationService) {
+
+    this._engine = engine;
+
     this.confirmService = confirmService;
-    this.score = scoreService;
     this.output = new CommandResponseManager();
 
     // These are commonly needed by classes and shouldn't be injected
     this.logger = LoggingService.instance;
     this.analytics = GoogleAnalyticsService.instance;
 
+  }
+
+  get story(): Story {
+    return this.engine.story;
+  }
+
+  get engine(): InteractiveFictionEngine {
+    return this._engine;
   }
 
   getSingleObjectForToken(token: CommandToken, announceConfusion: boolean = true): EntityBase {
@@ -60,7 +64,7 @@ export class CommandContext {
     if (!entities || entities.length <= 0) {
       this.logger.log(`No local match found for '${token.name}'`);
 
-      if (!NaturalLanguageService.isSpecialNoun(token)) {
+      if (!NaturalLanguageProcessor.isSpecialNoun(token)) {
 
         this.analytics.emitEvent(
           'Reference Not Found',

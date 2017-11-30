@@ -20,9 +20,7 @@ import {GenericVerbHandler} from './generic-verb-handler';
 @Injectable()
 export class CommonVerbService {
 
-  constructor() { }
-
-  public getCommonVerbs(): VerbHandler[] {
+  public static getCommonVerbs(): VerbHandler[] {
 
     const verbs: VerbHandler[] = [];
 

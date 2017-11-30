@@ -3,10 +3,10 @@ import {Actor} from './actor';
 import {VerbHandler} from '../verbs/verb-handler';
 import {WorldEntity} from './world-entity';
 import {LoggingService} from '../../utility/logging.service';
-import {TextOutputService} from '../text-output.service';
 import {StoryResponse} from '../responses/story-response';
 import {CommandContext} from '../command-context';
 import {StoryData} from '../story-data/story-data';
+import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
 
 export class Story {
 
@@ -27,13 +27,15 @@ export class Story {
 
   verbHandlers: VerbHandler[];
   introResponse: StoryResponse;
+  languageProcessor: NaturalLanguageProcessor;
 
-  constructor(key: string) {
+  constructor(key: string, processor: NaturalLanguageProcessor) {
 
     this.name = 'Untitled';
     this.authors = 'Unattributed';
     this.version = '1.0';
     this.key = key;
+    this.languageProcessor = processor;
 
     // Initialize empty lists
     this.verbHandlers = [];
@@ -131,7 +133,7 @@ export class Story {
   private autodetectNounsAndAdjectives(entity: WorldEntity): void {
 
     // TODO: Is this the best place for this logic?
-    entity.addAliases(entity.name);
+    entity.addAliases(entity.name, this.languageProcessor);
 
     if (entity.contents && entity.contents.length > 0) {
       for (const child of entity.contents) {

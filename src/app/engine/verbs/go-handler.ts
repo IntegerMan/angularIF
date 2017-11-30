@@ -6,6 +6,7 @@ import {Room} from '../entities/room';
 import {RoomLink} from '../room-link';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
+import {InteractiveFictionEngine} from '../interactive-fiction-engine';
 
 export class GoHandler extends VerbHandler {
 
@@ -79,7 +80,7 @@ export class GoHandler extends VerbHandler {
     }
 
     // Move the player
-    context.ifService.setActorRoom(context.player, newRoom);
+    InteractiveFictionEngine.setActorRoom(context.player, newRoom);
 
     // Send events to the old room
     room.sendEvent(context, 'onLeave', link);

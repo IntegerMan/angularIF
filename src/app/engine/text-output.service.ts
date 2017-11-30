@@ -1,29 +1,39 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {LoggingService} from '../utility/logging.service';
 import {TextLine} from '../text-rendering/text-line';
 import {RenderType} from '../text-rendering/render-type.enum';
+import {InteractiveFictionService} from './interactive-fiction.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Injectable()
-export class TextOutputService {
-
-  static get instance(): TextOutputService {
-    if (!this._instance) {
-      this._instance = new TextOutputService();
-    }
-    return this._instance;
-  }
-
-  private static _instance: TextOutputService;
+export class TextOutputService implements OnDestroy {
 
   lines: TextLine[] = [];
   lastLine: TextLine = null;
   linesChanged: EventEmitter<TextLine[]>;
   lineAdded: EventEmitter<TextLine>;
 
-  constructor() {
+  private linesAddedSubscription: Subscription;
+  private linesClearedSubscription: Subscription;
+
+  constructor(ifService: InteractiveFictionService) {
     this.linesChanged = new EventEmitter<TextLine[]>();
     this.lineAdded = new EventEmitter<TextLine>();
-    TextOutputService._instance = this;
+
+    this.linesAddedSubscription = ifService.engine.linesAdded.subscribe(lines => this.addLines(lines));
+    this.linesClearedSubscription = ifService.engine.clearOutputRequested.subscribe(() => this.clear());
+  }
+
+  ngOnDestroy(): void {
+
+    if (this.linesAddedSubscription) {
+      this.linesAddedSubscription.unsubscribe();
+    }
+
+    if (this.linesClearedSubscription) {
+      this.linesClearedSubscription.unsubscribe();
+    }
+
   }
 
   displaySystem(text: string): void {
