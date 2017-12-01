@@ -121,7 +121,7 @@ export class StoryContentComponent implements OnInit, OnDestroy, AfterViewChecke
         break;
 
       case GameState.won:
-        this.stateClass = 'green accent-3';
+        this.stateClass = 'green accent-4';
         break;
 
       case GameState.lost:

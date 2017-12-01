@@ -282,9 +282,13 @@ export class InteractiveFictionEngine {
       }
     }
 
-    context.output.addBlankLine();
-    context.output.addLine(message, RenderType.gameOver, isVictory);
-    context.output.addBlankLine();
+    // We need to emit here instead of just add to the context because there may be confirms behind this (on give up, for example)
+    // I
+    this.linesAdded.emit([
+      new TextLine('', RenderType.divider),
+      new TextLine(message, RenderType.gameOver, isVictory),
+      new TextLine('', RenderType.divider)
+    ]);
 
     GoogleAnalyticsService.instance.emitEvent(
       'Game Over',
