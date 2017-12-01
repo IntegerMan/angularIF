@@ -136,10 +136,6 @@ export class InteractiveFictionEngine {
     }
     command.result = result;
 
-    // Copy the output to the window
-    this.linesAdded.emit(context.output.lines);
-    this.commandEvaluated.emit(command);
-
     return result;
 
   }
@@ -255,6 +251,7 @@ export class InteractiveFictionEngine {
     // If the parser wasn't sure what we were referring to with something, then don't send it to a verb handler.
     let result: CommandResult;
     if (context.wasConfused && !(isDebugCommand)) {
+      console.warn('result was confused');
       result = CommandResult.BuildParseFailedResult();
     } else {
       // Okay, we can send the command off to be interpreted and just return the result
@@ -263,6 +260,13 @@ export class InteractiveFictionEngine {
 
     result.command = command;
     result.lines = ArrayHelper.clone(context.output.lines);
+
+    command.result = result;
+
+    // Copy the output to the window
+    this.linesAdded.emit(context.output.lines);
+    this.commandEvaluated.emit(command);
+
     return result;
 
   }

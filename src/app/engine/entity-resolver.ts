@@ -20,14 +20,16 @@ export class EntityResolver {
 
   static resolveNouns(context: CommandContext, tokens: CommandToken[], announceConfusion: boolean): void {
 
-    // TODO: This really shouldn't be in command context
-
     let isFirst: boolean = true;
     const confusedNames: string[] = [];
 
     const nouns: CommandToken[] = tokens.filter(t => t.classification === TokenClassification.Noun);
     for (const noun of nouns) {
-      noun.entity = EntityResolver.getSingleObjectForToken(context, noun, announceConfusion);
+
+      const room = context.currentRoom;
+      const candidates: EntityBase[] = room.findObjectsForToken(noun, context);
+
+      noun.entity = EntityResolver.getSingleObjectForToken(context, noun, candidates, announceConfusion);
       if (!noun.entity) {
 
         if (!NaturalLanguageProcessor.isSpecialNoun(noun)) {
@@ -48,20 +50,19 @@ export class EntityResolver {
     }
 
     // Tell the user all of the mistakes they made in one go.
-    if (confusedNames.length > 0 && announceConfusion) {
+    if (confusedNames.length > 0 && announceConfusion && !context.wasConfused) {
       context.output.addParserError(`You don't see ${StringHelper.toOxfordCommaList(confusedNames, 'or')} here.`);
     }
 
   }
 
-  static getSingleObjectForToken(context: CommandContext, token: CommandToken, announceConfusion: boolean = true): EntityBase {
-
-    const room = context.currentRoom;
-
-    let entities: EntityBase[] = room.findObjectsForToken(token, context);
+  static getSingleObjectForToken(context: CommandContext,
+                                 token: CommandToken,
+                                 candidates: EntityBase[],
+                                 announceConfusion: boolean = true): EntityBase {
 
     // No matches yields an "it's not here" message
-    if (!entities || entities.length <= 0) {
+    if (!candidates || candidates.length <= 0) {
       LoggingService.instance.log(`No local match found for '${token.name}'`);
 
       if (!NaturalLanguageProcessor.isSpecialNoun(token)) {
@@ -71,18 +72,19 @@ export class EntityResolver {
     }
 
     // If we have more than one best match, show a disambiguation message
-    if (entities.length > 1) {
+    if (candidates.length > 1) {
 
-      LoggingService.instance.warning(`Possible matches for '${token.name}': ${StringHelper.toOxfordCommaList(entities.map(e => e.name))}`);
+      const csvNames = StringHelper.toOxfordCommaList(candidates.map(e => e.name));
+      LoggingService.instance.warning(`Possible matches for '${token.name}': ${csvNames}`);
 
       // Set the initial score of each object
-      for (const e of entities) {
+      for (const e of candidates) {
         (<any>e).disambiguationScore = 1;
       }
 
       // Tally up our scoring based on the modifiers attached to this entity and how well they map to the entity.
       for (const t of token.modifiedBy) {
-        for (const e of entities) {
+        for (const e of candidates) {
           if (e.adjectives.indexOf(t.name) >= 0) {
             (<any>e).disambiguationScore += 1;
           } else if (e.nouns.indexOf(t.name) >= 0) {
@@ -95,21 +97,21 @@ export class EntityResolver {
       }
 
       // Figure out which item performed the best
-      const maxScore: number = Math.max.apply(Math, entities.map(e => (<any>e).disambiguationScore));
+      const maxScore: number = Math.max.apply(Math, candidates.map(e => (<any>e).disambiguationScore));
 
       // Whittle down to the best result based on our disambiguation score.
-      entities = entities.filter(e => (<any>e).disambiguationScore === maxScore);
+      candidates = candidates.filter(e => (<any>e).disambiguationScore === maxScore);
 
       // If we're still confused but we have an 'of' preposition, piggy back onto its resolution.
-      if (entities.length > 1) {
+      if (candidates.length > 1) {
 
         const ofTokens = token.modifiedBy.filter(m => m.name === 'of' && m.previousToken && m.previousToken.entity);
         if (ofTokens.length > 0) {
-          entities = [ofTokens[0].previousToken.entity];
+          candidates = [ofTokens[0].previousToken.entity];
         }
       }
 
-      if (entities.length > 1) {
+      if (candidates.length > 1) {
 
         if (announceConfusion) {
           context.output.addParserError(`There is more than one object here matching that description. Can you be more specific?`);
@@ -119,12 +121,12 @@ export class EntityResolver {
 
         return null;
 
-      } else if (entities.length < 1) {
-        throw new Error(`No results after disambiguating for token ${token.name} in ${room.key}`);
+      } else if (candidates.length < 1) {
+        throw new Error(`No results after disambiguating for token ${token.name} in ${context.currentRoom.key}`);
       }
     }
 
-    const entity: EntityBase = entities[0];
+    const entity: EntityBase = candidates[0];
     LoggingService.instance.log(`Match found for '${token.name}': ${entity.name}`);
 
     return entity;
