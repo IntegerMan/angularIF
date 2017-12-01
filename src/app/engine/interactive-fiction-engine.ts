@@ -21,6 +21,7 @@ import {CommonVerbService} from './verbs/common-verb.service';
 import {ArrayHelper} from '../utility/array-helper';
 import {SentenceParser} from './parser/sentence-parser';
 import {NaturalLanguageProcessor} from './parser/natural-language-processor';
+import {EntityResolver} from './entity-resolver';
 
 export class InteractiveFictionEngine {
 
@@ -245,8 +246,8 @@ export class InteractiveFictionEngine {
     }
 
     // Now that we know the basic sentence structure, let's look at the execution context and see if we can't identify what tokens map to.
-    context.resolveDirections(tokens);
-    context.resolveNouns(tokens, !isDebugCommand);
+    EntityResolver.resolveDirections(context, tokens);
+    EntityResolver.resolveNouns(context, tokens, !isDebugCommand);
 
     // Create a command context. This will give the command handler more utility information
     this.logUserCommandToAnalytics(context, command);
