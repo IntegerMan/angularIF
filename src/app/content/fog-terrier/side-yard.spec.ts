@@ -1,5 +1,4 @@
 import {Room} from '../../engine/entities/room';
-import {InteractiveFictionEngine} from '../../engine/interactive-fiction-engine';
 import {StorySpecVerifier} from '../../testing/story-spec-verifier';
 import {FogTerrierStory} from './fog-terrier-story';
 
@@ -9,8 +8,8 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   let room: Room;
 
   beforeEach(() =>  {
-    const engine = new InteractiveFictionEngine(null);
-    game = new StorySpecVerifier(engine, new FogTerrierStory(engine.nlp));
+    const storyFunc = (nlp) => new FogTerrierStory(nlp);
+    game = StorySpecVerifier.prepareToTest(storyFunc);
     room = game.warpTo('sideyard');
   });
 

@@ -123,4 +123,13 @@ export class StorySpecVerifier {
     return new RoomSpec(key, room, this);
   }
 
+  static prepareToTest(createStoryFunc: (nlp) => Story): StorySpecVerifier {
+
+    const engine = new InteractiveFictionEngine(null);
+    const story: Story = createStoryFunc(engine.nlp);
+
+    return new StorySpecVerifier(engine, story);
+
+  }
+
 }
