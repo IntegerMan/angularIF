@@ -119,8 +119,8 @@ export class StorySpecVerifier {
     return new EntitySpec(key, room, this);
   }
 
-  buildRoomSpec(key: string, room: Room): RoomSpec {
-    return new RoomSpec(key, room, this);
+  buildRoomSpec(room: Room): RoomSpec {
+    return new RoomSpec(room.key, room, this);
   }
 
   static prepareToTest(createStoryFunc: (nlp) => Story): StorySpecVerifier {

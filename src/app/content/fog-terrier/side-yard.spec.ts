@@ -16,7 +16,7 @@ describe('FogTerrier.YourHouse.Sideyard', () => {
   // Room: Side Yard
   it('should contain a side yard room that passes spec validation', () => {
 
-    const spec = game.buildRoomSpec('sideyard', room)
+    const spec = game.buildRoomSpec(room)
       .shouldResolveFrom(`sideyard`)
       .shouldResolveFrom(`side yard`)
       .shouldResolveFrom(`here`)
