@@ -298,14 +298,15 @@ export class EditorService {
       return;
     }
 
-    if (!name || name === null) {
+    if (!direction) {
 
       const dialogRef = this.dialog.open(AddNavigationDialogComponent, {
         width: '300px'
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.logger.debug(`The add navigation dialog was closed with a result of ${result}`);
+        this.logger.debug(`The add navigation dialog was closed with a result of:`);
+        this.logger.debug(result);
         if (result) {
           this.addNavigation(result);
         }

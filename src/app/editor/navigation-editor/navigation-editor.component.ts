@@ -13,6 +13,9 @@ export class NavigationEditorComponent implements OnInit, OnChanges {
   @Input()
   dir: DirectionData;
 
+  @Input()
+  renderAsCard: boolean = true;
+
   private roomKeys: string[];
 
   constructor(private editorService: EditorService) {

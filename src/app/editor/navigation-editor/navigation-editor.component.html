@@ -1,6 +1,6 @@
-<div class="card content-bg">
-  <div class="card-content">
-    <div class="card-header">
+<div [ngClass]="{card: renderAsCard, 'content-bg': renderAsCard}">
+  <div [ngClass]="{'card-content': renderAsCard}">
+    <div class="card-header" *ngIf="renderAsCard">
       <h4>{{dir.key}}</h4>
     </div>
 
