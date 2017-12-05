@@ -21,15 +21,17 @@ import { StringsListComponent } from './strings-list/strings-list.component';
 import { ResponseListComponent } from './verbs/response-list/response-list.component';
 import { EditorToolbarComponent } from './editor-toolbar/editor-toolbar.component';
 import { JsonExportComponent } from './json-export/json-export.component';
-import { AddAliasDialogComponent } from './add-alias-dialog/add-alias-dialog.component';
+import { AddAliasDialogComponent } from './dialogs/add-alias-dialog/add-alias-dialog.component';
 import { EditorCardCommandsComponent } from './editor-card-commands/editor-card-commands.component';
-import { AddEntityDialogComponent } from './add-entity-dialog/add-entity-dialog.component';
+import { AddEntityDialogComponent } from './dialogs/add-entity-dialog/add-entity-dialog.component';
 import { LookRendererComponent } from './verbs/look-renderer/look-renderer.component';
 import {StoryHostModule} from '../story-host/story-host.module';
-import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
-import { AddVerbHandlerDialogComponent } from './verbs/add-verb-handler-dialog/add-verb-handler-dialog.component';
+import {AddAttributeDialogComponent} from './dialogs/add-attribute-dialog/add-attribute-dialog.component';
+import { AddVerbHandlerDialogComponent } from './dialogs/add-verb-handler-dialog/add-verb-handler-dialog.component';
 import { VerbEditorComponent } from './verbs/verb-editor/verb-editor.component';
-import { AddVerbResponseDialogComponent } from './verbs/add-verb-response-dialog/add-verb-response-dialog.component';
+import { AddVerbResponseDialogComponent } from './dialogs/add-verb-response-dialog/add-verb-response-dialog.component';
+import { AddNavigationDialogComponent } from './dialogs/add-navigation-dialog/add-navigation-dialog.component';
+import { NavigationEditorComponent } from './navigation-editor/navigation-editor.component';
 
 @NgModule({
   imports: [
@@ -67,14 +69,17 @@ import { AddVerbResponseDialogComponent } from './verbs/add-verb-response-dialog
     AddAttributeDialogComponent,
     AddVerbHandlerDialogComponent,
     VerbEditorComponent,
-    AddVerbResponseDialogComponent
+    AddVerbResponseDialogComponent,
+    AddNavigationDialogComponent,
+    NavigationEditorComponent
   ],
   entryComponents: [
     AddAliasDialogComponent,
     AddEntityDialogComponent,
     AddAttributeDialogComponent,
     AddVerbHandlerDialogComponent,
-    AddVerbResponseDialogComponent
+    AddVerbResponseDialogComponent,
+    AddNavigationDialogComponent
   ]
 })
 export class EditorModule {

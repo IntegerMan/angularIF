@@ -16,7 +16,8 @@ export class AddVerbHandlerDialogComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+
   }
 
   confirmSelection() {

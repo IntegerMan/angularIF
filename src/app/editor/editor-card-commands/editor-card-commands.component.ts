@@ -34,6 +34,10 @@ export class EditorCardCommandsComponent implements OnInit {
     this.editorService.addAlias();
   }
 
+  addNavigation(): void {
+    this.editorService.addNavigation();
+  }
+
   addAttribute(): void {
     this.editorService.addAttribute();
   }

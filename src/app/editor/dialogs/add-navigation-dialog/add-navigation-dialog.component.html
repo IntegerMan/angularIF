@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Add Navigation Handler</h1>
+
+<div mat-dialog-content>
+  <div class="input-field">
+    <input type="text" id="direction" [(ngModel)]="direction" required #verbName
+           (keyup.enter)="onEnterPressed(verbName.value);">
+    <label for="direction" class="active">Direction</label>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <a class="btn waves-light waves-ripple" (click)="confirmSelection()">
+    Add
+  </a>
+  <a class="btn waves-light waves-ripple warn-bg" (click)="dialogRef.close()" style="margin-left: 1rem;">
+    Cancel
+  </a>
+</div>

@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddEntityDialogComponent } from './add-entity-dialog.component';
-import {LoggingService} from '../../utility/logging.service';
-import {LexiconService} from '../../engine/parser/lexicon.service';
-import {EditorModule} from '../editor.module';
-import {NaturalLanguageService} from '../../engine/parser/natural-language.service';
+import {LoggingService} from '../../../utility/logging.service';
+import {LexiconService} from '../../../engine/parser/lexicon.service';
+import {EditorModule} from '../../editor.module';
+import {NaturalLanguageService} from '../../../engine/parser/natural-language.service';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 describe('AddEntityDialogComponent', () => {

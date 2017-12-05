@@ -14,11 +14,9 @@ export class NavigationListComponent implements OnInit, OnChanges {
   @Input()
   room: RoomData;
   directions: DirectionData[];
-  roomKeys: string[];
 
-  constructor(private editorService: EditorService) {
+  constructor() {
     this.directions = [];
-    this.roomKeys = [];
   }
 
   ngOnInit() {
@@ -30,12 +28,6 @@ export class NavigationListComponent implements OnInit, OnChanges {
   }
 
   private updateData() {
-
-    // Update the room keys
-    this.roomKeys.length = 0;
-    for (const r of this.editorService.storyData.rooms) {
-      this.roomKeys.push(r.key);
-    }
 
     // Update the directional navigation
     this.directions.length = 0;

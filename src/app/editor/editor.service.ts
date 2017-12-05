@@ -6,16 +6,18 @@ import {ActorData} from '../engine/story-data/actor-data';
 import {StoryData} from '../engine/story-data/story-data';
 import {EventEmitter, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {AddAliasDialogComponent} from './add-alias-dialog/add-alias-dialog.component';
-import {AddEntityDialogComponent} from './add-entity-dialog/add-entity-dialog.component';
+import {AddAliasDialogComponent} from './dialogs/add-alias-dialog/add-alias-dialog.component';
+import {AddEntityDialogComponent} from './dialogs/add-entity-dialog/add-entity-dialog.component';
 import {StoryLoader} from '../engine/story-data/story-loader';
-import {AddAttributeDialogComponent} from './add-attribute-dialog/add-attribute-dialog.component';
-import {AddVerbHandlerDialogComponent} from './verbs/add-verb-handler-dialog/add-verb-handler-dialog.component';
+import {AddAttributeDialogComponent} from './dialogs/add-attribute-dialog/add-attribute-dialog.component';
+import {AddVerbHandlerDialogComponent} from './dialogs/add-verb-handler-dialog/add-verb-handler-dialog.component';
 import {VerbData} from '../engine/story-data/verb-data';
 import {EntityData} from '../engine/story-data/entity-data';
 import {isNullOrUndefined} from 'util';
-import {AddVerbResponseDialogComponent} from './verbs/add-verb-response-dialog/add-verb-response-dialog.component';
+import {AddVerbResponseDialogComponent} from './dialogs/add-verb-response-dialog/add-verb-response-dialog.component';
 import {ArrayHelper} from '../utility/array-helper';
+import {DirectionData} from '../engine/story-data/direction-data';
+import {AddNavigationDialogComponent} from './dialogs/add-navigation-dialog/add-navigation-dialog.component';
 
 @Injectable()
 export class EditorService {
@@ -77,6 +79,10 @@ export class EditorService {
 
   public get canAddEvent(): boolean {
     return this.selectedNode && this.selectedNode.events;
+  }
+
+  public get canAddNavigation(): boolean {
+    return this.selectedNode && this.selectedNode.directions;
   }
 
   public get canAddObject(): boolean {
@@ -280,6 +286,42 @@ export class EditorService {
     verbData.handler = [];
 
     this.selectedNode.verbData.push(verbData);
+  }
+
+  public addNavigation(direction: DirectionData = null): void {
+
+    // Verify we can handle verbs
+    if (!this.canAddNavigation) {
+      // TODO: It'd be nice to throw a toast notification up here.
+      this.logger.error('could not add navigation');
+      this.logger.error(this.selectedNode);
+      return;
+    }
+
+    if (!name || name === null) {
+
+      const dialogRef = this.dialog.open(AddNavigationDialogComponent, {
+        width: '300px'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.logger.debug(`The add navigation dialog was closed with a result of ${result}`);
+        if (result) {
+          this.addNavigation(result);
+        }
+      });
+
+      return;
+    }
+
+    // Verify the direction doesn't already exist
+    if (ArrayHelper.contains(this.selectedNode.directions, direction)) {
+      // TODO: It'd be nice to throw a toast notification up here.
+      return;
+    }
+
+    this.selectedNode.directions.push(direction);
+
   }
 
   public addAlias(name: string = null, partOfSpeech: string = null): void {
