@@ -1,53 +1,31 @@
-<div class="card hoverable">
-  <div class="card-content">
-    <div class="card-title">
-      <h2>{{entity.name}}</h2>
+<div class="card-title">
+  <h2>{{entity.name}}</h2>
+</div>
+
+
+<!-- Basic Information -->
+<div *ngIf="selectedTab === 'info'">
+  <div class="row">
+    <div class="input-field col s6">
+      <input id="key" [(ngModel)]="entity.key" type="text" required class="validate" data-length="64">
+      <label for="key" class="active">Key</label>
     </div>
-
-    <div class="card-tabs" style="margin-bottom: 1rem;">
-      <ul class="tabs tabs-fixed-width tabs-transparent">
-        <li class="tab"><a (click)="selectTab('info')" [ngClass]="{active: selectedTab === 'info'}">Basic</a></li>
-        <li class="tab"><a (click)="selectTab('attributes')" [ngClass]="{active: selectedTab === 'attributes'}">Attributes</a>
-        </li>
-        <li class="tab"><a (click)="selectTab('objects')" [ngClass]="{active: selectedTab === 'objects'}">Contents</a>
-        </li>
-        <li class="tab"><a (click)="selectTab('verbs')" [ngClass]="{active: selectedTab === 'verbs'}">Verbs</a></li>
-        <li class="tab"><a (click)="selectTab('aliases')" [ngClass]="{active: selectedTab === 'aliases'}">Aliases</a>
-        </li>
-        <li class="tab"><a (click)="selectTab('events')" [ngClass]="{active: selectedTab === 'events'}">Events</a></li>
-      </ul>
+    <div class="input-field col s6">
+      <input id="name" [(ngModel)]="entity.name" type="text" required class="validate" data-length="128">
+      <label for="name" class="active">Entity Name</label>
     </div>
-
-    <!-- Basic Information -->
-    <div *ngIf="selectedTab === 'info'">
-      <div class="row" >
-        <div class="input-field col s6">
-          <input id="key" [(ngModel)]="entity.key" type="text" required class="validate" data-length="64">
-          <label for="key" class="active">Key</label>
-        </div>
-        <div class="input-field col s6">
-          <input id="name" [(ngModel)]="entity.name" type="text" required class="validate" data-length="128">
-          <label for="name" class="active">Entity Name</label>
-        </div>
-      </div>
-      <div class="row" >
-        <div class=" col s12">
-          <mat-checkbox [(ngModel)]="entity.describeWithRoom">Describe with Room</mat-checkbox>
-        </div>
-      </div>
-      <if-verb-card [verb]="lookVerb" *ngIf="lookVerb" [entity]="entity"></if-verb-card>
-      <if-warning *ngIf="!lookVerb">This object does not have a verb handler for the 'look' verb.</if-warning>
-    </div>
-
-    <!-- Collections go here -->
-    <if-attributes-list [entity]="entity" *ngIf="selectedTab === 'attributes'"></if-attributes-list>
-    <if-contents-list [entity]="entity" *ngIf="selectedTab === 'objects'"></if-contents-list>
-    <if-verbs-list [entity]="entity" *ngIf="selectedTab === 'verbs'"></if-verbs-list>
-    <if-aliases-list [entity]="entity" *ngIf="selectedTab === 'aliases'"></if-aliases-list>
-    <if-events-list [entity]="entity" *ngIf="selectedTab === 'events'"></if-events-list>
-
   </div>
-  <div class="card-action">
-    <if-editor-card-commands [entity]="entity" [selectedTab]="selectedTab"></if-editor-card-commands>
+  <div class="row">
+    <div class=" col s12">
+      <mat-checkbox [(ngModel)]="entity.describeWithRoom">Describe with Room</mat-checkbox>
+    </div>
   </div>
 </div>
+
+<!-- Collections go here -->
+<if-attributes-list [entity]="entity"></if-attributes-list>
+<if-contents-list [entity]="entity"></if-contents-list>
+<if-verbs-list [entity]="entity"></if-verbs-list>
+<if-aliases-list [entity]="entity"></if-aliases-list>
+<if-events-list [entity]="entity"></if-events-list>
+

@@ -1,13 +1,7 @@
-<div class="row" style="margin-bottom: 0;">
-  <div class="col s6" >
-    <div class="collection" *ngIf="entity.contents.length > 0">
-      <a *ngFor="let obj of entity.contents | entitySort" class="collection-item" (click)="onObjectClick(obj)">
-        {{obj.name}}
-      </a>
-    </div>
-    <span *ngIf="entity.contents.length <= 0" class="grey-text center-align">(No contents are present)</span>
-  </div>
-  <div class="col s6">
-    <if-look-renderer [entity]="entity"></if-look-renderer>
-  </div>
+<h4>Contents</h4>
+<div class="collection" *ngIf="entity.contents.length > 0">
+  <a *ngFor="let obj of entity.contents | entitySort" class="collection-item" (click)="onObjectClick(obj)">
+    {{obj.name}}
+  </a>
 </div>
+<span *ngIf="entity.contents.length <= 0" class="grey-text center-align">(No contents are present)</span>

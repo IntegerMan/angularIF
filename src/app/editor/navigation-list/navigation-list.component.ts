@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {RoomData} from '../../engine/story-data/room-data';
 import {DirectionData} from '../../engine/story-data/direction-data';
-import {EditorService} from '../editor.service';
 
 @Component({
   selector: 'if-navigation-list',

@@ -1,13 +1,26 @@
-<div [ngSwitch]="node.nodeType">
+<div class="card hoverable">
 
-  <if-story-info-editor *ngSwitchCase="'storyInfo'" [story]="story"></if-story-info-editor>
-  <if-room-editor *ngSwitchCase="'room'" [story]="story" [room]="node"></if-room-editor>
-  <if-actor-editor *ngSwitchCase="'actor'" [story]="story" [actor]="node"></if-actor-editor>
-  <if-entity-editor *ngSwitchCase="'entity'" [story]="story" [entity]="node"></if-entity-editor>
-  <if-strings-list *ngSwitchCase="'strings'" [story]="story"></if-strings-list>
-  <if-json-export *ngSwitchCase="'json'"></if-json-export>
-  <if-verb-editor *ngSwitchCase="'verbHandler'" [verb]="node" [entity]="node.parent"></if-verb-editor>
+  <div class="card-content"
+       style="overflow-y: auto;"
+       (window:resize)="onResize()"
+       [style.height.px]="panelHeight"
+       [ngSwitch]="node.nodeType">
 
-  <if-warning *ngSwitchDefault>Node type '{{node.nodeType}}' does not have an editor component registered for it.</if-warning>
+    <if-story-info-editor *ngSwitchCase="'storyInfo'" [story]="story"></if-story-info-editor>
+    <if-room-editor *ngSwitchCase="'room'" [story]="story" [room]="node"></if-room-editor>
+    <if-actor-editor *ngSwitchCase="'actor'" [story]="story" [actor]="node"></if-actor-editor>
+    <if-entity-editor *ngSwitchCase="'entity'" [story]="story" [entity]="node"></if-entity-editor>
+    <if-strings-list *ngSwitchCase="'strings'" [story]="story"></if-strings-list>
+    <if-json-export *ngSwitchCase="'json'"></if-json-export>
+    <if-verb-editor *ngSwitchCase="'verbHandler'" [verb]="node" [entity]="node.parent"></if-verb-editor>
+
+    <if-warning *ngSwitchDefault>Node type '{{node.nodeType}}' does not have an editor component registered for it.</if-warning>
+
+  </div>
+
+  <div class="card-action blue-grey darken-4">
+    <if-editor-card-commands *ngIf="node.nodeType === 'room' || node.nodeType === 'actor' || node.nodeType === 'entity'"
+                             [entity]="node"></if-editor-card-commands>
+  </div>
 
 </div>

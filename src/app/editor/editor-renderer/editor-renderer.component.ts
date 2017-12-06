@@ -15,9 +15,16 @@ export class EditorRendererComponent implements OnInit {
   @Input()
   node: any;
 
+  panelHeight: number;
+
   constructor() { }
 
   ngOnInit() {
+    this.onResize();
+  }
+
+  onResize(): void {
+    this.panelHeight = window.innerHeight - 120 - 78;
   }
 
 }
