@@ -32,7 +32,7 @@
     "mustache": "^2.3.0",
     "primeng": "^4.2.2",
     "rollbar": "^2.2.10",
-    "rxjs": "^5.5.2",
+    "rxjs": "^5.5.4",
     "showdown": "^1.8.0",
     "yaml-loader": "^0.5.0",
     "zone.js": "^0.8.14"
