@@ -2,7 +2,7 @@ import {Room} from '../../engine/entities/room';
 import {StorySpecVerifier} from '../../testing/story-spec-verifier';
 import {FogTerrierStory} from './fog-terrier-story';
 
-describe('FogTerrier.YourHouse.Sideyard', () => {
+describe('FogTerrier.YourHouse.Frontyard', () => {
 
   let game: StorySpecVerifier;
   let room: Room;

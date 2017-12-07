@@ -1,5 +1,6 @@
 <h4>Attributes</h4>
-<p-dataTable [value]="kvps" [editable]="true">
-  <p-column field="key" header="Key" [editable]="false"></p-column>
-  <p-column field="value" header="Value" [editable]="true"></p-column>
-</p-dataTable>
+<span *ngIf="entity.attributeData.length <= 0" class="grey-text center-align">(No attributes present)</span>
+<div *ngFor="let attr of entity.attributeData">
+  <h5>{{attr.key}}</h5>
+  <input type="text" [(ngModel)]="attr.value" placeholder="Attribute value">
+</div>

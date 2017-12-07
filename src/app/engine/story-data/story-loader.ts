@@ -16,6 +16,7 @@ import {ItemData} from './item-data';
 import {VerbData} from './verb-data';
 import {isNullOrUndefined} from 'util';
 import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
+import {AttributeData} from './attribute-data';
 
 export class StoryLoader {
 
@@ -42,8 +43,9 @@ export class StoryLoader {
     if (!entity.aliases.adjectives) {
       entity.aliases.adjectives = [];
     }
-    if (!entity.attributes) {
-      entity.attributes = {};
+    if (!entity.attributeData) {
+      entity.attributeData = [];
+      this.migrateAttributes(entity);
     }
 
   }
@@ -205,9 +207,9 @@ export class StoryLoader {
   }
 
   private static buildAttributes(entity: WorldEntity, entityData: EntityData): void {
-    if (entityData.attributes) {
-      for (const attribute of Object.getOwnPropertyNames(entityData.attributes)) {
-        entity.attributes[attribute] = entityData.attributes[attribute];
+    if (entityData.attributeData) {
+      for (const attribute of entityData.attributeData) {
+        entity.attributes[attribute.key] = attribute.value;
       }
     }
   }
@@ -333,6 +335,30 @@ export class StoryLoader {
 
       // Chop out the old system entirely
       (<any>entity).verbs = undefined;
+    }
+
+  }
+
+  private static migrateAttributes(entity: EntityData): void {
+
+    // Migrate from attributes to attributeData
+    if ((<any>entity).attributes) {
+
+      for (const prop of Object.getOwnPropertyNames((<any>entity).attributes)) {
+
+        const atr: AttributeData = new AttributeData();
+        atr.key = prop;
+        atr.value = (<any>entity).attributes[prop];
+
+        console.warn(prop);
+        console.warn(atr);
+
+        entity.attributeData.push(atr);
+
+      }
+
+      // Chop out the old system entirely
+      (<any>entity).attributes = undefined;
     }
 
   }

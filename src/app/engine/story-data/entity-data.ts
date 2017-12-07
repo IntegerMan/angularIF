@@ -1,6 +1,7 @@
 import {ItemData} from './item-data';
 import {AliasData} from './alias-data';
 import {VerbData} from './verb-data';
+import {AttributeData} from './attribute-data';
 
 export abstract class EntityData {
 
@@ -11,6 +12,7 @@ export abstract class EntityData {
 
   verbData: VerbData[];
 
+  attributeData: AttributeData[];
   attributes: {};
 
   contents: ItemData[];
