@@ -1,5 +1,6 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {EntityData} from '../../engine/story-data/entity-data';
+import {EditorService} from '../editor.service';
 
 @Component({
   selector: 'if-attributes-list',
@@ -11,5 +12,14 @@ export class AttributesListComponent {
 
   @Input()
   entity: EntityData;
+
+  constructor(private editorService: EditorService) {
+
+  }
+
+  onAddClicked(): void {
+    console.debug(`Attribute list - add clicked`);
+    this.editorService.addAttribute();
+  }
 
 }

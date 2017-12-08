@@ -1,0 +1,10 @@
+<div>
+  <h4>
+    <ng-content></ng-content>
+
+    <a *ngIf="canAdd" (click)="onAddClicked()" class="waves-effect waves-light white-text">
+      <i class="material-icons">add</i>
+    </a>
+
+  </h4>
+</div>

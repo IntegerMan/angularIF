@@ -32,6 +32,7 @@ import { VerbEditorComponent } from './verbs/verb-editor/verb-editor.component';
 import { AddVerbResponseDialogComponent } from './dialogs/add-verb-response-dialog/add-verb-response-dialog.component';
 import { AddNavigationDialogComponent } from './dialogs/add-navigation-dialog/add-navigation-dialog.component';
 import { NavigationEditorComponent } from './navigation-editor/navigation-editor.component';
+import { EntitySectionHeaderComponent } from './entity-section-header/entity-section-header.component';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { NavigationEditorComponent } from './navigation-editor/navigation-editor
     VerbEditorComponent,
     AddVerbResponseDialogComponent,
     AddNavigationDialogComponent,
-    NavigationEditorComponent
+    NavigationEditorComponent,
+    EntitySectionHeaderComponent
   ],
   entryComponents: [
     AddAliasDialogComponent,

@@ -1,4 +1,6 @@
-<h4>Attributes</h4>
+<if-entity-section-header [canAdd]="true"
+                          (addClicked)="onAddClicked()">Attributes</if-entity-section-header>
+
 <span *ngIf="entity.attributeData.length <= 0" class="grey-text center-align">(No attributes present)</span>
 <div *ngFor="let attr of entity.attributeData">
   <h5>{{attr.key}}</h5>

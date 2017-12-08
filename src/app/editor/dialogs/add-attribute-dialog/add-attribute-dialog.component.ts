@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {AttributeData} from '../../../engine/story-data/attribute-data';
 
 @Component({
   selector: 'if-add-attribute-dialog-component',
@@ -13,7 +14,7 @@ export class AddAttributeDialogComponent implements OnInit {
   value: string;
 
   constructor(public dialogRef: MatDialogRef<AddAttributeDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+              @Inject(MAT_DIALOG_DATA) public data: AttributeData) {
 
     if (data.key) {
       this.key = data.key;
@@ -31,7 +32,12 @@ export class AddAttributeDialogComponent implements OnInit {
     this.onEnterPressed(this.key, this.value);
   }
 
-  onEnterPressed(key: String, value: String) {
-    this.dialogRef.close({key: key, value: value});
+  onEnterPressed(key: string, value: string) {
+
+    const data: AttributeData = new AttributeData();
+    data.key = key;
+    data.value = value;
+
+    this.dialogRef.close(data);
   }
 }

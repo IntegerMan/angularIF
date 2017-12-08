@@ -1,4 +1,5 @@
-<h4>Verb Handlers</h4>
+<if-entity-section-header [canAdd]="true">Verb Handlers</if-entity-section-header>
+
 <div *ngFor="let verb of entity.verbData">
   <if-verb-card [verb]="verb" [entity]="entity"></if-verb-card>
 </div>

@@ -18,6 +18,7 @@ import {AddVerbResponseDialogComponent} from './dialogs/add-verb-response-dialog
 import {ArrayHelper} from '../utility/array-helper';
 import {DirectionData} from '../engine/story-data/direction-data';
 import {AddNavigationDialogComponent} from './dialogs/add-navigation-dialog/add-navigation-dialog.component';
+import {AttributeData} from '../engine/story-data/attribute-data';
 
 @Injectable()
 export class EditorService {
@@ -74,7 +75,7 @@ export class EditorService {
   }
 
   public get canAddAttribute(): boolean {
-    return this.selectedNode && this.selectedNode.attributes;
+    return this.selectedNode && this.selectedNode.attributeData;
   }
 
   public get canAddEvent(): boolean {
@@ -358,7 +359,7 @@ export class EditorService {
     }
   }
 
-  public addAttribute(name: string = null, value: any = null): void {
+  public addAttribute(attr: AttributeData): void {
 
     // Verify we can handle attributes
     if (!this.canAddAttribute) {
@@ -366,23 +367,24 @@ export class EditorService {
       return;
     }
 
-    if (!name || name === null) {
+    if (isNullOrUndefined(attr)) {
 
       const dialogRef = this.dialog.open(AddAttributeDialogComponent, {
         width: '300px',
-        data: {name: name, value: value}
+        data: {attr}
       });
 
       dialogRef.afterClosed().subscribe(result => {
         this.logger.debug(`The add attribute dialog was closed with a result of ${result}`);
         if (result) {
-          this.addAttribute(result.key, result.value);
+          this.addAttribute(result);
         }
       });
 
       return;
     }
-    this.selectedNode.attributes[name] = value;
+
+    this.selectedNode.attributeData.push(attr);
   }
 
   addResponse(verb: VerbData, response: any = null): void {
