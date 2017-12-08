@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {EntityData} from '../../../engine/story-data/entity-data';
-import {KeyValuePair} from '../../../utility/key-value-pair';
+import {EditorService} from '../../editor.service';
 
 @Component({
   selector: 'if-verbs-list',
@@ -8,23 +8,20 @@ import {KeyValuePair} from '../../../utility/key-value-pair';
   styleUrls: ['./verbs-list.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class VerbsListComponent implements OnInit, OnChanges {
+export class VerbsListComponent implements OnInit {
 
   @Input()
   entity: EntityData;
 
-  constructor() { }
+  constructor(private editorService: EditorService) {
+
+  }
 
   ngOnInit() {
-    this.updateData();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateData();
-  }
-
-  private updateData() {
-
+  onAddClicked(): void {
+    this.editorService.addVerb();
   }
 
 }

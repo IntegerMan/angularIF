@@ -1,2 +1,2 @@
-<if-entity-section-header [canAdd]="true">Navigation</if-entity-section-header>
+<if-entity-section-header [canAdd]="true" (addClicked)="onAddClicked()">Navigation</if-entity-section-header>
 <if-navigation-editor *ngFor="let dir of directions" [dir]="dir" ></if-navigation-editor>

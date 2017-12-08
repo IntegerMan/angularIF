@@ -1,4 +1,4 @@
-<if-entity-section-header [canAdd]="true">Contents</if-entity-section-header>
+<if-entity-section-header [canAdd]="true" (addClicked)="onAddClicked()">Contents</if-entity-section-header>
 
 <div class="collection" *ngIf="entity.contents.length > 0">
   <a *ngFor="let obj of entity.contents | entitySort" class="collection-item" (click)="onObjectClick(obj)">

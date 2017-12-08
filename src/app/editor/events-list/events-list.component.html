@@ -1,4 +1,4 @@
-<if-entity-section-header [canAdd]="true">Events</if-entity-section-header>
+<if-entity-section-header [canAdd]="true" (addClicked)="onAddClicked()">Events</if-entity-section-header>
 
 <p-dataTable [value]="kvps" [editable]="true">
   <p-column field="key" header="Key" [editable]="false"></p-column>

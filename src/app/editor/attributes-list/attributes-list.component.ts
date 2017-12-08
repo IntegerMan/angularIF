@@ -18,7 +18,6 @@ export class AttributesListComponent {
   }
 
   onAddClicked(): void {
-    console.debug(`Attribute list - add clicked`);
     this.editorService.addAttribute();
   }
 

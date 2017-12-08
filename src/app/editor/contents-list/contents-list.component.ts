@@ -24,4 +24,9 @@ export class ContentsListComponent implements OnInit {
   onObjectClick(obj: ItemData) {
     this.editorService.selectNode(obj, 'entity');
   }
+
+  onAddClicked(): void {
+    this.editorService.addObject();
+  }
+
 }

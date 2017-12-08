@@ -359,7 +359,7 @@ export class EditorService {
     }
   }
 
-  public addAttribute(attr: AttributeData): void {
+  public addAttribute(attr: AttributeData = null): void {
 
     // Verify we can handle attributes
     if (!this.canAddAttribute) {
