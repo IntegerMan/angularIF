@@ -1,8 +1,19 @@
 <if-entity-section-header [canAdd]="true"
-                          (addClicked)="onAddClicked()">Attributes</if-entity-section-header>
+                          (addClicked)="onAddClicked()">Attributes
+</if-entity-section-header>
 
-<span *ngIf="entity.attributeData.length <= 0" class="grey-text center-align">(No attributes present)</span>
-<div *ngFor="let attr of entity.attributeData">
-  <h5>{{attr.key}}</h5>
-  <input type="text" [(ngModel)]="attr.value" placeholder="Attribute value">
-</div>
+<span *ngIf="!entity.attributeData || entity.attributeData.length <= 0" class="grey-text center-align">(No attributes present)</span>
+<table *ngIf="entity.attributeData.length > 0">
+  <thead>
+  <tr>
+    <th>Key</th>
+    <th>Value</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let attr of entity.attributeData">
+    <td><input type="text" [(ngModel)]="attr.key" placeholder="Attribute key"></td>
+    <td><input type="text" [(ngModel)]="attr.value" placeholder="Attribute value"></td>
+  </tr>
+  </tbody>
+</table>
