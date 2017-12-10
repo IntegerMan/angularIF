@@ -113,13 +113,7 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
 
     this.menuItems.length = 0;
 
-    console.warn(node);
-
     if (!node || !node.nodeType) {
-      return;
-    }
-
-    if (node.nodeType === 'strings' || node.nodeType === 'storyInfo') {
       return;
     }
 
