@@ -1,6 +1,8 @@
 import { Subscription } from 'rxjs/Rx';
 import { EditorService } from '../editor.service';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatMenuTrigger} from '@angular/material';
+import {EntityData} from '../../engine/story-data/entity-data';
 
 @Component({
   selector: 'if-editor-toolbar',
@@ -10,20 +12,16 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class EditorToolbarComponent implements OnInit, OnDestroy {
 
-  breadcrumbs: any[];
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-  canAddObject: boolean = false;
-  canAddRoom: boolean = false;
-  canAddVerb: boolean = false;
-  canAddActor: boolean = false;
-  canAddAttribute: boolean = false;
-  canAddEvent: boolean = false;
-  canAddAlias: boolean = false;
+  breadcrumbs: any[];
+  menuItems: any[];
 
   private nodeSelectedSubscription: Subscription;
 
   constructor(private editorService: EditorService) {
     this.breadcrumbs = [];
+    this.menuItems = [];
   }
 
   ngOnInit() {
@@ -71,7 +69,15 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
   }
 
   onBreadcrumbClick(breadcrumb: any): void {
-    this.editorService.selectNode(breadcrumb);
+    if (breadcrumb === this.editorService.selectedNode && this.menuItems.length > 0) {
+      this.trigger.openMenu();
+    } else {
+      this.editorService.selectNode(breadcrumb);
+    }
+  }
+
+  onMenuItemClick(item: any): void {
+    this.editorService.selectNode(item);
   }
 
   getBreadcrumbName(breadcrumb: any): string {
@@ -99,19 +105,49 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
 
     // Ensure the breadcrumbs reflect our current selection
     this.updateBreadcrumbs(node);
-
-    // Update our boolean properties so we can hide bad parts of the UI
-    this.canAddAlias = this.editorService.canAddAlias;
-    this.canAddActor = this.editorService.canAddActor;
-    this.canAddAttribute = this.editorService.canAddAttribute;
-    this.canAddEvent = this.editorService.canAddEvent;
-    this.canAddObject = this.editorService.canAddObject;
-    this.canAddRoom = this.editorService.canAddRoom;
-    this.canAddVerb = this.editorService.canAddVerb;
+    this.updateMenuItems(node);
 
   }
 
-  private updateBreadcrumbs(node: any): void {
+  private updateMenuItems(node: EntityData | any): void {
+
+    this.menuItems.length = 0;
+
+    console.warn(node);
+
+    if (!node || !node.nodeType) {
+      return;
+    }
+
+    if (node.nodeType === 'strings' || node.nodeType === 'storyInfo') {
+      return;
+    }
+
+    let items: any[] = [];
+
+    if (node.nodeType === 'room') {
+      items = this.editorService.storyData.rooms;
+    } else if (node.nodeType === 'actor') {
+      items = this.editorService.storyData.actors;
+    } else if (node.nodeType === 'entity') {
+      items = node.parent.contents;
+    } else if (node.nodeType === 'verbHandler') {
+      items = node.parent.verbData;
+    }
+
+    // Populate the menu item list
+    // TODO: May not be contents in all cases
+    // items = node.parent.contents;
+
+    if (items) {
+      for (const item of items) {
+        this.menuItems.push(item);
+      }
+    }
+
+  }
+
+  private updateBreadcrumbs(node: EntityData | any): void {
 
     this.breadcrumbs.length = 0;
 

@@ -1,33 +1,35 @@
 <ul id="dropdownAdd" class="dropdown-content">
-    <li *ngIf="canAddActor"><a (click)="onAddActorClick()">Actor</a></li>
-    <li *ngIf="canAddRoom"><a (click)="onAddRoomClick()">Room</a></li>
-    <li *ngIf="canAddObject"><a (click)="onAddObjectClick()">Object</a></li>
-    <li *ngIf="canAddVerb"><a (click)="onAddVerbClick()">Verb</a></li>
-    <li *ngIf="canAddAttribute"><a (click)="onAddAttributeClick()">Attribute</a></li>
-    <li *ngIf="canAddEvent"><a (click)="onAddEventClick()">Event</a></li>
-    <li *ngIf="canAddAlias"><a (click)="onAddAliasClick()">Alias</a></li>
-  </ul>
+  <li *ngIf="canAddActor"><a (click)="onAddActorClick()">Actor</a></li>
+  <li *ngIf="canAddRoom"><a (click)="onAddRoomClick()">Room</a></li>
+  <li *ngIf="canAddObject"><a (click)="onAddObjectClick()">Object</a></li>
+  <li *ngIf="canAddVerb"><a (click)="onAddVerbClick()">Verb</a></li>
+  <li *ngIf="canAddAttribute"><a (click)="onAddAttributeClick()">Attribute</a></li>
+  <li *ngIf="canAddEvent"><a (click)="onAddEventClick()">Event</a></li>
+  <li *ngIf="canAddAlias"><a (click)="onAddAliasClick()">Alias</a></li>
+</ul>
 <nav>
   <div class="nav-wrapper">
     <div class="col s12">
 
+      <a (click)="onHomeClick()" style="margin-left: 2rem; margin-right: 0; font-size: 150%; font-weight: bold;"
+         class="white-text">IF Edit</a>
 
-      <a (click)="onHomeClick()" style="margin-left: 2rem; margin-right: 0rem; font-size: 150%; font-weight: bold;" class="white-text">IF Edit</a>
+      <!-- If this is not the last one in the sequence then go ahead and render it as a simple link -->
       <a *ngFor="let crumb of breadcrumbs"
          class="breadcrumb"
          (click)="onBreadcrumbClick(crumb);">
-         {{getBreadcrumbName(crumb)}}
+        {{getBreadcrumbName(crumb)}}
       </a>
-      <ul class="right">
-        <!-- Dropdown Trigger -->
-        <li>
-          <a class="waves-effect waves-light dropdown-button" data-activates="dropdownAdd">
-            Add
-            <i class="material-icons right">arrow_drop_down</i>
-            <i class="material-icons left">add</i>
-          </a>
-        </li>
-      </ul>
+
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let sibling of menuItems"
+                (click)="onMenuItemClick(sibling)"
+                mat-menu-item>{{getBreadcrumbName(sibling)}}</button>
+      </mat-menu>
+
+      <!-- Angular Material still needs the element hooked up to trigger the open menu call -->
+      <a [matMenuTriggerFor]="menu">&nbsp;</a>
+
     </div>
   </div>
 </nav>

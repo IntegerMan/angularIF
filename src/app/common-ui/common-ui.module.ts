@@ -6,7 +6,7 @@ import {
   MAT_PLACEHOLDER_GLOBAL_OPTIONS,
   MatDialogModule,
   MatCheckboxModule,
-  MatExpansionModule, MatInputModule, MatRadioModule, MatSelectModule, MatToolbarModule,
+  MatExpansionModule, MatInputModule, MatRadioModule, MatSelectModule, MatToolbarModule, MatMenuModule,
   MatTooltipModule
 } from '@angular/material';
 import {
@@ -25,6 +25,7 @@ import { WarningComponent } from './warning/warning.component';
     MatExpansionModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatMenuModule,
     MatInputModule,
     MatRadioModule,
     MatCheckboxModule,
@@ -46,6 +47,7 @@ import { WarningComponent } from './warning/warning.component';
     MatExpansionModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatMenuModule,
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
