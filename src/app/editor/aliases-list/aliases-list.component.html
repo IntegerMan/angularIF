@@ -1,6 +1,11 @@
 <if-entity-section-header [canAdd]="true" (addClicked)="onAddClicked()">Aliases</if-entity-section-header>
 <div>
 
+  <span *ngIf="entity.aliases.nouns.length <= 0 && entity.aliases.adjectives.length <= 0"
+        class="grey-text center-align">
+    (No aliases are present)
+  </span>
+
   <span class="chip token-noun valign-wrapper"
   *ngFor="let noun of entity.aliases.nouns">
   <i class="material-icons" style="font-size: 12px;" alt="Noun">devices</i>

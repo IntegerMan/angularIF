@@ -3,3 +3,4 @@
 <div *ngFor="let verb of entity.verbData">
   <if-verb-card [verb]="verb" [entity]="entity"></if-verb-card>
 </div>
+<span *ngIf="entity.verbData.length <= 0" class="grey-text center-align">(No verb handlers are present)</span>
