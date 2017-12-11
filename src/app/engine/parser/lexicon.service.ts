@@ -3,8 +3,6 @@ import {TokenClassification} from './token-classification.enum';
 import {CommandToken} from './command-token';
 import {StringHelper} from '../../utility/string-helper';
 import {ArrayHelper} from '../../utility/array-helper';
-import {CommonDictionary} from './common-dictionary';
-import {NaturalLanguageService} from './natural-language.service';
 import {NaturalLanguageProcessor} from './natural-language-processor';
 
 @Injectable()
@@ -38,13 +36,6 @@ export class LexiconService {
     this._expandRules = {};
 
     LexiconService._instance = this;
-  }
-
-  useDefaults(): void {
-
-    const dict = new CommonDictionary();
-    dict.addTerms();
-
   }
 
   public addIgnorable(term: string): void {

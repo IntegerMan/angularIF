@@ -22,6 +22,7 @@ import {ArrayHelper} from '../utility/array-helper';
 import {SentenceParser} from './parser/sentence-parser';
 import {NaturalLanguageProcessor} from './parser/natural-language-processor';
 import {EntityResolver} from './entity-resolver';
+import {CommonDictionary} from './parser/common-dictionary';
 
 export class InteractiveFictionEngine {
 
@@ -368,7 +369,9 @@ export class InteractiveFictionEngine {
   }
 
   private static initializeEngine() {
-    LexiconService.instance.useDefaults(); // TODO: Reduce reliance on lex service
+    // Add common terms to the lexicon
+    const dict = new CommonDictionary();
+    dict.addTerms();
   }
 
   private initializeStory(story: Story) {
