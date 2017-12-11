@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddNavigationDialogComponent } from './add-navigation-dialog.component';
+import {TestingModule} from '../../../testing/testing.module';
+import {TestDataProvider} from '../../../engine/story-data/test-data-provider';
 
 describe('AddNavigationDialogComponent', () => {
   let component: AddNavigationDialogComponent;
@@ -8,7 +10,7 @@ describe('AddNavigationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddNavigationDialogComponent ]
+      imports: [TestingModule]
     })
     .compileComponents();
   }));
@@ -16,6 +18,7 @@ describe('AddNavigationDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddNavigationDialogComponent);
     component = fixture.componentInstance;
+    component.direction = TestDataProvider.buildDirectionData();
     fixture.detectChanges();
   });
 

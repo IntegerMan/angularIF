@@ -34,8 +34,10 @@ export class NavigationEditorComponent implements OnInit, OnChanges {
 
     // Update the room keys
     this.roomKeys.length = 0;
-    for (const r of this.editorService.storyData.rooms) {
-      this.roomKeys.push(r.key);
+    if (this.editorService.storyData && this.editorService.storyData.rooms) {
+      for (const r of this.editorService.storyData.rooms) {
+        this.roomKeys.push(r.key);
+      }
     }
 
   }

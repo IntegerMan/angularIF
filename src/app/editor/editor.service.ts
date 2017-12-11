@@ -40,6 +40,7 @@ export class EditorService {
     this.nodeSelected = new EventEmitter<any>();
     this.playRequested = new EventEmitter<RoomData>();
     this.selectedNode = null;
+    this.storyData = new StoryData(); //  This helps out unit tests
 
   }
 
@@ -69,18 +70,18 @@ export class EditorService {
   canDelete(entity: EntityData): boolean {
 
     return entity &&
-           entity.nodeType &&
-           (entity.nodeType === 'entity' ||
-            entity.nodeType === 'actor' ||
-            entity.nodeType === 'room' ||
-            entity.nodeType === 'verb');
+      entity.nodeType &&
+      (entity.nodeType === 'entity' ||
+        entity.nodeType === 'actor' ||
+        entity.nodeType === 'room' ||
+        entity.nodeType === 'verb');
 
   }
 
   public delete(entity: EntityData): void {
 
     // Validate that this is acceptable
-    if  (!this.canDelete(entity)) {
+    if (!this.canDelete(entity)) {
       return;
     }
 

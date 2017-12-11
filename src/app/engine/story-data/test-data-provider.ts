@@ -10,6 +10,7 @@ import {Room} from '../entities/room';
 import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
 import {LanguageTerm} from '../parser/language-term';
+import {DirectionData} from './direction-data';
 
 export class TestDataProvider {
 
@@ -80,5 +81,11 @@ export class TestDataProvider {
   static buildCommandToken(): CommandToken {
     const token: CommandToken = new CommandToken(TestDataProvider.buildLanguageTerm());
     return token;
+  }
+
+  static buildDirectionData(): DirectionData {
+    const dir: DirectionData = new DirectionData();
+    dir.key = 'North';
+    return dir;
   }
 }
