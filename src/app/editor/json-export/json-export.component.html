@@ -1,23 +1,19 @@
-<div class="card">
-  <div class="card-content">
-    <div class="card-title">
-      <h2>JSON Data</h2>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        <textarea [(ngModel)]="json" name="jsonViewer" id="jsonViewer" readonly="readonly" class="materialize-textarea white-text" style="height: 500px; overflow-y: auto;"></textarea>
-        <!--<label for="jsonViewer" class="active">Raw JSON Data</label>-->
-      </div>
-    </div>
-  </div>
-  <div class="card-action">
-    <a class="waves-effect waves-light btn" data-clipboard-target="#jsonViewer" data-clipboard-action="copy">
-      Copy
-      <i class="material-icons left">content_copy</i>
-    </a>
-    <a class="waves-effect waves-light btn" (click)="download()" style="margin-left: 1rem;">
-      Download
-      <i class="material-icons left">file_download</i>
-    </a>
+<div class="card-title">
+  <h2>JSON Data</h2>
+</div>
+<div>
+  <a class="waves-effect waves-light btn" data-clipboard-target="#jsonViewer" data-clipboard-action="copy">
+    Copy
+    <i class="material-icons left">content_copy</i>
+  </a>
+  <a class="waves-effect waves-light btn" (click)="download()" style="margin-left: 1rem;">
+    Download
+    <i class="material-icons left">file_download</i>
+  </a>
+</div>
+<div class="row">
+  <div class="input-field col s12">
+    <textarea [(ngModel)]="json" name="jsonViewer" id="jsonViewer" readonly="readonly" class="materialize-textarea white-text" style="height: 500px; overflow-y: auto;"></textarea>
+    <!--<label for="jsonViewer" class="active">Raw JSON Data</label>-->
   </div>
 </div>
