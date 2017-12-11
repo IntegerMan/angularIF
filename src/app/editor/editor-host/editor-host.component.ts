@@ -170,7 +170,7 @@ export class EditorHostComponent implements OnInit, OnDestroy {
     if (room) {
       const storyRoom = this.gameStory.findRoomByKey(room.key);
       if (storyRoom) {
-        InteractiveFictionEngine.setActorRoom(this.gameStory.player, storyRoom);
+        this.engine.setActorRoom(this.gameStory.player, storyRoom);
         this.outputService.clear();
         this.engine.describeRoom(storyRoom, this.engine.buildCommandContext());
       }

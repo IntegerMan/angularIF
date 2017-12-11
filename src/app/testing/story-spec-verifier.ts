@@ -57,7 +57,7 @@ export class StorySpecVerifier {
       throw new Error(`Could not locate room with key of ${roomKey}`);
     }
 
-    InteractiveFictionEngine.setActorRoom(this.player, room);
+    this.engine.setActorRoom(this.player, room);
     this.context = this.engine.buildCommandContext();
 
     if (describe) {

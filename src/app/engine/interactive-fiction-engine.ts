@@ -154,7 +154,7 @@ export class InteractiveFictionEngine {
     return new CommandContext(this, this.confirmService);
   }
 
-  static setActorRoom(actor: Actor, room: Room): void {
+  setActorRoom(actor: Actor, room: Room): void {
 
     if (!actor) {
       throw new Error(`Actor is required but was null`);
