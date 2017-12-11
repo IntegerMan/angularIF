@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AliasesListComponent } from './aliases-list.component';
 import {TestDataProvider} from '../../engine/story-data/test-data-provider';
+import {TestingModule} from '../../testing/testing.module';
 
 describe('AliasesListComponent', () => {
   let component: AliasesListComponent;
@@ -9,7 +10,7 @@ describe('AliasesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AliasesListComponent ]
+      imports: [TestingModule],
     })
     .compileComponents();
   }));

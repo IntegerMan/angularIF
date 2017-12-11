@@ -37,7 +37,7 @@ export class AliasesListComponent implements OnInit, OnChanges {
     this.editorService.addAlias();
   }
 
-  private ensureAliases() {
+  private ensureAliases(): void {
     if (this.entity && !this.entity.aliases) {
       this.entity.aliases = new AliasData();
     }

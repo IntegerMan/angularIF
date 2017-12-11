@@ -3,7 +3,7 @@
 </if-entity-section-header>
 
 <span *ngIf="!entity.attributeData || entity.attributeData.length <= 0" class="grey-text center-align">(No attributes present)</span>
-<table *ngIf="entity.attributeData.length > 0">
+<table *ngIf="entity.attributeData && entity.attributeData.length > 0">
   <thead>
   <tr>
     <th>Key</th>

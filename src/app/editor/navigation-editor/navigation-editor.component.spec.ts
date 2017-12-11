@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavigationEditorComponent } from './navigation-editor.component';
+import {EditorModule} from '../editor.module';
 
 describe('NavigationEditorComponent', () => {
   let component: NavigationEditorComponent;
@@ -8,7 +9,7 @@ describe('NavigationEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationEditorComponent ]
+      imports: [EditorModule]
     })
     .compileComponents();
   }));

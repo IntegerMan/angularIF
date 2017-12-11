@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AttributesListComponent } from './attributes-list.component';
-import {CommonUIModule} from '../../common-ui/common-ui.module';
 import {LoggingService} from '../../utility/logging.service';
 import {LexiconService} from '../../engine/parser/lexicon.service';
 import {EditorModule} from '../editor.module';

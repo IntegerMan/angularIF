@@ -2,8 +2,6 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActorData} from '../../engine/story-data/actor-data';
 import {StoryData} from '../../engine/story-data/story-data';
 
-declare var $: any;
-
 @Component({
   selector: 'if-actor-editor',
   templateUrl: './actor-editor.component.html',
@@ -19,10 +17,10 @@ export class ActorEditorComponent implements OnInit {
   actor: ActorData;
 
   selectedTab: string = 'info';
-  roomKeys: string[] = [];
+  roomKeys: string[];
 
   constructor() {
-
+    this.roomKeys = [];
   }
 
   ngOnInit() {

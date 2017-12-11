@@ -66,38 +66,6 @@ export class EditorService {
 
   }
 
-  public get canAddVerb(): boolean {
-    return this.selectedNode && this.selectedNode.verbData;
-  }
-
-  public get canAddAlias(): boolean {
-    return this.selectedNode && this.selectedNode.aliases;
-  }
-
-  public get canAddAttribute(): boolean {
-    return this.selectedNode && this.selectedNode.attributeData;
-  }
-
-  public get canAddEvent(): boolean {
-    return this.selectedNode && this.selectedNode.events;
-  }
-
-  public get canAddNavigation(): boolean {
-    return this.selectedNode && this.selectedNode.directions;
-  }
-
-  public get canAddObject(): boolean {
-    return this.selectedNode && this.selectedNode.contents;
-  }
-
-  public get canAddRoom(): boolean {
-    return true;
-  }
-
-  public get canAddActor(): boolean {
-    return true;
-  }
-
   canDelete(entity: EntityData): boolean {
 
     return entity &&
@@ -164,12 +132,6 @@ export class EditorService {
 
   public addRoom(key: string = null, name: string = null): void {
 
-    // Verify we can handle rooms
-    if (!this.canAddRoom) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      return;
-    }
-
     if (!key || !name) {
       const method = this.addRoom;
       const entityType = 'Room';
@@ -188,12 +150,6 @@ export class EditorService {
   }
 
   public addActor(key: string = null, name: string = null): void {
-
-    // Verify we can handle children
-    if (!this.canAddActor) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      return;
-    }
 
     if (!key || !name) {
       const method = this.addActor;
@@ -219,11 +175,6 @@ export class EditorService {
   }
 
   public addObject(key: string = null, name: string = null): void {
-    // Verify we can handle children
-    if (!this.canAddObject) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      return;
-    }
 
     // Prompt to enter a name / key
     if (!key || !name) {
@@ -251,14 +202,6 @@ export class EditorService {
   }
 
   public addVerb(name: string = null): void {
-
-    // Verify we can handle verbs
-    if (!this.canAddVerb) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      this.logger.error('could not add verb');
-      this.logger.error(this.selectedNode);
-      return;
-    }
 
     if (!name || name === null) {
 
@@ -291,14 +234,6 @@ export class EditorService {
 
   public addNavigation(direction: DirectionData = null): void {
 
-    // Verify we can handle verbs
-    if (!this.canAddNavigation) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      this.logger.error('could not add navigation');
-      this.logger.error(this.selectedNode);
-      return;
-    }
-
     if (!direction) {
 
       const dialogRef = this.dialog.open(AddNavigationDialogComponent, {
@@ -328,12 +263,6 @@ export class EditorService {
 
   public addAlias(name: string = null, partOfSpeech: string = null): void {
 
-    // Verify we can handle aliases
-    if (!this.canAddAlias) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      return;
-    }
-
     if (!name || name === null) {
 
       const dialogRef = this.dialog.open(AddAliasDialogComponent, {
@@ -360,12 +289,6 @@ export class EditorService {
   }
 
   public addAttribute(attr: AttributeData = null): void {
-
-    // Verify we can handle attributes
-    if (!this.canAddAttribute) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      return;
-    }
 
     if (isNullOrUndefined(attr)) {
 
@@ -449,12 +372,6 @@ export class EditorService {
   }
 
   public addEvent(name: string = null): void {
-
-    // Verify we can handle events
-    if (!this.canAddEvent) {
-      // TODO: It'd be nice to throw a toast notification up here.
-      return;
-    }
 
     if (!name || name === null) {
       // TODO: Pop up some UI to ask the user to get an attribute name and value

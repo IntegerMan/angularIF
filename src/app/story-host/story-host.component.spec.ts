@@ -21,7 +21,7 @@ describe('StoryHostComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [StoryHostModule, EngineModule, RouterTestingModule, NoopAnimationsModule],
-      providers: [ NaturalLanguageService, LexiconService, LoggingService, ConfirmationService, GoogleAnalyticsService, StoryService]
+      providers: [ NaturalLanguageService, LexiconService, LoggingService, ConfirmationService, GoogleAnalyticsService]
     })
     .compileComponents();
   }));
