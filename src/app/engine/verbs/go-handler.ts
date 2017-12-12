@@ -28,8 +28,12 @@ export class GoHandler extends VerbHandler {
     }
 
     if (!link) {
-      context.output.addParserError('In order to go somewhere, you must include a direction.',
-        'Try saying "Go East" or, simply, "East" or "E" to move in a direction.');
+      if (!direction) {
+        context.output.addParserError('In order to go somewhere, you must include a direction.',
+          'Try saying "Go East" or, simply, "East" or "E" to move in a direction.');
+      } else {
+        context.output.addParserError(`You can't go that way.`);
+      }
       return CommandResult.BuildParseFailedResult();
     }
 
