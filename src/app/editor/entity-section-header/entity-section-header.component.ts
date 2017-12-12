@@ -25,7 +25,6 @@ export class EntitySectionHeaderComponent implements OnInit {
   }
 
   onAddClicked(): void {
-    console.debug(`Add Clicked. Emitting now`);
     this.addClicked.emit();
   }
 }
