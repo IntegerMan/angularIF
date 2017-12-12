@@ -22,7 +22,7 @@ export class EntitySpec {
 
   public shouldNotBeGettable(...expectedReplyString: string[]): EntitySpec {
 
-    this.addCheck( () => {
+    this.addCheck(() => {
       this.game.input(`get ${this.entity.that}`);
       if (this.game.player.has(this.entity)) {
         return `${this.entity.that} was owned by the player after a get command when it should not have been.`;
@@ -34,7 +34,7 @@ export class EntitySpec {
   }
 
   public shouldBeGettable(...expectedReplyString: string[]): EntitySpec {
-    this.addCheck( () => {
+    this.addCheck(() => {
       this.game.input(`get ${this.entity.that}`);
       if (!this.game.player.has(this.entity)) {
         return `${this.entity.that} was not owned by the player after a get command when it should have been.`;
@@ -46,7 +46,7 @@ export class EntitySpec {
   }
 
   public shouldRespondToCommandWith(input: string, ...expectedReplyString: string[]): EntitySpec {
-    this.addCheck( () => {
+    this.addCheck(() => {
       this.game.input(input);
       return this.checkForExpectedReply(...expectedReplyString);
     });
@@ -55,7 +55,7 @@ export class EntitySpec {
   }
 
   public shouldRespondToVerbWith(verb: string, ...expectedReplyString: string[]): EntitySpec {
-    this.addCheck( () => {
+    this.addCheck(() => {
       this.game.input(`${verb} ${this.entity.that}`, ...expectedReplyString);
       return this.checkForExpectedReply(...expectedReplyString);
     });
@@ -63,7 +63,7 @@ export class EntitySpec {
   }
 
   public shouldResolveFrom(text: string): EntitySpec {
-    this.addCheck( () => {
+    this.addCheck(() => {
       if (!this.game.lookForEntity(text, this.key)) {
         return `${this.entity.that} could not be resolved using '${text}'.`;
       }
@@ -75,7 +75,7 @@ export class EntitySpec {
 
   public shouldDescribeWithRoom(): EntitySpec {
 
-    this.addCheck( () => {
+    this.addCheck(() => {
       if (!this.entity.shouldDescribeWithRoom(this.game.context)) {
         return `${this.entity.that} should describe with the room (${this.room.key}), but does not.`;
       }
@@ -87,7 +87,7 @@ export class EntitySpec {
 
   public shouldNotDescribeWithRoom(): EntitySpec {
 
-    this.addCheck( () => {
+    this.addCheck(() => {
       if (this.entity.shouldDescribeWithRoom(this.game.context)) {
         return `${this.entity.that} should not describe with the room (${this.room.key}), but does.`;
       }
@@ -98,7 +98,7 @@ export class EntitySpec {
   }
 
   public shouldHaveAttributeValue(attribute: string, expected: any): EntitySpec {
-    this.addCheck( () => {
+    this.addCheck(() => {
       const actual = this.entity.getAttribute(attribute, undefined);
       if (actual !== expected) {
         return `${this.entity.that} should have attribute ${attribute} of value ${expected} but has a value of ${actual} instead.`;
@@ -158,7 +158,9 @@ export class EntitySpec {
       for (const line of this.game.lines) {
 
         // Don't aggregate what the user typed or standard engine content or the output is just going to get all squirrely.
-        if (line.commandType === RenderType.divider ||
+        if (!line ||
+          !line.text ||
+          line.commandType === RenderType.divider ||
           line.commandType === RenderType.roomName ||
           line.commandType === RenderType.userInput) {
           continue;
