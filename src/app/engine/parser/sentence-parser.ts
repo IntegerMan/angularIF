@@ -57,11 +57,19 @@ export class SentenceParser {
 
   }
 
-  private static inferVerbIfNeeded(command: Command, context: CommandContext) {
+  private static inferVerbIfNeeded(command: Command, context: CommandContext): void {
+
+    if (command.verb) {
+      return;
+    }
 
     // This will handle some specialized commands such as "Inventory" or "Verbs"
-    if (!command.verb && command.objects.length === 1) {
-      command.verb = SentenceParser.buildLookToken(context);
+    if (command.objects.length === 1) {
+      if (command.objects[0].classification === TokenClassification.Direction) {
+        command.verb = SentenceParser.buildGoToken(context);
+      } else {
+        command.verb = SentenceParser.buildLookToken(context);
+      }
     }
 
   }
@@ -144,11 +152,6 @@ export class SentenceParser {
     const nouns: CommandToken[] = tokens.filter(t => SentenceParser.isNounLike(t));
     for (const noun of nouns) {
 
-      // When no verbs are present and the first noun is a direction, interpret it as a 'Go' verb.
-      if (!command.verb && noun.classification === TokenClassification.Direction) {
-        command.verb = SentenceParser.buildGoToken(context);
-      }
-
       // If this noun comes before the verb, we're going to use it as a subject instead of as an object, but only for the first noun
       if (!command.subject && indexOfVerb > tokens.indexOf(noun)) {
         command.subject = noun;
@@ -182,13 +185,20 @@ export class SentenceParser {
     // Grab the first verb and stick that into the sentence as the sentence's main verb
     const prepositions: CommandToken[] = tokens.filter(t => SentenceParser.isPreposition(t));
     for (const prep of prepositions) {
-      command.addPreposition(prep);
 
       // If this IS a preposition, we'll want to link it to the prior noun as well. Case study here "worn patch of grass" - we'll want to
       // be able to identify this with the phrase "worn grass" and that's only possible if they're linked together via the of prepositional
       // phrase
       if (prep.name === 'of' && prep.previousToken && SentenceParser.isNounLike(prep.previousToken)) {
         prep.previousToken.setModifiedBy(prep);
+      }
+
+      // When we see in or out as the last word of a sentence, treat it as a direction
+      if ((prep.name === 'in' || prep.name === 'out') && !prep.nextToken) {
+        prep.classification = TokenClassification.Direction;
+        command.objects.push(prep);
+      } else {
+        command.addPreposition(prep);
       }
     }
 

@@ -90,16 +90,23 @@ export class Command {
   }
 
   getFirstDirection(): CommandToken {
-    let direction: CommandToken = null;
 
     const directions: CommandToken[] =
       this.objects.filter(o => o.classification === TokenClassification.Direction || (o.entity && o.entity instanceof RoomLink));
 
     if (directions && directions.length > 0) {
-      direction = directions[0];
+      return directions[0];
     }
 
-    return direction;
+    // In and out can be directions instead of prepositions
+    if (this.prepositions['in']) {
+      return this.prepositions['in'];
+    }
+    if (this.prepositions['out']) {
+      return this.prepositions['out'];
+    }
+
+    return null;
   }
 
   addPreposition(preposition: CommandToken): void {

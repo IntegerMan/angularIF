@@ -83,6 +83,8 @@ substitute:
   front yard: frontyard
   side yard: sideyard
   back yard: backyard
+  inside: in
+  outside: out
 expand:
   g: repeat
   x: examine
