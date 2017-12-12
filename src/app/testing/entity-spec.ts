@@ -2,6 +2,7 @@ import {WorldEntity} from '../engine/entities/world-entity';
 import {StorySpecVerifier} from './story-spec-verifier';
 import {Room} from '../engine/entities/room';
 import {isNullOrUndefined} from 'util';
+import {RenderType} from '../text-rendering/render-type.enum';
 
 export class EntitySpec {
 
@@ -149,12 +150,32 @@ export class EntitySpec {
 
   protected checkForExpectedReply(...expectedReplyString: string[]): string {
 
-    const actualReply: string = this.game.lastReply;
-    const actualReplyLower: string = actualReply.toLowerCase();
-
     for (const expectedReply of expectedReplyString) {
-      if (actualReplyLower.indexOf(expectedReply.toLowerCase()) < 0) {
-        return `Response '${actualReply}' to '${this.game.lastInput}' did not contain '${expectedReply}'`;
+
+      let matched: boolean = false;
+      let actualReply: string = '';
+
+      for (const line of this.game.lines) {
+
+        // Don't aggregate what the user typed or standard engine content or the output is just going to get all squirrely.
+        if (line.commandType === RenderType.divider ||
+          line.commandType === RenderType.roomName ||
+          line.commandType === RenderType.userInput) {
+          continue;
+        }
+
+        actualReply += line.text + ' ';
+
+        const lineLower: string = line.text.toLowerCase();
+
+        if (lineLower.indexOf(expectedReply.toLowerCase()) >= 0) {
+          matched = true;
+        }
+
+      }
+
+      if (!matched) {
+        return `Response '${actualReply.trim()}' to '${this.game.lastInput}' did not contain '${expectedReply}'`;
       }
     }
 
