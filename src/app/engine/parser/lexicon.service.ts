@@ -134,7 +134,7 @@ export class LexiconService {
 
   private addCustom(term: string, tag: string): void {
     if (term && term.length > 0) {
-      this.lexicon[term] = tag;
+      this.lexicon[term.toLowerCase()] = tag;
     }
   }
 
