@@ -5,6 +5,7 @@ import {LexiconService} from './lexicon.service';
 import {isNullOrUndefined} from 'util';
 import {CommandToken} from './command-token';
 import {TokenClassification} from './token-classification.enum';
+import { environment } from '../../../environments/environment';
 
 export class NaturalLanguageProcessor {
 
@@ -14,6 +15,10 @@ export class NaturalLanguageProcessor {
 
   constructor() {
     this.nlp = require('Compromise');
+
+    if (environment.showDebugAids) {
+      this.nlp.verbose('tagger');
+    }    
   }
 
   public isTerm(word: string, tagToMatch: string) {
