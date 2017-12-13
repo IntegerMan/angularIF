@@ -34,7 +34,6 @@
     "rollbar": "^2.3.2",
     "rxjs": "^5.5.2",
     "showdown": "^1.8.5",
-    "yaml-loader": "^0.5.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

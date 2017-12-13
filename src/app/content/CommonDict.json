@@ -1,0 +1,114 @@
+{
+  "name": "Common Dictionary Terms",
+  "purpose": "Shared usage as a base library",
+  "author": {
+    "name": "Matt Eland",
+    "contact": "Matt.Eland@GMail.com"
+  },
+  "terms": {
+    "Adjective": [
+      "My",
+      "Your",
+      "Brass",
+      "Bronze",
+      "Decorated",
+      "Glittering",
+      "Scrawled",
+      "Unholy",
+      "Worn"
+    ],
+    "Direction": [
+      "North",
+      "East",
+      "South",
+      "West",
+      "Up",
+      "Down",
+      "Northeast",
+      "Southeast",
+      "Southwest",
+      "Northwest"
+    ],
+    "Ignorable": [
+      "Please"
+    ],
+    "Noun": [
+      "Hall",
+      "Chandelier",
+      "Chandeliers",
+      "Message",
+      "Note",
+      "Whacker",
+      "Well",
+      "Shit"
+    ],
+    "Verb": [
+      "Open",
+      "Procure",
+      "Restart",
+      "Reset",
+      "Inspect",
+      "Debug",
+      "Throw",
+      "Lurk",
+      "Loiter",
+      "Exit",
+      "Saunter",
+      "Stroll",
+      "Sprint",
+      "Repeat",
+      "Unscrew",
+      "Screw",
+      "ReportBug",
+      "Mow",
+      "Harvest",
+      "Reap",
+      "Chop",
+      "Stab",
+      "Slice",
+      "Bisect",
+      "Skewer",
+      "Impale",
+      "Haul",
+      "Tug",
+      "Shove"
+    ]
+  },
+  "fallback": {
+    "open": "Adjective",
+    "using": "Preposition"
+  },
+  "substitute": {
+    "pick up": "get",
+    "turn on": "activate",
+    "turn off": "deactivate",
+    "north east": "northeast",
+    "north west": "northwest",
+    "south east": "southeast",
+    "south west": "southwest",
+    "cannot": "can not",
+    "weed whacker": "whacker",
+    "front yard": "frontyard",
+    "side yard": "sideyard",
+    "back yard": "backyard",
+    "inside": "in",
+    "outside": "out"
+  },
+  "expand": {
+    "g": "repeat",
+    "x": "examine",
+    "l": "look",
+    "i": "inventory",
+    "e": "east",
+    "w": "west",
+    "s": "south",
+    "n": "north",
+    "u": "up",
+    "d": "down",
+    "ne": "northeast",
+    "nw": "northwest",
+    "sw": "southwest",
+    "se": "southeast",
+    "bugreport": "reportbug"
+  }
+}
