@@ -18,7 +18,7 @@ export class NaturalLanguageProcessor {
 
     if (environment.showDebugAids) {
       this.nlp.verbose('tagger');
-    }    
+    }
   }
 
   public isTerm(word: string, tagToMatch: string) {
@@ -46,7 +46,15 @@ export class NaturalLanguageProcessor {
     // Commas are death.
     sentence = StringHelper.replaceAll(sentence, ',', '');
 
-    const data: LanguageTerm[] = this.nlp(sentence, LexiconService.instance.lexicon).terms().data();
+    const lexicon = LexiconService.instance.lexicon;
+    const data: LanguageTerm[] = this.nlp(sentence, lexicon).terms().data();
+
+    // Work around for compromise issue #437 where casing can matter in terms of ignoring custom dictionary entries
+    for (const term of data) {
+      if (lexicon[term.normal]) {
+        term.bestTag = lexicon[term.normal];
+      }
+    }
 
     if (this.shouldLog) {
       LoggingService.instance.log(data);
