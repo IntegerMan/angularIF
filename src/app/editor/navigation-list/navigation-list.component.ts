@@ -31,6 +31,10 @@ export class NavigationListComponent implements OnInit, OnChanges {
     this.editorService.addNavigation();
   }
 
+  onDirectionClick(dir: DirectionData) {
+    this.editorService.editNavigation(dir);
+  }
+
   private updateData() {
 
     // Update the directional navigation

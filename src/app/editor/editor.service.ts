@@ -262,6 +262,27 @@ export class EditorService {
 
   }
 
+  editNavigation(direction: DirectionData): void {
+
+    const dialogRef = this.dialog.open(AddNavigationDialogComponent, {
+      width: '300px',
+      data: Object.assign({}, direction)
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.logger.debug(`The edit navigation dialog was closed with a result of:`);
+      this.logger.debug(result);
+      if (result) {
+        direction.key = result.key;
+        direction.aliases = result.aliases;
+        direction.goMessage = result.goMessage;
+        direction.lookMessage = result.lookMessage;
+        direction.room = result.room;
+      }
+    });
+
+  }
+
   public addAlias(name: string = null, partOfSpeech: string = null): void {
 
     if (!name || name === null) {

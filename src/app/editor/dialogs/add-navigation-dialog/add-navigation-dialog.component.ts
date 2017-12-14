@@ -11,11 +11,18 @@ import {DirectionData} from '../../../engine/story-data/direction-data';
 export class AddNavigationDialogComponent implements OnInit {
 
   direction: DirectionData;
+  addOrEdit: string;
 
   constructor(public dialogRef: MatDialogRef<AddNavigationDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 
-    this.direction = new DirectionData();
+    if (data) {
+      this.direction = data;
+      this.addOrEdit = 'Edit';
+    } else {
+      this.direction = new DirectionData();
+      this.addOrEdit = 'Add';
+    }
 
   }
 

@@ -1,2 +1,9 @@
 <if-entity-section-header [canAdd]="true" (addClicked)="onAddClicked()">Navigation</if-entity-section-header>
-<if-navigation-editor *ngFor="let dir of directions" [dir]="dir" ></if-navigation-editor>
+
+<div class="collection" *ngIf="directions.length > 0">
+  <a *ngFor="let dir of directions" class="collection-item" (click)="onDirectionClick(dir)">
+    {{dir.key}}
+  </a>
+</div>
+<span *ngIf="directions.length <= 0" class="grey-text center-align">(No navigation links are present)</span>
+<!--<if-navigation-editor *ngFor="let dir of directions" [dir]="dir" ></if-navigation-editor>-->
