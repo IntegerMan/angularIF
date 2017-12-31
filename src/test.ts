@@ -16,6 +16,9 @@ import {
 declare const __karma__: any;
 declare const require: any;
 
+// Prevent timeouts on slower machines
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 3000000;
+
 // Prevent Karma from running prematurely.
 __karma__.loaded = function () {};
 
