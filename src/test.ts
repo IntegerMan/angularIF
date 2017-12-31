@@ -19,6 +19,10 @@ declare const require: any;
 // Prevent timeouts on slower machines
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 3000000;
 
+// Set up the TeamCity reporter
+const reporters = require('jasmine-reporters');
+jasmine.getEnv().addReporter(new reporters.TeamCityReporter());
+
 // Prevent Karma from running prematurely.
 __karma__.loaded = function () {};
 
