@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
+import {LoggingService} from './logging.service';
 
 declare let ga: any;
 
@@ -15,7 +16,6 @@ export class GoogleAnalyticsService {
 
   private static _instance: GoogleAnalyticsService;
 
-
   constructor() {
     GoogleAnalyticsService._instance = this;
   }
@@ -25,14 +25,18 @@ export class GoogleAnalyticsService {
                    eventLabel: string = null,
                    eventValue: number = null) {
 
-    if (environment.production) {
+    if (environment.enableAnalytics) {
 
-      ga('send', 'event', {
-        eventCategory: eventCategory,
-        eventLabel: eventLabel,
-        eventAction: eventAction,
-        eventValue: eventValue
-      });
+      if (!ga) {
+        LoggingService.instance.warning('Cannot end analytics event without ga defined.');
+      } else {
+        ga('send', 'event', {
+          eventCategory: eventCategory,
+          eventLabel: eventLabel,
+          eventAction: eventAction,
+          eventValue: eventValue
+        });
+      }
 
     }
 

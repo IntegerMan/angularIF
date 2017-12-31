@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   showDebugAids: true,
+  enableAnalytics: false,
   environmentName: 'localhost'
 };

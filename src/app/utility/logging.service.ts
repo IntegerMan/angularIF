@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class LoggingService {
@@ -17,7 +18,7 @@ export class LoggingService {
   }
 
   public log(input: any): void {
-    if (console) {
+    if (console && !environment.production) {
       console.log(input);
     }
   }
@@ -35,11 +36,14 @@ export class LoggingService {
   }
 
   public debug(input: any): void {
-    this.log(input);
+    if (console && !environment.production) {
+      // noinspection TsLint
+      console.debug(input);
+    }
   }
 
   public table(...data: any[]) {
-    if (console) {
+    if (console && !environment.production) {
       console.table(data);
     }
   }

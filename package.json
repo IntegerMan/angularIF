@@ -58,6 +58,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-jquery": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.4",
+    "karma-teamcity-reporter": "^1.0.1",
     "phantomjs-prebuilt": "^2.1.16",
     "protractor": "^5.2.1",
     "ts-node": "~3.2.0",
