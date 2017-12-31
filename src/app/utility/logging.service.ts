@@ -37,7 +37,6 @@ export class LoggingService {
 
   public debug(input: any): void {
     if (console && !environment.production) {
-      // noinspection TsLint
       console.debug(input);
     }
   }
