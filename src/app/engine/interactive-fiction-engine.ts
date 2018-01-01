@@ -252,7 +252,7 @@ export class InteractiveFictionEngine {
     // If the parser wasn't sure what we were referring to with something, then don't send it to a verb handler.
     let result: CommandResult;
     if (context.wasConfused && !(isDebugCommand)) {
-      console.warn('result was confused');
+      console.warn(`Result of command '${command.userInput}' was confused`);
       result = CommandResult.BuildParseFailedResult();
     } else {
       // Okay, we can send the command off to be interpreted and just return the result
