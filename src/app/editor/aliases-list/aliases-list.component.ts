@@ -3,6 +3,7 @@ import {EntityData} from '../../engine/story-data/entity-data';
 import {AliasData} from '../../engine/story-data/alias-data';
 import {ArrayHelper} from '../../utility/array-helper';
 import {EditorService} from '../editor.service';
+import {LoggingService} from '../../utility/logging.service';
 
 @Component({
   selector: 'if-aliases-list',
@@ -30,7 +31,6 @@ export class AliasesListComponent implements OnInit, OnChanges {
   onRemoveClick(token: string) {
     ArrayHelper.removeIfPresent(this.entity.aliases.adjectives, token);
     ArrayHelper.removeIfPresent(this.entity.aliases.nouns, token);
-    console.warn(this.entity.aliases);
   }
 
   onAddClicked(): void {

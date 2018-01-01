@@ -46,11 +46,8 @@ export class CloakStory extends Story {
 
     // TODO: This can be accomplished via an if block with a room check condition
 
-    console.warn('preview cloak drop');
-
     if (context.currentRoom === this.cloakroom) {
 
-      console.warn(`Has dropped cloak: ${this.hasDroppedCloak}`);
       if (!this.hasDroppedCloak) {
 
         // TODO: This can be accomplished via an increase score command with a do-once limiter

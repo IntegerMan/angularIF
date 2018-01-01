@@ -30,8 +30,6 @@ export class StringsListComponent implements OnInit, OnChanges {
   private updateStrings(): void {
     this.strings.length = 0;
 
-    console.log(this.story.strings);
-
     if (this.story.strings) {
       for (const str of this.story.strings) {
         for (const key of Object.getOwnPropertyNames(str)) {

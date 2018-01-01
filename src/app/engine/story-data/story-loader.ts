@@ -17,6 +17,7 @@ import {VerbData} from './verb-data';
 import {isNullOrUndefined} from 'util';
 import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
 import {AttributeData} from './attribute-data';
+import {LoggingService} from '../../utility/logging.service';
 
 export class StoryLoader {
 
@@ -349,9 +350,6 @@ export class StoryLoader {
         const atr: AttributeData = new AttributeData();
         atr.key = prop;
         atr.value = (<any>entity).attributes[prop];
-
-        console.warn(prop);
-        console.warn(atr);
 
         entity.attributeData.push(atr);
 

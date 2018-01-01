@@ -163,7 +163,7 @@ export class NaturalLanguageProcessor {
 
     const tokens: CommandToken[] = [];
 
-    console.log('Parsing terms into tokens now...');
+    LoggingService.instance.debug('Parsing terms into tokens now...');
     let lastToken: CommandToken = null;
     for (const term of terms) {
 
