@@ -16,7 +16,7 @@ export class NavigationEditorComponent implements OnInit, OnChanges {
   @Input()
   renderAsCard: boolean = true;
 
-  private roomKeys: string[];
+  roomKeys: string[];
 
   constructor(private editorService: EditorService) {
     this.roomKeys = [];
