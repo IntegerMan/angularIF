@@ -16,7 +16,7 @@ module.exports = function (config) {
       require('@angular/cli/plugins/karma')
     ],
     files: [
-      './src/assets/materialize/js/bin/materialize.min.js',
+      'src/assets/materialize/js/dist/materialize.min.js',
       'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js'
     ],
     client:{
