@@ -1,8 +1,9 @@
 <if-entity-section-header [canAdd]="false" (addClicked)="onAddClicked()">Events</if-entity-section-header>
 
-<span *ngIf="!entity.events || entity.events.length <= 0" class="grey-text center-align">(No events are present)</span>
+<span *ngIf="!entity.eventData || entity.eventData.length <= 0" class="grey-text center-align">(No events are present)</span>
 
-<!--<p-dataTable [value]="kvps" [editable]="true" *ngIf="entity.events && entity.events.length > 0">-->
-  <!--<p-column field="key" header="Key" [editable]="false"></p-column>-->
-  <!--<p-column field="value" header="Value" [editable]="true"></p-column>-->
-<!--</p-dataTable>-->
+<div class="collection" *ngIf="entity.eventData.length > 0">
+  <div *ngFor="let obj of entity.eventData | entitySort" class="collection-item">
+    {{obj.key}}
+  </div>
+</div>

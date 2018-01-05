@@ -2,6 +2,7 @@ import {ItemData} from './item-data';
 import {AliasData} from './alias-data';
 import {VerbData} from './verb-data';
 import {AttributeData} from './attribute-data';
+import {EventData} from './event-data';
 
 export abstract class EntityData {
 
@@ -16,6 +17,7 @@ export abstract class EntityData {
   attributes: {};
 
   contents: ItemData[];
+  eventData: EventData[];
 
   describeWithRoom: boolean = true;
 

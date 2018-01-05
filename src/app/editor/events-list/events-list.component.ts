@@ -1,8 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {EntityData} from '../../engine/story-data/entity-data';
-import {KeyValuePair} from '../../utility/key-value-pair';
-import {RoomData} from '../../engine/story-data/room-data';
 import {EditorService} from '../editor.service';
+import {EventData} from '../../engine/story-data/event-data';
 
 @Component({
   selector: 'if-events-list',
@@ -14,10 +12,10 @@ export class EventsListComponent implements OnInit, OnChanges {
 
   @Input()
   entity: any;
-  kvps: KeyValuePair[];
+  events: EventData[];
 
   constructor(private editorService: EditorService) {
-    this.kvps = [];
+    this.events = [];
   }
 
   ngOnInit() {
@@ -33,13 +31,7 @@ export class EventsListComponent implements OnInit, OnChanges {
   }
 
   private updateData() {
-    this.kvps.length = 0;
-    if (this.entity && this.entity.events) {
-      for (const key of Object.getOwnPropertyNames(this.entity.events)) {
-        const kvp = new KeyValuePair(key, this.entity.events[key]);
-        this.kvps.push(kvp);
-      }
-    }
+    this.events = this.entity.eventData;
   }
 
 }

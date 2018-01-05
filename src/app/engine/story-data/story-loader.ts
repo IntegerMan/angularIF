@@ -17,7 +17,7 @@ import {VerbData} from './verb-data';
 import {isNullOrUndefined} from 'util';
 import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
 import {AttributeData} from './attribute-data';
-import {LoggingService} from '../../utility/logging.service';
+import {EventData} from './event-data';
 
 export class StoryLoader {
 
@@ -48,7 +48,10 @@ export class StoryLoader {
       entity.attributeData = [];
       this.migrateAttributes(entity);
     }
-
+    if (!entity.eventData) {
+      entity.eventData = [];
+      this.migrateEvents(entity);
+    }
   }
 
   cleanseData(data: StoryData): StoryData {
@@ -162,15 +165,15 @@ export class StoryLoader {
 
     StoryLoader.populateCommonFields(item, itemData, story);
 
-    StoryLoader.populateEvents(item, itemData.events);
+    StoryLoader.populateEvents(item, itemData.eventData);
 
     return item;
   }
 
-  private static populateEvents(entity: WorldEntity, events: any) {
+  private static populateEvents(entity: WorldEntity, events: EventData[]) {
     if (events) {
-      for (const key of Object.getOwnPropertyNames(events)) {
-        entity.events[key] = StoryLoader.buildResponse(events[key], entity);
+      for (const e of events) {
+        entity.events[e.key] = StoryLoader.buildResponse(e.value, entity);
       }
     }
   }
@@ -181,7 +184,7 @@ export class StoryLoader {
 
     StoryLoader.populateCommonFields(room, roomData, story);
 
-    StoryLoader.populateEvents(room, roomData.events);
+    StoryLoader.populateEvents(room, roomData.eventData);
 
     // Populate all registered items
     if (roomData.contents) {
@@ -357,6 +360,27 @@ export class StoryLoader {
 
       // Chop out the old system entirely
       (<any>entity).attributes = undefined;
+    }
+
+  }
+
+  private static migrateEvents(entity: EntityData): void {
+
+    // Migrate from events to eventData
+    if ((<any>entity).events) {
+
+      for (const prop of Object.getOwnPropertyNames((<any>entity).events)) {
+
+        const event: EventData = new EventData();
+        event.key = prop;
+        event.value = (<any>entity).events[prop];
+
+        entity.eventData.push(event);
+
+      }
+
+      // Chop out the old system entirely
+      (<any>entity).events = undefined;
     }
 
   }
