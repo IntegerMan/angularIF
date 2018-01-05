@@ -9,15 +9,13 @@ import {
   MatExpansionModule, MatInputModule, MatRadioModule, MatSelectModule, MatToolbarModule, MatMenuModule,
   MatTooltipModule
 } from '@angular/material';
-import {
-  ConfirmDialogModule, ConfirmationService, TreeModule, DataTableModule, SharedModule
-} from 'primeng/primeng';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import { EntitySortPipe } from './entity-sort.pipe';
 import {TemplatingService} from '../engine/parser/templating.service';
 import {MarkdownService} from '../text-rendering/markdown.service';
 import { WarningComponent } from './warning/warning.component';
+import {ConfirmService} from './confirm.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,21 +27,13 @@ import { WarningComponent } from './warning/warning.component';
     MatInputModule,
     MatRadioModule,
     MatCheckboxModule,
-    ConfirmDialogModule,
-    TreeModule,
     RouterModule,
-    DataTableModule,
     MatSelectModule,
-    MatDialogModule,
-    SharedModule
+    MatDialogModule
   ],
   exports: [
-    ConfirmDialogModule,
-    TreeModule,
     RouterModule,
     FormsModule,
-    DataTableModule,
-    SharedModule,
     MatExpansionModule,
     MatToolbarModule,
     MatTooltipModule,
@@ -59,7 +49,7 @@ import { WarningComponent } from './warning/warning.component';
     WarningComponent
   ],
   providers: [
-    ConfirmationService,
+    ConfirmService,
     MarkdownService,
     TemplatingService,
     {provide: MAT_PLACEHOLDER_GLOBAL_OPTIONS, useValue: {float: 'always'}}

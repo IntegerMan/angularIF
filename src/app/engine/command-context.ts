@@ -3,10 +3,10 @@ import {Story} from './entities/story';
 import {Room} from './entities/room';
 import {Actor} from './entities/actor';
 import {GoogleAnalyticsService} from '../utility/google-analytics.service';
-import {ConfirmationService} from 'primeng/primeng';
 import {Command} from './parser/command';
 import {CommandResponseManager} from './command-response-manager';
 import {InteractiveFictionEngine} from './interactive-fiction-engine';
+import {ConfirmService} from '../common-ui/confirm.service';
 
 export class CommandContext {
 
@@ -20,7 +20,7 @@ export class CommandContext {
 
   logger: LoggingService;
   analytics: GoogleAnalyticsService;
-  confirmService: ConfirmationService;
+  confirmService: ConfirmService;
   command: Command;
   output: CommandResponseManager;
   wasConfused: boolean = false;
@@ -28,7 +28,7 @@ export class CommandContext {
   private _engine: InteractiveFictionEngine;
 
   constructor(engine: InteractiveFictionEngine,
-              confirmService: ConfirmationService) {
+              confirmService: ConfirmService) {
 
     this._engine = engine;
 

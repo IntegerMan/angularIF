@@ -3,7 +3,7 @@ import {CommandContext} from '../command-context';
 import {Command} from '../parser/command';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
-import {Confirmation} from 'primeng/primeng';
+import {ConfirmTask} from '../../common-ui/confirm-task';
 
 export class DieHandler extends VerbHandler {
 
@@ -17,7 +17,7 @@ export class DieHandler extends VerbHandler {
 
   handleCommand(command: Command, context: CommandContext): CommandResult {
 
-    const confirmation: Confirmation = {
+    const confirmation: ConfirmTask = {
       message: 'Are you sure you want to just give up?',
       header: 'Give up?',
       accept: () => context.engine.endGame(context, false),

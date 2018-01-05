@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WorldEntity} from '../../engine/entities/world-entity';
-import {TreeNode} from '../../../assets/primeng/components/common/treenode';
 
 @Component({
   selector: 'if-entity-debug',
@@ -12,7 +11,7 @@ export class EntityDebugComponent implements OnInit {
   @Input()
   entity: WorldEntity;
 
-  contentNodes: TreeNode[];
+  contentNodes: any[];
 
   constructor() {
     this.contentNodes = [];
@@ -26,10 +25,10 @@ export class EntityDebugComponent implements OnInit {
 
   }
 
-  private buildNodeForEntity(entity: WorldEntity, parentNode: TreeNode): void {
+  private buildNodeForEntity(entity: WorldEntity, parentNode: any): void {
 
     // Build the base node
-    const node: TreeNode = {
+    const node: any = {
       label: entity.that,
       data: entity,
       parent: parentNode,

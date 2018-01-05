@@ -14,7 +14,6 @@ import {Actor} from './entities/actor';
 import {WorldEntity} from './entities/world-entity';
 import {Room} from './entities/room';
 import {LoggingService} from '../utility/logging.service';
-import {ConfirmationService} from 'primeng/primeng';
 import {TextLine} from '../text-rendering/text-line';
 import {LexiconService} from './parser/lexicon.service';
 import {CommonVerbService} from './verbs/common-verb.service';
@@ -23,6 +22,7 @@ import {SentenceParser} from './parser/sentence-parser';
 import {NaturalLanguageProcessor} from './parser/natural-language-processor';
 import {EntityResolver} from './entity-resolver';
 import {CommonDictionary} from './parser/common-dictionary';
+import {ConfirmService} from '../common-ui/confirm.service';
 
 export class InteractiveFictionEngine {
 
@@ -46,7 +46,7 @@ export class InteractiveFictionEngine {
   private _gameState: GameState = GameState.initializing;
   private _processor: NaturalLanguageProcessor;
 
-  constructor(private confirmService: ConfirmationService) {
+  constructor(private confirmService: ConfirmService) {
     this.verbHandlers = [];
     this.commandEvaluated = new EventEmitter<Command>();
     this.gameStateChanged = new EventEmitter<GameState>();

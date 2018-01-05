@@ -1,9 +1,9 @@
 import {VerbHandler} from './verb-handler';
 import {Command} from '../parser/command';
 import {CommandContext} from '../command-context';
-import {Confirmation} from 'primeng/components/common/confirmation';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
+import {ConfirmTask} from '../../common-ui/confirm-task';
 
 export class RestartHandler extends VerbHandler {
 
@@ -19,7 +19,7 @@ export class RestartHandler extends VerbHandler {
 
     } else {
 
-      const confirmation: Confirmation = {
+      const confirmation: ConfirmTask = {
         message: 'Are you sure you want to restart? All current progress will be lost.',
         header: 'Restart?',
         accept: () => context.engine.restartStory(),
