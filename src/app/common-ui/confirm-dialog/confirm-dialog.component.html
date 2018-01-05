@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{task.header}}</h1>
+
+<div mat-dialog-content style="padding-bottom: 2rem;">
+  <p>
+    {{task.message}}
+  </p>
+</div>
+
+<div mat-dialog-actions>
+  <a class="btn waves-light waves-ripple success-bg" (click)="confirm()">
+    Confirm
+  </a>
+  <a class="btn waves-light waves-ripple warn-bg" (click)="cancel()" style="margin-left: 1rem;">
+    Cancel
+  </a>
+</div>
