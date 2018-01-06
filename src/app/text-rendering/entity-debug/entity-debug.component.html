@@ -12,17 +12,18 @@
 
     <div class="card-content">
 
-      <div *ngIf="entity.contents.length > 0" class="right" style="width: 300px;">
-        <span class="right-align" style="width: 100px;"><strong>Contents:</strong></span>
-        <!--TODO: <p-tree [value]="contentNodes"></p-tree>-->
-      </div>
-
       <dl>
 
         <dt>Parent</dt>
         <dd>
           <if-entity-reference *ngIf="entity.parent" [entity]="entity.parent"></if-entity-reference>
           <span *ngIf="!entity.parent" class="grey-text small-text">(None)</span>
+        </dd>
+
+        <dt>Contents</dt>
+        <dd>
+          <if-entity-reference *ngFor="let child of entity.contents" [entity]="child"></if-entity-reference>
+          <span *ngIf="entity.contents.length <= 0" class="grey-text small-text">(None)</span>
         </dd>
 
         <dt>Verbs</dt>
