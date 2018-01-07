@@ -16,8 +16,8 @@ describe('FogTerrier', () => {
     expect(game.story).toBeTruthy();
   });
 
-  it('should have a title of November Project', () => {
-    expect(game.story.name).toBe('November Project');
+  it('should have a title of Fog Terrier', () => {
+    expect(game.story.name).toBe('Fog Terrier');
   });
 
   it('should have a max score of 100', () => {
