@@ -14,6 +14,8 @@
 
       <mat-menu #menu="matMenu">
         <button *ngFor="let sibling of menuItems"
+                [class.teal]="sibling === currentNode"
+                [class.lighten-1]="sibling === currentNode"
                 (click)="onMenuItemClick(sibling)"
                 mat-menu-item>{{getBreadcrumbName(sibling)}}</button>
       </mat-menu>

@@ -16,6 +16,7 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
 
   breadcrumbs: any[];
   menuItems: any[];
+  currentNode: any;
 
   private nodeSelectedSubscription: Subscription;
 
@@ -102,6 +103,9 @@ export class EditorToolbarComponent implements OnInit, OnDestroy {
   }
 
   private onNodeSelected(node: any): void {
+
+    // Set the current node so we can render the selection
+    this.currentNode = node;
 
     // Ensure the breadcrumbs reflect our current selection
     this.updateBreadcrumbs(node);
