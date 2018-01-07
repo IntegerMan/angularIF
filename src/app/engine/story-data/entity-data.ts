@@ -19,7 +19,7 @@ export abstract class EntityData {
   contents: ItemData[];
   eventData: EventData[];
 
-  describeWithRoom: boolean = true;
+  describeWithRoom: boolean = false; // Most of the time we will NOT want this.
 
   // Editor Specific items here:
   parent: EntityData;
