@@ -30,7 +30,7 @@ describe('FogTerrier.YourHouse.Hall', () => {
       .shouldFailNavigationTo('climb stairs', `don't need`)
       .shouldFailNavigationTo('go up the stairs', `don't need`)
       .shouldFailNavigationTo('go upstairs', `don't need`)
-      .shouldRespondToCommandWith(`look`, `door`, `stairs`, `office`, `kitchen`, `rack`, `painting`)
+      .shouldRespondToCommandWith(`look`, `door`, `stairs`, `office`, `kitchen`, `rack`, `picture`)
       .shouldRespondToCommandWith(`look s`, `kitchen`)
       .shouldRespondToCommandWith(`look n`, `front yard`)
       .shouldRespondToCommandWith(`look w`, `office`)

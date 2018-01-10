@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  showDebugAids: true,
+  showDebugAids: false,
   enableAnalytics: false,
   environmentName: 'localhost'
 };

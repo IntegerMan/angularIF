@@ -11,6 +11,8 @@ import {Command} from '../parser/command';
 import {CommandToken} from '../parser/command-token';
 import {LanguageTerm} from '../parser/language-term';
 import {DirectionData} from './direction-data';
+import {Story} from '../entities/story';
+import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
 
 export class TestDataProvider {
 
@@ -57,6 +59,7 @@ export class TestDataProvider {
     item.aliases = new AliasData();
     item.aliases.adjectives = [];
     item.aliases.nouns = [];
+    item.eventData = [];
   }
 
   static buildGameRoom(): Room {
@@ -87,5 +90,11 @@ export class TestDataProvider {
     const dir: DirectionData = new DirectionData();
     dir.key = 'North';
     return dir;
+  }
+
+  static buildStories(): Story[] {
+    const stories: Story[] = [];
+    stories.push(new Story(`test`, null));
+    return stories;
   }
 }
