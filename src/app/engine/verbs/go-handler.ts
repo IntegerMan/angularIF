@@ -6,6 +6,8 @@ import {Room} from '../entities/room';
 import {RoomLink} from '../room-link';
 import {VerbType} from './verb-type.enum';
 import {CommandResult} from '../command-result';
+import {EntityBase} from '../entities/entity-base';
+import {WorldEntity} from '../entities/world-entity';
 
 export class GoHandler extends VerbHandler {
 
@@ -27,13 +29,29 @@ export class GoHandler extends VerbHandler {
       }
     }
 
+    const entities: EntityBase[] = command.getDistinctEntitiesFromObjects();
+
     if (!link) {
+
+      // If we got here, we may be trying to GO to an Entity, if so, try sending the command that way.
+      if (entities && entities.length > 0) {
+        const entity: WorldEntity = entities[0] as WorldEntity;
+        if (entity instanceof WorldEntity) {
+          if (entity.invokeVerbResponse(context, 'go')) {
+            return CommandResult.BuildActionSuccessResult();
+          }
+        }
+      }
+
+      // Okay, not that. Tell the user how much they suck.
       if (!direction) {
         context.output.addParserError('In order to go somewhere, you must include a direction.',
           'Try saying "Go East" or, simply, "East" or "E" to move in a direction.');
+
       } else {
         context.output.addParserError(`You can't go that way.`);
       }
+
       return CommandResult.BuildParseFailedResult();
     }
 

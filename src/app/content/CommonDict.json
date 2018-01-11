@@ -40,7 +40,8 @@
       "Note",
       "Whacker",
       "Well",
-      "Shit"
+      "Shit",
+      "Upstairs"
     ],
     "Verb": [
       "Open",
@@ -71,7 +72,8 @@
       "Impale",
       "Haul",
       "Tug",
-      "Shove"
+      "Shove",
+      "Climb"
     ]
   },
   "fallback": {
@@ -80,6 +82,7 @@
   },
   "substitute": {
     "pick up": "get",
+    "climb up": "climb",
     "turn on": "activate",
     "turn off": "deactivate",
     "north east": "northeast",

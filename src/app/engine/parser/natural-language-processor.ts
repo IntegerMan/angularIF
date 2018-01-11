@@ -16,7 +16,7 @@ export class NaturalLanguageProcessor {
   constructor() {
     this.nlp = require('Compromise');
 
-    if (environment.showDebugAids) {
+    if (environment.debugLexer) {
       this.nlp.verbose('tagger');
     }
   }

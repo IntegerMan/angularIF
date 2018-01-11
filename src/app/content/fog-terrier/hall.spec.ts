@@ -34,8 +34,7 @@ describe('FogTerrier.YourHouse.Hall', () => {
       .shouldRespondToCommandWith(`look s`, `kitchen`)
       .shouldRespondToCommandWith(`look n`, `front yard`)
       .shouldRespondToCommandWith(`look w`, `office`)
-      .shouldRespondToCommandWith(`look up`, `hallway`)
-      .shouldNotBeGettable('serious');
+      .shouldRespondToCommandWith(`look up`, `hallway`);
 
     expect(spec.validate()).toBeFalsy();
   });

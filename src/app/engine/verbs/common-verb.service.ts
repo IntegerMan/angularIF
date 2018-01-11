@@ -16,6 +16,7 @@ import {DebugHandler} from './debug-handler';
 import {WaitHandler} from './wait-handler';
 import {ReportbugHandler} from './reportbug-handler';
 import {GenericVerbHandler} from './generic-verb-handler';
+import {ClimbHandler} from './climb-handler';
 
 @Injectable()
 export class CommonVerbService {
@@ -27,6 +28,7 @@ export class CommonVerbService {
     // TODO: It'd be real nice to have some automated way of getting synonyms within the engine
     verbs.push(new LookHandler(['look', 'examine', 'inspect']));
     verbs.push(new GoHandler(['go', 'walk', 'run', 'travel', 'exit', 'saunter', 'stroll', 'sprint']));
+    verbs.push(new ClimbHandler('climb', ['climb', 'ascend']));
     verbs.push(new HangHandler(['hang', 'suspend', 'attach', 'affix']));
     verbs.push(new PutHandler(['put', 'set', 'deposit', 'store', 'stash', 'place']));
     verbs.push(new GetHandler(['get', 'take', 'procure', 'catch', 'grab', 'snatch', 'yoink']));
