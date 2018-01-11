@@ -19,7 +19,7 @@ describe('RoomEditorComponent', () => {
     fixture = TestBed.createComponent(RoomEditorComponent);
     component = fixture.componentInstance;
     component.room = TestDataProvider.buildRoom();
-    component.story = TestDataProvider.buildStory();
+    component.story = TestDataProvider.buildStoryData();
     fixture.detectChanges();
   });
 

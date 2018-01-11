@@ -22,7 +22,7 @@ describe('StringsListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StringsListComponent);
     component = fixture.componentInstance;
-    component.story = TestDataProvider.buildStory();
+    component.story = TestDataProvider.buildStoryData();
     fixture.detectChanges();
   });
 

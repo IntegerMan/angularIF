@@ -23,7 +23,7 @@ describe('ActorEditorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ActorEditorComponent);
     component = fixture.componentInstance;
-    component.story = TestDataProvider.buildStory();
+    component.story = TestDataProvider.buildStoryData();
     component.actor = TestDataProvider.buildActor();
     fixture.detectChanges();
   });

@@ -16,7 +16,7 @@ import {NaturalLanguageProcessor} from '../parser/natural-language-processor';
 
 export class TestDataProvider {
 
-  public static buildStory(): StoryData {
+  public static buildStoryData(): StoryData {
     const story: StoryData = new StoryData();
     story.rooms = [];
     story.actors = [];
@@ -92,9 +92,13 @@ export class TestDataProvider {
     return dir;
   }
 
+  static buildStory(): Story {
+    return new Story(`test`, null);
+  }
+
   static buildStories(): Story[] {
     const stories: Story[] = [];
-    stories.push(new Story(`test`, null));
+    stories.push(TestDataProvider.buildStory());
     return stories;
   }
 }

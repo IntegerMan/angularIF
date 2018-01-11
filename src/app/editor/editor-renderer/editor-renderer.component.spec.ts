@@ -22,7 +22,7 @@ describe('EditorRendererComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditorRendererComponent);
     component = fixture.componentInstance;
-    component.story = TestDataProvider.buildStory();
+    component.story = TestDataProvider.buildStoryData();
     component.node = TestDataProvider.buildActor();
     fixture.detectChanges();
   });

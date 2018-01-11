@@ -22,7 +22,7 @@ describe('EditorSidebarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditorSidebarComponent);
     component = fixture.componentInstance;
-    component.story = TestDataProvider.buildStory();
+    component.story = TestDataProvider.buildStoryData();
     fixture.detectChanges();
   });
 
