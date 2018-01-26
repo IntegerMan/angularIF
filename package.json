@@ -61,7 +61,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-teamcity-reporter": "^1.0.1",
     "phantomjs-prebuilt": "^2.1.16",
-    "protractor": "^5.2.1",
+    "protractor": "^5.3.0",
     "ts-node": "~3.2.0",
     "tslint": "~5.8.0",
     "typescript": "~2.4.2",
