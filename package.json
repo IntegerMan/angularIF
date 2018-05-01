@@ -46,7 +46,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "^8.0.58",
     "angular-tslint-rules": "^1.1.0",
-    "codelyzer": "^4.0.1",
+    "codelyzer": "^4.3.0",
     "css-loader": "^0.28.7",
     "jasmine-core": "~2.6.2",
     "jasmine-reporters": "^2.0.0",
